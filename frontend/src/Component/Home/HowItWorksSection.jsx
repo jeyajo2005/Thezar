@@ -57,13 +57,22 @@ export default function HowItWorksSection({ onOpenRegister }) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16 sm:mb-20">
-          <span className="font-mono text-xs sm:text-sm font-bold text-blue-600 tracking-wider">
-            [ Road to the Championship ]
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-[#071426] tracking-tight uppercase">
-            How TheZar <span className="text-blue-600">Works</span>
+          <div className="flex items-center justify-center gap-3">
+            <span className="text-[12px] font-bold text-[#2563EB] tracking-[0.18em] uppercase">
+              HOW IT WORKS
+            </span>
+            <div
+              className="w-10 h-[2px] rounded-full"
+              style={{
+                backgroundColor: '#D4A72C',
+                boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+              }}
+            />
+          </div>
+          <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
+            HOW THEZAR <span className="text-[#2563EB]">WORKS</span>
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base">
+          <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
             A clear 5-step journey connecting campus talent directly to the grand statewide spotlight.
           </p>
         </div>
@@ -74,7 +83,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
           <div className="hidden lg:block absolute top-12 left-10 right-10 h-0.5 bg-gradient-to-r from-blue-600 via-cyan-400 to-amber-400 -z-0" />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6 relative z-10">
-            {steps.map((step, idx) => {
+            {steps.map((step) => {
               const Icon = step.icon;
               return (
                 <div key={step.num} className="text-center space-y-4 flex flex-col items-center group">

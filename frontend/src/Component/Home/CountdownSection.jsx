@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calendar } from 'lucide-react';
 
-export default function CountdownSection({ onOpenRegister }) {
+export default function CountdownSection() {
   // Target date: October 10, 2026 (Tirunelveli District Round)
   const targetDate = new Date('2026-10-10T10:00:00').getTime();
 
@@ -47,70 +47,70 @@ export default function CountdownSection({ onOpenRegister }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Left Column: Heading */}
-          <div className="lg:col-span-5 text-left space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-blue-600 uppercase tracking-wider">
+          <div className="lg:col-span-5 text-left space-y-2">
+            <div className="inline-flex items-center gap-2 text-[12px] font-bold text-[#2563EB] uppercase tracking-[0.18em]">
               <Calendar className="w-3.5 h-3.5" />
               <span>NEXT DISTRICT STAGE</span>
             </div>
             
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#071426] tracking-tight leading-tight">
-              Count <span className="text-blue-600 font-extrabold">Every Second</span> <br className="hidden sm:block" />
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#071426] tracking-[-0.03em] leading-tight">
+              Count <span className="text-[#2563EB]">Every Second</span> <br className="hidden sm:block" />
               Until the Event
             </h3>
             
-            <p className="text-xs text-slate-500 font-medium">
+            <p className="text-[13px] text-[#64748B] font-medium">
               October 10, 2026 • Tirunelveli Main Convention Hall
             </p>
           </div>
 
-          {/* Right Column: Numbers Layout (Matching Reference Screenshot) */}
+          {/* Right Column: Numbers Layout (Conference Timer Typography) */}
           <div className="lg:col-span-7">
-            <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-6 md:gap-8 font-mono">
+            <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-6 md:gap-8">
               
               {/* Days */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#071426] tracking-tight block">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#071426] tracking-[-0.04em] block leading-none">
                   {timeLeft.days}
                 </span>
-                <p className="text-[11px] sm:text-xs font-bold text-cyan-600 uppercase tracking-widest mt-1 font-mono">
-                  [Days]
-                </p>
+                <span className="text-[11px] sm:text-[12px] font-semibold text-[#64748B] uppercase tracking-[0.12em] mt-2 block">
+                  DAYS
+                </span>
               </div>
 
-              <span className="text-2xl sm:text-4xl font-light text-slate-300 select-none pb-4">:</span>
+              <span className="text-2xl sm:text-4xl font-light text-slate-300 select-none pb-5">:</span>
 
               {/* Hours */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#071426] tracking-tight block">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#071426] tracking-[-0.04em] block leading-none">
                   {timeLeft.hours}
                 </span>
-                <p className="text-[11px] sm:text-xs font-bold text-cyan-600 uppercase tracking-widest mt-1 font-mono">
-                  [Hours]
-                </p>
+                <span className="text-[11px] sm:text-[12px] font-semibold text-[#64748B] uppercase tracking-[0.12em] mt-2 block">
+                  HOURS
+                </span>
               </div>
 
-              <span className="text-2xl sm:text-4xl font-light text-slate-300 select-none pb-4">:</span>
+              <span className="text-2xl sm:text-4xl font-light text-slate-300 select-none pb-5">:</span>
 
               {/* Minutes */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#071426] tracking-tight block">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#071426] tracking-[-0.04em] block leading-none">
                   {timeLeft.minutes}
                 </span>
-                <p className="text-[11px] sm:text-xs font-bold text-cyan-600 uppercase tracking-widest mt-1 font-mono">
-                  [Minutes]
-                </p>
+                <span className="text-[11px] sm:text-[12px] font-semibold text-[#64748B] uppercase tracking-[0.12em] mt-2 block">
+                  MINUTES
+                </span>
               </div>
 
-              <span className="text-2xl sm:text-4xl font-light text-slate-300 select-none pb-4">:</span>
+              <span className="text-2xl sm:text-4xl font-light text-slate-300 select-none pb-5">:</span>
 
               {/* Seconds */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-blue-600 tracking-tight block">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#2563EB] tracking-[-0.04em] block leading-none">
                   {timeLeft.seconds}
                 </span>
-                <p className="text-[11px] sm:text-xs font-bold text-blue-600 uppercase tracking-widest mt-1 font-mono">
-                  [Seconds]
-                </p>
+                <span className="text-[11px] sm:text-[12px] font-semibold text-[#2563EB] uppercase tracking-[0.12em] mt-2 block">
+                  SECONDS
+                </span>
               </div>
 
             </div>

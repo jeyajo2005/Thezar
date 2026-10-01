@@ -1,17 +1,31 @@
 @import "tailwindcss";
 
+:root {
+  --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --color-navy: #071426;
+  --color-blue: #2563EB;
+  --color-cyan: #06B6D4;
+  --color-gold: #D4A72C;
+  --color-light-gold: #F5D77A;
+  --color-white: #FFFFFF;
+  --color-muted: #64748B;
+}
+
 @layer base {
   body {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-primary);
     margin: 0;
     padding: 0;
     overflow-x: hidden;
     background-color: #0b0d17;
     color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-primary);
   }
 
   /* Prevent browser or Bootstrap default underlines on navbar */
@@ -21,6 +35,36 @@
   .nav-link-clean:hover {
     text-decoration: none !important;
   }
+}
+
+/* Decorative Gold Line System */
+.decorative-gold-line {
+  width: 80px;
+  height: 2px;
+  background-color: #D4A72C;
+  box-shadow: 0 0 10px rgba(212, 167, 44, 0.35);
+  border-radius: 9999px;
+}
+
+.decorative-gold-line-sm {
+  width: 40px;
+  height: 2px;
+  background-color: #D4A72C;
+  box-shadow: 0 0 8px rgba(212, 167, 44, 0.30);
+  border-radius: 9999px;
+}
+
+/* Text Gradients */
+.text-gradient-thezar {
+  background: linear-gradient(90deg, #60A5FA 0%, #22D3EE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(90deg, #D4A72C 0%, #F5D77A 50%, #D4A72C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Reference Image Exact Theme Classes */

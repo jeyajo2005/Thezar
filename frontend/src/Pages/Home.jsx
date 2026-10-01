@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Navbar from '../Component/Navbar/Navbar';
 import Hero from '../Component/Home/Hero';
-import AboutThezarSection from '../Component/Home/AboutThezarSection';
+import AboutTheZarSection from '../Component/Home/AboutTheZarSection';
 import CountdownSection from '../Component/Home/CountdownSection';
 import EventsGrid from '../Component/Events/EventsGrid';
 import DistrictJourneySection from '../Component/Home/DistrictJourneySection';
@@ -33,7 +33,7 @@ export default function Home() {
         />
 
         {/* 04. About TheZar */}
-        <AboutThezarSection
+        <AboutTheZarSection
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
 

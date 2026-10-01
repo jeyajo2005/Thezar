@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DISTRICTS_DATA } from '../../data/mockData';
-import { Search, MapPin, CheckCircle2, ChevronRight, ArrowRight } from 'lucide-react';
+import { Search, MapPin, CheckCircle2, ChevronRight } from 'lucide-react';
 
 export default function DistrictJourneySection({ onOpenRegister }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -34,16 +34,25 @@ export default function DistrictJourneySection({ onOpenRegister }) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
-          <span className="font-mono text-xs sm:text-sm font-bold text-blue-600 tracking-wider">
-            [ Statewide Championship Circuit ]
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-[#071426] tracking-tight uppercase">
-            TheZar Across <span className="text-blue-600">Tamil Nadu</span>
+          <div className="flex items-center justify-center gap-3">
+            <span className="text-[12px] font-bold text-[#2563EB] tracking-[0.18em] uppercase">
+              THEZAR ACROSS TAMIL NADU
+            </span>
+            <div
+              className="w-10 h-[2px] rounded-full"
+              style={{
+                backgroundColor: '#D4A72C',
+                boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+              }}
+            />
+          </div>
+          <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
+            THEZAR ACROSS <span className="text-[#2563EB]">TAMIL NADU</span>
           </h2>
-          <p className="text-xs sm:text-sm font-mono font-bold text-cyan-600 tracking-widest uppercase">
+          <p className="text-[11px] sm:text-[12px] font-bold text-[#06B6D4] tracking-[0.12em] uppercase">
             38 DISTRICTS • ONE JOURNEY • ONE GRAND STAGE
           </p>
-          <p className="text-slate-600 text-sm sm:text-base pt-1">
+          <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed pt-1">
             Preliminary collegiate rounds taking place across every district, leading to the Grand Statewide Finale at Chennai.
           </p>
         </div>

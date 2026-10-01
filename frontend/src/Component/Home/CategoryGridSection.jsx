@@ -76,13 +76,22 @@ export default function CategoryGridSection({ onOpenRegister }) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <span className="font-mono text-xs sm:text-sm font-bold text-blue-600 tracking-wider">
-            [ Multi-Disciplinary Competition Tracks ]
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-[#071426] tracking-tight uppercase">
-            Compete <span className="text-blue-600">Your Way</span>
+          <div className="flex items-center justify-center gap-3">
+            <span className="text-[12px] font-bold text-[#2563EB] tracking-[0.18em] uppercase">
+              COMPETITIONS
+            </span>
+            <div
+              className="w-10 h-[2px] rounded-full"
+              style={{
+                backgroundColor: '#D4A72C',
+                boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+              }}
+            />
+          </div>
+          <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
+            COMPETE <span className="text-[#2563EB]">YOUR WAY</span>
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base">
+          <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
             Choose your arena from 6 official championship categories open to engineering, arts, science, and management colleges across Tamil Nadu.
           </p>
         </div>

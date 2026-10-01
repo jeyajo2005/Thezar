@@ -1,4 +1,4 @@
-import heroSpeakerImg from '../../assets/hero_speaker.jpg';
+import heroSpeakerImg from '../../assets/Young_woman.png';
 import { ArrowRight, Trophy } from 'lucide-react';
 
 export default function Hero({ onOpenRegister }) {
@@ -40,45 +40,57 @@ export default function Hero({ onOpenRegister }) {
         <div className="absolute top-1/4 left-10 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
       </div>
 
-      {/* Main Hero Content Area: Occupies ~45-50% width on left */}
-      <div className="relative z-10 max-w-[1320px] mx-auto px-6 pt-12 sm:pt-16 lg:pt-20 pb-24 sm:pb-32 lg:pb-36 w-full flex-1 flex items-center">
-        <div className="max-w-2xl text-left space-y-6">
+      {/* Main Hero Content Area: Occupies ~45% width on left (Editorial Composition) */}
+      <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-12 pt-12 sm:pt-16 lg:pt-20 pb-24 sm:pb-32 lg:pb-36 w-full flex-1 flex items-center">
+        <div className="max-w-[620px] text-left space-y-6">
           
-          {/* Eyebrow & Bold Heading */}
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-cyan-300 text-xs font-mono font-extrabold tracking-[0.2em] uppercase">
-              <Trophy className="w-3.5 h-3.5 text-amber-400" />
-              <span>THEZAR 2026 • TAMIL NADU</span>
-            </div>
-            
-            <h1 className="text-4xl sm:text-6xl lg:text-[72px] font-black text-white tracking-[-0.04em] uppercase leading-[0.96]">
-              THE GRAND <br />
-              COLLEGIATE <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-sky-300 filter drop-shadow">
-                COMPETITION
-              </span>
-            </h1>
+          {/* 1. EYEBROW */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/20 backdrop-blur-sm text-[12px] sm:text-[13px] font-bold tracking-[0.18em] uppercase text-white shadow-sm">
+            <Trophy className="w-3.5 h-3.5 text-[#D4A72C] shrink-0" />
+            <span>THEZAR 2026</span>
+            <span className="text-[#22D3EE] font-black">•</span>
+            <span>TAMIL NADU</span>
           </div>
 
-          {/* Description: Modern sans-serif, clean and legible */}
-          <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-sans font-medium">
+          {/* 2. MAIN HEADING */}
+          <h1 className="text-[42px] sm:text-[54px] md:text-[64px] lg:text-[76px] xl:text-[80px] font-extrabold text-white tracking-[-0.045em] uppercase leading-[0.98] lg:leading-[0.95] max-w-[560px]">
+            THE GRAND <br />
+            COLLEGIATE <br />
+            <span className="text-gradient-thezar inline-block">
+              COMPETITION
+            </span>
+          </h1>
+
+          {/* 3. DECORATIVE GOLD LINE */}
+          <div
+            className="w-[80px] h-[2px] rounded-full"
+            style={{
+              backgroundColor: '#D4A72C',
+              boxShadow: '0 0 10px rgba(212, 167, 44, 0.35)',
+            }}
+          />
+
+          {/* 4. DESCRIPTION */}
+          <p
+            className="text-[15px] sm:text-[16px] lg:text-[18px] font-normal leading-[1.7] tracking-[-0.01em] max-w-[580px]"
+            style={{ color: 'rgba(255, 255, 255, 0.82)' }}
+          >
             Bringing students together across 38 districts through competition, creativity, innovation and unforgettable experiences.
           </p>
 
-          {/* Primary & Secondary Action Buttons (Both Rounded Pills) */}
+          {/* 5. CTA BUTTONS */}
           <div className="pt-1 flex flex-col sm:flex-row items-center gap-3.5 sm:gap-4 w-full sm:w-auto">
             {/* Primary Pill Button */}
             <button
               onClick={onOpenRegister}
-              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-7 sm:px-8 rounded-full text-[15px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer"
+              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-8 rounded-full text-[14px] sm:text-[15px] font-bold text-white uppercase tracking-[0.02em] flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/25"
               style={{
                 background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
-                boxShadow: '0 10px 25px rgba(37, 99, 235, 0.25)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'linear-gradient(135deg, #1D4ED8 0%, #0891B2 100%)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 12px 28px rgba(37, 99, 235, 0.32)';
+                e.currentTarget.style.boxShadow = '0 12px 28px rgba(37, 99, 235, 0.35)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)';
@@ -93,10 +105,10 @@ export default function Hero({ onOpenRegister }) {
             {/* Secondary Pill Button */}
             <a
               href="#events"
-              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-7 sm:px-8 rounded-full text-[15px] font-bold text-white uppercase tracking-wider flex items-center justify-center transition-all duration-200 cursor-pointer"
+              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-8 rounded-full text-[14px] sm:text-[15px] font-semibold text-white uppercase tracking-[0.02em] flex items-center justify-center transition-all duration-200 cursor-pointer"
               style={{
                 background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.55)',
+                border: '1px solid rgba(255, 255, 255, 0.50)',
                 backdropFilter: 'blur(8px)',
               }}
               onMouseEnter={(e) => {
@@ -106,7 +118,7 @@ export default function Hero({ onOpenRegister }) {
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.55)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.50)';
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
@@ -114,22 +126,22 @@ export default function Hero({ onOpenRegister }) {
             </a>
           </div>
 
-          {/* Live Event Indicator & Statistics */}
-          <div className="pt-3 space-y-4">
+          {/* 6. LIVE EVENT INFORMATION & 7. STATISTICS */}
+          <div className="pt-2 space-y-4">
             {/* Live Event Badge: Pill-shaped, subtle pulsing cyan dot */}
             <div>
               <div
-                className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-full text-slate-200 text-xs font-semibold backdrop-blur-md"
+                className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full backdrop-blur-md"
                 style={{
-                  background: 'rgba(7, 20, 38, 0.70)',
-                  border: '1px solid rgba(255, 255, 255, 0.30)',
+                  background: 'rgba(7, 20, 38, 0.75)',
+                  border: '1px solid rgba(34, 211, 238, 0.35)',
                 }}
               >
-                <span className="relative flex h-2 w-2">
+                <span className="relative flex h-2 w-2 shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22D3EE] opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22D3EE]"></span>
                 </span>
-                <span className="text-[11px] font-mono font-bold text-[#22D3EE] tracking-wider uppercase">
+                <span className="text-[11px] sm:text-[12px] font-bold text-[#22D3EE] tracking-[0.12em] uppercase">
                   TIRUNELVELI DISTRICT • ROUND 2 • LIVE
                 </span>
               </div>
@@ -139,37 +151,52 @@ export default function Hero({ onOpenRegister }) {
             <div className="pt-1 flex items-center gap-6 sm:gap-8">
               {/* Stat 1 */}
               <div>
-                <span className="text-xl sm:text-2xl font-black text-white font-mono block leading-none">
+                <span className="text-[22px] sm:text-[26px] font-extrabold text-white tracking-[-0.03em] block leading-none">
                   38
                 </span>
-                <span className="text-xs text-[#CBD5E1] font-medium block mt-1">
-                  Districts
+                <span
+                  className="text-[11px] sm:text-[12px] font-medium tracking-[0.05em] uppercase block mt-1.5"
+                  style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                >
+                  DISTRICTS
                 </span>
               </div>
 
               {/* Vertical Separator */}
-              <div className="h-8 w-px bg-white/25" />
+              <div
+                className="h-8 w-px"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.22)' }}
+              />
 
               {/* Stat 2 */}
               <div>
-                <span className="text-xl sm:text-2xl font-black text-white font-mono block leading-none">
+                <span className="text-[22px] sm:text-[26px] font-extrabold text-white tracking-[-0.03em] block leading-none">
                   100+
                 </span>
-                <span className="text-xs text-[#CBD5E1] font-medium block mt-1">
-                  Events
+                <span
+                  className="text-[11px] sm:text-[12px] font-medium tracking-[0.05em] uppercase block mt-1.5"
+                  style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                >
+                  EVENTS
                 </span>
               </div>
 
               {/* Vertical Separator */}
-              <div className="h-8 w-px bg-white/25" />
+              <div
+                className="h-8 w-px"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.22)' }}
+              />
 
               {/* Stat 3 */}
               <div>
-                <span className="text-xl sm:text-2xl font-black text-white font-mono block leading-none">
+                <span className="text-[22px] sm:text-[26px] font-extrabold text-white tracking-[-0.03em] block leading-none">
                   5000+
                 </span>
-                <span className="text-xs text-[#CBD5E1] font-medium block mt-1">
-                  Participants
+                <span
+                  className="text-[11px] sm:text-[12px] font-medium tracking-[0.05em] uppercase block mt-1.5"
+                  style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                >
+                  PARTICIPANTS
                 </span>
               </div>
             </div>

@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import aboutAudienceImg from '../../assets/about_audience.jpg';
-import { Play, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Play, ArrowRight, CheckCircle2 } from 'lucide-react';
 
-export default function AboutThezarSection({ onOpenRegister }) {
+export default function AboutTheZarSection({ onOpenRegister }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
     <section id="about-thezar" className="py-20 sm:py-28 bg-white text-slate-900 relative overflow-hidden">
       {/* 1. Oversized Faint Background Watermark Text: "ABOUT" */}
       <div
-        className="absolute top-6 left-6 sm:left-16 pointer-events-none select-none font-black tracking-tighter uppercase z-0 leading-none"
+        className="absolute top-6 left-6 sm:left-16 pointer-events-none select-none font-extrabold tracking-tighter uppercase z-0 leading-none"
         style={{
-          fontSize: 'clamp(90px, 16vw, 190px)',
-          color: 'rgba(15, 23, 42, 0.038)',
+          fontSize: 'clamp(120px, 16vw, 180px)',
+          color: 'rgba(15, 23, 42, 0.035)',
           fontFamily: "'Plus Jakarta Sans', sans-serif",
         }}
       >
@@ -23,43 +23,52 @@ export default function AboutThezarSection({ onOpenRegister }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Editorial Heading & Content */}
-          <div className="lg:col-span-6 text-left space-y-6">
+          <div className="lg:col-span-6 text-left space-y-5">
             
-            {/* Editorial Eyebrow */}
-            <div className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-bold text-blue-600 tracking-wider">
-              <span>[ About TheZar 2026 ]</span>
+            {/* Editorial Eyebrow with Small Gold Line */}
+            <div className="flex items-center gap-3">
+              <span className="text-[12px] font-bold text-[#2563EB] tracking-[0.18em] uppercase">
+                ABOUT THEZAR
+              </span>
+              <div
+                className="w-10 h-[2px] rounded-full"
+                style={{
+                  backgroundColor: '#D4A72C',
+                  boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                }}
+              />
             </div>
 
-            {/* Main Editorial Heading */}
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#071426] tracking-tight leading-[1.08] uppercase">
-              Where Talent <br />
-              <span className="text-blue-600 font-serif italic lowercase tracking-normal">meets</span> <br />
-              Opportunity
+            {/* Main Editorial Heading: 48-64px, weight 800, line-height 1.0 */}
+            <h2 className="text-[34px] sm:text-[46px] lg:text-[56px] font-extrabold text-[#071426] tracking-[-0.035em] leading-[1.0] uppercase">
+              WHERE TALENT <br />
+              <span className="text-[#2563EB] font-serif italic lowercase tracking-normal">meets</span> <br />
+              OPPORTUNITY
             </h2>
 
             {/* Editorial Description */}
-            <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed font-sans max-w-xl">
+            <p className="text-[#64748B] text-sm sm:text-base lg:text-[17px] font-normal leading-[1.7] tracking-[-0.01em] max-w-xl">
               TheZar brings students together across Tamil Nadu through district-level competitions, innovation, creativity and achievement. From hackathons to cultural spectacles, this is the definitive stage for collegiate champions.
             </p>
 
             {/* Feature Bullets */}
-            <div className="space-y-2.5 pt-1 text-sm text-slate-700 font-medium">
+            <div className="space-y-2.5 pt-1 text-sm text-[#334155] font-medium">
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-cyan-500 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#06B6D4] shrink-0" />
                 <span>38 District preliminary stages leading to Chennai Mega Finals</span>
               </div>
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-cyan-500 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#06B6D4] shrink-0" />
                 <span>₹40 Lakhs House Bumper + ₹25 Lakhs Cash Pool for winners</span>
               </div>
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-cyan-500 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#06B6D4] shrink-0" />
                 <span>Direct mentorship and networking with state industry leaders</span>
               </div>
             </div>
 
             {/* CTA Button */}
-            <div className="pt-3">
+            <div className="pt-3 flex flex-wrap items-center gap-4">
               <a
                 href="#events"
                 className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full border-2 border-[#071426] text-[#071426] hover:bg-[#071426] hover:text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm"
@@ -67,6 +76,15 @@ export default function AboutThezarSection({ onOpenRegister }) {
                 <span>KNOW MORE</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
+              {onOpenRegister && (
+                <button
+                  type="button"
+                  onClick={onOpenRegister}
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md shadow-blue-500/20 cursor-pointer"
+                >
+                  <span>REGISTER NOW</span>
+                </button>
+              )}
             </div>
 
           </div>

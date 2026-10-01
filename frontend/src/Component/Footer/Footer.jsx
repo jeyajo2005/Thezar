@@ -1,5 +1,4 @@
-import { Trophy, Mail, Phone, MapPin, Globe, ArrowUp, MessageSquare } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Trophy, Mail, Phone, MapPin, ArrowUp, MessageSquare } from 'lucide-react';
 
 export default function Footer({ onOpenRegister }) {
   const scrollToTop = () => {

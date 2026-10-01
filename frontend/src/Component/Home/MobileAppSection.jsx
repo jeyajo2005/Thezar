@@ -1,5 +1,5 @@
 import { QRCodeSVG } from 'qrcode.react';
-import { Smartphone, QrCode, Bell, Trophy, Bot, Calendar, Download, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Bell, Download, CheckCircle2 } from 'lucide-react';
 
 export default function MobileAppSection() {
   const appFeatures = [
@@ -76,18 +76,27 @@ export default function MobileAppSection() {
           {/* Right Column: Content */}
           <div className="lg:col-span-7 text-left space-y-6">
             
-            <div className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-bold text-cyan-400 tracking-wider">
-              <span>[ Official Companion App ]</span>
+            <div className="flex items-center gap-3">
+              <span className="text-[12px] font-bold text-[#06B6D4] tracking-[0.18em] uppercase">
+                OFFICIAL MOBILE APP
+              </span>
+              <div
+                className="w-10 h-[2px] rounded-full"
+                style={{
+                  backgroundColor: '#D4A72C',
+                  boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                }}
+              />
             </div>
 
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08] uppercase">
-              Your TheZar Journey <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-sky-300">
-                In Your Pocket.
+            <h2 className="text-[32px] sm:text-[46px] lg:text-[54px] font-extrabold text-white tracking-[-0.035em] leading-[1.05] uppercase">
+              YOUR THEZAR JOURNEY <br />
+              <span className="text-gradient-thezar">
+                IN YOUR POCKET.
               </span>
             </h2>
 
-            <p className="text-slate-300 text-sm sm:text-base lg:text-lg leading-relaxed max-w-xl font-sans">
+            <p className="text-[#CBD5E1] text-sm sm:text-base lg:text-[17px] leading-[1.7] max-w-xl font-normal">
               Download the official TheZar mobile application for Android and iOS. Generate your QR candidate pass, track live stage schedules, receive real-time scores, and consult the AI Event Assistant.
             </p>
 
@@ -95,7 +104,7 @@ export default function MobileAppSection() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
               {appFeatures.map((feat) => (
                 <div key={feat.title} className="flex items-start gap-3 bg-white/5 p-3.5 rounded-xl border border-white/10">
-                  <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#06B6D4] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="text-xs sm:text-sm font-bold text-white">{feat.title}</h4>
                     <p className="text-[11px] text-slate-400 mt-0.5">{feat.desc}</p>
@@ -108,13 +117,13 @@ export default function MobileAppSection() {
             <div className="pt-4 flex flex-wrap items-center gap-4">
               <a
                 href="#download"
-                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-700 hover:to-cyan-500 text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-blue-600/30 hover:scale-105 transition-all flex items-center gap-2"
+                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-700 hover:to-cyan-500 text-white font-bold text-[13px] sm:text-[14px] uppercase tracking-[0.02em] shadow-xl shadow-blue-600/30 hover:scale-105 transition-all flex items-center gap-2"
               >
                 <Download className="w-4 h-4" />
                 <span>DOWNLOAD THE APP</span>
               </a>
 
-              <span className="text-xs font-mono text-slate-400">
+              <span className="text-xs text-slate-400 font-medium">
                 Available on iOS App Store & Android APK
               </span>
             </div>

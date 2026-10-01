@@ -1,6 +1,6 @@
-import { LayoutDashboard, Users, Calendar, MapPin, Radio, CheckCircle2, Search, Bell, Settings, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { LayoutDashboard, Users, Calendar, MapPin, Radio, Search, Bell } from 'lucide-react';
 
-export default function AdminTeaserSection({ onOpenRegister }) {
+export default function AdminTeaserSection() {
   const recentRegistrations = [
     { name: "Arun Kumar", district: "Tirunelveli", event: "Quiz", status: "Registered", time: "2 mins ago" },
     { name: "Priya S", district: "Madurai", event: "Innovation", status: "Registered", time: "10 mins ago" },
@@ -14,13 +14,22 @@ export default function AdminTeaserSection({ onOpenRegister }) {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
-          <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
-            [ SECTION 5: ADMIN CONTROL PANEL CONCEPT ]
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Centralized <span className="gradient-gold">Admin Management</span>
+          <div className="flex items-center justify-center gap-3">
+            <span className="text-[12px] font-bold text-amber-400 tracking-[0.18em] uppercase">
+              ADMIN CONTROL SYSTEM
+            </span>
+            <div
+              className="w-10 h-[2px] rounded-full"
+              style={{
+                backgroundColor: '#D4A72C',
+                boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+              }}
+            />
+          </div>
+          <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-white tracking-[-0.035em] uppercase leading-[1.05]">
+            CENTRALIZED <span className="text-gradient-gold">ADMIN MANAGEMENT</span>
           </h2>
-          <p className="text-slate-400 text-sm">
+          <p className="text-slate-400 text-sm sm:text-base font-normal leading-relaxed">
             Control center for state officials and district convenors to manage 38 district events, candidate passes, competition results, and live broadcasts.
           </p>
         </div>

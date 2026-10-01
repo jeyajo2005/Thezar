@@ -1,11 +1,11 @@
-import { ShieldCheck, ArrowRight, Award, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Award, CheckCircle2 } from 'lucide-react';
 
 export default function GrandPrizeBanner({ onOpenRegister }) {
   return (
     <section className="py-12 bg-slate-50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Dark Indigo Rounded Container matching TRAVELIA Banner */}
+        {/* Dark Indigo Rounded Container */}
         <div className="bg-[#0b0e26] rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden shadow-2xl border border-indigo-900/50">
           
           {/* Decorative Subtle Background Pattern */}
@@ -17,17 +17,17 @@ export default function GrandPrizeBanner({ onOpenRegister }) {
             <div className="lg:col-span-8 text-left space-y-5">
               
               {/* Yellow Badge Tag */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black tracking-wider uppercase shadow-md">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-[11px] font-bold tracking-[0.15em] uppercase shadow-md">
                 <Award className="w-3.5 h-3.5" />
                 <span>GRAND BUMPER ANNOUNCEMENT</span>
               </div>
 
               {/* Title */}
-              <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+              <h2 className="text-[28px] sm:text-[40px] lg:text-[48px] font-extrabold text-white tracking-[-0.035em] leading-tight">
                 Win <span className="text-amber-400 font-serif italic">₹40 Lakhs House Free</span> on Statewide Finale!
               </h2>
 
-              <p className="text-slate-300 text-xs sm:text-sm max-w-xl font-mono leading-relaxed opacity-90">
+              <p className="text-slate-300 text-sm sm:text-base max-w-xl font-normal leading-relaxed opacity-90">
                 The #1 Grand Champion of Tamil Nadu receives a 100% Free Villa + ₹25L Cash Pool at Chennai Main Auditorium. Registrations ending soon!
               </p>
 

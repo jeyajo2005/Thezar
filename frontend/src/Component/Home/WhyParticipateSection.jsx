@@ -1,23 +1,32 @@
 import { Star } from 'lucide-react';
 import trophyImg from '../../assets/event_trophy.jpg';
 
-export default function WhyParticipateSection({ onOpenRegister }) {
+export default function WhyParticipateSection() {
   return (
     <section className="py-20 bg-slate-50 text-slate-900 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Testimonial & Social Proof matching TRAVELIA Section 6 */}
+          {/* Left Column: Testimonial & Social Proof */}
           <div className="lg:col-span-6 text-left space-y-6">
             
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-600 text-xs font-black font-mono tracking-wider uppercase">
-              <span>TRUSTED BY CANDIDATES</span>
+            <div className="flex items-center gap-3">
+              <span className="text-[12px] font-bold text-[#2563EB] tracking-[0.18em] uppercase">
+                TESTIMONIALS & IMPACT
+              </span>
+              <div
+                className="w-10 h-[2px] rounded-full"
+                style={{
+                  backgroundColor: '#D4A72C',
+                  boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                }}
+              />
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-              Loved by thousands of{' '}
-              <span className="font-serif italic text-indigo-600 underline decoration-cyan-400 decoration-wavy decoration-2">
+            <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
+              LOVED BY THOUSANDS OF{' '}
+              <span className="text-[#2563EB] font-serif italic lowercase tracking-normal">
                 competitors
               </span>
             </h2>
