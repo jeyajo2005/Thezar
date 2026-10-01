@@ -1,65 +1,109 @@
-import { Gift, ShieldCheck, Rocket, Award, Users, CheckCircle2 } from 'lucide-react';
+import { Star } from 'lucide-react';
+import trophyImg from '../../assets/event_trophy.jpg';
 
 export default function WhyParticipateSection({ onOpenRegister }) {
-  const benefits = [
-    {
-      icon: Gift,
-      title: '₹25,00,000 Grand Prize Pool',
-      desc: 'Cash awards distributed for district winners and state finalists across all 4 competition tracks.'
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Government & University Certificate',
-      desc: 'Official certificate of achievement recognized by universities and top recruiters nationwide.'
-    },
-    {
-      icon: Rocket,
-      title: 'Startup Incubation Grants',
-      desc: 'Top projects in the AI & Innovation Expo receive direct mentorship and seed fund connections.'
-    },
-    {
-      icon: Users,
-      title: 'Network with 5,000+ Peers',
-      desc: 'Connect with collegiate leaders, engineering minds, and artists from all 38 districts.'
-    }
-  ];
-
   return (
-    <section className="py-20 bg-slate-900 relative">
+    <section className="py-20 bg-slate-50 text-slate-900 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">
-            09 • CANDIDATE ADVANTAGES
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Why Participate in <span className="gradient-text">THEZAR 2026?</span>
-          </h2>
-          <p className="text-slate-400 text-sm">
-            Elevate your resume, gain state-level prestige, and showcase your talent on Tamil Nadu's biggest stage.
-          </p>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left Column: Testimonial & Social Proof matching TRAVELIA Section 6 */}
+          <div className="lg:col-span-6 text-left space-y-6">
+            
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-600 text-xs font-black font-mono tracking-wider uppercase">
+              <span>TRUSTED BY CANDIDATES</span>
+            </div>
 
-        {/* Benefits Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {benefits.map((b, idx) => {
-            const IconC = b.icon;
-            return (
-              <div
-                key={idx}
-                className="glass-card rounded-3xl p-8 border border-slate-800 hover:border-slate-700 transition-all text-left flex items-start gap-5 group"
-              >
-                <div className="p-4 rounded-2xl bg-gradient-to-tr from-rose-600 to-amber-500 text-white shrink-0 shadow-lg group-hover:scale-105 transition-transform">
-                  <IconC className="w-6 h-6" />
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+              Loved by thousands of{' '}
+              <span className="font-serif italic text-indigo-600 underline decoration-cyan-400 decoration-wavy decoration-2">
+                competitors
+              </span>
+            </h2>
+
+            {/* Testimonial Quote Card */}
+            <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xl space-y-4 relative">
+              <span className="text-5xl font-serif text-indigo-400 leading-none">“</span>
+              <p className="text-slate-600 text-sm italic font-serif leading-relaxed">
+                THEZAR transformed our collegiate team. Competing at Tirunelveli Round 2 and making it to the Chennai Grand Finale opened direct career opportunities and provided statewide recognition.
+              </p>
+              
+              <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                <div className="flex items-center gap-3">
+                  <img
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
+                    alt="Olivia Martinez"
+                    className="w-10 h-10 rounded-full object-cover border border-slate-200"
+                  />
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-900">Suman R.</h4>
+                    <p className="text-[10px] text-slate-400 font-mono">Tirunelveli District Finalist</p>
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  <h3 className="text-xl font-black text-white">{b.title}</h3>
-                  <p className="text-xs text-slate-300 leading-relaxed">{b.desc}</p>
+
+                <div className="flex items-center gap-1 text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                  ))}
                 </div>
               </div>
-            );
-          })}
+            </div>
+
+            {/* Avatar Stack Counter */}
+            <div className="flex items-center gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-fit">
+              <div className="flex -space-x-2">
+                <img className="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Avatar" />
+                <img className="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Avatar" />
+                <img className="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Avatar" />
+              </div>
+              <div className="text-left font-mono">
+                <p className="text-xs font-black text-slate-900">50,000+ Candidates</p>
+                <p className="text-[10px] text-slate-500">Registered across 38 Districts</p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Column: Hero Visual + 3 Stat Counters matching TRAVELIA Section 6 */}
+          <div className="lg:col-span-6 relative flex flex-col items-center">
+            
+            <div className="relative w-full rounded-3xl overflow-hidden shadow-2xl min-h-[380px] flex flex-col justify-between p-8 border border-slate-200">
+              <img
+                src={trophyImg}
+                alt="Championship Podium"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+
+              <div className="relative z-10 text-left">
+                <span className="bg-indigo-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                  STATISTICS & OUTREACH
+                </span>
+              </div>
+
+              {/* 3 Stat Counter Box Grid */}
+              <div className="relative z-10 grid grid-cols-3 gap-3 pt-8">
+                <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl text-center border border-white shadow-lg">
+                  <p className="text-xl sm:text-2xl font-black text-indigo-600 font-mono">120+</p>
+                  <p className="text-[10px] text-slate-600 font-bold uppercase tracking-wider mt-0.5">Colleges</p>
+                </div>
+
+                <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl text-center border border-white shadow-lg">
+                  <p className="text-xl sm:text-2xl font-black text-purple-600 font-mono">50K+</p>
+                  <p className="text-[10px] text-slate-600 font-bold uppercase tracking-wider mt-0.5">Participants</p>
+                </div>
+
+                <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl text-center border border-white shadow-lg">
+                  <p className="text-xl sm:text-2xl font-black text-amber-500 font-mono">4.9/5</p>
+                  <p className="text-[10px] text-slate-600 font-bold uppercase tracking-wider mt-0.5">Avg Rating</p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
       </div>

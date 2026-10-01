@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Clock, Calendar, Trophy, Flame } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 
 export default function CountdownSection({ onOpenRegister }) {
   // Target date: October 10, 2026 (Tirunelveli District Round)
   const targetDate = new Date('2026-10-10T10:00:00').getTime();
 
   const [timeLeft, setTimeLeft] = useState({
-    days: '00',
-    hours: '00',
-    minutes: '00',
-    seconds: '00'
+    days: '08',
+    hours: '21',
+    minutes: '42',
+    seconds: '12'
   });
 
   useEffect(() => {
@@ -29,8 +29,6 @@ export default function CountdownSection({ onOpenRegister }) {
           minutes: String(minutes).padStart(2, '0'),
           seconds: String(seconds).padStart(2, '0')
         });
-      } else {
-        setTimeLeft({ days: '00', hours: '00', minutes: '00', seconds: '00' });
       }
     }, 1000);
 
@@ -38,108 +36,88 @@ export default function CountdownSection({ onOpenRegister }) {
   }, [targetDate]);
 
   return (
-    <section className="py-12 bg-slate-900 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Main Floating Countdown Container inspired by Image 1 */}
-        <div className="relative rounded-3xl bg-slate-950 border border-slate-800 p-8 sm:p-12 shadow-2xl overflow-hidden">
+    <div className="relative z-30 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-14 sm:-mt-16 -mb-12 sm:-mb-14">
+      {/* Floating White Card Overlapping Sections */}
+      <div
+        className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-slate-100 transition-all duration-300"
+        style={{
+          boxShadow: '0 25px 60px -15px rgba(15, 23, 42, 0.12), 0 10px 25px -10px rgba(15, 23, 42, 0.06)',
+        }}
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Subtle Accent Radial Gradient */}
-          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none"></div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+          {/* Left Column: Heading */}
+          <div className="lg:col-span-5 text-left space-y-1.5">
+            <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-blue-600 uppercase tracking-wider">
+              <Calendar className="w-3.5 h-3.5" />
+              <span>NEXT DISTRICT STAGE</span>
+            </div>
             
-            {/* Left Headline */}
-            <div className="lg:col-span-4 text-left space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 text-rose-400 text-xs font-mono font-bold">
-                <Flame className="w-4 h-4 text-rose-500 animate-bounce" />
-                <span>[ NEXT DISTRICT STAGE ROUND ]</span>
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#071426] tracking-tight leading-tight">
+              Count <span className="text-blue-600 font-extrabold">Every Second</span> <br className="hidden sm:block" />
+              Until the Event
+            </h3>
+            
+            <p className="text-xs text-slate-500 font-medium">
+              October 10, 2026 • Tirunelveli Main Convention Hall
+            </p>
+          </div>
+
+          {/* Right Column: Numbers Layout (Matching Reference Screenshot) */}
+          <div className="lg:col-span-7">
+            <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-6 md:gap-8 font-mono">
+              
+              {/* Days */}
+              <div className="text-center min-w-[55px] sm:min-w-[80px]">
+                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#071426] tracking-tight block">
+                  {timeLeft.days}
+                </span>
+                <p className="text-[11px] sm:text-xs font-bold text-cyan-600 uppercase tracking-widest mt-1 font-mono">
+                  [Days]
+                </p>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                Count <span className="text-rose-500">Every Second</span> Until the Event
-              </h2>
-              <p className="text-slate-400 text-sm">
-                Tirunelveli District Round 2 Starts Soon. Prepare your team & lock your participant seat.
-              </p>
-            </div>
 
-            {/* Middle Countdown Timer Box (Reference Image 1 Layout) */}
-            <div className="lg:col-span-8">
-              <div className="bg-slate-900/90 rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-inner">
-                <div className="grid grid-cols-4 gap-2 sm:gap-6 text-center">
-                  
-                  {/* Days */}
-                  <div className="flex flex-col items-center">
-                    <div className="w-full py-4 sm:py-6 bg-slate-950 rounded-xl border border-slate-800 shadow-lg">
-                      <span className="text-3xl sm:text-5xl md:text-6xl font-black text-white font-mono tracking-wider">
-                        {timeLeft.days}
-                      </span>
-                    </div>
-                    <span className="mt-3 text-xs sm:text-sm font-mono text-rose-400 font-bold tracking-widest uppercase">
-                      [Days]
-                    </span>
-                  </div>
+              <span className="text-2xl sm:text-4xl font-light text-slate-300 select-none pb-4">:</span>
 
-                  {/* Hours */}
-                  <div className="flex flex-col items-center">
-                    <div className="w-full py-4 sm:py-6 bg-slate-950 rounded-xl border border-slate-800 shadow-lg">
-                      <span className="text-3xl sm:text-5xl md:text-6xl font-black text-rose-500 font-mono tracking-wider">
-                        {timeLeft.hours}
-                      </span>
-                    </div>
-                    <span className="mt-3 text-xs sm:text-sm font-mono text-rose-400 font-bold tracking-widest uppercase">
-                      [Hours]
-                    </span>
-                  </div>
-
-                  {/* Minutes */}
-                  <div className="flex flex-col items-center">
-                    <div className="w-full py-4 sm:py-6 bg-slate-950 rounded-xl border border-slate-800 shadow-lg">
-                      <span className="text-3xl sm:text-5xl md:text-6xl font-black text-amber-400 font-mono tracking-wider">
-                        {timeLeft.minutes}
-                      </span>
-                    </div>
-                    <span className="mt-3 text-xs sm:text-sm font-mono text-rose-400 font-bold tracking-widest uppercase">
-                      [Minutes]
-                    </span>
-                  </div>
-
-                  {/* Seconds */}
-                  <div className="flex flex-col items-center">
-                    <div className="w-full py-4 sm:py-6 bg-slate-950 rounded-xl border border-slate-800 shadow-lg">
-                      <span className="text-3xl sm:text-5xl md:text-6xl font-black text-pink-400 font-mono tracking-wider">
-                        {timeLeft.seconds}
-                      </span>
-                    </div>
-                    <span className="mt-3 text-xs sm:text-sm font-mono text-rose-400 font-bold tracking-widest uppercase">
-                      [Seconds]
-                    </span>
-                  </div>
-
-                </div>
-
-                {/* Sub CTA inside Countdown Banner */}
-                <div className="mt-6 pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center gap-2 text-xs text-slate-400">
-                    <Calendar className="w-4 h-4 text-amber-400" />
-                    <span>Venue: ABC College Auditorium, Tirunelveli</span>
-                  </div>
-                  <button
-                    onClick={onOpenRegister}
-                    className="px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs tracking-wider uppercase transition-colors border border-rose-400/30 shadow-md"
-                  >
-                    Lock Registration Pass
-                  </button>
-                </div>
-
+              {/* Hours */}
+              <div className="text-center min-w-[55px] sm:min-w-[80px]">
+                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#071426] tracking-tight block">
+                  {timeLeft.hours}
+                </span>
+                <p className="text-[11px] sm:text-xs font-bold text-cyan-600 uppercase tracking-widest mt-1 font-mono">
+                  [Hours]
+                </p>
               </div>
-            </div>
 
+              <span className="text-2xl sm:text-4xl font-light text-slate-300 select-none pb-4">:</span>
+
+              {/* Minutes */}
+              <div className="text-center min-w-[55px] sm:min-w-[80px]">
+                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#071426] tracking-tight block">
+                  {timeLeft.minutes}
+                </span>
+                <p className="text-[11px] sm:text-xs font-bold text-cyan-600 uppercase tracking-widest mt-1 font-mono">
+                  [Minutes]
+                </p>
+              </div>
+
+              <span className="text-2xl sm:text-4xl font-light text-slate-300 select-none pb-4">:</span>
+
+              {/* Seconds */}
+              <div className="text-center min-w-[55px] sm:min-w-[80px]">
+                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-blue-600 tracking-tight block">
+                  {timeLeft.seconds}
+                </span>
+                <p className="text-[11px] sm:text-xs font-bold text-blue-600 uppercase tracking-widest mt-1 font-mono">
+                  [Seconds]
+                </p>
+              </div>
+
+            </div>
           </div>
 
         </div>
-
       </div>
-    </section>
+    </div>
   );
 }

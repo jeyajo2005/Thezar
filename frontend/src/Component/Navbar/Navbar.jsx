@@ -1,124 +1,217 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Trophy, Menu, X, Search, UserCheck } from 'lucide-react';
+import { Menu, X, Search, Heart, ArrowRight } from 'lucide-react';
+import thezarLogo from '../../assets/thezar_logo.png';
 
 export default function Navbar({ onOpenRegister }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 15);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const navLinks = [
-    { name: 'HOME', path: '/' },
-    { name: 'EVENTS', path: '/events' },
-    { name: 'ABOUT', path: '/about' },
-    { name: 'CONTACT', path: '/contact' },
+    { name: 'Home', path: '/' },
+    { name: 'Events', path: '/events' },
+    { name: 'Districts', path: '/districts' },
+    { name: 'About TheZar', path: '/about' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0b0d17]/90 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+    <header
+      className={`sticky top-0 left-0 right-0 z-50 bg-white transition-all duration-200 ${
+        scrolled ? 'shadow-[0_2px_12px_rgba(15,23,42,0.06)]' : 'shadow-[0_2px_12px_rgba(15,23,42,0.04)]'
+      }`}
+      style={{
+        backgroundColor: '#FFFFFF',
+        borderBottom: '1px solid #F1F5F9',
+      }}
+    >
+      <div className="max-w-[1320px] mx-auto px-6">
+        <div className="flex items-center justify-between h-[62px] md:h-[68px] min-h-[62px] md:min-h-[68px]">
           
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-lg bg-royal-blue flex items-center justify-center text-white shadow-lg">
-              <Trophy className="w-5 h-5 text-white" />
-            </div>
-            <div className="text-left">
-              <span className="text-xl sm:text-2xl font-black tracking-wider text-white font-sans uppercase">
-                THEZAR <span className="text-blue-500">2026</span>
-              </span>
-              <p className="text-[10px] text-slate-400 hidden sm:block font-mono tracking-widest uppercase">
-                38 DISTRICTS • TAMIL NADU
-              </p>
-            </div>
+          {/* 1. Official TheZar Logo */}
+          <Link
+            to="/"
+            className="flex items-center shrink-0 no-underline hover:no-underline nav-link-clean"
+            style={{ textDecoration: 'none' }}
+          >
+            <img
+              src={thezarLogo}
+              alt="TheZar Events 2026"
+              className="h-11 sm:h-12 w-auto object-contain rounded-full hover:scale-105 transition-transform duration-200"
+            />
           </Link>
 
-          {/* Nav Links Matching Reference Image Navbar */}
-          <nav className="hidden md:flex items-center gap-2">
+          {/* 2. Centered Navigation for Desktop */}
+          <nav className="hidden md:flex items-center gap-7 lg:gap-8">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
+              const isCurrent =
+                location.pathname === link.path ||
+                (link.path === '/' && (location.pathname === '/' || location.pathname === ''));
+
               return (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`px-4 py-2 text-xs font-black tracking-widest transition-all ${
-                    isActive
-                      ? 'bg-royal-blue text-white rounded'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5 rounded'
+                  className={`nav-link-clean text-[14px] font-semibold tracking-[-0.01em] relative transition-colors duration-200 no-underline hover:no-underline group ${
+                    isCurrent
+                      ? 'text-[#2563EB] bg-[#EFF6FF] px-3.5 py-1.5 rounded-full font-bold'
+                      : 'text-[#334155] hover:text-[#2563EB] py-1'
                   }`}
+                  style={{
+                    textDecoration: 'none',
+                    color: isCurrent ? '#2563EB' : undefined,
+                  }}
                 >
-                  {link.name}
+                  <span>{link.name}</span>
+                  
+                  {/* Custom Animated Gradient Underline (Active on hover only, never on initial load or active pill) */}
+                  {!isCurrent && (
+                    <span
+                      className="absolute bottom-[-5px] left-0 w-0 h-[2px] rounded-full transition-all duration-250 ease-out group-hover:w-full pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(90deg, #2563EB, #06B6D4)',
+                      }}
+                    />
+                  )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right Action Icons & Register Button */}
-          <div className="hidden lg:flex items-center gap-4 text-xs font-bold text-white">
-            <button className="p-2 text-slate-300 hover:text-white transition-colors" aria-label="Search">
+          {/* 3. Actions: Circular Search, Circular Wishlist, Divider, and Rounded Pill Register */}
+          <div className="hidden md:flex items-center gap-3 shrink-0">
+            {/* Search Circular Button */}
+            <button
+              className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#EFF6FF] hover:border-[#BFDBFE] hover:text-[#2563EB] hover:-translate-y-px transition-all duration-200 cursor-pointer"
+              aria-label="Search"
+              style={{
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+              }}
+            >
               <Search className="w-4 h-4" />
             </button>
-            <span className="text-slate-600">|</span>
+
+            {/* Wishlist / Heart Circular Button */}
+            <button
+              className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#FFF7F9] hover:border-[#F9A8D4] hover:text-[#E94B75] hover:-translate-y-px transition-all duration-200 cursor-pointer"
+              aria-label="Wishlist"
+              style={{
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+              }}
+            >
+              <Heart className="w-4 h-4" />
+            </button>
+
+            {/* Subtle Vertical Divider */}
+            <span
+              className="w-[1px] h-6 bg-[#E2E8F0] mx-1"
+              style={{
+                width: '1px',
+                height: '24px',
+                backgroundColor: '#E2E8F0',
+              }}
+            />
+
+            {/* Primary Pill Button: Register Now */}
             <button
               onClick={onOpenRegister}
-              className="px-5 py-2 text-xs font-black tracking-wider text-white btn-royal-blue uppercase shadow-lg hover:bg-blue-600 transition-colors"
+              className="h-[44px] px-[22px] rounded-full text-[14px] font-bold text-white uppercase tracking-wider flex items-center gap-2 group transition-all duration-250 cursor-pointer"
+              style={{
+                borderRadius: '9999px',
+                height: '44px',
+                padding: '0 22px',
+                background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
+                boxShadow: '0 8px 20px rgba(37, 99, 235, 0.20)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #1D4ED8 0%, #0891B2 100%)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 12px 25px rgba(37, 99, 235, 0.28)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(37, 99, 235, 0.20)';
+              }}
             >
-              REGISTER NOW
+              <span>REGISTER NOW</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
             </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex lg:hidden items-center gap-2">
+          {/* Mobile Menu Toggle & Compact CTA */}
+          <div className="flex md:hidden items-center gap-2">
             <button
               onClick={onOpenRegister}
-              className="sm:hidden px-3 py-1.5 rounded text-xs font-black text-white bg-royal-blue uppercase"
+              className="h-9 px-4 rounded-full text-xs font-bold text-white uppercase tracking-wider shadow-sm cursor-pointer"
+              style={{
+                borderRadius: '9999px',
+                background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
+              }}
             >
               REGISTER
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded text-slate-400 hover:text-white hover:bg-white/10"
+              className="w-10 h-10 rounded-full text-[#334155] hover:text-[#071426] bg-[#F8FAFC] hover:bg-[#EFF6FF] border border-[#E2E8F0] flex items-center justify-center transition-colors cursor-pointer"
               aria-label="Toggle Menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0b0d17] border-b border-white/10 px-4 pt-3 pb-6 space-y-2 text-left">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block w-full text-left px-4 py-3 rounded text-xs font-black tracking-widest ${
-                location.pathname === link.path
-                  ? 'bg-royal-blue text-white'
-                  : 'text-slate-300 hover:bg-white/5 hover:text-white'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <div className="pt-3 border-t border-white/10">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenRegister();
+              style={{
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
               }}
-              className="w-full py-3 rounded font-black text-white bg-royal-blue flex items-center justify-center gap-2 text-xs uppercase tracking-widest"
             >
-              <UserCheck className="w-4 h-4" />
-              <span>REGISTER CANDIDATE PASS</span>
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
-      )}
 
+        {/* Mobile Dropdown Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden pb-4 pt-2 border-t border-slate-200 space-y-1 text-left animate-in fade-in slide-in-from-top-2 duration-200">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-2.5 rounded-full text-[14px] font-semibold text-[#334155] hover:text-[#2563EB] hover:bg-[#EFF6FF] transition-colors no-underline hover:no-underline nav-link-clean"
+                style={{ textDecoration: 'none' }}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <div className="pt-2 px-1">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenRegister();
+                }}
+                className="w-full h-11 rounded-full font-bold text-white flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-md"
+                style={{
+                  borderRadius: '9999px',
+                  background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
+                }}
+              >
+                <span>REGISTER CANDIDATE PASS</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

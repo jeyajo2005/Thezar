@@ -1,181 +1,198 @@
-import { useState, useEffect } from 'react';
 import heroSpeakerImg from '../../assets/hero_speaker.jpg';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Trophy } from 'lucide-react';
 
 export default function Hero({ onOpenRegister }) {
-  // Target date: October 10, 2026 (Tirunelveli District Round)
-  const targetDate = new Date('2026-10-10T10:00:00').getTime();
-
-  const [timeLeft, setTimeLeft] = useState({
-    months: '00',
-    days: '24',
-    hours: '14',
-    minutes: '55',
-    seconds: '44'
-  });
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      if (difference > 0) {
-        const daysTotal = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const months = Math.floor(daysTotal / 30);
-        const days = daysTotal % 30;
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        setTimeLeft({
-          months: String(months).padStart(2, '0'),
-          days: String(days).padStart(2, '0'),
-          hours: String(hours).padStart(2, '0'),
-          minutes: String(minutes).padStart(2, '0'),
-          seconds: String(seconds).padStart(2, '0')
-        });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [targetDate]);
-
   return (
-    <section id="home" className="relative bg-convention-dark min-h-[620px] lg:min-h-[680px] flex flex-col justify-between overflow-hidden">
-      
-      {/* Main Hero Container matching Reference Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 w-full flex-1 flex items-center relative z-10">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+    <section
+      id="home"
+      className="relative flex flex-col justify-between overflow-hidden min-h-[620px] md:min-h-[660px] lg:min-h-[700px] bg-[#071426]"
+      style={{
+        fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+      }}
+    >
+      {/* 1. Cinematic Background Image: Keynote Speaker & Atmosphere */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <img
+          src={heroSpeakerImg}
+          alt="THEZAR 2026 Keynote Stage Atmosphere"
+          className="w-full h-full object-cover object-[78%_25%] sm:object-[center_20%] lg:object-[75%_22%]"
+        />
+
+        {/* 2. Directional Navy Overlay: Dark on left for text readability, clear on right */}
+        {/* Mobile vertical gradient */}
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none md:hidden"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(7, 20, 38, 0.88) 0%, rgba(7, 20, 38, 0.65) 55%, rgba(7, 20, 38, 0.90) 100%)',
+          }}
+        />
+        {/* Desktop directional overlay */}
+        <div
+          className="hidden md:block absolute inset-0 z-[1] pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(90deg, rgba(7, 20, 38, 0.85) 0%, rgba(7, 20, 38, 0.65) 38%, rgba(7, 20, 38, 0.25) 70%, rgba(7, 20, 38, 0.05) 100%)',
+          }}
+        />
+
+        {/* 3. Subtle ambient glow accents */}
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+      </div>
+
+      {/* Main Hero Content Area: Occupies ~45-50% width on left */}
+      <div className="relative z-10 max-w-[1320px] mx-auto px-6 pt-12 sm:pt-16 lg:pt-20 pb-24 sm:pb-32 lg:pb-36 w-full flex-1 flex items-center">
+        <div className="max-w-2xl text-left space-y-6">
           
-          {/* Left Column: Big Bold Headline & Buttons */}
-          <div className="lg:col-span-7 text-left space-y-6">
+          {/* Eyebrow & Bold Heading */}
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-cyan-300 text-xs font-mono font-extrabold tracking-[0.2em] uppercase">
+              <Trophy className="w-3.5 h-3.5 text-amber-400" />
+              <span>THEZAR 2026 • TAMIL NADU</span>
+            </div>
             
-            <div className="space-y-1 font-sans">
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight uppercase leading-none">
-                THE NUMBER ONE
-              </h1>
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight uppercase leading-none">
+            <h1 className="text-4xl sm:text-6xl lg:text-[72px] font-black text-white tracking-[-0.04em] uppercase leading-[0.96]">
+              THE GRAND <br />
+              COLLEGIATE <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-sky-300 filter drop-shadow">
                 COMPETITION
-              </h1>
-            </div>
-
-            <p className="text-slate-300 text-sm sm:text-base max-w-lg leading-relaxed font-mono">
-              Multi-format collegiate stage across 38 districts of Tamil Nadu. 1st Prize Bumper: ₹40 Lakhs House Free + ₹25L Cash Pool.
-            </p>
-
-            {/* Dual Rectangular Buttons matching Reference Image */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              <a
-                href="#events"
-                className="px-8 py-3.5 text-xs font-black uppercase tracking-widest btn-white-solid shadow-xl transition-transform hover:scale-105"
-              >
-                VIEW MORE
-              </a>
-
-              <button
-                onClick={onOpenRegister}
-                className="px-8 py-3.5 text-xs font-black uppercase tracking-widest btn-outline-glass shadow-xl transition-all"
-              >
-                REGISTER
-              </button>
-            </div>
-
+              </span>
+            </h1>
           </div>
 
-          {/* Right Column: Keynote Speaker Photo Visual matching Reference Image */}
-          <div className="lg:col-span-5 relative flex justify-center">
-            
-            <div className="relative w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
-              <img
-                src={heroSpeakerImg}
-                alt="THEZAR Keynote Speaker"
-                className="w-full h-[380px] sm:h-[440px] object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0b0d17] via-transparent to-transparent opacity-60"></div>
-              
-              <div className="absolute bottom-4 left-4 right-4 text-left">
-                <span className="bg-royal-blue text-white text-[10px] font-black px-2.5 py-1 rounded tracking-widest uppercase">
-                  TIRUNELVELI ROUND 2 • LIVE
+          {/* Description: Modern sans-serif, clean and legible */}
+          <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-sans font-medium">
+            Bringing students together across 38 districts through competition, creativity, innovation and unforgettable experiences.
+          </p>
+
+          {/* Primary & Secondary Action Buttons (Both Rounded Pills) */}
+          <div className="pt-1 flex flex-col sm:flex-row items-center gap-3.5 sm:gap-4 w-full sm:w-auto">
+            {/* Primary Pill Button */}
+            <button
+              onClick={onOpenRegister}
+              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-7 sm:px-8 rounded-full text-[15px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer"
+              style={{
+                background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
+                boxShadow: '0 10px 25px rgba(37, 99, 235, 0.25)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #1D4ED8 0%, #0891B2 100%)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 12px 28px rgba(37, 99, 235, 0.32)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 10px 25px rgba(37, 99, 235, 0.25)';
+              }}
+            >
+              <span>REGISTER NOW</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
+            </button>
+
+            {/* Secondary Pill Button */}
+            <a
+              href="#events"
+              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-7 sm:px-8 rounded-full text-[15px] font-bold text-white uppercase tracking-wider flex items-center justify-center transition-all duration-200 cursor-pointer"
+              style={{
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.55)',
+                backdropFilter: 'blur(8px)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.16)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.80)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.55)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              EXPLORE EVENTS
+            </a>
+          </div>
+
+          {/* Live Event Indicator & Statistics */}
+          <div className="pt-3 space-y-4">
+            {/* Live Event Badge: Pill-shaped, subtle pulsing cyan dot */}
+            <div>
+              <div
+                className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-full text-slate-200 text-xs font-semibold backdrop-blur-md"
+                style={{
+                  background: 'rgba(7, 20, 38, 0.70)',
+                  border: '1px solid rgba(255, 255, 255, 0.30)',
+                }}
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22D3EE] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22D3EE]"></span>
                 </span>
-                <p className="text-sm font-bold text-white mt-1">Main Convention Auditorium</p>
+                <span className="text-[11px] font-mono font-bold text-[#22D3EE] tracking-wider uppercase">
+                  TIRUNELVELI DISTRICT • ROUND 2 • LIVE
+                </span>
               </div>
             </div>
 
-          </div>
+            {/* Statistics: Numbers stacked above labels with vertical separators */}
+            <div className="pt-1 flex items-center gap-6 sm:gap-8">
+              {/* Stat 1 */}
+              <div>
+                <span className="text-xl sm:text-2xl font-black text-white font-mono block leading-none">
+                  38
+                </span>
+                <span className="text-xs text-[#CBD5E1] font-medium block mt-1">
+                  Districts
+                </span>
+              </div>
 
-        </div>
+              {/* Vertical Separator */}
+              <div className="h-8 w-px bg-white/25" />
 
-      </div>
+              {/* Stat 2 */}
+              <div>
+                <span className="text-xl sm:text-2xl font-black text-white font-mono block leading-none">
+                  100+
+                </span>
+                <span className="text-xs text-[#CBD5E1] font-medium block mt-1">
+                  Events
+                </span>
+              </div>
 
-      {/* Left and Right Slider Arrows matching Reference Image */}
-      <button
-        aria-label="Previous Slide"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 slider-arrow-btn rounded-full"
-      >
-        <ChevronLeft className="w-5 h-5" />
-      </button>
+              {/* Vertical Separator */}
+              <div className="h-8 w-px bg-white/25" />
 
-      <button
-        aria-label="Next Slide"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 slider-arrow-btn rounded-full"
-      >
-        <ChevronRight className="w-5 h-5" />
-      </button>
-
-      {/* Bottom Fixed Black Countdown Bar matching Reference Image */}
-      <div className="bottom-countdown-bar w-full py-4 px-6 sm:px-12 relative z-30">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          
-          {/* Big Digital Countdown Numbers matching Reference Image */}
-          <div className="flex items-center gap-4 sm:gap-8 font-mono">
-            <div className="text-center">
-              <span className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-wider">
-                {timeLeft.months}
-              </span>
-              <p className="text-[10px] text-slate-400 font-sans uppercase font-bold tracking-widest mt-1">Months</p>
+              {/* Stat 3 */}
+              <div>
+                <span className="text-xl sm:text-2xl font-black text-white font-mono block leading-none">
+                  5000+
+                </span>
+                <span className="text-xs text-[#CBD5E1] font-medium block mt-1">
+                  Participants
+                </span>
+              </div>
             </div>
-
-            <div className="text-center">
-              <span className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-wider">
-                {timeLeft.days}
-              </span>
-              <p className="text-[10px] text-slate-400 font-sans uppercase font-bold tracking-widest mt-1">Days</p>
-            </div>
-
-            <div className="text-center">
-              <span className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-wider">
-                {timeLeft.hours}
-              </span>
-              <p className="text-[10px] text-slate-400 font-sans uppercase font-bold tracking-widest mt-1">Hours</p>
-            </div>
-
-            <div className="text-center">
-              <span className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-wider">
-                {timeLeft.minutes}
-              </span>
-              <p className="text-[10px] text-slate-400 font-sans uppercase font-bold tracking-widest mt-1">Minutes</p>
-            </div>
-
-            <div className="text-center">
-              <span className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-wider">
-                {timeLeft.seconds}
-              </span>
-              <p className="text-[10px] text-slate-400 font-sans uppercase font-bold tracking-widest mt-1">Seconds</p>
-            </div>
-          </div>
-
-          {/* Right Label matching Reference Image */}
-          <div className="text-right">
-            <h3 className="text-lg sm:text-2xl font-black text-white font-sans tracking-tight">
-              Countdown to Conference
-            </h3>
-            <p className="text-xs text-blue-400 font-mono">Tirunelveli District Grand Stage</p>
           </div>
 
         </div>
       </div>
 
+      {/* 03. CURVED HERO DIVIDER: Smooth, large white SVG wave sweeping across the bottom */}
+      <div className="absolute bottom-0 inset-x-0 z-20 pointer-events-none leading-none overflow-hidden">
+        <svg
+          viewBox="0 0 1440 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-14 sm:h-20 md:h-28 text-white block preserve-3d"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,45 C320,115 680,10 1020,75 C1220,112 1360,55 1440,35 L1440,120 L0,120 Z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      </div>
     </section>
   );
 }

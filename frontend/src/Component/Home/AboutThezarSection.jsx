@@ -1,66 +1,118 @@
-import { ChevronDown, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import aboutAudienceImg from '../../assets/about_audience.jpg';
+import { Play, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function AboutThezarSection({ onOpenRegister }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
-    <section id="about-thezar" className="py-24 bg-white text-slate-900 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <section id="about-thezar" className="py-20 sm:py-28 bg-white text-slate-900 relative overflow-hidden">
+      {/* 1. Oversized Faint Background Watermark Text: "ABOUT" */}
+      <div
+        className="absolute top-6 left-6 sm:left-16 pointer-events-none select-none font-black tracking-tighter uppercase z-0 leading-none"
+        style={{
+          fontSize: 'clamp(90px, 16vw, 190px)',
+          color: 'rgba(15, 23, 42, 0.038)',
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+        }}
+      >
+        ABOUT
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column: Oval Visual Cut-out Image Frame matching Image 1 Section 2 */}
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="w-80 h-96 sm:w-96 sm:h-[420px] oval-image-frame overflow-hidden relative shadow-2xl group">
-              <img
-                src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=80"
-                alt="THEZAR Collegiate Stage"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-purple-950/60 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          {/* Right Column: Card Block with pink accent outline matching Image 1 Section 2 */}
-          <div className="lg:col-span-7 text-left space-y-6 bg-slate-50 p-8 sm:p-12 rounded-3xl border-2 border-rose-200 shadow-xl">
+          {/* Left Column: Editorial Heading & Content */}
+          <div className="lg:col-span-6 text-left space-y-6">
             
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold font-mono">
-              <Sparkles className="w-4 h-4 text-rose-600" />
-              <span>[ ABOUT THEZAR 2026 ]</span>
+            {/* Editorial Eyebrow */}
+            <div className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-bold text-blue-600 tracking-wider">
+              <span>[ About TheZar 2026 ]</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-              THEZAR — Empowering Youth Talent Across Tamil Nadu
+            {/* Main Editorial Heading */}
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#071426] tracking-tight leading-[1.08] uppercase">
+              Where Talent <br />
+              <span className="text-blue-600 font-serif italic lowercase tracking-normal">meets</span> <br />
+              Opportunity
             </h2>
 
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              <strong>THEZAR 2026</strong> is Tamil Nadu’s premiere multi-format inter-collegiate tournament bringing together talented youth from all <strong>38 districts</strong>. Designed to bridge academic excellence with real-world innovation, culture, and technical mastery.
+            {/* Editorial Description */}
+            <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed font-sans max-w-xl">
+              TheZar brings students together across Tamil Nadu through district-level competitions, innovation, creativity and achievement. From hackathons to cultural spectacles, this is the definitive stage for collegiate champions.
             </p>
 
-            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-              Over 450+ colleges participate in technical hackathons, group choreography, grand quizzes, and AI prototype expos. Top 3 finalists from each district qualify directly for the Statewide Grand Finale in Chennai!
-            </p>
+            {/* Feature Bullets */}
+            <div className="space-y-2.5 pt-1 text-sm text-slate-700 font-medium">
+              <div className="flex items-center gap-3">
+                <CheckCircle2 className="w-4 h-4 text-cyan-500 shrink-0" />
+                <span>38 District preliminary stages leading to Chennai Mega Finals</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle2 className="w-4 h-4 text-cyan-500 shrink-0" />
+                <span>₹40 Lakhs House Bumper + ₹25 Lakhs Cash Pool for winners</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle2 className="w-4 h-4 text-cyan-500 shrink-0" />
+                <span>Direct mentorship and networking with state industry leaders</span>
+              </div>
+            </div>
 
-            <div className="pt-2 flex items-center gap-4">
-              <button
-                onClick={onOpenRegister}
-                className="px-7 py-3 rounded-full text-xs font-black uppercase tracking-wider text-white bg-magenta-gradient shadow-lg hover:scale-105 transition-all"
+            {/* CTA Button */}
+            <div className="pt-3">
+              <a
+                href="#events"
+                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full border-2 border-[#071426] text-[#071426] hover:bg-[#071426] hover:text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm"
               >
-                READ MORE & REGISTER
+                <span>KNOW MORE</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+          </div>
+
+          {/* Right Column: Large Editorial Event Image with Concentric Rings & Play Button */}
+          <div className="lg:col-span-6 relative flex justify-center lg:justify-end">
+            
+            {/* Concentric Decorative Rings behind the Image (from reference design) */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] rounded-full border border-slate-200/80 pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] sm:w-[560px] sm:h-[560px] rounded-full border border-slate-100 pointer-events-none" />
+
+            {/* Image Container */}
+            <div className="relative z-10 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl border border-slate-200/80 group">
+              <img
+                src={aboutAudienceImg}
+                alt="TheZar Collegiate Audience & Symposium"
+                className="w-full h-[360px] sm:h-[420px] lg:h-[460px] object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+
+              {/* Subtle Gradient Over Bottom of Photo */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#071426]/70 via-transparent to-transparent opacity-60" />
+
+              {/* Photo Caption Badge */}
+              <div className="absolute bottom-4 left-4 right-4 z-20 text-left text-white">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-300 font-bold block">
+                  STATEWIDE SYMPOSIUM
+                </span>
+                <p className="text-xs sm:text-sm font-semibold text-slate-100">
+                  Annual Collegiate Talent & Innovation Expo
+                </p>
+              </div>
+
+              {/* Circular Play Button Overlapping the Image */}
+              <button
+                onClick={() => setIsPlaying(!isPlaying)}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white flex items-center justify-center shadow-xl shadow-blue-500/30 hover:scale-110 transition-all duration-300 cursor-pointer"
+                aria-label="Play Introduction Video"
+              >
+                <Play className="w-6 h-6 fill-current ml-0.5" />
               </button>
             </div>
 
           </div>
 
         </div>
-
       </div>
-
-      {/* Floating Circular Down Chevron Button at Bottom (Matching Image 1 Section Seam) */}
-      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 z-20">
-        <a href="#categories" className="section-chevron-btn hover:scale-110 transition-transform">
-          <ChevronDown className="w-6 h-6 stroke-[3]" />
-        </a>
-      </div>
-
     </section>
   );
 }

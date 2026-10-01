@@ -13,6 +13,14 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Outfit', sans-serif;
   }
+
+  /* Prevent browser or Bootstrap default underlines on navbar */
+  .nav-link-clean {
+    text-decoration: none !important;
+  }
+  .nav-link-clean:hover {
+    text-decoration: none !important;
+  }
 }
 
 /* Reference Image Exact Theme Classes */

@@ -1,41 +1,53 @@
 import { useState } from 'react';
 import { LEADERBOARD_DATA } from '../../data/mockData';
-import { Trophy, Award, Medal, Star, Flame } from 'lucide-react';
+import { Trophy, Award, ArrowRight } from 'lucide-react';
 
 export default function LeaderboardSection() {
   const [tab, setTab] = useState('Individual');
 
   return (
-    <section id="leaderboard" className="py-20 bg-slate-900 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="leaderboard" className="py-24 sm:py-32 bg-[#F8FAFC] text-slate-900 relative overflow-hidden">
+      {/* 1. Oversized Faint Watermark Text: "RANKINGS" */}
+      <div
+        className="absolute top-8 left-1/2 -translate-x-1/2 pointer-events-none select-none font-black tracking-tighter uppercase z-0 leading-none text-center w-full"
+        style={{
+          fontSize: 'clamp(70px, 14vw, 170px)',
+          color: 'rgba(15, 23, 42, 0.035)',
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+        }}
+      >
+        RANKINGS
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
-          <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
-            [ STATEWIDE COMPETITOR STANDINGS ]
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-12 sm:mb-16">
+          <span className="font-mono text-xs sm:text-sm font-bold text-blue-600 tracking-wider">
+            [ Verified Participant Standings ]
           </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Results & <span className="gradient-gold">Leaderboard</span>
+          <h2 className="text-3xl sm:text-5xl font-black text-[#071426] tracking-tight uppercase">
+            TheZar <span className="text-blue-600">Leaderboard</span>
           </h2>
-          <p className="text-slate-400 text-sm">
+          <p className="text-slate-600 text-sm sm:text-base">
             Live points tally updated across all 38 districts of Tamil Nadu after each competition round.
           </p>
         </div>
 
-        {/* Leaderboard Card Container matching Image 2 Mobile/Web layout */}
-        <div className="max-w-4xl mx-auto glass-card rounded-3xl border border-slate-800 p-6 sm:p-8 shadow-2xl">
+        {/* Leaderboard Card Container */}
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-10 shadow-xl text-left">
           
-          {/* Tabs */}
+          {/* Category Tabs */}
           <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
-              {['Individual', 'College', 'District', 'Overall'].map((t) => (
+            <div className="inline-flex bg-slate-100 p-1.5 rounded-full border border-slate-200">
+              {['Individual', 'College', 'District'].map((t) => (
                 <button
                   key={t}
                   onClick={() => setTab(t)}
-                  className={`px-5 py-2 rounded-xl text-xs font-extrabold tracking-wider uppercase transition-all ${
+                  className={`px-5 py-2 rounded-full text-xs font-black tracking-wider uppercase transition-all cursor-pointer ${
                     tab === t
-                      ? 'bg-amber-500 text-slate-950 shadow-md'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'bg-[#071426] text-white shadow-sm'
+                      : 'text-slate-600 hover:text-[#071426]'
                   }`}
                 >
                   {t}
@@ -44,59 +56,75 @@ export default function LeaderboardSection() {
             </div>
           </div>
 
-          {/* Leaderboard List */}
+          {/* Leaderboard List (Top 5 Participants) */}
           <div className="space-y-3">
-            {LEADERBOARD_DATA.map((user) => (
+            {LEADERBOARD_DATA.slice(0, 5).map((user) => (
               <div
                 key={user.rank}
-                className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-4 text-left ${
+                className={`p-4 sm:p-5 rounded-2xl border transition-all flex items-center justify-between gap-4 ${
                   user.isUser
-                    ? 'bg-rose-950/40 border-rose-500/60 shadow-lg shadow-rose-950/40'
-                    : 'bg-slate-950 border-slate-800/80 hover:border-slate-700'
+                    ? 'bg-blue-50/70 border-blue-300 shadow-sm'
+                    : 'bg-[#F8FAFC] border-slate-200/70 hover:border-slate-300'
                 }`}
               >
-                {/* Rank Badge & Avatar */}
-                <div className="flex items-center gap-4">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm ${
-                    user.rank === 1
-                      ? 'bg-amber-400 text-slate-950 shadow-lg shadow-amber-400/30'
-                      : user.rank === 2
-                      ? 'bg-slate-300 text-slate-950'
-                      : user.rank === 3
-                      ? 'bg-amber-700 text-white'
-                      : 'bg-slate-900 text-slate-400 border border-slate-800'
-                  }`}>
-                    {user.rank === 1 ? <Trophy className="w-5 h-5 fill-current" /> : user.rank}
+                {/* Rank Badge & Profile Info */}
+                <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm shrink-0 ${
+                      user.rank === 1
+                        ? 'bg-amber-400 text-[#071426] shadow-md shadow-amber-400/25'
+                        : user.rank === 2
+                        ? 'bg-slate-300 text-slate-800'
+                        : user.rank === 3
+                        ? 'bg-amber-700 text-white'
+                        : 'bg-white text-slate-600 border border-slate-200'
+                    }`}
+                  >
+                    {user.rank === 1 ? <Trophy className="w-5 h-5 fill-current" /> : `#${user.rank}`}
                   </div>
 
                   <img
                     src={user.avatar}
                     alt={user.name}
-                    className="w-10 h-10 rounded-full object-cover border border-slate-700"
+                    className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm shrink-0"
                   />
 
-                  <div>
+                  <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-bold text-white">{user.name}</h4>
+                      <h4 className="text-sm sm:text-base font-black text-[#071426] truncate">
+                        {user.name}
+                      </h4>
                       {user.isUser && (
-                        <span className="bg-rose-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">
-                          Your Position
+                        <span className="bg-blue-600 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase shrink-0 font-mono">
+                          Your Rank
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-slate-400">{user.college}</p>
+                    <p className="text-xs text-slate-500 truncate">{user.college}</p>
                   </div>
                 </div>
 
                 {/* Points & District */}
-                <div className="text-right">
-                  <span className="text-lg font-black font-mono text-amber-400">{user.points}</span>
-                  <span className="text-xs text-slate-500 ml-1 font-mono">pts</span>
-                  <p className="text-[11px] text-slate-400 font-medium">{user.district} District</p>
+                <div className="text-right shrink-0">
+                  <div className="flex items-baseline justify-end gap-1 font-mono">
+                    <span className="text-lg sm:text-2xl font-black text-blue-600">{user.points}</span>
+                    <span className="text-[11px] text-slate-400 font-bold uppercase">pts</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-medium">{user.district} District</p>
                 </div>
 
               </div>
             ))}
+          </div>
+
+          {/* Full Leaderboard CTA */}
+          <div className="mt-8 pt-6 border-t border-slate-100 text-center">
+            <button
+              className="inline-flex items-center gap-2 text-xs font-extrabold text-blue-600 hover:text-blue-800 uppercase tracking-widest cursor-pointer"
+            >
+              <span>VIEW FULL LEADERBOARD (38 DISTRICTS)</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
 
         </div>

@@ -1,54 +1,58 @@
 import { useState } from 'react';
 import { EVENTS_LIST } from '../../data/mockData';
-import { Calendar, MapPin, Clock, ArrowRight, Code, Music, HelpCircle, Zap, Shield } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, Eye, Sparkles } from 'lucide-react';
 
 export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
   const [filterCategory, setFilterCategory] = useState('All');
 
   const categories = ['All', 'Live Now', 'Technical', 'Cultural', 'Quiz', 'Innovation'];
 
-  const filteredEvents = EVENTS_LIST.filter(evt => {
+  const filteredEvents = EVENTS_LIST.filter((evt) => {
     if (filterCategory === 'All') return true;
     if (filterCategory === 'Live Now') return evt.status === 'Live';
-    return evt.competitions.some(c => c.type === filterCategory);
+    return evt.competitions?.some((c) => c.type === filterCategory);
   });
 
-  const getCompetitionIcon = (type) => {
-    switch (type) {
-      case 'Technical': return <Code className="w-4 h-4 text-emerald-400" />;
-      case 'Cultural': return <Music className="w-4 h-4 text-pink-400" />;
-      case 'Quiz': return <HelpCircle className="w-4 h-4 text-amber-400" />;
-      case 'Innovation': return <Zap className="w-4 h-4 text-rose-400" />;
-      default: return <Shield className="w-4 h-4 text-sky-400" />;
-    }
-  };
-
   return (
-    <section id="events" className="py-20 bg-slate-950 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="events" className="py-24 sm:py-32 bg-[#F8FAFC] text-slate-900 relative overflow-hidden">
+      {/* 1. Oversized Faint Watermark Text: "SCHEDULE" */}
+      <div
+        className="absolute top-8 left-1/2 -translate-x-1/2 pointer-events-none select-none font-black tracking-tighter uppercase z-0 leading-none text-center w-full"
+        style={{
+          fontSize: 'clamp(80px, 15vw, 180px)',
+          color: 'rgba(15, 23, 42, 0.035)',
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+        }}
+      >
+        SCHEDULE
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div className="text-left space-y-2">
-            <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">
-              [ DISTRICT ROUND SCHEDULE ]
+            <span className="font-mono text-xs sm:text-sm font-bold text-blue-600 tracking-wider">
+              [ District Timetable & Stage Dates ]
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              Upcoming <span className="gradient-text">District Events</span>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#071426] tracking-tight uppercase">
+              Upcoming <span className="text-blue-600">Events</span>
             </h2>
-            <p className="text-slate-400 text-sm max-w-xl">
-              Explore district competitions taking place across Tamil Nadu. Register to represent your institution.
+            <p className="text-slate-600 text-sm sm:text-base max-w-xl">
+              Discover what's happening across TheZar. Preliminary district rounds and live stages across 38 districts of Tamil Nadu.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
+          {/* Filter Pills */}
+          <div className="flex flex-wrap items-center gap-1.5 bg-white p-1.5 rounded-full border border-slate-200/80 shadow-sm">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilterCategory(cat)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
                   filterCategory === cat
-                    ? 'bg-rose-600 text-white shadow-lg shadow-rose-600/30'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-[#071426] hover:bg-slate-100'
                 }`}
               >
                 {cat}
@@ -57,94 +61,98 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
           </div>
         </div>
 
+        {/* Event Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredEvents.map((evt) => (
+          {filteredEvents.slice(0, 6).map((evt) => (
             <div
               key={evt.id}
-              className="glass-card rounded-3xl overflow-hidden border border-slate-800/80 hover:border-rose-500/50 transition-all group flex flex-col justify-between hover:shadow-2xl hover:shadow-rose-950/40"
+              className="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
             >
-              <div>
-                <div className="relative h-52 overflow-hidden">
-                  <img
-                    src={evt.image}
-                    alt={evt.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
-                  
-                  <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider shadow-md ${
-                      evt.status === 'Live' 
-                        ? 'bg-rose-600 text-white animate-pulse' 
-                        : 'bg-slate-900/90 text-amber-300 border border-amber-400/30'
-                    }`}>
-                      {evt.badge}
+              {/* Event Image with Badge */}
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src={evt.image}
+                  alt={evt.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071426]/75 via-transparent to-transparent" />
+                
+                {/* Status Badge */}
+                <div className="absolute top-4 left-4">
+                  {evt.status === 'Live' ? (
+                    <span className="inline-flex items-center gap-1.5 bg-cyan-500 text-[#071426] text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+                      <span className="w-2 h-2 rounded-full bg-[#071426] animate-pulse"></span>
+                      LIVE NOW
                     </span>
-                  </div>
-
-                  <div className="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10 text-xs font-mono font-bold text-slate-200">
-                    {evt.districtCode}
-                  </div>
-
-                  <div className="absolute bottom-3 left-4 right-4">
-                    <span className="text-xs text-amber-400 font-bold uppercase tracking-widest">{evt.category}</span>
-                    <h3 className="text-xl font-extrabold text-white leading-tight mt-0.5">{evt.title}</h3>
-                  </div>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md text-[#071426] text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                      <span className="w-2 h-2 rounded-full bg-slate-400"></span>
+                      UPCOMING
+                    </span>
+                  )}
                 </div>
 
-                <div className="p-6 space-y-4 text-left">
-                  <div className="space-y-2 text-xs text-slate-300">
-                    <div className="flex items-center gap-2 text-slate-300 font-medium">
-                      <Calendar className="w-4 h-4 text-rose-400 shrink-0" />
-                      <span>{evt.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-slate-300 font-medium">
-                      <Clock className="w-4 h-4 text-amber-400 shrink-0" />
-                      <span>{evt.time}</span>
-                    </div>
-                    <div className="flex items-start gap-2 text-slate-400">
-                      <MapPin className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
-                      <span className="line-clamp-1">{evt.venue}</span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
-                    {evt.description}
-                  </p>
-
-                  <div className="pt-2 border-t border-slate-800">
-                    <p className="text-[11px] text-slate-500 uppercase font-mono font-bold mb-2">Tracks Included:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {evt.competitions.map((comp, idx) => (
-                        <div key={idx} className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-semibold text-slate-300">
-                          {getCompetitionIcon(comp.type)}
-                          <span>{comp.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
+                {/* District Pill */}
+                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white text-xs">
+                  <span className="font-mono text-cyan-300 font-bold uppercase tracking-wider text-[11px]">
+                    {evt.district} DISTRICT
+                  </span>
+                  <span className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-semibold">
+                    Round 2
+                  </span>
                 </div>
               </div>
 
-              <div className="p-6 pt-0 space-y-2">
-                <button
-                  onClick={onOpenRegister}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
-                >
-                  <span>Register Now</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => onSelectEvent(evt.id)}
-                  className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-bold transition-colors border border-slate-800"
-                >
-                  View Schedule & Venue Details
-                </button>
-              </div>
+              {/* Card Body */}
+              <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-black text-[#071426] tracking-tight group-hover:text-blue-600 transition-colors">
+                    {evt.title}
+                  </h3>
+                  <div className="space-y-1.5 text-xs text-slate-500">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                      <span>{evt.date} • {evt.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                      <span className="truncate">{evt.venue}</span>
+                    </div>
+                  </div>
+                </div>
 
+                {/* Card Actions */}
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
+                  <button
+                    onClick={() => onSelectEvent && onSelectEvent(evt.id)}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors cursor-pointer"
+                  >
+                    <Eye className="w-3.5 h-3.5" />
+                    <span>View Details</span>
+                  </button>
+
+                  <button
+                    onClick={onOpenRegister}
+                    className="px-4 py-2 rounded-full text-xs font-bold text-white bg-[#071426] hover:bg-blue-600 transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>Register</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
+        </div>
+
+        {/* View All Events Button */}
+        <div className="mt-12 text-center">
+          <a
+            href="/events"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-slate-200 hover:border-blue-600 bg-white hover:text-blue-600 text-[#071426] font-bold text-xs uppercase tracking-widest transition-all shadow-sm"
+          >
+            <span>EXPLORE ALL 38 DISTRICT ROUNDS</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
 
       </div>
