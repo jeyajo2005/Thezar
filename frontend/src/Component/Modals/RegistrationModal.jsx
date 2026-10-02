@@ -240,7 +240,7 @@ export default function RegistrationModal({ onClose }) {
                     {registeredUser.participantId}
                   </p>
                   <p className="text-lg font-bold text-white">{registeredUser.fullName}</p>
-                  <p className="text-xs text-slate-300">{registeredUser.collegeName || 'Collegiate Candidate'}</p>
+                  <p className="text-xs text-slate-300">{registeredUser.collegeName || 'Official Candidate'}</p>
                   <p className="text-xs text-rose-400 font-semibold">{registeredUser.district} District • {registeredUser.competition}</p>
                   
                   <div className="pt-2 flex items-center gap-2 text-xs text-slate-400 bg-slate-900 px-3 py-1.5 rounded-full border border-slate-800">
@@ -252,7 +252,7 @@ export default function RegistrationModal({ onClose }) {
 
               <div className="pt-3 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
                 <span>Issued: {registeredUser.registeredAt}</span>
-                <span>Tamil Nadu Collegiate League</span>
+                <span>Tamil Nadu Championship League</span>
               </div>
 
             </div>

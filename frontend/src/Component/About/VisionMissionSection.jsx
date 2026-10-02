@@ -11,7 +11,7 @@ export default function VisionMissionSection() {
           </div>
           <h3 className="text-xl font-extrabold text-white">Our Vision</h3>
           <p className="text-xs text-slate-300 leading-relaxed">
-            To build Tamil Nadu’s most inspiring collegiate ecosystem where youth talent is recognized, mentored, and connected to national industry opportunities.
+            To build Tamil Nadu’s most inspiring talent ecosystem where youth and participants are recognized, mentored, and connected to national industry opportunities.
           </p>
         </div>
 
@@ -21,7 +21,7 @@ export default function VisionMissionSection() {
           </div>
           <h3 className="text-xl font-extrabold text-white">Our Mission</h3>
           <p className="text-xs text-slate-300 leading-relaxed">
-            Provide an equitable, transparent platform with cash prizes, incubators, and state-level recognition for every passionate student contestant.
+            Provide an equitable, transparent platform with cash prizes, incubators, and state-level recognition for every passionate contestant.
           </p>
         </div>
 

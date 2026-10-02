@@ -1,6 +1,6 @@
 export default function CoreValuesSection() {
   const values = [
-    { title: 'Inclusivity', desc: 'Equal opportunity for rural and urban collegiate students across all 38 districts.' },
+    { title: 'Inclusivity', desc: 'Equal opportunity for rural and urban participants across all 38 districts.' },
     { title: 'Excellence', desc: 'Strict, impartial judging by state academic & industry experts.' },
     { title: 'Innovation', desc: 'Promoting real-world problem solving, AI, and green technologies.' },
     { title: 'Culture', desc: 'Preserving and celebrating Tamil heritage, music, and performing arts.' }

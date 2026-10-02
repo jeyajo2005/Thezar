@@ -35,7 +35,7 @@ export default function WhyParticipateSection() {
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xl space-y-4 relative">
               <span className="text-5xl font-serif text-rose-400 leading-none">"</span>
               <p className="text-slate-600 text-sm italic font-serif leading-relaxed">
-                THEZAR transformed our collegiate team. Competing at Tirunelveli Round 2 and making it to the Chennai Grand Finale opened direct career opportunities and provided statewide recognition.
+                THEZAR transformed our team. Competing at Tirunelveli Round 2 and making it to the Chennai Grand Finale opened direct career opportunities and provided statewide recognition.
               </p>
               
               <div className="flex items-center justify-between pt-2 border-t border-slate-100">

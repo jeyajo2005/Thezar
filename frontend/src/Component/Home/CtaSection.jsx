@@ -30,7 +30,7 @@ export default function CtaSection({ onOpenRegister }) {
 
             {/* Subheading */}
             <p className="text-[#CBD5E1] text-sm sm:text-base lg:text-[17px] max-w-xl mx-auto leading-[1.7] font-normal">
-              Register for TheZar 2026 and begin your journey. Join thousands of collegiate students competing across 38 districts of Tamil Nadu.
+              Register for TheZar 2026 and begin your journey. Join thousands of participants competing across 38 districts of Tamil Nadu.
             </p>
 
             {/* Bumper Prize Reminder */}
@@ -42,15 +42,25 @@ export default function CtaSection({ onOpenRegister }) {
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={onOpenRegister}
-                className="w-full sm:w-auto px-9 py-4 rounded-full bg-gradient-to-r from-rose-600 via-rose-500 to-rose-400 hover:from-rose-700 hover:to-rose-500 text-white font-bold text-[14px] sm:text-[15px] uppercase tracking-[0.02em] shadow-xl shadow-rose-600/30 hover:shadow-rose-400/40 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-9 py-4 rounded-full text-white font-extrabold text-[14px] sm:text-[15px] uppercase tracking-[0.02em] shadow-xl shadow-rose-600/30 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                style={{
+                  borderRadius: '9999px',
+                  background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                  color: '#FFFFFF',
+                }}
               >
-                <span>REGISTER NOW</span>
+                <span>START YOUR JOURNEY NOW</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <a
                 href="#events"
-                className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-widest transition-colors text-center"
+                className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-widest transition-colors text-center no-underline hover:no-underline"
+                style={{
+                  borderRadius: '9999px',
+                  textDecoration: 'none',
+                  color: '#FFFFFF',
+                }}
               >
                 VIEW EVENT SCHEDULE
               </a>

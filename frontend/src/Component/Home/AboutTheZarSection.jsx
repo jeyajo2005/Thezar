@@ -48,7 +48,7 @@ export default function AboutTheZarSection({ onOpenRegister }) {
 
             {/* Editorial Description */}
             <p className="text-[#64748B] text-sm sm:text-base lg:text-[17px] font-normal leading-[1.7] tracking-[-0.01em] max-w-xl">
-              TheZar brings students together across Tamil Nadu through district-level competitions, innovation, creativity and achievement. From hackathons to cultural spectacles, this is the definitive stage for collegiate champions.
+              TheZar brings participants together across Tamil Nadu through district-level competitions, innovation, creativity and achievement. From competitions to cultural spectacles, this is the definitive stage for state champions.
             </p>
 
             {/* Feature Bullets */}
@@ -71,7 +71,21 @@ export default function AboutTheZarSection({ onOpenRegister }) {
             <div className="pt-3 flex flex-wrap items-center gap-4">
               <a
                 href="#events"
-                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full border-2 border-[#071426] text-[#071426] hover:bg-[#071426] hover:text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm"
+                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full border-2 border-[#E11D48] font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm no-underline hover:no-underline group"
+                style={{
+                  color: '#E11D48',
+                  borderColor: '#E11D48',
+                  borderRadius: '9999px',
+                  textDecoration: 'none',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#E11D48';
+                  e.currentTarget.style.color = '#FFFFFF';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#E11D48';
+                }}
               >
                 <span>KNOW MORE</span>
                 <ArrowRight className="w-4 h-4" />
@@ -80,7 +94,12 @@ export default function AboutTheZarSection({ onOpenRegister }) {
                 <button
                   type="button"
                   onClick={onOpenRegister}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md shadow-rose-500/20 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md shadow-rose-500/25 cursor-pointer"
+                  style={{
+                    borderRadius: '9999px',
+                    background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                    color: '#FFFFFF',
+                  }}
                 >
                   <span>REGISTER NOW</span>
                 </button>
@@ -100,7 +119,7 @@ export default function AboutTheZarSection({ onOpenRegister }) {
             <div className="relative z-10 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl border border-slate-200/80 group">
               <img
                 src={aboutAudienceImg}
-                alt="TheZar Collegiate Audience & Symposium"
+                alt="TheZar Audience & Statewide Symposium"
                 className="w-full h-[360px] sm:h-[420px] lg:h-[460px] object-cover group-hover:scale-105 transition-transform duration-700"
               />
 
@@ -113,7 +132,7 @@ export default function AboutTheZarSection({ onOpenRegister }) {
                   STATEWIDE SYMPOSIUM
                 </span>
                 <p className="text-xs sm:text-sm font-semibold text-slate-100">
-                  Annual Collegiate Talent & Innovation Expo
+                  Annual Statewide Talent & Innovation Expo
                 </p>
               </div>
 

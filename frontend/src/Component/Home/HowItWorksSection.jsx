@@ -6,7 +6,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
       num: '01',
       title: 'REGISTER',
       subtitle: 'Candidate Pass',
-      desc: 'Sign up with your college ID to generate your verified digital QR admission pass.',
+      desc: 'Sign up with your details to generate your verified digital QR admission pass.',
       icon: UserCheck,
     },
     {

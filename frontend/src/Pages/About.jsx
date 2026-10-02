@@ -27,7 +27,7 @@ export default function About() {
               Celebrating <span className="gradient-text">Youth & Talent</span>
             </h1>
             <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
-              Learn about our journey, vision, and mission to empower collegiate students across all 38 districts of Tamil Nadu.
+              Learn about our journey, vision, and mission to empower participants across all 38 districts of Tamil Nadu.
             </p>
           </div>
         </section>

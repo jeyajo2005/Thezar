@@ -16,7 +16,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
       title: 'Innovation',
       icon: Lightbulb,
       color: 'text-rose-600 bg-rose-50 border-rose-200',
-      description: 'AI prototyping, smart hardware, green energy solutions, and student patent showcases.',
+      description: 'AI prototyping, smart hardware, green energy solutions, and patent showcases.',
       rounds: '8 Competitions',
       pool: '₹6 Lakhs Pool'
     },
@@ -52,7 +52,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
       title: 'Presentation',
       icon: Presentation,
       color: 'text-rose-600 bg-rose-50 border-rose-200',
-      description: 'Collegiate research paper presentation, parliamentary debate, and public oratory cups.',
+      description: 'Research paper presentation, parliamentary debate, and public oratory cups.',
       rounds: '6 Competitions',
       pool: '₹2.5 Lakhs Pool'
     }
@@ -92,7 +92,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
             COMPETE <span className="text-[#E11D48]">YOUR WAY</span>
           </h2>
           <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
-            Choose your arena from 6 official championship categories open to engineering, arts, science, and management colleges across Tamil Nadu.
+            Choose your arena from 6 official championship categories open to all participants across Tamil Nadu.
           </p>
         </div>
 

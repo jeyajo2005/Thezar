@@ -9,7 +9,7 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
       badgeColor: 'from-emerald-500 to-teal-700',
       prizes: '₹8,00,000 Total Pool',
       items: ['Full-Stack Web & App Hackathon', 'Cybersecurity Capture The Flag', 'AI & Data Science Challenge', 'Algorithmic Coding Battle'],
-      description: 'Test your problem solving and software architecture against the top student developers in Tamil Nadu.'
+      description: 'Test your problem solving and software architecture against top developers across Tamil Nadu.'
     },
     {
       id: 'cultural',
@@ -18,7 +18,7 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
       badgeColor: 'from-pink-500 to-rose-700',
       prizes: '₹6,50,000 Total Pool',
       items: ['Choreography & Group Dance', 'Battle of the Bands & Folk Music', 'Theatrical Drama & Skit', 'Classical Vocal Showcase'],
-      description: 'Unleash artistic expression and traditional Tamil culture on the grand collegiate stage.'
+      description: 'Unleash artistic expression and traditional Tamil culture on the grand statewide stage.'
     },
     {
       id: 'quiz',
@@ -52,7 +52,7 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
             Statewide <span className="gradient-text">Competition Categories</span>
           </h2>
           <p className="text-slate-400 text-sm">
-            Designed to identify, reward, and elevate collegiate talent across technology, culture, knowledge, and innovation.
+            Designed to identify, reward, and elevate talent across technology, culture, knowledge, and innovation.
           </p>
         </div>
 

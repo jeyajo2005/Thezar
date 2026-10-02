@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { EVENTS_LIST } from '../../data/mockData';
-import { Calendar, MapPin, ArrowRight, Eye } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
   const [filterCategory, setFilterCategory] = useState('All');
+  const [activeDot, setActiveDot] = useState(0);
+  const sliderRef = useRef(null);
 
   const categories = ['All', 'Live Now', 'Technical', 'Cultural', 'Quiz', 'Innovation'];
 
@@ -12,6 +14,39 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
     if (filterCategory === 'Live Now') return evt.status === 'Live';
     return evt.competitions?.some((c) => c.type === filterCategory);
   });
+
+  const handleScroll = () => {
+    if (sliderRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+      const maxScroll = scrollWidth - clientWidth;
+      if (maxScroll <= 0) return;
+      const scrollRatio = scrollLeft / maxScroll;
+      const dotIndex = Math.min(2, Math.floor(scrollRatio * 3 + 0.3));
+      setActiveDot(dotIndex);
+    }
+  };
+
+  const scrollToDot = (idx) => {
+    if (sliderRef.current) {
+      const { scrollWidth, clientWidth } = sliderRef.current;
+      const maxScroll = scrollWidth - clientWidth;
+      const targetScroll = (idx / 2) * maxScroll;
+      sliderRef.current.scrollTo({ left: targetScroll, behavior: 'smooth' });
+      setActiveDot(idx);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -380, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: 380, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section id="events" className="py-24 sm:py-32 bg-[#F8FAFC] text-slate-900 relative overflow-hidden">
@@ -30,7 +65,7 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-6">
           <div className="text-left space-y-3">
             <div className="flex items-center gap-3">
               <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
@@ -52,33 +87,84 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
             </p>
           </div>
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap items-center gap-1.5 bg-white p-1.5 rounded-full border border-slate-200/80 shadow-sm">
-            {categories.map((cat) => (
+          {/* Filter Pills & Slider Controls */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
+            {/* Filter Pills Container */}
+            <div
+              className="inline-flex flex-nowrap items-center gap-1.5 sm:gap-2 bg-white p-2 rounded-full border border-slate-200 shadow-sm overflow-x-auto max-w-full shrink-0"
+              style={{ borderRadius: '9999px' }}
+            >
+              {categories.map((cat) => {
+                const isSelected = filterCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setFilterCategory(cat)}
+                    className="px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0"
+                    style={{
+                      borderRadius: '9999px',
+                      background: isSelected ? 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)' : 'transparent',
+                      color: isSelected ? '#FFFFFF' : '#475569',
+                      boxShadow: isSelected ? '0 4px 12px rgba(225, 29, 72, 0.25)' : 'none',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = '#E11D48';
+                        e.currentTarget.style.backgroundColor = '#FFF1F2';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = '#475569';
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                      }
+                    }}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Slider Navigation Arrow Buttons */}
+            <div className="hidden sm:flex items-center gap-2">
               <button
-                key={cat}
-                onClick={() => setFilterCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                  filterCategory === cat
-                    ? 'bg-rose-600 text-white shadow-sm'
-                    : 'text-slate-600 hover:text-[#071426] hover:bg-slate-100'
-                }`}
+                onClick={scrollLeft}
+                className="w-10 h-10 rounded-full border border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-300 text-slate-700 hover:text-rose-600 flex items-center justify-center shadow-sm cursor-pointer transition-colors"
+                style={{ borderRadius: '9999px' }}
+                aria-label="Previous events"
               >
-                {cat}
+                <ChevronLeft className="w-5 h-5" />
               </button>
-            ))}
+              <button
+                onClick={scrollRight}
+                className="w-10 h-10 rounded-full border border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-300 text-slate-700 hover:text-rose-600 flex items-center justify-center shadow-sm cursor-pointer transition-colors"
+                style={{ borderRadius: '9999px' }}
+                aria-label="Next events"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Event Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredEvents.slice(0, 6).map((evt) => (
+        {/* Event Cards Interactive Horizontal Slider Container (Hidden Scrollbar) */}
+        <div
+          ref={sliderRef}
+          onScroll={handleScroll}
+          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {filteredEvents.map((evt) => (
             <div
               key={evt.id}
-              className="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
+              className="snap-start shrink-0 w-[300px] sm:w-[350px] md:w-[380px] bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
             >
               {/* Event Image with Badge */}
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative h-52 sm:h-56 overflow-hidden">
                 <img
                   src={evt.image}
                   alt={evt.title}
@@ -89,12 +175,12 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
                 {/* Status Badge */}
                 <div className="absolute top-4 left-4">
                   {evt.status === 'Live' ? (
-                    <span className="inline-flex items-center gap-1.5 bg-rose-500 text-white text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+                    <span className="inline-flex items-center gap-1.5 bg-rose-500 text-white text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md" style={{ borderRadius: '9999px' }}>
                       <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
                       LIVE NOW
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md text-[#071426] text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                    <span className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md text-[#071426] text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm" style={{ borderRadius: '9999px' }}>
                       <span className="w-2 h-2 rounded-full bg-slate-400"></span>
                       UPCOMING
                     </span>
@@ -106,7 +192,7 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
                   <span className="text-rose-300 font-bold uppercase tracking-[0.12em] text-[11px] sm:text-[12px]">
                     {evt.district} DISTRICT
                   </span>
-                  <span className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-semibold">
+                  <span className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-semibold" style={{ borderRadius: '9999px' }}>
                     Round 2
                   </span>
                 </div>
@@ -115,7 +201,7 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
               {/* Card Body */}
               <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                 <div className="space-y-2">
-                  <h3 className="text-[20px] sm:text-[22px] font-bold text-[#071426] tracking-tight group-hover:text-rose-600 transition-colors">
+                  <h3 className="text-[19px] sm:text-[21px] font-bold text-[#071426] tracking-tight group-hover:text-rose-600 transition-colors line-clamp-1">
                     {evt.title}
                   </h3>
                   <div className="space-y-1.5 text-[13px] sm:text-[14px] text-[#64748B] font-medium">
@@ -142,10 +228,16 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
 
                   <button
                     onClick={onOpenRegister}
-                    className="px-5 py-2.5 rounded-full text-[13px] sm:text-[14px] font-bold text-white bg-[#071426] hover:bg-rose-600 transition-colors flex items-center gap-1 cursor-pointer"
+                    className="px-5 py-2.5 rounded-full text-[13px] sm:text-[14px] font-bold text-white transition-all cursor-pointer shadow-sm shadow-rose-500/20 inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
+                    style={{
+                      borderRadius: '9999px',
+                      background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                      color: '#FFFFFF',
+                      whiteSpace: 'nowrap',
+                    }}
                   >
-                    <span>Register</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span style={{ whiteSpace: 'nowrap' }}>Register</span>
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </button>
                 </div>
               </div>
@@ -153,11 +245,41 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
           ))}
         </div>
 
+        {/* Three Dot Pagination Indicators */}
+        <div className="flex items-center justify-center gap-2 pt-6">
+          {[0, 1, 2].map((idx) => (
+            <button
+              key={idx}
+              onClick={() => scrollToDot(idx)}
+              className={`transition-all duration-300 cursor-pointer ${
+                activeDot === idx
+                  ? 'w-7 h-2.5 rounded-full bg-[#E11D48] shadow-sm shadow-rose-500/30'
+                  : 'w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400'
+              }`}
+              aria-label={`Go to slide page ${idx + 1}`}
+            />
+          ))}
+        </div>
+
         {/* View All Events Button */}
-        <div className="mt-12 text-center">
+        <div className="mt-10 text-center">
           <a
             href="/events"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-slate-200 hover:border-rose-600 bg-white hover:text-rose-600 text-[#071426] font-bold text-xs uppercase tracking-widest transition-all shadow-sm"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 font-bold text-xs uppercase tracking-widest transition-all shadow-sm no-underline hover:no-underline group"
+            style={{
+              color: '#E11D48',
+              borderColor: '#E11D48',
+              borderRadius: '9999px',
+              textDecoration: 'none',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#E11D48';
+              e.currentTarget.style.color = '#FFFFFF';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = '#E11D48';
+            }}
           >
             <span>EXPLORE ALL 38 DISTRICT ROUNDS</span>
             <ArrowRight className="w-4 h-4" />

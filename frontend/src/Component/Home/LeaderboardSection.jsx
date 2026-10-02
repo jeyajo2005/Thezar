@@ -48,20 +48,25 @@ export default function LeaderboardSection() {
           
           {/* Category Tabs */}
           <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-slate-100 p-1.5 rounded-full border border-slate-200">
-              {['Individual', 'College', 'District'].map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setTab(t)}
-                  className={`px-5 py-2 rounded-full text-xs font-black tracking-wider uppercase transition-all cursor-pointer ${
-                    tab === t
-                      ? 'bg-[#071426] text-white shadow-sm'
-                      : 'text-slate-600 hover:text-[#071426]'
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
+            <div className="inline-flex bg-slate-100 p-1.5 rounded-full border border-slate-200" style={{ borderRadius: '9999px' }}>
+              {['Individual', 'District'].map((t) => {
+                const isSelected = tab === t;
+                return (
+                  <button
+                    key={t}
+                    onClick={() => setTab(t)}
+                    className="px-6 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all cursor-pointer"
+                    style={{
+                      borderRadius: '9999px',
+                      background: isSelected ? 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)' : 'transparent',
+                      color: isSelected ? '#FFFFFF' : '#475569',
+                      boxShadow: isSelected ? '0 4px 12px rgba(225, 29, 72, 0.25)' : 'none',
+                    }}
+                  >
+                    {t}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

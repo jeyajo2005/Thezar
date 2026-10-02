@@ -7,11 +7,11 @@ export default function FaqSection() {
   const faqs = [
     {
       q: 'Who is eligible to participate in THEZAR 2026?',
-      a: 'Any enrolled student (Diploma, UG, PG, Ph.D.) from recognized colleges or universities in Tamil Nadu.'
+      a: 'Any resident or participant from any district across Tamil Nadu.'
     },
     {
       q: 'How do I obtain my Candidate Pass?',
-      a: 'Click "Register Now" in the header, fill out your student details, and your unique QR code pass will be generated instantly.'
+      a: 'Click "Register Now" in the header, fill out your details, and your unique QR code pass will be generated instantly.'
     },
     {
       q: 'Can I participate in multiple competition tracks?',
@@ -19,7 +19,7 @@ export default function FaqSection() {
     },
     {
       q: 'Are there any registration fees?',
-      a: 'Registration is free for all official district collegiate participants.'
+      a: 'Registration is free for all official district participants.'
     }
   ];
 

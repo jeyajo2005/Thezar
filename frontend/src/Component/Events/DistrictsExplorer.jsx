@@ -27,7 +27,7 @@ export default function DistrictsExplorer({ onOpenRegister }) {
             District Management & <span className="gradient-gold">Venues</span>
           </h2>
           <p className="text-slate-400 text-sm">
-            THEZAR 2026 brings collegiate talent competitions to every corner of Tamil Nadu. Find your local district event schedule and register.
+            THEZAR 2026 brings talent competitions to every corner of Tamil Nadu. Find your local district event schedule and register.
           </p>
         </div>
 
