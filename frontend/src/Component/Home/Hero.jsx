@@ -37,7 +37,7 @@ export default function Hero({ onOpenRegister }) {
         />
 
         {/* 3. Subtle ambient glow accents */}
-        <div className="absolute top-1/4 left-10 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-rose-600/20 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       {/* Main Hero Content Area: Occupies ~45% width on left (Editorial Composition) */}
@@ -48,7 +48,7 @@ export default function Hero({ onOpenRegister }) {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/20 backdrop-blur-sm text-[12px] sm:text-[13px] font-bold tracking-[0.18em] uppercase text-white shadow-sm">
             <Trophy className="w-3.5 h-3.5 text-[#D4A72C] shrink-0" />
             <span>THEZAR 2026</span>
-            <span className="text-[#22D3EE] font-black">•</span>
+            <span className="text-[#FDA4AF] font-black">•</span>
             <span>TAMIL NADU</span>
           </div>
 
@@ -83,19 +83,19 @@ export default function Hero({ onOpenRegister }) {
             {/* Primary Pill Button */}
             <button
               onClick={onOpenRegister}
-              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-8 rounded-full text-[14px] sm:text-[15px] font-bold text-white uppercase tracking-[0.02em] flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/25"
+              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-8 rounded-full text-[14px] sm:text-[15px] font-bold text-white uppercase tracking-[0.02em] flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-lg shadow-rose-500/25"
               style={{
-                background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
+                background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #1D4ED8 0%, #0891B2 100%)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #BE123C 0%, #E11D48 100%)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 12px 28px rgba(37, 99, 235, 0.35)';
+                e.currentTarget.style.boxShadow = '0 12px 28px rgba(225, 29, 72, 0.35)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)';
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 10px 25px rgba(37, 99, 235, 0.25)';
+                e.currentTarget.style.boxShadow = '0 10px 25px rgba(225, 29, 72, 0.25)';
               }}
             >
               <span>REGISTER NOW</span>
@@ -128,20 +128,20 @@ export default function Hero({ onOpenRegister }) {
 
           {/* 6. LIVE EVENT INFORMATION & 7. STATISTICS */}
           <div className="pt-2 space-y-4">
-            {/* Live Event Badge: Pill-shaped, subtle pulsing cyan dot */}
+            {/* Live Event Badge: Pill-shaped, subtle pulsing dot */}
             <div>
               <div
                 className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full backdrop-blur-md"
                 style={{
                   background: 'rgba(7, 20, 38, 0.75)',
-                  border: '1px solid rgba(34, 211, 238, 0.35)',
+                  border: '1px solid rgba(251, 113, 133, 0.35)',
                 }}
               >
                 <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22D3EE] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22D3EE]"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FDA4AF] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FDA4AF]"></span>
                 </span>
-                <span className="text-[11px] sm:text-[12px] font-bold text-[#22D3EE] tracking-[0.12em] uppercase">
+                <span className="text-[11px] sm:text-[12px] font-bold text-[#FDA4AF] tracking-[0.12em] uppercase">
                   TIRUNELVELI DISTRICT • ROUND 2 • LIVE
                 </span>
               </div>

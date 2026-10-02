@@ -14,11 +14,11 @@ export default function Footer({ onOpenRegister }) {
           {/* Col 1: Brand & Tagline */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white shadow-md shadow-blue-500/25">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-600 to-rose-400 flex items-center justify-center text-white shadow-md shadow-rose-500/25">
                 <Trophy className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl sm:text-2xl font-black text-white tracking-wider uppercase font-sans">
-                THEZAR <span className="text-blue-500">2026</span>
+                THEZAR <span className="text-rose-500">2026</span>
               </span>
             </div>
             
@@ -37,11 +37,11 @@ export default function Footer({ onOpenRegister }) {
           <div className="space-y-3">
             <h4 className="text-sm font-black text-white uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="#home" className="hover:text-blue-400 transition-colors">Home Page</a></li>
-              <li><a href="#events" className="hover:text-blue-400 transition-colors">Upcoming Events</a></li>
-              <li><a href="#districts" className="hover:text-blue-400 transition-colors">38 Districts</a></li>
-              <li><a href="#about-thezar" className="hover:text-blue-400 transition-colors">About TheZar</a></li>
-              <li><a href="#contact" className="hover:text-blue-400 transition-colors">Contact Helpdesk</a></li>
+              <li><a href="#home" className="text-slate-400 no-underline hover:text-rose-400 transition-colors">Home Page</a></li>
+              <li><a href="#events" className="text-slate-400 no-underline hover:text-rose-400 transition-colors">Upcoming Events</a></li>
+              <li><a href="#districts" className="text-slate-400 no-underline hover:text-rose-400 transition-colors">38 Districts</a></li>
+              <li><a href="#about-thezar" className="text-slate-400 no-underline hover:text-rose-400 transition-colors">About TheZar</a></li>
+              <li><a href="#contact" className="text-slate-400 no-underline hover:text-rose-400 transition-colors">Contact Helpdesk</a></li>
             </ul>
           </div>
 
@@ -52,15 +52,15 @@ export default function Footer({ onOpenRegister }) {
               <li>
                 <button
                   onClick={onOpenRegister}
-                  className="hover:text-cyan-400 transition-colors text-left cursor-pointer"
+                  className="hover:text-rose-300 transition-colors text-left cursor-pointer"
                 >
                   Register Candidate Pass
                 </button>
               </li>
-              <li><a href="#mobile-app" className="hover:text-cyan-400 transition-colors">Download Mobile App</a></li>
-              <li><a href="#leaderboard" className="hover:text-cyan-400 transition-colors">Statewide Leaderboard</a></li>
-              <li><a href="#competitions" className="hover:text-cyan-400 transition-colors">Competition Guidelines</a></li>
-              <li><a href="#events" className="hover:text-cyan-400 transition-colors">Venue & Schedule Map</a></li>
+              <li><a href="#mobile-app" className="text-slate-400 no-underline hover:text-rose-300 transition-colors">Download Mobile App</a></li>
+              <li><a href="#leaderboard" className="text-slate-400 no-underline hover:text-rose-300 transition-colors">Statewide Leaderboard</a></li>
+              <li><a href="#competitions" className="text-slate-400 no-underline hover:text-rose-300 transition-colors">Competition Guidelines</a></li>
+              <li><a href="#events" className="text-slate-400 no-underline hover:text-rose-300 transition-colors">Venue & Schedule Map</a></li>
             </ul>
           </div>
 
@@ -69,15 +69,15 @@ export default function Footer({ onOpenRegister }) {
             <h4 className="text-sm font-black text-white uppercase tracking-wider">Support & Help</h4>
             <div className="space-y-2.5 text-slate-400 text-xs">
               <p className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-blue-400 shrink-0" />
+                <MapPin className="w-4 h-4 text-rose-400 shrink-0" />
                 <span>Anna Salai, Guindy, Chennai</span>
               </p>
               <p className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-cyan-400 shrink-0" />
+                <Phone className="w-4 h-4 text-rose-300 shrink-0" />
                 <span>+91 98765 43210</span>
               </p>
               <p className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-blue-400 shrink-0" />
+                <Mail className="w-4 h-4 text-rose-400 shrink-0" />
                 <span>secretariat@thezar2026.tn.gov.in</span>
               </p>
               <p className="flex items-center gap-2">
@@ -98,7 +98,7 @@ export default function Footer({ onOpenRegister }) {
               className="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition-colors flex items-center gap-1.5 text-xs font-bold cursor-pointer"
             >
               <span>Back to top</span>
-              <ArrowUp className="w-4 h-4 text-cyan-400" />
+              <ArrowUp className="w-4 h-4 text-rose-400" />
             </button>
           </div>
         </div>

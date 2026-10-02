@@ -24,7 +24,7 @@ export default function LeaderboardSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-3">
-            <span className="text-[12px] font-bold text-[#2563EB] tracking-[0.18em] uppercase">
+            <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
               LIVE STANDINGS
             </span>
             <div
@@ -36,7 +36,7 @@ export default function LeaderboardSection() {
             />
           </div>
           <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
-            THEZAR <span className="text-[#2563EB]">LEADERBOARD</span>
+            THEZAR <span className="text-[#E11D48]">LEADERBOARD</span>
           </h2>
           <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
             Live points tally updated across all 38 districts of Tamil Nadu after each competition round.
@@ -44,7 +44,7 @@ export default function LeaderboardSection() {
         </div>
 
         {/* Leaderboard Card Container */}
-        <div className="max-w-4xl mx-auto bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-10 shadow-xl text-left">
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-10 shadow-xl text-left">
           
           {/* Category Tabs */}
           <div className="flex justify-center mb-8">
@@ -72,14 +72,14 @@ export default function LeaderboardSection() {
                 key={user.rank}
                 className={`p-4 sm:p-5 rounded-2xl border transition-all flex items-center justify-between gap-4 ${
                   user.isUser
-                    ? 'bg-blue-50/70 border-blue-300 shadow-sm'
+                    ? 'bg-rose-50/70 border-rose-300 shadow-sm'
                     : 'bg-[#F8FAFC] border-slate-200/70 hover:border-slate-300'
                 }`}
               >
                 {/* Rank Badge & Profile Info */}
                 <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                   <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm shrink-0 ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-sm shrink-0 ${
                       user.rank === 1
                         ? 'bg-amber-400 text-[#071426] shadow-md shadow-amber-400/25'
                         : user.rank === 2
@@ -104,7 +104,7 @@ export default function LeaderboardSection() {
                         {user.name}
                       </h4>
                       {user.isUser && (
-                        <span className="bg-blue-600 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase shrink-0 font-mono">
+                        <span className="bg-rose-600 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase shrink-0 font-mono">
                           Your Rank
                         </span>
                       )}
@@ -116,7 +116,7 @@ export default function LeaderboardSection() {
                 {/* Points & District */}
                 <div className="text-right shrink-0">
                   <div className="flex items-baseline justify-end gap-1 font-mono">
-                    <span className="text-lg sm:text-2xl font-black text-blue-600">{user.points}</span>
+                    <span className="text-lg sm:text-2xl font-black text-rose-600">{user.points}</span>
                     <span className="text-[11px] text-slate-400 font-bold uppercase">pts</span>
                   </div>
                   <p className="text-[11px] text-slate-500 font-medium">{user.district} District</p>
@@ -129,7 +129,7 @@ export default function LeaderboardSection() {
           {/* Full Leaderboard CTA */}
           <div className="mt-8 pt-6 border-t border-slate-100 text-center">
             <button
-              className="inline-flex items-center gap-2 text-xs font-extrabold text-blue-600 hover:text-blue-800 uppercase tracking-widest cursor-pointer"
+              className="inline-flex items-center gap-2 text-xs font-extrabold text-rose-600 hover:text-rose-800 uppercase tracking-widest cursor-pointer"
             >
               <span>VIEW FULL LEADERBOARD (38 DISTRICTS)</span>
               <ArrowRight className="w-4 h-4" />

@@ -82,7 +82,7 @@ export default function Events() {
             <h2 className="text-3xl font-black text-white">Ready to Lock Your District Pass?</h2>
             <button
               onClick={() => setIsRegisterOpen(true)}
-              className="px-8 py-3.5 rounded-xl font-extrabold text-white gradient-bg-pink shadow-lg text-xs uppercase tracking-wider"
+              className="px-8 py-3.5 rounded-full font-extrabold text-white gradient-bg-pink shadow-lg text-xs uppercase tracking-wider"
             >
               Register Candidate Now &rarr;
             </button>

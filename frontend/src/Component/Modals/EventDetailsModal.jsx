@@ -19,7 +19,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl my-8 text-left">
+      <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl my-8 text-left">
         
         <button
           onClick={onClose}
@@ -87,9 +87,9 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
                 <h3 className="text-base font-bold text-white mb-3">Competition Tracks Available</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {event.competitions.map((comp, i) => (
-                    <div key={i} className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex items-center justify-between">
+                    <div key={i} className="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                        <div className="p-2.5 rounded-[10px] bg-slate-900 border border-slate-800">
                           {getCompetitionIcon(comp.type)}
                         </div>
                         <div>
@@ -110,7 +110,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
                 {event.competitions.map((comp, i) => (
                   <div key={i} className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded border border-rose-500/20">
+                      <span className="text-xs font-mono font-bold text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-full border border-rose-500/20">
                         {comp.type}
                       </span>
                       <span className="text-xs font-bold text-amber-400 flex items-center gap-1">
@@ -131,14 +131,14 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
               <h3 className="text-base font-bold text-white mb-4">Official Day Timetable</h3>
               <div className="space-y-2">
                 {event.schedule.map((item, idx) => (
-                  <div key={idx} className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex items-center justify-between">
+                  <div key={idx} className="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <span className="text-xs font-mono font-bold text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20 shrink-0">
+                      <span className="text-xs font-mono font-bold text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/20 shrink-0">
                         {item.time}
                       </span>
                       <span className="text-sm font-semibold text-slate-200">{item.task}</span>
                     </div>
-                    <span className="text-xs font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded hidden sm:inline-block">
+                    <span className="text-xs font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded-full hidden sm:inline-block">
                       {item.room}
                     </span>
                   </div>
@@ -189,7 +189,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold"
+              className="px-5 py-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold"
             >
               Close
             </button>
@@ -198,7 +198,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
                 onClose();
                 onOpenRegister();
               }}
-              className="px-6 py-2.5 rounded-xl font-bold text-white gradient-bg-pink shadow-lg hover:opacity-90 text-xs uppercase tracking-wider"
+              className="px-6 py-2.5 rounded-full font-bold text-white gradient-bg-pink shadow-lg hover:opacity-90 text-xs uppercase tracking-wider"
             >
               Register Candidate Now &rarr;
             </button>

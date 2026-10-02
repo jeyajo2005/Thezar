@@ -58,7 +58,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16 sm:mb-20">
           <div className="flex items-center justify-center gap-3">
-            <span className="text-[12px] font-bold text-[#2563EB] tracking-[0.18em] uppercase">
+            <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
               HOW IT WORKS
             </span>
             <div
@@ -70,7 +70,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
             />
           </div>
           <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
-            HOW THEZAR <span className="text-[#2563EB]">WORKS</span>
+            HOW THEZAR <span className="text-[#E11D48]">WORKS</span>
           </h2>
           <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
             A clear 5-step journey connecting campus talent directly to the grand statewide spotlight.
@@ -80,7 +80,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
         {/* 5-Step Horizontal Timeline */}
         <div className="relative">
           {/* Horizontal Connecting Line on Desktop */}
-          <div className="hidden lg:block absolute top-12 left-10 right-10 h-0.5 bg-gradient-to-r from-blue-600 via-cyan-400 to-amber-400 -z-0" />
+          <div className="hidden lg:block absolute top-12 left-10 right-10 h-0.5 bg-gradient-to-r from-rose-600 via-rose-400 to-amber-400 -z-0" />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6 relative z-10">
             {steps.map((step) => {
@@ -89,9 +89,9 @@ export default function HowItWorksSection({ onOpenRegister }) {
                 <div key={step.num} className="text-center space-y-4 flex flex-col items-center group">
                   
                   {/* Step Number Circle */}
-                  <div className="w-24 h-24 rounded-full bg-white border-2 border-slate-200 group-hover:border-blue-600 shadow-md flex flex-col items-center justify-center transition-all duration-300 group-hover:scale-110">
-                    <span className="text-xs font-mono font-black text-cyan-600">{step.num}</span>
-                    <Icon className="w-7 h-7 text-blue-600 group-hover:text-cyan-500 transition-colors mt-0.5" />
+                  <div className="w-24 h-24 rounded-full bg-white border-2 border-slate-200 group-hover:border-rose-600 shadow-md flex flex-col items-center justify-center transition-all duration-300 group-hover:scale-110">
+                    <span className="text-xs font-mono font-black text-rose-500">{step.num}</span>
+                    <Icon className="w-7 h-7 text-rose-600 group-hover:text-rose-500 transition-colors mt-0.5" />
                   </div>
 
                   {/* Content */}
@@ -117,7 +117,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
         <div className="mt-16 text-center">
           <button
             onClick={onOpenRegister}
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-black text-xs uppercase tracking-widest shadow-lg shadow-blue-500/25 hover:scale-105 transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-rose-600 to-rose-400 hover:from-rose-700 hover:to-rose-500 text-white font-black text-xs uppercase tracking-widest shadow-lg shadow-rose-500/25 hover:scale-105 transition-all cursor-pointer"
           >
             <span>START YOUR JOURNEY NOW</span>
             <ArrowRight className="w-4 h-4" />

@@ -6,11 +6,11 @@ export default function CtaSection({ onOpenRegister }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Deep Navy Decorative Card */}
-        <div className="relative rounded-3xl bg-[#071426] p-8 sm:p-16 lg:p-20 text-center overflow-hidden shadow-2xl border border-slate-800">
+        <div className="relative rounded-2xl bg-[#071426] p-8 sm:p-16 lg:p-20 text-center overflow-hidden shadow-2xl border border-slate-800">
           
           {/* Subtle Ambient Radial Lighting */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-20 right-10 w-80 h-80 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-rose-600/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-20 right-10 w-80 h-80 bg-rose-400/15 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto space-y-6">
             
@@ -42,7 +42,7 @@ export default function CtaSection({ onOpenRegister }) {
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={onOpenRegister}
-                className="w-full sm:w-auto px-9 py-4 rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-700 hover:to-cyan-500 text-white font-bold text-[14px] sm:text-[15px] uppercase tracking-[0.02em] shadow-xl shadow-blue-600/30 hover:shadow-cyan-400/40 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-9 py-4 rounded-full bg-gradient-to-r from-rose-600 via-rose-500 to-rose-400 hover:from-rose-700 hover:to-rose-500 text-white font-bold text-[14px] sm:text-[15px] uppercase tracking-[0.02em] shadow-xl shadow-rose-600/30 hover:shadow-rose-400/40 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>REGISTER NOW</span>
                 <ArrowRight className="w-4 h-4" />

@@ -39,7 +39,7 @@ export default function CountdownSection() {
     <div className="relative z-30 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-14 sm:-mt-16 -mb-12 sm:-mb-14">
       {/* Floating White Card Overlapping Sections */}
       <div
-        className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-slate-100 transition-all duration-300"
+        className="bg-white rounded-2xl p-6 sm:p-10 border border-slate-100 transition-all duration-300"
         style={{
           boxShadow: '0 25px 60px -15px rgba(15, 23, 42, 0.12), 0 10px 25px -10px rgba(15, 23, 42, 0.06)',
         }}
@@ -48,13 +48,13 @@ export default function CountdownSection() {
           
           {/* Left Column: Heading */}
           <div className="lg:col-span-5 text-left space-y-2">
-            <div className="inline-flex items-center gap-2 text-[12px] font-bold text-[#2563EB] uppercase tracking-[0.18em]">
+            <div className="inline-flex items-center gap-2 text-[12px] font-bold text-[#E11D48] uppercase tracking-[0.18em]">
               <Calendar className="w-3.5 h-3.5" />
               <span>NEXT DISTRICT STAGE</span>
             </div>
             
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#071426] tracking-[-0.03em] leading-tight">
-              Count <span className="text-[#2563EB]">Every Second</span> <br className="hidden sm:block" />
+              Count <span className="text-[#E11D48]">Every Second</span> <br className="hidden sm:block" />
               Until the Event
             </h3>
             
@@ -105,10 +105,10 @@ export default function CountdownSection() {
 
               {/* Seconds */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#2563EB] tracking-[-0.04em] block leading-none">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#E11D48] tracking-[-0.04em] block leading-none">
                   {timeLeft.seconds}
                 </span>
-                <span className="text-[11px] sm:text-[12px] font-semibold text-[#2563EB] uppercase tracking-[0.12em] mt-2 block">
+                <span className="text-[11px] sm:text-[12px] font-semibold text-[#E11D48] uppercase tracking-[0.12em] mt-2 block">
                   SECONDS
                 </span>
               </div>

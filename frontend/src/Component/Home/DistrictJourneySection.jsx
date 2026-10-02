@@ -35,7 +35,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
           <div className="flex items-center justify-center gap-3">
-            <span className="text-[12px] font-bold text-[#2563EB] tracking-[0.18em] uppercase">
+            <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
               THEZAR ACROSS TAMIL NADU
             </span>
             <div
@@ -47,9 +47,9 @@ export default function DistrictJourneySection({ onOpenRegister }) {
             />
           </div>
           <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
-            THEZAR ACROSS <span className="text-[#2563EB]">TAMIL NADU</span>
+            THEZAR ACROSS <span className="text-[#E11D48]">TAMIL NADU</span>
           </h2>
-          <p className="text-[11px] sm:text-[12px] font-bold text-[#06B6D4] tracking-[0.12em] uppercase">
+          <p className="text-[11px] sm:text-[12px] font-bold text-[#FB7185] tracking-[0.12em] uppercase">
             38 DISTRICTS • ONE JOURNEY • ONE GRAND STAGE
           </p>
           <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed pt-1">
@@ -63,16 +63,16 @@ export default function DistrictJourneySection({ onOpenRegister }) {
             <p className="text-xs text-slate-500 font-mono uppercase font-bold">Total Districts</p>
             <p className="text-3xl sm:text-4xl font-black text-[#071426] mt-1 font-mono">38</p>
           </div>
-          <div className="bg-cyan-50/60 rounded-2xl p-5 border border-cyan-200/80 text-center">
-            <p className="text-xs text-cyan-700 font-mono uppercase font-bold">Live Now</p>
-            <p className="text-3xl sm:text-4xl font-black text-cyan-600 mt-1 font-mono flex items-center justify-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-500 animate-ping"></span>
+          <div className="bg-rose-50/60 rounded-2xl p-5 border border-rose-200/80 text-center">
+            <p className="text-xs text-rose-700 font-mono uppercase font-bold">Live Now</p>
+            <p className="text-3xl sm:text-4xl font-black text-rose-600 mt-1 font-mono flex items-center justify-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
               1
             </p>
           </div>
-          <div className="bg-blue-50/60 rounded-2xl p-5 border border-blue-200/80 text-center">
-            <p className="text-xs text-blue-700 font-mono uppercase font-bold">Upcoming Rounds</p>
-            <p className="text-3xl sm:text-4xl font-black text-blue-600 mt-1 font-mono">19</p>
+          <div className="bg-rose-50/60 rounded-2xl p-5 border border-rose-200/80 text-center">
+            <p className="text-xs text-rose-700 font-mono uppercase font-bold">Upcoming Rounds</p>
+            <p className="text-3xl sm:text-4xl font-black text-rose-600 mt-1 font-mono">19</p>
           </div>
           <div className="bg-emerald-50/60 rounded-2xl p-5 border border-emerald-200/80 text-center">
             <p className="text-xs text-emerald-700 font-mono uppercase font-bold">Completed Stages</p>
@@ -89,7 +89,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
               placeholder="Search district or venue..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white text-xs pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-blue-600"
+              className="w-full bg-white text-xs pl-10 pr-4 py-2.5 rounded-[10px] border border-slate-200 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-rose-600"
             />
           </div>
 
@@ -98,7 +98,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
               <button
                 key={region}
                 onClick={() => setSelectedRegion(region)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                   selectedRegion === region
                     ? 'bg-[#071426] text-white shadow-sm'
                     : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
@@ -115,16 +115,16 @@ export default function DistrictJourneySection({ onOpenRegister }) {
           {filteredDistricts.slice(0, 9).map((dist) => (
             <div
               key={dist.id}
-              className="bg-[#F8FAFC] p-5 rounded-2xl border border-slate-200/70 hover:border-blue-400 hover:shadow-md transition-all flex flex-col justify-between group"
+              className="bg-[#F8FAFC] p-5 rounded-2xl border border-slate-200/70 hover:border-rose-400 hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold bg-white px-2.5 py-0.5 rounded-md border border-slate-200 text-slate-600 uppercase">
+                  <span className="text-[10px] font-mono font-bold bg-white px-2.5 py-0.5 rounded-full border border-slate-200 text-slate-600 uppercase">
                     {dist.code} • {dist.region} TN
                   </span>
                   {dist.status === 'Live' ? (
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-cyan-600 font-mono">
-                      <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 font-mono">
+                      <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
                       ● Live
                     </span>
                   ) : dist.status === 'Completed' ? (
@@ -140,7 +140,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                 </div>
 
                 <div>
-                  <h4 className="text-base font-extrabold text-[#071426] group-hover:text-blue-600 transition-colors">
+                  <h4 className="text-base font-extrabold text-[#071426] group-hover:text-rose-600 transition-colors">
                     {dist.name} District
                   </h4>
                   <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-1 truncate">
@@ -154,7 +154,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                 <span className="font-mono text-slate-500">{dist.date}</span>
                 <button
                   onClick={onOpenRegister}
-                  className="font-bold text-blue-600 hover:text-blue-800 flex items-center gap-0.5 cursor-pointer"
+                  className="font-bold text-rose-600 hover:text-rose-800 flex items-center gap-0.5 cursor-pointer"
                 >
                   <span>Pass</span>
                   <ChevronRight className="w-3.5 h-3.5" />

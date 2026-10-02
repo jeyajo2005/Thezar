@@ -14,14 +14,14 @@ export default function MobileAppSection() {
   return (
     <section id="mobile-app" className="py-24 sm:py-32 bg-[#071426] text-white relative overflow-hidden">
       {/* Subtle ambient light */}
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-rose-600/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Sleek Smartphone Mockup */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-72 sm:w-80 rounded-[44px] p-4 bg-slate-900 border-4 border-slate-700 shadow-2xl shadow-blue-950/60">
+            <div className="relative w-72 sm:w-80 rounded-[44px] p-4 bg-slate-900 border-4 border-slate-700 shadow-2xl shadow-rose-950/60">
               
               {/* Dynamic Island / Notch */}
               <div className="w-28 h-5 bg-black rounded-full mx-auto mb-3" />
@@ -32,34 +32,34 @@ export default function MobileAppSection() {
                 {/* Header */}
                 <div className="flex items-center justify-between pb-3 border-b border-slate-700/60">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-xs font-black">
+                    <div className="w-7 h-7 rounded-[10px] bg-gradient-to-tr from-rose-600 to-rose-400 flex items-center justify-center text-white text-xs font-black">
                       TZ
                     </div>
                     <span className="text-xs font-black text-white">THEZAR APP</span>
                   </div>
-                  <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded-full border border-cyan-500/30">
+                  <span className="text-[10px] font-mono text-rose-400 bg-rose-950/60 px-2 py-0.5 rounded-full border border-rose-500/30">
                     LIVE
                   </span>
                 </div>
 
                 {/* Candidate Pass Card inside Phone */}
-                <div className="bg-gradient-to-br from-blue-600 to-cyan-600 p-4 rounded-2xl text-white space-y-3 shadow-lg">
+                <div className="bg-gradient-to-br from-rose-600 to-rose-500 p-4 rounded-2xl text-white space-y-3 shadow-lg">
                   <div className="flex justify-between items-start">
                     <div>
-                      <span className="text-[9px] font-mono uppercase tracking-wider text-blue-100 block">CANDIDATE PASS</span>
+                      <span className="text-[9px] font-mono uppercase tracking-wider text-rose-100 block">CANDIDATE PASS</span>
                       <p className="text-sm font-black">Sumanth Raja</p>
                     </div>
                     <span className="text-[10px] font-mono bg-white/20 px-2 py-0.5 rounded">#TZ-3841</span>
                   </div>
-                  <div className="bg-white p-2 rounded-xl flex items-center justify-center w-28 h-28 mx-auto shadow-inner">
+                  <div className="bg-white p-2 rounded-[10px] flex items-center justify-center w-28 h-28 mx-auto shadow-inner">
                     <QRCodeSVG value="https://thezar2026.tn.gov.in/pass/TZ-3841" size={96} />
                   </div>
-                  <p className="text-[9px] text-center text-blue-100 font-mono">Scan for Instant Venue Entry</p>
+                  <p className="text-[9px] text-center text-rose-100 font-mono">Scan for Instant Venue Entry</p>
                 </div>
 
                 {/* Notification Item inside Phone */}
-                <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                <div className="bg-slate-800/80 p-3 rounded-2xl border border-slate-700 flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-[10px] bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
                     <Bell className="w-4 h-4" />
                   </div>
                   <div>
@@ -77,7 +77,7 @@ export default function MobileAppSection() {
           <div className="lg:col-span-7 text-left space-y-6">
             
             <div className="flex items-center gap-3">
-              <span className="text-[12px] font-bold text-[#06B6D4] tracking-[0.18em] uppercase">
+              <span className="text-[12px] font-bold text-[#FB7185] tracking-[0.18em] uppercase">
                 OFFICIAL MOBILE APP
               </span>
               <div
@@ -103,8 +103,8 @@ export default function MobileAppSection() {
             {/* Feature Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
               {appFeatures.map((feat) => (
-                <div key={feat.title} className="flex items-start gap-3 bg-white/5 p-3.5 rounded-xl border border-white/10">
-                  <CheckCircle2 className="w-4 h-4 text-[#06B6D4] shrink-0 mt-0.5" />
+                <div key={feat.title} className="flex items-start gap-3 bg-white/5 p-3.5 rounded-2xl border border-white/10">
+                  <CheckCircle2 className="w-4 h-4 text-[#FB7185] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="text-xs sm:text-sm font-bold text-white">{feat.title}</h4>
                     <p className="text-[11px] text-slate-400 mt-0.5">{feat.desc}</p>
@@ -117,7 +117,7 @@ export default function MobileAppSection() {
             <div className="pt-4 flex flex-wrap items-center gap-4">
               <a
                 href="#download"
-                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-700 hover:to-cyan-500 text-white font-bold text-[13px] sm:text-[14px] uppercase tracking-[0.02em] shadow-xl shadow-blue-600/30 hover:scale-105 transition-all flex items-center gap-2"
+                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-rose-600 via-rose-500 to-rose-400 hover:from-rose-700 hover:to-rose-500 text-white font-bold text-[13px] sm:text-[14px] uppercase tracking-[0.02em] shadow-xl shadow-rose-600/30 hover:scale-105 transition-all flex items-center gap-2"
               >
                 <Download className="w-4 h-4" />
                 <span>DOWNLOAD THE APP</span>
