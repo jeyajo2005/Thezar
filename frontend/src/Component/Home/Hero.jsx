@@ -1,5 +1,5 @@
 import heroSpeakerImg from '../../assets/Young_woman.png';
-import { Calendar, MapPin, Mic, Trophy, Music, ArrowRight } from 'lucide-react';
+import { Trophy, MapPin, Users, Sparkles, ArrowRight } from 'lucide-react';
 
 export default function Hero({ onOpenRegister }) {
   return (
@@ -14,7 +14,7 @@ export default function Hero({ onOpenRegister }) {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={heroSpeakerImg}
-          alt="TheZar 2026 Singing & Performance Stage Atmosphere"
+          alt="TheZar 2026 Grand Stage Atmosphere"
           className="w-full h-full object-cover object-[80%_25%] sm:object-[center_20%] lg:object-[75%_22%]"
         />
 
@@ -45,7 +45,7 @@ export default function Hero({ onOpenRegister }) {
           
           {/* 1. TOP EYEBROW HEADER */}
           <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-300">
-            38 DISTRICTS <span className="text-[#FB7185] mx-1.5">|</span> SINGING & MUSIC <span className="text-[#FB7185] mx-1.5">|</span> LIVE STAGE <span className="text-[#FB7185] mx-1.5">|</span> THEZAR 2026
+            38 DISTRICTS <span className="text-[#FB7185] mx-1.5">|</span> TAMIL NADU <span className="text-[#FB7185] mx-1.5">|</span> COLLEGIATE LEAGUE <span className="text-[#FB7185] mx-1.5">|</span> THEZAR 2026
           </div>
 
           {/* 2. TYPOGRAPHIC HEADING STACK */}
@@ -62,14 +62,14 @@ export default function Hero({ onOpenRegister }) {
               COLLEGIATE
             </span>
             <span className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-light text-white/95 tracking-[0.06em]">
-              SINGING LEAGUE
+              COMPETITION
             </span>
           </h1>
 
           {/* 3. SUBTITLE & ROSE DECORATIVE LINE */}
           <div className="space-y-2.5">
             <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-200 leading-relaxed">
-              A live musical program & competition platform where individual artists and groups perform vocal pieces in front of an audience and a panel of judges across 38 districts.
+              Bringing students together across 38 districts of Tamil Nadu through multi-disciplinary competitions, creativity, innovation, and unforgettable experiences.
             </p>
             <div
               className="w-14 h-[3px] rounded-full"
@@ -82,14 +82,14 @@ export default function Hero({ onOpenRegister }) {
 
           {/* 4. EVENT DETAILS 2x2 GRID */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 max-w-[500px]">
-            {/* Vocal Performances */}
+            {/* Multi-Disciplinary Events */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Mic className="w-4 h-4 text-[#FB7185]" />
+                <Trophy className="w-4 h-4 text-[#FB7185]" />
               </div>
               <div>
-                <div className="text-[13px] font-bold text-white leading-tight">Vocal Performances</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">Solo & Group Singers</div>
+                <div className="text-[13px] font-bold text-white leading-tight">Multi-Disciplinary</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">38 District Events</div>
               </div>
             </div>
 
@@ -100,29 +100,29 @@ export default function Hero({ onOpenRegister }) {
               </div>
               <div>
                 <div className="text-[13px] font-bold text-white leading-tight">38 Districts</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">Tamil Nadu State Rounds</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">Statewide Stages</div>
               </div>
             </div>
 
-            {/* Panel Judges */}
+            {/* Student Community */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Trophy className="w-4 h-4 text-[#FB7185]" />
+                <Users className="w-4 h-4 text-[#FB7185]" />
               </div>
               <div>
-                <div className="text-[13px] font-bold text-white leading-tight">Panel Judges</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">Grand State Finals</div>
+                <div className="text-[13px] font-bold text-white leading-tight">Student Community</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">5,000+ Participants</div>
               </div>
             </div>
 
-            {/* Live Musical Stage */}
+            {/* Grand Championship */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Music className="w-4 h-4 text-[#FB7185]" />
+                <Sparkles className="w-4 h-4 text-[#FB7185]" />
               </div>
               <div>
-                <div className="text-[13px] font-bold text-white leading-tight">Live Musical Stage</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">Audience & Auditions</div>
+                <div className="text-[13px] font-bold text-white leading-tight">Grand Championship</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">Trophies & Awards</div>
               </div>
             </div>
           </div>
