@@ -131,8 +131,9 @@ export default function Hero({ onOpenRegister }) {
           <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={onOpenRegister}
-              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-6 rounded-full text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-md shadow-rose-500/25"
+              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-6 rounded-xl text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-md shadow-rose-500/25"
               style={{
+                borderRadius: '12px',
                 background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
               }}
               onMouseEnter={(e) => {
@@ -150,8 +151,9 @@ export default function Hero({ onOpenRegister }) {
 
             <a
               href="#events"
-              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-6 rounded-full text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center transition-all duration-200 cursor-pointer"
+              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-6 rounded-xl text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center transition-all duration-200 cursor-pointer"
               style={{
+                borderRadius: '12px',
                 background: 'rgba(255, 255, 255, 0.08)',
                 border: '1px solid rgba(255, 255, 255, 0.30)',
                 backdropFilter: 'blur(8px)',
