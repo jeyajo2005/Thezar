@@ -3,7 +3,7 @@ import trophyImg from '../../assets/event_trophy.jpg';
 
 export default function WhyParticipateSection() {
   return (
-    <section className="py-20 bg-slate-50 text-slate-900 relative">
+    <section className="py-12 sm:py-16 bg-slate-50 text-slate-900 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">

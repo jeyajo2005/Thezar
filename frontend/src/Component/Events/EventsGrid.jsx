@@ -49,10 +49,10 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
   };
 
   return (
-    <section id="events" className="py-24 sm:py-32 bg-[#F8FAFC] text-slate-900 relative overflow-hidden">
+    <section id="events" className="pt-24 sm:pt-32 pb-12 sm:pb-16 bg-[#F8FAFC] text-slate-900 relative overflow-hidden">
       {/* 1. Oversized Faint Watermark Text: "SCHEDULE" */}
       <div
-        className="absolute top-8 left-1/2 -translate-x-1/2 pointer-events-none select-none font-black tracking-tighter uppercase z-0 leading-none text-center w-full"
+        className="absolute top-12 sm:top-16 left-1/2 -translate-x-1/2 pointer-events-none select-none font-black tracking-tighter uppercase z-0 leading-none text-center w-full"
         style={{
           fontSize: 'clamp(80px, 15vw, 180px)',
           color: 'rgba(15, 23, 42, 0.035)',

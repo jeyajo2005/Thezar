@@ -1,65 +1,52 @@
-import { UserCheck, Compass, Zap, BarChart3, Trophy, ArrowRight } from 'lucide-react';
+import { MapPin, Video, Trophy, ArrowRight, UserCheck, QrCode, Sparkles, CheckCircle2 } from 'lucide-react';
+import contestantImg from '../../assets/cheerful_contestant.jpg';
 
 export default function HowItWorksSection({ onOpenRegister }) {
   const steps = [
     {
-      num: '01',
-      title: 'REGISTER',
-      subtitle: 'Candidate Pass',
-      desc: 'Sign up with your details to generate your verified digital QR admission pass.',
+      id: 1,
+      title: 'Select District & Register',
+      desc: 'Choose your district arena (e.g. Tirunelveli Cooking, Cultural or Arts) & generate your verified digital admission pass.',
       icon: UserCheck,
+      iconBg: 'bg-[#DCFCE7] text-[#15803D]', // Soft mint green
     },
     {
-      num: '02',
-      title: 'CHOOSE YOUR EVENT',
-      subtitle: 'Select Arena',
-      desc: 'Browse 100+ competitions across technical, cultural, quiz, and innovation tracks.',
-      icon: Compass,
+      id: 2,
+      title: 'Submit 60-Sec Video Reel',
+      desc: 'Record & upload a short video reel showing your talent for district jury evaluation & shortlisting.',
+      icon: Video,
+      iconBg: 'bg-[#F1F5F9] text-[#334155]', // Soft slate
     },
     {
-      num: '03',
-      title: 'COMPETE',
-      subtitle: 'District Round',
-      desc: 'Perform on live auditorium stages in front of expert state and national judges.',
-      icon: Zap,
-    },
-    {
-      num: '04',
-      title: 'TRACK RESULTS',
-      subtitle: 'Live Scoring',
-      desc: 'View real-time district leaderboard points, performance metrics, and badges.',
-      icon: BarChart3,
-    },
-    {
-      num: '05',
-      title: 'REACH GRAND STAGE',
-      subtitle: 'Chennai Finale',
-      desc: 'District champions compete in Chennai for the ₹40 Lakhs House & ₹25L cash pool.',
+      id: 3,
+      title: 'Face-to-Face Live Stage',
+      desc: 'Perform live before grand judges & audience at your district auditorium and advance to Chennai Finals!',
       icon: Trophy,
+      iconBg: 'bg-[#FEF3C7] text-[#92400E]', // Soft warm amber
     },
   ];
 
   return (
-    <section id="how-it-works" className="py-24 sm:py-32 bg-white text-slate-900 relative overflow-hidden">
-      {/* 1. Oversized Faint Watermark Text: "PROCESS" */}
+    <section id="how-it-works" className="py-12 sm:py-16 bg-white text-slate-900 relative overflow-hidden">
+      {/* Background Watermark */}
       <div
-        className="absolute top-8 left-1/2 -translate-x-1/2 pointer-events-none select-none font-black tracking-tighter uppercase z-0 leading-none text-center w-full"
+        className="absolute top-6 left-1/2 -translate-x-1/2 pointer-events-none select-none font-black tracking-tighter uppercase z-0 leading-none text-center w-full"
         style={{
-          fontSize: 'clamp(80px, 15vw, 180px)',
-          color: 'rgba(15, 23, 42, 0.035)',
+          fontSize: 'clamp(70px, 14vw, 170px)',
+          color: 'rgba(15, 23, 42, 0.025)',
           fontFamily: "'Plus Jakarta Sans', sans-serif",
         }}
       >
-        PROCESS
+        STEPS
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-16 sm:mb-20">
+        {/* CENTERED HEADER (Matching Reference Image) */}
+        <div className="text-center max-w-2xl mx-auto space-y-2 mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-3">
             <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
-              HOW IT WORKS
+              SIMPLE STEPS
             </span>
             <div
               className="w-10 h-[2px] rounded-full"
@@ -69,40 +56,58 @@ export default function HowItWorksSection({ onOpenRegister }) {
               }}
             />
           </div>
-          <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
-            HOW THEZAR <span className="text-[#E11D48]">WORKS</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#071426] tracking-tight uppercase">
+            HOW IT <span className="text-[#E11D48]">WORKS</span>
           </h2>
-          <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
-            A clear 5-step journey connecting campus talent directly to the grand statewide spotlight.
+          <p className="text-slate-500 text-sm sm:text-base leading-relaxed pt-1">
+            No confusion or delays. Just fast, simple and transparent talent selection.
           </p>
         </div>
 
-        {/* 5-Step Horizontal Timeline */}
-        <div className="relative">
-          {/* Horizontal Connecting Line on Desktop */}
-          <div className="hidden lg:block absolute top-12 left-10 right-10 h-0.5 bg-gradient-to-r from-rose-600 via-rose-400 to-amber-400 -z-0" />
+        {/* 2-COLUMN SPLIT */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          
+          {/* LEFT COLUMN: Clean Person Portrait Card */}
+          <div className="lg:col-span-6 relative flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-md sm:max-w-lg">
+              
+              {/* Soft Ambient Backdrop Light */}
+              <div className="absolute -left-10 -bottom-10 w-72 h-72 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
+              
+              {/* Main Person Portrait Card */}
+              <div className="relative rounded-[32px] overflow-hidden shadow-2xl border border-slate-100 aspect-[4/3.8] bg-slate-100 group">
+                <img
+                  src={contestantImg}
+                  alt="TheZar Participant"
+                  className="w-full h-full object-cover object-top select-none group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6 relative z-10">
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Vertical Step List with Left Timeline Line (Matching Reference Layout) */}
+          <div className="lg:col-span-6 text-left relative space-y-8 pl-2 sm:pl-4">
+            
+            {/* Vertical Timeline Divider Line */}
+            <div className="absolute left-[39px] sm:left-[47px] top-6 bottom-6 w-[2px] bg-slate-200/80 -z-0" />
+
             {steps.map((step) => {
-              const Icon = step.icon;
+              const StepIcon = step.icon;
               return (
-                <div key={step.num} className="text-center space-y-4 flex flex-col items-center group">
+                <div key={step.id} className="relative z-10 flex items-start gap-5 sm:gap-6 group">
                   
-                  {/* Step Number Circle */}
-                  <div className="w-24 h-24 rounded-full bg-white border-2 border-slate-200 group-hover:border-rose-600 shadow-md flex flex-col items-center justify-center transition-all duration-300 group-hover:scale-110">
-                    <span className="text-xs font-mono font-black text-rose-500">{step.num}</span>
-                    <Icon className="w-7 h-7 text-rose-600 group-hover:text-rose-500 transition-colors mt-0.5" />
+                  {/* Icon Box (Matching Reference Green / Grey / Yellow Square Icon Design) */}
+                  <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-105 ${step.iconBg}`}>
+                    <StepIcon className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
 
-                  {/* Content */}
-                  <div className="space-y-1.5 px-2">
-                    <span className="text-[10px] font-mono uppercase font-bold text-slate-400 tracking-widest block">
-                      {step.subtitle}
-                    </span>
-                    <h3 className="text-base font-black text-[#071426] tracking-tight">
+                  {/* Step Title & Description */}
+                  <div className="pt-1 space-y-1 max-w-lg">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#071426] tracking-tight group-hover:text-[#E11D48] transition-colors">
                       {step.title}
                     </h3>
-                    <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                    <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
                       {step.desc}
                     </p>
                   </div>
@@ -110,18 +115,21 @@ export default function HowItWorksSection({ onOpenRegister }) {
                 </div>
               );
             })}
-          </div>
-        </div>
 
-        {/* Bottom CTA Button */}
-        <div className="mt-16 text-center">
-          <button
-            onClick={onOpenRegister}
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-rose-600 to-rose-400 hover:from-rose-700 hover:to-rose-500 text-white font-black text-xs uppercase tracking-widest shadow-lg shadow-rose-500/25 hover:scale-105 transition-all cursor-pointer"
-          >
-            <span>START YOUR JOURNEY NOW</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+            {/* CTA Button */}
+            <div className="pt-4 pl-[75px] sm:pl-[88px]">
+              <button
+                onClick={onOpenRegister}
+                className="px-8 py-3.5 rounded-full bg-[#071426] hover:bg-[#E11D48] text-white text-xs sm:text-sm font-bold inline-flex items-center gap-2 shadow-lg transition-all cursor-pointer"
+                style={{ borderRadius: '9999px' }}
+              >
+                <span>Register & Get Digital Pass</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+
+          </div>
+
         </div>
 
       </div>

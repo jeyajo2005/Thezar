@@ -1,61 +1,273 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { DISTRICTS_DATA } from '../../data/mockData';
-import { MapPin, Calendar, ArrowRight, CheckCircle2, ChevronDown } from 'lucide-react';
+import { MapPin, Calendar, ArrowRight, CheckCircle2, ChevronDown, Layers, Sparkles } from 'lucide-react';
 import tnMapImg from '../../assets/tn_map_pink.png';
 
-// Calibrated Coordinates (x, y) on a 500x670 SVG canvas matching tn_map_pink.png district boundaries
+// Calibrated 774x1024 Native Coordinates matching tn_map_pink.png district boundaries perfectly
 const MAP_PINS_COORDINATES = {
-  1: { x: 205, y: 575, name: "Tirunelveli" },
-  2: { x: 235, y: 455, name: "Madurai" },
-  3: { x: 435, y: 205, name: "Chennai" },
-  4: { x: 125, y: 345, name: "Coimbatore" },
-  5: { x: 280, y: 265, name: "Salem" },
-  6: { x: 295, y: 380, name: "Trichy" },
-  7: { x: 185, y: 635, name: "Kanyakumari" },
-  8: { x: 350, y: 405, name: "Thanjavur" },
-  9: { x: 195, y: 260, name: "Erode" },
-  10: { x: 335, y: 135, name: "Vellore" },
-  11: { x: 250, y: 580, name: "Tuticorin" },
-  12: { x: 200, y: 405, name: "Dindigul" },
-  13: { x: 405, y: 335, name: "Cuddalore" },
-  14: { x: 400, y: 195, name: "Kanchipuram" },
-  15: { x: 420, y: 95, name: "Thiruvallur" },
-  16: { x: 250, y: 220, name: "Dharmapuri" },
-  17: { x: 235, y: 155, name: "Krishnagiri" },
-  18: { x: 240, y: 315, name: "Namakkal" },
-  19: { x: 240, y: 370, name: "Karur" },
-  20: { x: 310, y: 340, name: "Perambalur" },
-  21: { x: 350, y: 355, name: "Ariyalur" },
-  22: { x: 415, y: 455, name: "Nagapattinam" },
-  23: { x: 410, y: 385, name: "Mayiladuthurai" },
-  24: { x: 395, y: 430, name: "Tiruvarur" },
-  25: { x: 325, y: 440, name: "Pudukkottai" },
-  26: { x: 295, y: 475, name: "Sivagangai" },
-  27: { x: 350, y: 530, name: "Ramanathapuram" },
-  28: { x: 205, y: 505, name: "Virudhunagar" },
-  29: { x: 155, y: 445, name: "Theni" },
-  30: { x: 165, y: 555, name: "Tenkasi" },
-  31: { x: 80, y: 245, name: "Nilgiris" },
-  32: { x: 285, y: 170, name: "Tirupathur" },
-  33: { x: 390, y: 150, name: "Ranipet" },
-  34: { x: 325, y: 275, name: "Kallakurichi" },
-  35: { x: 380, y: 280, name: "Villupuram" },
-  36: { x: 420, y: 240, name: "Chengalpattu" },
-  37: { x: 350, y: 210, name: "Tiruvannamalai" },
-  38: { x: 438, y: 212, name: "Grand Finale - Chennai" },
+  1: { x: 290, y: 840, name: "Tirunelveli" },
+  2: { x: 360, y: 680, name: "Madurai" },
+  3: { x: 665, y: 220, name: "Chennai" },
+  4: { x: 135, y: 490, name: "Coimbatore" },
+  5: { x: 370, y: 360, name: "Salem" },
+  6: { x: 440, y: 520, name: "Trichy" },
+  7: { x: 275, y: 945, name: "Kanyakumari" },
+  8: { x: 510, y: 550, name: "Thanjavur" },
+  9: { x: 270, y: 390, name: "Erode" },
+  10: { x: 480, y: 180, name: "Vellore" },
+  11: { x: 390, y: 830, name: "Tuticorin" },
+  12: { x: 290, y: 560, name: "Dindigul" },
+  13: { x: 580, y: 440, name: "Cuddalore" },
+  14: { x: 590, y: 240, name: "Kanchipuram" },
+  15: { x: 550, y: 130, name: "Thiruvallur" },
+  16: { x: 370, y: 280, name: "Dharmapuri" },
+  17: { x: 340, y: 190, name: "Krishnagiri" },
+  18: { x: 350, y: 430, name: "Namakkal" },
+  19: { x: 340, y: 500, name: "Karur" },
+  20: { x: 460, y: 450, name: "Perambalur" },
+  21: { x: 510, y: 470, name: "Ariyalur" },
+  22: { x: 600, y: 610, name: "Nagapattinam" },
+  23: { x: 600, y: 500, name: "Mayiladuthurai" },
+  24: { x: 580, y: 570, name: "Tiruvarur" },
+  25: { x: 470, y: 590, name: "Pudukkottai" },
+  26: { x: 410, y: 650, name: "Sivagangai" },
+  27: { x: 500, y: 730, name: "Ramanathapuram" },
+  28: { x: 290, y: 700, name: "Virudhunagar" },
+  29: { x: 200, y: 610, name: "Theni" },
+  30: { x: 220, y: 770, name: "Tenkasi" },
+  31: { x: 100, y: 390, name: "Nilgiris" },
+  32: { x: 410, y: 220, name: "Tirupathur" },
+  33: { x: 550, y: 190, name: "Ranipet" },
+  34: { x: 470, y: 370, name: "Kallakurichi" },
+  35: { x: 540, y: 360, name: "Villupuram" },
+  36: { x: 610, y: 290, name: "Chengalpattu" },
+  37: { x: 490, y: 290, name: "Tiruvannamalai" },
+  38: { x: 670, y: 225, name: "Grand Finale - Chennai" },
 };
+
+/**
+ * Native HTML5 Canvas 2D Engine Map Component (774x1024 Pixel Alignment)
+ */
+function HTML5CanvasMap({ selectedDistrictId, setSelectedDistrictId, hoveredDistrictId, setHoveredDistrictId }) {
+  const canvasRef = useRef(null);
+  const animFrameRef = useRef(null);
+  const bgImgRef = useRef(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = tnMapImg;
+    img.onload = () => {
+      bgImgRef.current = img;
+      setImgLoaded(true);
+    };
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let pulseStep = 0;
+
+    const render = () => {
+      pulseStep += 0.04;
+      const width = canvas.width;   // 774
+      const height = canvas.height; // 1024
+
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Draw 100% exact background map without letterboxing
+      if (bgImgRef.current && imgLoaded) {
+        ctx.drawImage(bgImgRef.current, 0, 0, width, height);
+      }
+
+      // 2. Draw animated radar connector lines from selected district node to adjacent districts
+      const activeCoord = MAP_PINS_COORDINATES[selectedDistrictId] || { x: 387, y: 512 };
+
+      DISTRICTS_DATA.forEach((dist) => {
+        const coord = MAP_PINS_COORDINATES[dist.id] || { x: 387, y: 512 };
+        const distToActive = Math.hypot(coord.x - activeCoord.x, coord.y - activeCoord.y);
+
+        if (distToActive < 200 && dist.id !== selectedDistrictId) {
+          ctx.beginPath();
+          ctx.setLineDash([5, 5]);
+          ctx.moveTo(activeCoord.x, activeCoord.y);
+          ctx.lineTo(coord.x, coord.y);
+          ctx.strokeStyle = 'rgba(225, 29, 72, 0.40)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      });
+
+      // 3. Draw all 38 District Nodes on Canvas Grid
+      DISTRICTS_DATA.forEach((dist) => {
+        const coord = MAP_PINS_COORDINATES[dist.id] || { x: 387, y: 512 };
+        const isSelected = dist.id === selectedDistrictId;
+        const isHovered = dist.id === hoveredDistrictId;
+        const isLive = dist.status === 'Live';
+
+        // Outer Pulsing Glow Aura
+        if (isSelected || isLive) {
+          const pulseRadius = (isSelected ? 24 : 16) + Math.sin(pulseStep) * 5;
+          ctx.beginPath();
+          ctx.arc(coord.x, coord.y, Math.max(pulseRadius, 4), 0, Math.PI * 2);
+          ctx.fillStyle = isSelected ? 'rgba(225, 29, 72, 0.38)' : 'rgba(244, 63, 94, 0.30)';
+          ctx.fill();
+        }
+
+        // Hover Highlight Ring
+        if (isHovered && !isSelected) {
+          ctx.beginPath();
+          ctx.arc(coord.x, coord.y, 18, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(225, 29, 72, 0.25)';
+          ctx.fill();
+        }
+
+        // Node Circle Body
+        const radius = isSelected ? 13 : isHovered ? 10 : 7.5;
+        ctx.beginPath();
+        ctx.arc(coord.x, coord.y, radius, 0, Math.PI * 2);
+
+        if (isSelected) {
+          const grad = ctx.createRadialGradient(coord.x, coord.y, 2, coord.x, coord.y, 15);
+          grad.addColorStop(0, '#FB7185');
+          grad.addColorStop(1, '#E11D48');
+          ctx.fillStyle = grad;
+        } else if (isHovered) {
+          ctx.fillStyle = '#E11D48';
+        } else if (isLive) {
+          ctx.fillStyle = '#F43F5E';
+        } else {
+          ctx.fillStyle = '#475569';
+        }
+
+        ctx.fill();
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = isSelected ? 3 : 2;
+        ctx.stroke();
+
+        // Inner White Dot Core
+        ctx.beginPath();
+        ctx.arc(coord.x, coord.y, isSelected ? 4.5 : 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+
+        // Canvas Tooltip Card for Selected / Hovered
+        if (isSelected || isHovered) {
+          const labelText = dist.name;
+          ctx.font = `bold ${isSelected ? '15px' : '13px'} 'Plus Jakarta Sans', sans-serif`;
+          const textWidth = ctx.measureText(labelText).width;
+          const padX = 12;
+          const rectW = textWidth + padX * 2;
+          const rectH = 30;
+          const rectX = coord.x - rectW / 2;
+          const rectY = coord.y - radius - 34;
+
+          // Tooltip Dark Card
+          ctx.fillStyle = isSelected ? '#071426' : '#1E293B';
+          ctx.beginPath();
+          if (ctx.roundRect) {
+            ctx.roundRect(rectX, rectY, rectW, rectH, 15);
+          } else {
+            ctx.rect(rectX, rectY, rectW, rectH);
+          }
+          ctx.fill();
+          ctx.strokeStyle = '#E11D48';
+          ctx.lineWidth = 1.8;
+          ctx.stroke();
+
+          // Tooltip Text Label
+          ctx.fillStyle = '#FFFFFF';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(labelText, coord.x, rectY + rectH / 2);
+        }
+      });
+
+      animFrameRef.current = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      if (animFrameRef.current) {
+        cancelAnimationFrame(animFrameRef.current);
+      }
+    };
+  }, [selectedDistrictId, hoveredDistrictId, imgLoaded]);
+
+  const handleMouseMove = (e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    let foundId = null;
+
+    DISTRICTS_DATA.forEach((dist) => {
+      const coord = MAP_PINS_COORDINATES[dist.id] || { x: 387, y: 512 };
+      const distance = Math.hypot(mouseX - coord.x, mouseY - coord.y);
+      if (distance <= 22) {
+        foundId = dist.id;
+      }
+    });
+
+    setHoveredDistrictId(foundId);
+  };
+
+  const handleClick = (e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    DISTRICTS_DATA.forEach((dist) => {
+      const coord = MAP_PINS_COORDINATES[dist.id] || { x: 387, y: 512 };
+      const distance = Math.hypot(mouseX - coord.x, mouseY - coord.y);
+      if (distance <= 26) {
+        setSelectedDistrictId(dist.id);
+      }
+    });
+  };
+
+  return (
+    <div className="relative w-full aspect-[774/1024] flex items-center justify-center">
+      <canvas
+        ref={canvasRef}
+        width={774}
+        height={1024}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={() => setHoveredDistrictId(null)}
+        onClick={handleClick}
+        className="w-full h-full object-fill cursor-pointer select-none filter drop-shadow-md rounded-2xl"
+      />
+    </div>
+  );
+}
 
 export default function DistrictJourneySection({ onOpenRegister }) {
   const [selectedDistrictId, setSelectedDistrictId] = useState(1);
   const [hoveredDistrictId, setHoveredDistrictId] = useState(null);
+  const [mapMode, setMapMode] = useState('canvas'); // 'canvas' | 'svg'
 
   const selectedDistrict =
     DISTRICTS_DATA.find((d) => d.id === selectedDistrictId) || DISTRICTS_DATA[0];
 
-  const activeCoord = MAP_PINS_COORDINATES[selectedDistrict.id] || { x: 250, y: 300 };
+  const activeCoord = MAP_PINS_COORDINATES[selectedDistrict.id] || { x: 387, y: 512 };
 
   return (
-    <section id="districts" className="py-20 sm:py-28 bg-[#F8FAFC] text-slate-900 relative overflow-hidden">
+    <section id="districts" className="py-12 sm:py-16 bg-[#F8FAFC] text-slate-900 relative overflow-hidden">
       {/* Background Watermark */}
       <div
         className="absolute top-6 left-1/2 -translate-x-1/2 pointer-events-none select-none font-black tracking-tighter uppercase z-0 leading-none text-center w-full"
@@ -70,10 +282,10 @@ export default function DistrictJourneySection({ onOpenRegister }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Main 2-Column Split: Details Left, Pink Picture Map Right */}
+        {/* Main 2-Column Split */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
-          {/* LEFT COLUMN: Section Header, District Selector, Active Info Card & CTA Button */}
+          {/* LEFT COLUMN: Info Card & Selector */}
           <div className="lg:col-span-6 space-y-8 text-left">
             
             {/* Header Badge */}
@@ -97,7 +309,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
               </h2>
 
               <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed pt-1">
-                TheZar brings competition stages across all 38 districts of Tamil Nadu. Select any district from the dropdown or click on the Tamil Nadu map to view venue details, dates, and live qualifier rounds.
+                TheZar brings competition stages across all 38 districts of Tamil Nadu. Select any district from the dropdown or click directly on the map to view venue details, dates, and live qualifier rounds.
               </p>
             </div>
 
@@ -193,131 +405,161 @@ export default function DistrictJourneySection({ onOpenRegister }) {
 
           </div>
 
-          {/* RIGHT COLUMN: Pink Tamil Nadu District Map Picture with Calibrated SVG Overlay */}
+          {/* RIGHT COLUMN: Pixel-Perfect Map Display Container */}
           <div className="lg:col-span-6 relative flex flex-col items-center justify-center">
             
-            <div className="relative w-full max-w-[480px] bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-xl overflow-hidden group">
+            <div className="relative w-full max-w-[480px] bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/80 shadow-xl overflow-hidden group">
               
-              {/* Overlay Badge */}
-              <div className="absolute top-4 left-6 z-20 pointer-events-none">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-[#E11D48] uppercase bg-rose-50 px-3 py-1 rounded-full border border-rose-100" style={{ borderRadius: '9999px' }}>
-                  TAMIL NADU 38 DISTRICTS MAP
+              {/* Card Header Switcher */}
+              <div className="flex items-center justify-between mb-3 z-20 relative">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-[#E11D48] uppercase bg-rose-50 px-3 py-1 rounded-full border border-rose-100 flex items-center gap-1.5" style={{ borderRadius: '9999px' }}>
+                  <Sparkles className="w-3 h-3 text-[#E11D48]" />
+                  TN 38 DISTRICTS MAP
                 </span>
+
+                {/* Map Mode Toggle Switch */}
+                <div className="inline-flex p-0.5 bg-slate-100 rounded-full border border-slate-200 text-[10px] font-bold">
+                  <button
+                    onClick={() => setMapMode('canvas')}
+                    className={`px-2.5 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1 ${
+                      mapMode === 'canvas' ? 'bg-[#071426] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <Layers className="w-3 h-3" />
+                    Canvas Engine
+                  </button>
+                  <button
+                    onClick={() => setMapMode('svg')}
+                    className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
+                      mapMode === 'svg' ? 'bg-[#071426] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Vector Pin Overlay
+                  </button>
+                </div>
               </div>
 
-              {/* Aspect Ratio Container (500x670) Matching Image Aspect Ratio */}
-              <div className="relative w-full aspect-[500/670] flex items-center justify-center">
-                
-                {/* User's Pink Tamil Nadu District Map Picture */}
-                <img
-                  src={tnMapImg}
-                  alt="Tamil Nadu District Map"
-                  className="w-full h-full object-contain filter drop-shadow-md select-none transition-transform duration-500 group-hover:scale-[1.01]"
+              {/* Map Canvas / SVG Layer with 100% 774x1024 Pixel Alignment */}
+              {mapMode === 'canvas' ? (
+                <HTML5CanvasMap
+                  selectedDistrictId={selectedDistrictId}
+                  setSelectedDistrictId={setSelectedDistrictId}
+                  hoveredDistrictId={hoveredDistrictId}
+                  setHoveredDistrictId={setHoveredDistrictId}
                 />
-
-                {/* Calibrated Interactive SVG Pin Layer */}
-                <svg
-                  viewBox="0 0 500 670"
-                  className="absolute inset-0 w-full h-full select-none z-10"
-                >
-                  <defs>
-                    <linearGradient id="roseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#E11D48" />
-                      <stop offset="100%" stopColor="#FB7185" />
-                    </linearGradient>
-
-                    <filter id="glowPin" x="-30%" y="-30%" width="160%" height="160%">
-                      <feGaussianBlur stdDeviation="5" result="blur" />
-                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                    </filter>
-                  </defs>
-
-                  {/* Connecting Dashed Line to Active Pin */}
-                  <line
-                    x1="250"
-                    y1="335"
-                    x2={activeCoord.x}
-                    y2={activeCoord.y}
-                    stroke="#E11D48"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 3"
-                    className="opacity-60 animate-pulse"
+              ) : (
+                <div className="relative w-full aspect-[774/1024] flex items-center justify-center rounded-2xl overflow-hidden">
+                  
+                  {/* Pink Map Image stretching 100% without letterbox padding */}
+                  <img
+                    src={tnMapImg}
+                    alt="Tamil Nadu District Map"
+                    className="absolute inset-0 w-full h-full object-fill select-none pointer-events-none filter drop-shadow-md"
                   />
 
-                  {/* All 38 District Interactive Node Pins */}
-                  {DISTRICTS_DATA.map((dist) => {
-                    const coord = MAP_PINS_COORDINATES[dist.id] || { x: 250, y: 335 };
-                    const isSelected = dist.id === selectedDistrictId;
-                    const isHovered = dist.id === hoveredDistrictId;
-                    const isLive = dist.status === 'Live';
+                  {/* Pixel-Perfect Calibrated SVG Layer */}
+                  <svg
+                    viewBox="0 0 774 1024"
+                    className="absolute inset-0 w-full h-full select-none z-10"
+                  >
+                    <defs>
+                      <linearGradient id="roseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#E11D48" />
+                        <stop offset="100%" stopColor="#FB7185" />
+                      </linearGradient>
 
-                    return (
-                      <g
-                        key={dist.id}
-                        transform={`translate(${coord.x}, ${coord.y})`}
-                        onClick={() => setSelectedDistrictId(dist.id)}
-                        onMouseEnter={() => setHoveredDistrictId(dist.id)}
-                        onMouseLeave={() => setHoveredDistrictId(null)}
-                        className="cursor-pointer group/pin"
-                      >
-                        {/* Pulse Ring for Selected or Live District */}
-                        {(isSelected || isLive) && (
-                          <circle
-                            r={isSelected ? "18" : "12"}
-                            fill={isSelected ? "rgba(225, 29, 72, 0.35)" : "rgba(244, 63, 94, 0.3)"}
-                            className="animate-ping"
-                          />
-                        )}
+                      <filter id="glowPin" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur stdDeviation="6" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                      </filter>
+                    </defs>
 
-                        {/* Outer Pin Body */}
-                        <circle
-                          r={isSelected ? "11" : isHovered ? "9" : "5.5"}
-                          fill={isSelected ? "url(#roseGradient)" : isHovered ? "#E11D48" : isLive ? "#F43F5E" : "#94A3B8"}
-                          stroke="#FFFFFF"
-                          strokeWidth={isSelected ? "2.5" : "1.8"}
-                          filter={isSelected ? "url(#glowPin)" : "none"}
-                          className="transition-all duration-300"
-                        />
+                    {/* Connecting Vector Line to Selected Pin */}
+                    <line
+                      x1="387"
+                      y1="512"
+                      x2={activeCoord.x}
+                      y2={activeCoord.y}
+                      stroke="#E11D48"
+                      strokeWidth="2.5"
+                      strokeDasharray="6 4"
+                      className="opacity-60 animate-pulse"
+                    />
 
-                        {/* White Inner Core */}
-                        <circle
-                          r={isSelected ? "4" : "1.8"}
-                          fill="#FFFFFF"
-                        />
+                    {/* All 38 District Interactive Node Pins */}
+                    {DISTRICTS_DATA.map((dist) => {
+                      const coord = MAP_PINS_COORDINATES[dist.id] || { x: 387, y: 512 };
+                      const isSelected = dist.id === selectedDistrictId;
+                      const isHovered = dist.id === hoveredDistrictId;
+                      const isLive = dist.status === 'Live';
 
-                        {/* Floating District Label Tag on Hover/Selection */}
-                        {(isSelected || isHovered) && (
-                          <g transform="translate(0, -22)" className="pointer-events-none z-30">
-                            <rect
-                              x="-32"
-                              y="-16"
-                              width="64"
-                              height="20"
-                              rx="10"
-                              fill={isSelected ? "#071426" : "#1E293B"}
-                              stroke="#FFFFFF"
-                              strokeWidth="1.5"
-                              className="shadow-xl"
+                      return (
+                        <g
+                          key={dist.id}
+                          transform={`translate(${coord.x}, ${coord.y})`}
+                          onClick={() => setSelectedDistrictId(dist.id)}
+                          onMouseEnter={() => setHoveredDistrictId(dist.id)}
+                          onMouseLeave={() => setHoveredDistrictId(null)}
+                          className="cursor-pointer group/pin"
+                        >
+                          {/* Pulse Ring for Selected or Live District */}
+                          {(isSelected || isLive) && (
+                            <circle
+                              r={isSelected ? "24" : "16"}
+                              fill={isSelected ? "rgba(225, 29, 72, 0.38)" : "rgba(244, 63, 94, 0.3)"}
+                              className="animate-ping"
                             />
-                            <text
-                              x="0"
-                              y="-3"
-                              textAnchor="middle"
-                              fill="#FFFFFF"
-                              fontSize="9.5"
-                              fontWeight="bold"
-                              fontFamily="sans-serif"
-                            >
-                              {dist.name}
-                            </text>
-                          </g>
-                        )}
-                      </g>
-                    );
-                  })}
-                </svg>
+                          )}
 
-              </div>
+                          {/* Outer Node Body */}
+                          <circle
+                            r={isSelected ? "14" : isHovered ? "11" : "7.5"}
+                            fill={isSelected ? "url(#roseGradient)" : isHovered ? "#E11D48" : isLive ? "#F43F5E" : "#475569"}
+                            stroke="#FFFFFF"
+                            strokeWidth={isSelected ? "3" : "2"}
+                            filter={isSelected ? "url(#glowPin)" : "none"}
+                            className="transition-all duration-300"
+                          />
+
+                          {/* Inner White Core */}
+                          <circle
+                            r={isSelected ? "4.5" : "2.5"}
+                            fill="#FFFFFF"
+                          />
+
+                          {/* Floating District Name Tag */}
+                          {(isSelected || isHovered) && (
+                            <g transform="translate(0, -30)" className="pointer-events-none z-30">
+                              <rect
+                                x="-42"
+                                y="-18"
+                                width="84"
+                                height="26"
+                                rx="13"
+                                fill={isSelected ? "#071426" : "#1E293B"}
+                                stroke="#E11D48"
+                                strokeWidth="1.8"
+                                className="shadow-2xl"
+                              />
+                              <text
+                                x="0"
+                                y="-3"
+                                textAnchor="middle"
+                                fill="#FFFFFF"
+                                fontSize="12"
+                                fontWeight="bold"
+                                fontFamily="sans-serif"
+                              >
+                                {dist.name}
+                              </text>
+                            </g>
+                          )}
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+              )}
 
               {/* Map Footer Legend */}
               <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500 font-semibold bg-slate-50 px-4 py-2 rounded-full border border-slate-200/80">

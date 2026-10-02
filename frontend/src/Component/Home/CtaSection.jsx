@@ -2,7 +2,7 @@ import { ArrowRight, Trophy } from 'lucide-react';
 
 export default function CtaSection({ onOpenRegister }) {
   return (
-    <section className="py-20 sm:py-28 bg-white relative overflow-hidden">
+    <section className="py-12 sm:py-16 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Deep Navy Decorative Card */}

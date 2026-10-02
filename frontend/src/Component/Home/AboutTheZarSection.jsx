@@ -6,7 +6,7 @@ export default function AboutTheZarSection({ onOpenRegister }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section id="about-thezar" className="py-20 sm:py-28 bg-white text-slate-900 relative overflow-hidden">
+    <section id="about-thezar" className="py-12 sm:py-16 bg-white text-slate-900 relative overflow-hidden">
       {/* 1. Oversized Faint Background Watermark Text: "ABOUT" */}
       <div
         className="absolute top-6 left-6 sm:left-16 pointer-events-none select-none font-extrabold tracking-tighter uppercase z-0 leading-none"
