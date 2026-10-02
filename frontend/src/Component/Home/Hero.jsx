@@ -1,217 +1,184 @@
 import heroSpeakerImg from '../../assets/Young_woman.png';
-import { ArrowRight, Trophy } from 'lucide-react';
+import { Calendar, MapPin, Users, Lightbulb, ArrowRight } from 'lucide-react';
 
 export default function Hero({ onOpenRegister }) {
   return (
     <section
       id="home"
-      className="relative flex flex-col justify-between overflow-hidden min-h-[620px] md:min-h-[660px] lg:min-h-[700px] bg-[#071426]"
+      className="relative flex flex-col justify-between overflow-hidden min-h-[600px] md:min-h-[650px] lg:min-h-[700px] bg-[#071426]"
       style={{
         fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
       }}
     >
-      {/* 1. Cinematic Background Image: Keynote Speaker & Atmosphere */}
+      {/* 1. Background Image & Dark Navy Gradients for High Readability */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={heroSpeakerImg}
-          alt="THEZAR 2026 Keynote Stage Atmosphere"
-          className="w-full h-full object-cover object-[78%_25%] sm:object-[center_20%] lg:object-[75%_22%]"
+          alt="Youth Leadership Summit Keynote Speaker"
+          className="w-full h-full object-cover object-[80%_25%] sm:object-[center_20%] lg:object-[75%_22%]"
         />
 
-        {/* 2. Directional Navy Overlay: Dark on left for text readability, clear on right */}
         {/* Mobile vertical gradient */}
         <div
           className="absolute inset-0 z-[1] pointer-events-none md:hidden"
           style={{
             background:
-              'linear-gradient(180deg, rgba(7, 20, 38, 0.88) 0%, rgba(7, 20, 38, 0.65) 55%, rgba(7, 20, 38, 0.90) 100%)',
+              'linear-gradient(180deg, rgba(7, 20, 38, 0.92) 0%, rgba(7, 20, 38, 0.75) 55%, rgba(7, 20, 38, 0.95) 100%)',
           }}
         />
-        {/* Desktop directional overlay */}
+        {/* Desktop horizontal gradient overlay: Dark on left for text contrast */}
         <div
           className="hidden md:block absolute inset-0 z-[1] pointer-events-none"
           style={{
             background:
-              'linear-gradient(90deg, rgba(7, 20, 38, 0.85) 0%, rgba(7, 20, 38, 0.65) 38%, rgba(7, 20, 38, 0.25) 70%, rgba(7, 20, 38, 0.05) 100%)',
+              'linear-gradient(90deg, rgba(7, 20, 38, 0.95) 0%, rgba(7, 20, 38, 0.82) 42%, rgba(7, 20, 38, 0.35) 75%, rgba(7, 20, 38, 0.1) 100%)',
           }}
         />
 
-        {/* 3. Subtle ambient glow accents */}
-        <div className="absolute top-1/4 left-10 w-96 h-96 bg-rose-600/20 rounded-full blur-3xl pointer-events-none" />
+        {/* Ambient glow accent */}
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-rose-600/15 rounded-full blur-3xl pointer-events-none" />
       </div>
 
-      {/* Main Hero Content Area: Occupies ~45% width on left (Editorial Composition) */}
-      <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-12 pt-12 sm:pt-16 lg:pt-20 pb-24 sm:pb-32 lg:pb-36 w-full flex-1 flex items-center">
-        <div className="max-w-[620px] text-left space-y-6">
+      {/* Main Hero Content */}
+      <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-12 pt-10 sm:pt-12 lg:pt-16 pb-24 sm:pb-28 lg:pb-32 w-full flex-1 flex items-center">
+        <div className="max-w-[560px] text-left space-y-4 sm:space-y-5">
           
-          {/* 1. EYEBROW */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/20 backdrop-blur-sm text-[12px] sm:text-[13px] font-bold tracking-[0.18em] uppercase text-white shadow-sm">
-            <Trophy className="w-3.5 h-3.5 text-[#D4A72C] shrink-0" />
-            <span>THEZAR 2026</span>
-            <span className="text-[#FDA4AF] font-black">•</span>
-            <span>TAMIL NADU</span>
+          {/* 1. TOP EYEBROW HEADER */}
+          <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-300">
+            TECHNOLOGY <span className="text-[#FB7185] mx-1.5">|</span> IDEAS <span className="text-[#FB7185] mx-1.5">|</span> PEOPLE <span className="text-[#FB7185] mx-1.5">|</span> IMPACT
           </div>
 
-          {/* 2. MAIN HEADING */}
-          <h1 className="text-[42px] sm:text-[54px] md:text-[64px] lg:text-[76px] xl:text-[80px] font-extrabold text-white tracking-[-0.045em] uppercase leading-[0.98] lg:leading-[0.95] max-w-[560px]">
-            THE GRAND <br />
-            COLLEGIATE <br />
-            <span className="text-gradient-thezar inline-block">
-              COMPETITION
+          {/* 2. TYPOGRAPHIC HEADING STACK (Rose Theme) */}
+          <h1 className="flex flex-col uppercase tracking-tight leading-[0.94]">
+            <span className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-extrabold text-white">
+              YOUTH
+            </span>
+            <span
+              className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-extrabold text-transparent bg-clip-text"
+              style={{
+                backgroundImage: 'linear-gradient(90deg, #E11D48 0%, #FB7185 50%, #F43F5E 100%)',
+              }}
+            >
+              LEADERSHIP
+            </span>
+            <span className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-light text-white/95 tracking-[0.06em]">
+              SUMMIT
             </span>
           </h1>
 
-          {/* 3. DECORATIVE GOLD LINE */}
-          <div
-            className="w-[80px] h-[2px] rounded-full"
-            style={{
-              backgroundColor: '#D4A72C',
-              boxShadow: '0 0 10px rgba(212, 167, 44, 0.35)',
-            }}
-          />
+          {/* 3. SUBTITLE & ROSE DECORATIVE LINE */}
+          <div className="space-y-2.5">
+            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-200 leading-snug">
+              Empowering the Next Generation for a Brighter Tomorrow
+            </p>
+            <div
+              className="w-14 h-[3px] rounded-full"
+              style={{
+                background: 'linear-gradient(90deg, #E11D48, #FB7185)',
+                boxShadow: '0 0 10px rgba(225, 29, 72, 0.4)',
+              }}
+            />
+          </div>
 
-          {/* 4. DESCRIPTION */}
-          <p
-            className="text-[15px] sm:text-[16px] lg:text-[18px] font-normal leading-[1.7] tracking-[-0.01em] max-w-[580px]"
-            style={{ color: 'rgba(255, 255, 255, 0.82)' }}
-          >
-            Bringing students together across 38 districts through competition, creativity, innovation and unforgettable experiences.
-          </p>
+          {/* 4. EVENT DETAILS 2x2 GRID */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 max-w-[500px]">
+            {/* Date & Time */}
+            <div className="flex items-start gap-2.5">
+              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
+                <Calendar className="w-4 h-4 text-[#FB7185]" />
+              </div>
+              <div>
+                <div className="text-[13px] font-bold text-white leading-tight">Oct 25, 2026</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">09:00 AM - 05:00 PM</div>
+              </div>
+            </div>
 
-          {/* 5. CTA BUTTONS */}
-          <div className="pt-1 flex flex-col sm:flex-row items-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-            {/* Primary Pill Button */}
+            {/* Location */}
+            <div className="flex items-start gap-2.5">
+              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
+                <MapPin className="w-4 h-4 text-[#FB7185]" />
+              </div>
+              <div>
+                <div className="text-[13px] font-bold text-white leading-tight">Chennai</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">Convention Centre</div>
+              </div>
+            </div>
+
+            {/* Audience */}
+            <div className="flex items-start gap-2.5">
+              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
+                <Users className="w-4 h-4 text-[#FB7185]" />
+              </div>
+              <div>
+                <div className="text-[13px] font-bold text-white leading-tight">Industry Experts</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">Panel Discussions</div>
+              </div>
+            </div>
+
+            {/* Activities */}
+            <div className="flex items-start gap-2.5">
+              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
+                <Lightbulb className="w-4 h-4 text-[#FB7185]" />
+              </div>
+              <div>
+                <div className="text-[13px] font-bold text-white leading-tight">Ideas & Innovation</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">Networking</div>
+              </div>
+            </div>
+          </div>
+
+          {/* 5. CTA ACTION BUTTONS (Rose Palette) */}
+          <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={onOpenRegister}
-              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-8 rounded-full text-[14px] sm:text-[15px] font-bold text-white uppercase tracking-[0.02em] flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-lg shadow-rose-500/25"
+              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-6 rounded-full text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-md shadow-rose-500/25"
               style={{
                 background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'linear-gradient(135deg, #BE123C 0%, #E11D48 100%)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 12px 28px rgba(225, 29, 72, 0.35)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)';
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 10px 25px rgba(225, 29, 72, 0.25)';
               }}
             >
               <span>REGISTER NOW</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
 
-            {/* Secondary Pill Button */}
             <a
               href="#events"
-              className="w-full sm:w-auto h-[48px] sm:h-[50px] px-8 rounded-full text-[14px] sm:text-[15px] font-semibold text-white uppercase tracking-[0.02em] flex items-center justify-center transition-all duration-200 cursor-pointer"
+              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-6 rounded-full text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center transition-all duration-200 cursor-pointer"
               style={{
                 background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.50)',
+                border: '1px solid rgba(255, 255, 255, 0.30)',
                 backdropFilter: 'blur(8px)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.16)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.80)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.6)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.50)';
-                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.30)';
               }}
             >
               EXPLORE EVENTS
             </a>
           </div>
 
-          {/* 6. LIVE EVENT INFORMATION & 7. STATISTICS */}
-          <div className="pt-2 space-y-4">
-            {/* Live Event Badge: Pill-shaped, subtle pulsing dot */}
-            <div>
-              <div
-                className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full backdrop-blur-md"
-                style={{
-                  background: 'rgba(7, 20, 38, 0.75)',
-                  border: '1px solid rgba(251, 113, 133, 0.35)',
-                }}
-              >
-                <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FDA4AF] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FDA4AF]"></span>
-                </span>
-                <span className="text-[11px] sm:text-[12px] font-bold text-[#FDA4AF] tracking-[0.12em] uppercase">
-                  TIRUNELVELI DISTRICT • ROUND 2 • LIVE
-                </span>
-              </div>
-            </div>
-
-            {/* Statistics: Numbers stacked above labels with vertical separators */}
-            <div className="pt-1 flex items-center gap-6 sm:gap-8">
-              {/* Stat 1 */}
-              <div>
-                <span className="text-[22px] sm:text-[26px] font-extrabold text-white tracking-[-0.03em] block leading-none">
-                  38
-                </span>
-                <span
-                  className="text-[11px] sm:text-[12px] font-medium tracking-[0.05em] uppercase block mt-1.5"
-                  style={{ color: 'rgba(255, 255, 255, 0.65)' }}
-                >
-                  DISTRICTS
-                </span>
-              </div>
-
-              {/* Vertical Separator */}
-              <div
-                className="h-8 w-px"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.22)' }}
-              />
-
-              {/* Stat 2 */}
-              <div>
-                <span className="text-[22px] sm:text-[26px] font-extrabold text-white tracking-[-0.03em] block leading-none">
-                  100+
-                </span>
-                <span
-                  className="text-[11px] sm:text-[12px] font-medium tracking-[0.05em] uppercase block mt-1.5"
-                  style={{ color: 'rgba(255, 255, 255, 0.65)' }}
-                >
-                  EVENTS
-                </span>
-              </div>
-
-              {/* Vertical Separator */}
-              <div
-                className="h-8 w-px"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.22)' }}
-              />
-
-              {/* Stat 3 */}
-              <div>
-                <span className="text-[22px] sm:text-[26px] font-extrabold text-white tracking-[-0.03em] block leading-none">
-                  5000+
-                </span>
-                <span
-                  className="text-[11px] sm:text-[12px] font-medium tracking-[0.05em] uppercase block mt-1.5"
-                  style={{ color: 'rgba(255, 255, 255, 0.65)' }}
-                >
-                  PARTICIPANTS
-                </span>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
-      {/* 03. CURVED HERO DIVIDER: Smooth, large white SVG wave sweeping across the bottom */}
+      {/* 6. CURVED HERO BOTTOM WAVE */}
       <div className="absolute bottom-0 inset-x-0 z-20 pointer-events-none leading-none overflow-hidden">
         <svg
           viewBox="0 0 1440 120"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-14 sm:h-20 md:h-28 text-white block preserve-3d"
+          className="w-full h-12 sm:h-16 md:h-20 text-white block"
           preserveAspectRatio="none"
         >
           <path

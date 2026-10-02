@@ -1,4 +1,5 @@
 import { Trophy, Mail, Phone, MapPin, ArrowUp, MessageSquare } from 'lucide-react';
+import thezarLogo from '../../assets/thezar_logo.png';
 
 export default function Footer({ onOpenRegister }) {
   const scrollToTop = () => {
@@ -13,11 +14,13 @@ export default function Footer({ onOpenRegister }) {
           
           {/* Col 1: Brand & Tagline */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-600 to-rose-400 flex items-center justify-center text-white shadow-md shadow-rose-500/25">
-                <Trophy className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl sm:text-2xl font-black text-white tracking-wider uppercase font-sans">
+            <div className="flex items-center gap-2">
+              <img
+                src={thezarLogo}
+                alt="TheZar 2026 Logo"
+                className="h-8 sm:h-9 w-auto object-contain rounded-full"
+              />
+              <span className="text-sm sm:text-base font-extrabold text-white tracking-wider uppercase font-sans">
                 THEZAR <span className="text-rose-500">2026</span>
               </span>
             </div>

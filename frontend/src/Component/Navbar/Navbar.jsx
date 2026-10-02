@@ -37,17 +37,20 @@ export default function Navbar({ onOpenRegister }) {
       <div className="max-w-[1320px] mx-auto px-6">
         <div className="flex items-center justify-between h-[62px] md:h-[68px] min-h-[62px] md:min-h-[68px]">
           
-          {/* 1. Official TheZar Logo */}
+          {/* 1. Official TheZar Logo & Brand Text */}
           <Link
             to="/"
-            className="flex items-center shrink-0 no-underline hover:no-underline nav-link-clean"
+            className="flex items-center gap-2 shrink-0 no-underline hover:no-underline nav-link-clean group"
             style={{ textDecoration: 'none' }}
           >
             <img
               src={thezarLogo}
               alt="TheZar Events 2026"
-              className="h-11 sm:h-12 w-auto object-contain rounded-full hover:scale-105 transition-transform duration-200"
+              className="h-8 sm:h-9 w-auto object-contain rounded-full group-hover:scale-105 transition-transform duration-200"
             />
+            <span className="text-sm sm:text-base font-extrabold text-slate-900 tracking-wider uppercase font-sans">
+              THEZAR <span className="text-[#E11D48]">2026</span>
+            </span>
           </Link>
 
           {/* 2. Centered Navigation for Desktop */}
