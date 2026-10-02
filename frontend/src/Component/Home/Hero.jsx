@@ -66,18 +66,11 @@ export default function Hero({ onOpenRegister }) {
             </span>
           </h1>
 
-          {/* 3. SUBTITLE & ROSE DECORATIVE LINE */}
-          <div className="space-y-2.5">
+          {/* 3. SUBTITLE */}
+          <div>
             <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-200 leading-relaxed">
               Bringing students together across 38 districts of Tamil Nadu through multi-disciplinary competitions, creativity, innovation, and unforgettable experiences.
             </p>
-            <div
-              className="w-14 h-[3px] rounded-full"
-              style={{
-                background: 'linear-gradient(90deg, #E11D48, #FB7185)',
-                boxShadow: '0 0 10px rgba(225, 29, 72, 0.4)',
-              }}
-            />
           </div>
 
           {/* 4. EVENT DETAILS 2x2 GRID */}
@@ -127,13 +120,13 @@ export default function Hero({ onOpenRegister }) {
             </div>
           </div>
 
-          {/* 5. CTA ACTION BUTTONS (Rose Palette) */}
+          {/* 5. CTA ACTION BUTTONS (Rose Palette - Full Pill Radius) */}
           <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={onOpenRegister}
-              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-6 rounded-xl text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-md shadow-rose-500/25"
+              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-7 rounded-full text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-md shadow-rose-500/25 no-underline hover:no-underline"
               style={{
-                borderRadius: '12px',
+                borderRadius: '9999px',
                 background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
               }}
               onMouseEnter={(e) => {
@@ -151,9 +144,10 @@ export default function Hero({ onOpenRegister }) {
 
             <a
               href="#events"
-              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-6 rounded-xl text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center transition-all duration-200 cursor-pointer"
+              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-7 rounded-full text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center transition-all duration-200 cursor-pointer no-underline hover:no-underline"
               style={{
-                borderRadius: '12px',
+                borderRadius: '9999px',
+                textDecoration: 'none',
                 background: 'rgba(255, 255, 255, 0.08)',
                 border: '1px solid rgba(255, 255, 255, 0.30)',
                 backdropFilter: 'blur(8px)',
