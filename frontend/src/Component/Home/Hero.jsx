@@ -1,5 +1,5 @@
 import heroSpeakerImg from '../../assets/Young_woman.png';
-import { Calendar, MapPin, Users, Lightbulb, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, Mic, Trophy, Music, ArrowRight } from 'lucide-react';
 
 export default function Hero({ onOpenRegister }) {
   return (
@@ -14,7 +14,7 @@ export default function Hero({ onOpenRegister }) {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={heroSpeakerImg}
-          alt="Youth Leadership Summit Keynote Speaker"
+          alt="TheZar 2026 Singing & Performance Stage Atmosphere"
           className="w-full h-full object-cover object-[80%_25%] sm:object-[center_20%] lg:object-[75%_22%]"
         />
 
@@ -45,13 +45,13 @@ export default function Hero({ onOpenRegister }) {
           
           {/* 1. TOP EYEBROW HEADER */}
           <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-300">
-            TECHNOLOGY <span className="text-[#FB7185] mx-1.5">|</span> IDEAS <span className="text-[#FB7185] mx-1.5">|</span> PEOPLE <span className="text-[#FB7185] mx-1.5">|</span> IMPACT
+            38 DISTRICTS <span className="text-[#FB7185] mx-1.5">|</span> SINGING & MUSIC <span className="text-[#FB7185] mx-1.5">|</span> LIVE STAGE <span className="text-[#FB7185] mx-1.5">|</span> THEZAR 2026
           </div>
 
-          {/* 2. TYPOGRAPHIC HEADING STACK (Rose Theme) */}
+          {/* 2. TYPOGRAPHIC HEADING STACK */}
           <h1 className="flex flex-col uppercase tracking-tight leading-[0.94]">
             <span className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-extrabold text-white">
-              YOUTH
+              THE GRAND
             </span>
             <span
               className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-extrabold text-transparent bg-clip-text"
@@ -59,17 +59,17 @@ export default function Hero({ onOpenRegister }) {
                 backgroundImage: 'linear-gradient(90deg, #E11D48 0%, #FB7185 50%, #F43F5E 100%)',
               }}
             >
-              LEADERSHIP
+              COLLEGIATE
             </span>
             <span className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-light text-white/95 tracking-[0.06em]">
-              SUMMIT
+              SINGING LEAGUE
             </span>
           </h1>
 
           {/* 3. SUBTITLE & ROSE DECORATIVE LINE */}
           <div className="space-y-2.5">
-            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-200 leading-snug">
-              Empowering the Next Generation for a Brighter Tomorrow
+            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-200 leading-relaxed">
+              A live musical program & competition platform where individual artists and groups perform vocal pieces in front of an audience and a panel of judges across 38 districts.
             </p>
             <div
               className="w-14 h-[3px] rounded-full"
@@ -82,47 +82,47 @@ export default function Hero({ onOpenRegister }) {
 
           {/* 4. EVENT DETAILS 2x2 GRID */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 max-w-[500px]">
-            {/* Date & Time */}
+            {/* Vocal Performances */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Calendar className="w-4 h-4 text-[#FB7185]" />
+                <Mic className="w-4 h-4 text-[#FB7185]" />
               </div>
               <div>
-                <div className="text-[13px] font-bold text-white leading-tight">Oct 25, 2026</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">09:00 AM - 05:00 PM</div>
+                <div className="text-[13px] font-bold text-white leading-tight">Vocal Performances</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">Solo & Group Singers</div>
               </div>
             </div>
 
-            {/* Location */}
+            {/* 38 Districts */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
                 <MapPin className="w-4 h-4 text-[#FB7185]" />
               </div>
               <div>
-                <div className="text-[13px] font-bold text-white leading-tight">Chennai</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">Convention Centre</div>
+                <div className="text-[13px] font-bold text-white leading-tight">38 Districts</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">Tamil Nadu State Rounds</div>
               </div>
             </div>
 
-            {/* Audience */}
+            {/* Panel Judges */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Users className="w-4 h-4 text-[#FB7185]" />
+                <Trophy className="w-4 h-4 text-[#FB7185]" />
               </div>
               <div>
-                <div className="text-[13px] font-bold text-white leading-tight">Industry Experts</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">Panel Discussions</div>
+                <div className="text-[13px] font-bold text-white leading-tight">Panel Judges</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">Grand State Finals</div>
               </div>
             </div>
 
-            {/* Activities */}
+            {/* Live Musical Stage */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Lightbulb className="w-4 h-4 text-[#FB7185]" />
+                <Music className="w-4 h-4 text-[#FB7185]" />
               </div>
               <div>
-                <div className="text-[13px] font-bold text-white leading-tight">Ideas & Innovation</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">Networking</div>
+                <div className="text-[13px] font-bold text-white leading-tight">Live Musical Stage</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">Audience & Auditions</div>
               </div>
             </div>
           </div>
