@@ -27,11 +27,11 @@ export default function Footer({ onOpenRegister }) {
             
             <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
               38 DISTRICTS • MULTI-DISCIPLINARY COMPETITIONS • ONE GRAND STAGE.
-              The official premier collegiate conference and competition platform across Tamil Nadu.
+              The official premier state conference and competition platform across Tamil Nadu.
             </p>
             
             <div className="pt-2 flex flex-wrap items-center gap-2 text-slate-300 font-mono text-[11px]">
-              <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg">Tamil Nadu Collegiate League</span>
+              <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg">Tamil Nadu Championship League</span>
               <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg">Season 2026 - 2027</span>
             </div>
           </div>

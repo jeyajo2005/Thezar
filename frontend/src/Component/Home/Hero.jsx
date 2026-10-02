@@ -45,7 +45,7 @@ export default function Hero({ onOpenRegister }) {
           
           {/* 1. TOP EYEBROW HEADER */}
           <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-300">
-            38 DISTRICTS <span className="text-[#FB7185] mx-1.5">|</span> TAMIL NADU <span className="text-[#FB7185] mx-1.5">|</span> COLLEGIATE LEAGUE <span className="text-[#FB7185] mx-1.5">|</span> THEZAR 2026
+            38 DISTRICTS <span className="text-[#FB7185] mx-1.5">|</span> TAMIL NADU <span className="text-[#FB7185] mx-1.5">|</span> STATEWIDE LEAGUE <span className="text-[#FB7185] mx-1.5">|</span> THEZAR 2026
           </div>
 
           {/* 2. TYPOGRAPHIC HEADING STACK */}
@@ -59,7 +59,7 @@ export default function Hero({ onOpenRegister }) {
                 backgroundImage: 'linear-gradient(90deg, #E11D48 0%, #FB7185 50%, #F43F5E 100%)',
               }}
             >
-              COLLEGIATE
+              STATEWIDE
             </span>
             <span className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-light text-white/95 tracking-[0.06em]">
               COMPETITION
@@ -69,7 +69,7 @@ export default function Hero({ onOpenRegister }) {
           {/* 3. SUBTITLE */}
           <div>
             <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-200 leading-relaxed">
-              Bringing students together across 38 districts of Tamil Nadu through multi-disciplinary competitions, creativity, innovation, and unforgettable experiences.
+              Bringing people together across 38 districts of Tamil Nadu through multi-disciplinary competitions, creativity, innovation, and unforgettable experiences.
             </p>
           </div>
 
@@ -97,13 +97,13 @@ export default function Hero({ onOpenRegister }) {
               </div>
             </div>
 
-            {/* Student Community */}
+            {/* Open to Everyone */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
                 <Users className="w-4 h-4 text-[#FB7185]" />
               </div>
               <div>
-                <div className="text-[13px] font-bold text-white leading-tight">Student Community</div>
+                <div className="text-[13px] font-bold text-white leading-tight">Open to Everyone</div>
                 <div className="text-[11px] text-slate-300 mt-0.5">5,000+ Participants</div>
               </div>
             </div>
