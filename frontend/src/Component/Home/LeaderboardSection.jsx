@@ -127,8 +127,8 @@ export default function LeaderboardSection() {
             <div
               className="w-10 h-[2px] rounded-full"
               style={{
-                backgroundColor: '#D4A72C',
-                boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                backgroundColor: '#3f0701',
+                boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
               }}
             />
           </div>
@@ -162,7 +162,7 @@ export default function LeaderboardSection() {
                 </div>
               </div>
               <div className="pt-2">
-                <h4 className="text-sm sm:text-base font-black text-[#071426] tracking-tight">{topThree[0].name}</h4>
+                <h4 className="text-sm sm:text-base font-black text-[#3f0701] tracking-tight">{topThree[0].name}</h4>
                 <p className="text-[11px] text-slate-500 font-semibold">{topThree[0].district}</p>
               </div>
               <div className={`w-full h-1.5 rounded-full ${topThree[0].lineColor} mt-2`} />
@@ -189,7 +189,7 @@ export default function LeaderboardSection() {
                 </div>
               </div>
               <div className="pt-3">
-                <h4 className="text-base sm:text-lg font-black text-[#071426] tracking-tight">{topThree[1].name}</h4>
+                <h4 className="text-base sm:text-lg font-black text-[#3f0701] tracking-tight">{topThree[1].name}</h4>
                 <p className="text-xs text-amber-600 font-extrabold uppercase tracking-wider">{topThree[1].district} Champion</p>
               </div>
               <div className={`w-full h-2 rounded-full ${topThree[1].lineColor} mt-2`} />
@@ -211,7 +211,7 @@ export default function LeaderboardSection() {
                 </div>
               </div>
               <div className="pt-2">
-                <h4 className="text-sm sm:text-base font-black text-[#071426] tracking-tight">{topThree[2].name}</h4>
+                <h4 className="text-sm sm:text-base font-black text-[#3f0701] tracking-tight">{topThree[2].name}</h4>
                 <p className="text-[11px] text-slate-500 font-semibold">{topThree[2].district}</p>
               </div>
               <div className={`w-full h-1.5 rounded-full ${topThree[2].lineColor} mt-2`} />
@@ -280,7 +280,7 @@ export default function LeaderboardSection() {
                     className="w-10 h-10 rounded-full object-cover border border-white shadow-xs shrink-0"
                   />
                   <div className="min-w-0">
-                    <h5 className="text-sm font-bold text-[#071426] truncate">{row.name}</h5>
+                    <h5 className="text-sm font-bold text-[#3f0701] truncate">{row.name}</h5>
                     <p className="text-[11px] text-slate-500 font-medium">{row.district} District</p>
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export default function LeaderboardSection() {
                 </div>
 
                 {/* Rank */}
-                <div className="sm:col-span-2 text-left sm:text-center font-mono font-bold text-[#071426] text-sm">
+                <div className="sm:col-span-2 text-left sm:text-center font-mono font-bold text-[#3f0701] text-sm">
                   <span className="sm:hidden text-xs text-slate-400 font-sans mr-2">Rank:</span>
                   <span className="bg-slate-200/70 px-2 py-0.5 rounded-md text-xs">{row.rankChange}</span>
                 </div>

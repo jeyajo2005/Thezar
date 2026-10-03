@@ -33,14 +33,14 @@ export default function MobileAppSection() {
                 <div
                   className="w-10 h-[2px] rounded-full"
                   style={{
-                    backgroundColor: '#D4A72C',
-                    boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                    backgroundColor: '#3f0701',
+                    boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
                   }}
                 />
               </div>
 
               <div className="space-y-2">
-                <h2 className="text-[36px] sm:text-[48px] lg:text-[54px] font-black text-[#071426] tracking-[-0.035em] leading-[1.05] uppercase">
+                <h2 className="text-[36px] sm:text-[48px] lg:text-[54px] font-black text-[#3f0701] tracking-[-0.035em] leading-[1.05] uppercase">
                   DOWNLOAD <br />
                   <span className="text-[#9e0804]">THIS APP</span>
                 </h2>
@@ -124,7 +124,7 @@ export default function MobileAppSection() {
                 {/* PHONE 1: 6.3-inch Real Flagship (Tilted Left - Live Pass) */}
                 {/* ========================================================= */}
                 <div className="relative flex flex-col items-center">
-                  <div className="relative w-[210px] sm:w-[245px] h-[440px] sm:h-[490px] rounded-[44px] p-[5px] bg-[#1a2332] border-[2.5px] border-slate-600/90 shadow-[0_25px_50px_-12px_rgba(7,20,38,0.5),0_0_0_1px_rgba(255,255,255,0.1),inset_0_1px_2px_rgba(255,255,255,0.25)] transform -rotate-6 hover:rotate-0 transition-all duration-500 z-10 group">
+                  <div className="relative w-[210px] sm:w-[245px] h-[440px] sm:h-[490px] rounded-[44px] p-[5px] bg-[#240401] border-[2.5px] border-[#3f0701] shadow-[0_25px_50px_-12px_rgba(63,7,1,0.5),0_0_0_1px_rgba(255,255,255,0.1),inset_0_1px_2px_rgba(255,255,255,0.25)] transform -rotate-6 hover:rotate-0 transition-all duration-500 z-10 group">
                     
                     {/* Hardware Buttons on Chassis */}
                     <div className="absolute -left-[3.5px] top-20 w-[2.5px] h-7 bg-slate-500 rounded-l" />
@@ -135,7 +135,7 @@ export default function MobileAppSection() {
                     <div className="absolute top-[3px] left-1/2 -translate-x-1/2 w-12 h-[2.5px] bg-slate-700 rounded-full z-40" />
 
                     {/* 6.3" Screen Display (Ultra-thin uniform bezel & chin: rounded-[39px]) */}
-                    <div className="relative w-full h-full bg-[#081224] rounded-[39px] overflow-hidden flex flex-col justify-between border border-white/5">
+                    <div className="relative w-full h-full bg-[#150201] rounded-[39px] overflow-hidden flex flex-col justify-between border border-white/5">
                       
                       {/* Diagonal Glass Sheen Reflection */}
                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none z-30" />

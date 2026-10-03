@@ -7,7 +7,7 @@ export default function Footer({ onOpenRegister }) {
   };
 
   return (
-    <footer className="bg-[#071426] border-t border-slate-800 text-slate-400 text-xs">
+    <footer className="bg-[#3f0701] border-t border-white/10 text-white/80 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 text-left">
@@ -25,14 +25,14 @@ export default function Footer({ onOpenRegister }) {
               </span>
             </div>
             
-            <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
+            <p className="text-white/80 text-xs leading-relaxed max-w-sm">
               38 DISTRICTS • MULTI-DISCIPLINARY COMPETITIONS • ONE GRAND STAGE.
               The official premier state conference and competition platform across Tamil Nadu.
             </p>
             
-            <div className="pt-2 flex flex-wrap items-center gap-2 text-slate-300 font-mono text-[11px]">
-              <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg">Tamil Nadu Championship League</span>
-              <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg">Season 2026 - 2027</span>
+            <div className="pt-2 flex flex-wrap items-center gap-2 text-white font-mono text-[11px]">
+              <span className="bg-white/10 border border-white/15 px-3 py-1 rounded-lg">Tamil Nadu Championship League</span>
+              <span className="bg-white/10 border border-white/15 px-3 py-1 rounded-lg">Season 2026 - 2027</span>
             </div>
           </div>
 
@@ -70,7 +70,7 @@ export default function Footer({ onOpenRegister }) {
           {/* Col 4: Secretariat & Support */}
           <div className="space-y-3">
             <h4 className="text-sm font-black text-white uppercase tracking-wider">Support & Help</h4>
-            <div className="space-y-2.5 text-slate-400 text-xs">
+            <div className="space-y-2.5 text-white/80 text-xs">
               <p className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-red-300 shrink-0" />
                 <span>Anna Salai, Guindy, Chennai</span>
@@ -84,7 +84,7 @@ export default function Footer({ onOpenRegister }) {
                 <span>secretariat@thezar2026.tn.gov.in</span>
               </p>
               <p className="flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
+                <MessageSquare className="w-4 h-4 text-emerald-300 shrink-0" />
                 <span>WhatsApp: +91 94444 12345</span>
               </p>
             </div>
@@ -93,12 +93,12 @@ export default function Footer({ onOpenRegister }) {
         </div>
 
         {/* Bottom Bar: Copyright & Back to Top */}
-        <div className="mt-14 pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
+        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/60">
           <p>© 2026 THEZAR Platform. All rights reserved across 38 Districts of Tamil Nadu.</p>
           <div className="flex items-center gap-4">
             <button
               onClick={scrollToTop}
-              className="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition-colors flex items-center gap-1.5 text-xs font-bold cursor-pointer"
+              className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors flex items-center gap-1.5 text-xs font-bold cursor-pointer"
             >
               <span>Back to top</span>
               <ArrowUp className="w-4 h-4 text-red-300" />

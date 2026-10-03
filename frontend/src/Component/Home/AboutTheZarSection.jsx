@@ -33,14 +33,14 @@ export default function AboutTheZarSection({ onOpenRegister }) {
               <div
                 className="w-10 h-[2px] rounded-full"
                 style={{
-                  backgroundColor: '#D4A72C',
-                  boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                  backgroundColor: '#3f0701',
+                  boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
                 }}
               />
             </div>
 
             {/* Main Editorial Heading: 48-64px, weight 800, line-height 1.0 */}
-            <h2 className="text-[34px] sm:text-[46px] lg:text-[56px] font-extrabold text-[#071426] tracking-[-0.035em] leading-[1.0] uppercase">
+            <h2 className="text-[34px] sm:text-[46px] lg:text-[56px] font-extrabold text-[#3f0701] tracking-[-0.035em] leading-[1.0] uppercase">
               WHERE TALENT <br />
               <span className="text-[#9e0804] font-serif italic lowercase tracking-normal">meets</span> <br />
               OPPORTUNITY
@@ -124,7 +124,7 @@ export default function AboutTheZarSection({ onOpenRegister }) {
               />
 
               {/* Subtle Gradient Over Bottom of Photo */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#071426]/70 via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#3f0701]/70 via-transparent to-transparent opacity-60" />
 
               {/* Photo Caption Badge */}
               <div className="absolute bottom-4 left-4 right-4 z-20 text-left text-white">

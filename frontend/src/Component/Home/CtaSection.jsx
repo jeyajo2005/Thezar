@@ -5,8 +5,8 @@ export default function CtaSection({ onOpenRegister }) {
     <section className="py-12 sm:py-16 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Deep Navy Decorative Card */}
-        <div className="relative rounded-2xl bg-[#071426] p-8 sm:p-16 lg:p-20 text-center overflow-hidden shadow-2xl border border-slate-800">
+        {/* Deep Maroon Decorative Card */}
+        <div className="relative rounded-2xl bg-[#3f0701] p-8 sm:p-16 lg:p-20 text-center overflow-hidden shadow-2xl border border-[#3f0701]/60">
           
           {/* Subtle Ambient Radial Lighting */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#9e0804]/25 rounded-full blur-3xl pointer-events-none" />
@@ -15,7 +15,7 @@ export default function CtaSection({ onOpenRegister }) {
           <div className="relative z-10 max-w-3xl mx-auto space-y-6">
             
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/20 backdrop-blur-sm text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.18em] text-white">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.12] border border-white/20 backdrop-blur-sm text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.18em] text-white">
               <Trophy className="w-3.5 h-3.5 text-[#D4A72C]" />
               <span>THEZAR 2026 REGISTRATION</span>
             </div>
@@ -23,7 +23,7 @@ export default function CtaSection({ onOpenRegister }) {
             {/* Heading */}
             <h2 className="text-[36px] sm:text-[50px] lg:text-[60px] font-extrabold text-white tracking-[-0.035em] uppercase leading-[1.05]">
               READY TO TAKE <br />
-              <span className="text-gradient-thezar">
+              <span className="text-white underline decoration-white/40">
                 THE STAGE?
               </span>
             </h2>
@@ -34,7 +34,7 @@ export default function CtaSection({ onOpenRegister }) {
             </p>
 
             {/* Bumper Prize Reminder */}
-            <div className="pt-2 text-[12px] sm:text-[13px] font-bold text-amber-400 tracking-[0.05em] uppercase">
+            <div className="pt-2 text-[12px] sm:text-[13px] font-bold text-amber-300 tracking-[0.05em] uppercase">
               1st Prize Bumper: ₹40 Lakhs House Free + ₹25L Cash Pool
             </div>
 
@@ -50,12 +50,12 @@ export default function CtaSection({ onOpenRegister }) {
                 }}
               >
                 <span>START YOUR JOURNEY NOW</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#3f0701]" />
               </button>
 
               <a
                 href="#events"
-                className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-widest transition-colors text-center no-underline hover:no-underline"
+                className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/40 bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-widest transition-colors text-center no-underline hover:no-underline"
                 style={{
                   borderRadius: '9999px',
                   textDecoration: 'none',

@@ -59,8 +59,8 @@ export default function NewsTickerBar() {
         <div className="overflow-hidden whitespace-nowrap flex-1 relative group cursor-pointer">
           
           {/* Subtle Fading Edge Gradients */}
-          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#071426] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#071426] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#3f0701] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#3f0701] to-transparent z-10 pointer-events-none" />
 
           {/* Marquee Motion Wrapper */}
           <div className="inline-flex items-center gap-8 animate-news-marquee group-hover:[animation-play-state:paused]">

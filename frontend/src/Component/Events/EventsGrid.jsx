@@ -74,8 +74,8 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
               <div
                 className="w-10 h-[2px] rounded-full"
                 style={{
-                  backgroundColor: '#D4A72C',
-                  boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                  backgroundColor: '#3f0701',
+                  boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
                 }}
               />
             </div>
@@ -170,7 +170,7 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
                   alt={evt.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#071426]/75 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#3f0701]/75 via-transparent to-transparent" />
                 
                 {/* Status Badge */}
                 <div className="absolute top-4 left-4">
@@ -180,7 +180,7 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
                       LIVE NOW
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md text-[#071426] text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm" style={{ borderRadius: '9999px' }}>
+                    <span className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-md text-[#3f0701] text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm" style={{ borderRadius: '9999px' }}>
                       <span className="w-2 h-2 rounded-full bg-slate-400"></span>
                       UPCOMING
                     </span>

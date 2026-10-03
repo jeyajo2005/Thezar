@@ -66,8 +66,8 @@ export default function CategoryGridSection({ onOpenRegister }) {
             <div
               className="w-10 h-[2px] rounded-full"
               style={{
-                backgroundColor: '#D4A72C',
-                boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                backgroundColor: '#3f0701',
+                boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
               }}
             />
           </div>
@@ -83,7 +83,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
         <div className="space-y-6">
           
           {/* TOP WIDE HERO BENTO CARD - FEATURED COOKING CHAMPIONSHIP */}
-          <div className="relative rounded-3xl bg-[#071426] p-8 sm:p-12 text-white overflow-hidden shadow-2xl border border-slate-800">
+          <div className="relative rounded-3xl bg-[#3f0701] p-8 sm:p-12 text-white overflow-hidden shadow-2xl border border-[#3f0701]/50">
             {/* Background Accent Lines */}
             <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full border border-white/10 pointer-events-none" />
             <div className="absolute -right-10 -top-10 w-72 h-72 rounded-full border border-[#9e0804]/20 pointer-events-none" />
@@ -104,7 +104,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
                   </span>
                 </h3>
 
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+                <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-xl">
                   Showcase your culinary magic! Step 1: Upload a short 60-sec recipe preparation video reel. Shortlisted participants perform Face-to-Face live in front of master chefs & judges in Tirunelveli!
                 </p>
 
@@ -115,8 +115,8 @@ export default function CategoryGridSection({ onOpenRegister }) {
                     style={{ borderRadius: '9999px' }}
                   >
                     <span>Register for Cooking Competition</span>
-                    <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
-                      <ArrowUpRight className="w-4 h-4 text-white" />
+                    <div className="w-7 h-7 rounded-full bg-[#3f0701]/10 flex items-center justify-center">
+                      <ArrowUpRight className="w-4 h-4 text-[#3f0701]" />
                     </div>
                   </button>
                 </div>
@@ -128,7 +128,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
                   
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-2xl font-black text-[#071426] tracking-tight">3 Divisions</p>
+                      <p className="text-2xl font-black text-[#3f0701] tracking-tight">3 Divisions</p>
                       <p className="text-xs text-slate-500 font-medium">Kids • Adults • Men & Women</p>
                     </div>
                     <div className="w-10 h-10 rounded-full bg-red-50 text-[#9e0804] flex items-center justify-center font-bold">
@@ -187,7 +187,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
                       </span>
                     </div>
 
-                    <h4 className="text-xl font-black text-[#071426] tracking-tight leading-snug">
+                    <h4 className="text-xl font-black text-[#3f0701] tracking-tight leading-snug">
                       {cat.title}
                     </h4>
                     <p className="text-[11px] font-bold text-[#9e0804] uppercase tracking-wider mt-0.5 font-mono">

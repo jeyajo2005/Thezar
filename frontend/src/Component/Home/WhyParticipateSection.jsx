@@ -18,13 +18,13 @@ export default function WhyParticipateSection() {
               <div
                 className="w-10 h-[2px] rounded-full"
                 style={{
-                  backgroundColor: '#D4A72C',
-                  boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                  backgroundColor: '#3f0701',
+                  boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
                 }}
               />
             </div>
 
-            <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
+            <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#3f0701] tracking-[-0.035em] uppercase leading-[1.05]">
               LOVED BY THOUSANDS OF{' '}
               <span className="text-[#9e0804] font-serif italic lowercase tracking-normal">
                 competitors

@@ -167,7 +167,7 @@ function HTML5CanvasMap({ selectedDistrictId, setSelectedDistrictId, hoveredDist
           const rectY = coord.y - radius - 34;
 
           // Tooltip Dark Card
-          ctx.fillStyle = isSelected ? '#071426' : '#1E293B';
+          ctx.fillStyle = isSelected ? '#3f0701' : '#240401';
           ctx.beginPath();
           if (ctx.roundRect) {
             ctx.roundRect(rectX, rectY, rectW, rectH, 15);
@@ -297,13 +297,13 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                 <div
                   className="w-10 h-[2px] rounded-full"
                   style={{
-                    backgroundColor: '#D4A72C',
-                    boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                    backgroundColor: '#3f0701',
+                    boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
                   }}
                 />
               </div>
               
-              <h2 className="text-[32px] sm:text-[44px] lg:text-[48px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
+              <h2 className="text-[32px] sm:text-[44px] lg:text-[48px] font-extrabold text-[#3f0701] tracking-[-0.035em] uppercase leading-[1.05]">
                 38 DISTRICTS. <br />
                 <span className="text-[#9e0804]">ONE GRAND STAGE.</span>
               </h2>
@@ -324,7 +324,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                   <select
                     value={selectedDistrictId}
                     onChange={(e) => setSelectedDistrictId(Number(e.target.value))}
-                    className="w-full bg-transparent text-sm sm:text-base font-bold text-[#071426] focus:outline-none appearance-none cursor-pointer pr-6 py-0.5"
+                    className="w-full bg-transparent text-sm sm:text-base font-bold text-[#3f0701] focus:outline-none appearance-none cursor-pointer pr-6 py-0.5"
                   >
                     {DISTRICTS_DATA.map((dist) => (
                       <option key={dist.id} value={dist.id}>
@@ -363,7 +363,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                     )}
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#071426]">
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#3f0701]">
                     {selectedDistrict.name} District Round
                   </h3>
                 </div>
@@ -422,7 +422,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                   <button
                     onClick={() => setMapMode('canvas')}
                     className={`px-2.5 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1 ${
-                      mapMode === 'canvas' ? 'bg-[#071426] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                      mapMode === 'canvas' ? 'bg-[#3f0701] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
                     <Layers className="w-3 h-3" />
@@ -431,7 +431,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                   <button
                     onClick={() => setMapMode('svg')}
                     className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
-                      mapMode === 'svg' ? 'bg-[#071426] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                      mapMode === 'svg' ? 'bg-[#3f0701] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
                     Vector Pin Overlay

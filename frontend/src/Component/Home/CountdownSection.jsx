@@ -69,7 +69,7 @@ export default function CountdownSection() {
               
               {/* Days */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#071426] tracking-[-0.04em] block leading-none">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#3f0701] tracking-[-0.04em] block leading-none">
                   {timeLeft.days}
                 </span>
                 <span className="text-[11px] sm:text-[12px] font-semibold text-[#64748B] uppercase tracking-[0.12em] mt-2 block">
@@ -81,7 +81,7 @@ export default function CountdownSection() {
 
               {/* Hours */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#071426] tracking-[-0.04em] block leading-none">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#3f0701] tracking-[-0.04em] block leading-none">
                   {timeLeft.hours}
                 </span>
                 <span className="text-[11px] sm:text-[12px] font-semibold text-[#64748B] uppercase tracking-[0.12em] mt-2 block">
@@ -93,7 +93,7 @@ export default function CountdownSection() {
 
               {/* Minutes */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#071426] tracking-[-0.04em] block leading-none">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#3f0701] tracking-[-0.04em] block leading-none">
                   {timeLeft.minutes}
                 </span>
                 <span className="text-[11px] sm:text-[12px] font-semibold text-[#64748B] uppercase tracking-[0.12em] mt-2 block">

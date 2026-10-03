@@ -260,14 +260,14 @@ export default function RegistrationModal({ onClose }) {
             <div className="flex flex-col sm:flex-row items-center gap-3">
               <button
                 onClick={() => window.print()}
-                className="w-full sm:w-1/2 py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-all border border-slate-700 flex items-center justify-center gap-2"
+                className="w-full sm:w-1/2 py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-all border border-slate-700 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Download className="w-4 h-4 text-red-300" />
                 <span>Print Candidate Badge</span>
               </button>
               <button
                 onClick={onClose}
-                className="w-full sm:w-1/2 py-3 rounded-full text-white font-bold text-xs uppercase tracking-wider gradient-bg-pink shadow-lg"
+                className="w-full sm:w-1/2 py-3 rounded-full text-white font-bold text-xs uppercase tracking-wider bg-[#3f0701] hover:bg-[#580c04] shadow-lg cursor-pointer"
               >
                 Done
               </button>

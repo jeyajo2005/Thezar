@@ -61,7 +61,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`py-3.5 px-5 font-extrabold text-xs tracking-wider uppercase border-b-2 transition-all shrink-0 ${
+              className={`py-3.5 px-5 font-extrabold text-xs tracking-wider uppercase border-b-2 transition-all shrink-0 cursor-pointer ${
                 activeTab === tab
                   ? 'border-[#9e0804] text-red-300'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
@@ -198,7 +198,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
                 onClose();
                 onOpenRegister();
               }}
-              className="px-6 py-2.5 rounded-full font-bold text-white gradient-bg-pink shadow-lg hover:opacity-90 text-xs uppercase tracking-wider"
+              className="px-6 py-2.5 rounded-full font-bold text-white bg-[#3f0701] hover:bg-[#580c04] shadow-lg text-xs uppercase tracking-wider cursor-pointer"
             >
               Register Candidate Now &rarr;
             </button>
