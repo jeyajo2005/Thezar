@@ -228,17 +228,17 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
 
                   <button
                     onClick={onOpenRegister}
-                    className="px-5 py-2 rounded-full text-[13px] font-black transition-transform hover:scale-105 cursor-pointer shadow-md inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
+                    className="px-5 py-2.5 rounded-full text-[13px] sm:text-[14px] font-bold text-white transition-all cursor-pointer shadow-sm inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
                     style={{
                       borderRadius: '9999px',
-                      background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
-                      color: '#071426',
-                      boxShadow: '0 4px 14px rgba(184, 133, 40, 0.30)',
+                      background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
+                      boxShadow: '0 4px 14px rgba(63, 7, 1, 0.25)',
+                      color: '#FFFFFF',
                       whiteSpace: 'nowrap',
                     }}
                   >
                     <span style={{ whiteSpace: 'nowrap' }}>Register</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#071426] shrink-0" />
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </button>
                 </div>
               </div>
