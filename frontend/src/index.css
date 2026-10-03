@@ -5,9 +5,9 @@
   --font-serif: 'Playfair Display', Georgia, serif;
   --color-navy: #071426;
   --color-primary: #9e0804;
-  --color-accent: #9e0804;
-  --color-gold: #D4A72C;
-  --color-light-gold: #F5D77A;
+  --color-accent: #c4120c;
+  --color-maroon: #9e0804;
+  --color-light-maroon: #f87171;
   --color-white: #FFFFFF;
   --color-muted: #64748B;
 }
@@ -22,7 +22,7 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: #3f0701;
+    background-color: #071426;
     color: #ffffff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -46,20 +46,22 @@
   }
 }
 
-/* Decorative Gold Line System */
-.decorative-gold-line {
+/* Decorative Maroon Line System */
+.decorative-gold-line,
+.decorative-maroon-line {
   width: 80px;
   height: 2px;
-  background-color: #D4A72C;
-  box-shadow: 0 0 10px rgba(212, 167, 44, 0.35);
+  background-color: #c4120c;
+  box-shadow: 0 0 10px rgba(196, 18, 12, 0.35);
   border-radius: 9999px;
 }
 
-.decorative-gold-line-sm {
+.decorative-gold-line-sm,
+.decorative-maroon-line-sm {
   width: 40px;
   height: 2px;
-  background-color: #D4A72C;
-  box-shadow: 0 0 8px rgba(212, 167, 44, 0.30);
+  background-color: #c4120c;
+  box-shadow: 0 0 8px rgba(196, 18, 12, 0.30);
   border-radius: 9999px;
 }
 
@@ -70,8 +72,9 @@
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-gold {
-  background: linear-gradient(90deg, #D4A72C 0%, #F5D77A 50%, #D4A72C 100%);
+.text-gradient-gold,
+.text-gradient-maroon {
+  background: linear-gradient(90deg, #FFFFFF 0%, #f87171 50%, #c4120c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

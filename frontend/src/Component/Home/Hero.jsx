@@ -41,90 +41,90 @@ export default function Hero({ onOpenRegister }) {
       </div>
 
       {/* Main Hero Content */}
-      <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-12 pt-10 sm:pt-12 lg:pt-16 pb-24 sm:pb-28 lg:pb-32 w-full flex-1 flex items-center">
-        <div className="max-w-[560px] text-left space-y-4 sm:space-y-5">
+      <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-12 pt-8 sm:pt-10 lg:pt-14 pb-20 sm:pb-24 lg:pb-28 w-full flex-1 flex items-center">
+        <div className="max-w-[640px] text-left space-y-3.5 sm:space-y-4">
           
           {/* 1. TOP EYEBROW HEADER */}
-          <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-300">
-            38 DISTRICTS <span className="text-[#c4120c] mx-1.5">|</span> TAMIL NADU <span className="text-[#c4120c] mx-1.5">|</span> STATEWIDE LEAGUE <span className="text-[#c4120c] mx-1.5">|</span> THEZAR 2026
+          <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.20em] uppercase text-slate-300">
+            1ST DISTRICT STAGE <span className="text-[#c4120c] mx-1.5">|</span> TIRUNELVELI <span className="text-[#c4120c] mx-1.5">|</span> TALENT CHAMPIONSHIP <span className="text-[#c4120c] mx-1.5">|</span> THEZAR 2026
           </div>
 
-          {/* 2. TYPOGRAPHIC HEADING STACK (YOUTH LEADERSHIP SUMMIT) */}
-          <div className="pt-1">
-            <h1 className="flex flex-col uppercase tracking-tight leading-[0.92]">
-              <span className="text-[38px] sm:text-[50px] md:text-[60px] lg:text-[70px] font-black text-white tracking-tight">
-                YOUTH
+          {/* 2. TYPOGRAPHIC HEADING STACK (STATEWIDE TALENT SHOWCASE CHAMPIONSHIP) */}
+          <div className="pt-0.5">
+            <h1 className="flex flex-col uppercase tracking-tight leading-[1.02]">
+              <span className="text-[24px] sm:text-[32px] md:text-[38px] lg:text-[44px] font-black text-white tracking-tight">
+                STATEWIDE TALENT
               </span>
               <span
-                className="text-[38px] sm:text-[50px] md:text-[60px] lg:text-[70px] font-black text-transparent bg-clip-text"
+                className="text-[24px] sm:text-[32px] md:text-[38px] lg:text-[44px] font-black text-transparent bg-clip-text"
                 style={{
                   backgroundImage:
-                    'linear-gradient(90deg, #E6C587 0%, #D8AF67 35%, #F4DEC3 65%, #C89945 100%)',
+                    'linear-gradient(90deg, #FFFFFF 0%, #F87171 40%, #C4120C 75%, #9E0804 100%)',
                 }}
               >
-                LEADERSHIP
+                SHOWCASE PLATFORM
               </span>
-              <span className="text-[38px] sm:text-[50px] md:text-[60px] lg:text-[70px] font-light text-white tracking-[0.04em]">
-                SUMMIT
+              <span className="text-[22px] sm:text-[30px] md:text-[36px] lg:text-[42px] font-bold text-white tracking-[0.02em]">
+                CHAMPIONSHIP
               </span>
             </h1>
 
-            {/* Decorative Gold Accent Bar under SUMMIT */}
+            {/* Decorative Maroon Red Accent Bar under CHAMPIONSHIP */}
             <div
               className="w-20 h-[3px] mt-2 rounded-full"
               style={{
-                backgroundImage: 'linear-gradient(90deg, #c4120c 0%, #9e0804 50%, #e31b14 100%)',
+                backgroundImage: 'linear-gradient(90deg, #c4120c 0%, #9e0804 50%, #730502 100%)',
               }}
             />
           </div>
 
           {/* 3. SUBTITLE */}
-          <div className="pt-1">
-            <p className="text-[15px] sm:text-[17px] lg:text-[18px] font-medium text-slate-200 leading-snug">
-              Empowering the Next Generation <br className="hidden sm:inline" />
-              for a Brighter Tomorrow
+          <div className="pt-0.5">
+            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-200 leading-snug">
+              Unleashing & Elevating Extraordinary Talent Across 38 Districts <br className="hidden sm:inline" />
+              1st Live Competition Stage Hosted in Tirunelveli
             </p>
             {/* Small accent bar under subtitle */}
             <div
               className="w-12 h-[2px] mt-2 rounded-full"
               style={{
-                background: 'linear-gradient(90deg, #D8AF67 0%, rgba(216, 175, 103, 0) 100%)',
+                background: 'linear-gradient(90deg, #c4120c 0%, rgba(196, 18, 12, 0) 100%)',
               }}
             />
           </div>
 
           {/* 4. EVENT DETAILS 2x2 GRID */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 max-w-[500px]">
-            {/* Multi-Disciplinary Events */}
+            {/* Tirunelveli District Stage */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#c4120c] shrink-0">
                 <Trophy className="w-4 h-4 text-[#c4120c]" />
               </div>
               <div>
-                <div className="text-[14px] font-bold text-white leading-tight">Oct 25, 2026</div>
-                <div className="text-[12px] text-slate-300/85 mt-0.5">09:00 AM - 05:00 PM</div>
+                <div className="text-[14px] font-bold text-white leading-tight">Tirunelveli Stage</div>
+                <div className="text-[12px] text-slate-300/85 mt-0.5">Oct 10, 2026 • 10:00 AM</div>
               </div>
             </div>
 
-            {/* 38 Districts */}
+            {/* Tirunelveli Venue */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#c4120c] shrink-0">
                 <MapPin className="w-4 h-4 text-[#c4120c]" />
               </div>
               <div>
-                <div className="text-[14px] font-bold text-white leading-tight">Chennai</div>
-                <div className="text-[12px] text-slate-300/85 mt-0.5">Convention Centre</div>
+                <div className="text-[14px] font-bold text-white leading-tight">Tirunelveli District</div>
+                <div className="text-[12px] text-slate-300/85 mt-0.5">Main Convention Hall</div>
               </div>
             </div>
 
-            {/* Open to Everyone */}
+            {/* Talent Categories */}
             <div className="flex items-start gap-2.5">
               <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#c4120c] shrink-0">
                 <Users className="w-4 h-4 text-[#c4120c]" />
               </div>
               <div>
-                <div className="text-[14px] font-bold text-white leading-tight">Industry Experts</div>
-                <div className="text-[12px] text-slate-300/85 mt-0.5">Panel Discussions</div>
+                <div className="text-[14px] font-bold text-white leading-tight">Talent Competitions</div>
+                <div className="text-[12px] text-slate-300/85 mt-0.5">Cooking • Cultural • Tech</div>
               </div>
             </div>
 
@@ -134,13 +134,13 @@ export default function Hero({ onOpenRegister }) {
                 <Sparkles className="w-4 h-4 text-[#c4120c]" />
               </div>
               <div>
-                <div className="text-[14px] font-bold text-white leading-tight">Ideas & Innovation</div>
-                <div className="text-[12px] text-slate-300/85 mt-0.5">Networking</div>
+                <div className="text-[14px] font-bold text-white leading-tight">Statewide League</div>
+                <div className="text-[12px] text-slate-300/85 mt-0.5">Round 1 Reel & Live Round 2</div>
               </div>
             </div>
           </div>
 
-          {/* 5. CTA ACTION BUTTONS (Champagne Gold + Glass) */}
+          {/* 5. CTA ACTION BUTTONS (Maroon Red + Glass) */}
           <div className="pt-3 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={onOpenRegister}
@@ -169,16 +169,16 @@ export default function Hero({ onOpenRegister }) {
                 borderRadius: '9999px',
                 textDecoration: 'none',
                 background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(216, 175, 103, 0.40)',
+                border: '1px solid rgba(196, 18, 12, 0.40)',
                 backdropFilter: 'blur(8px)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(216, 175, 103, 0.15)';
-                e.currentTarget.style.borderColor = 'rgba(216, 175, 103, 0.8)';
+                e.currentTarget.style.background = 'rgba(196, 18, 12, 0.20)';
+                e.currentTarget.style.borderColor = 'rgba(196, 18, 12, 0.8)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                e.currentTarget.style.borderColor = 'rgba(216, 175, 103, 0.40)';
+                e.currentTarget.style.borderColor = 'rgba(196, 18, 12, 0.40)';
               }}
             >
               EXPLORE EVENTS

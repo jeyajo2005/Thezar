@@ -34,8 +34,8 @@ export default function CtaSection({ onOpenRegister }) {
             </p>
 
             {/* Bumper Prize Reminder */}
-            <div className="pt-2 text-[12px] sm:text-[13px] font-bold text-amber-300 tracking-[0.05em] uppercase">
-              1st Prize Bumper: ₹40 Lakhs House Free + ₹25L Cash Pool
+            <div className="pt-2 text-[12px] sm:text-[13px] font-bold text-red-300 tracking-[0.05em] uppercase">
+              1st Prize Bumper: Grand House Prize + Mega Cash Prize Pool
             </div>
 
             {/* Button */}

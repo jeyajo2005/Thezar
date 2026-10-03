@@ -190,7 +190,7 @@ export default function RegistrationModal({ onClose }) {
                 <select
                   value={formData.competition}
                   onChange={(e) => setFormData({ ...formData, competition: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors font-semibold text-amber-400"
+                  className="w-full px-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors font-semibold text-red-300"
                 >
                   <option value="Technical Hackathon">Technical Hackathon</option>
                   <option value="Cultural Dance Fest">Cultural Dance Fest</option>
@@ -203,7 +203,7 @@ export default function RegistrationModal({ onClose }) {
             <div className="pt-4">
               <button
                 type="submit"
-                className="w-full py-4 rounded-full text-base font-extrabold text-white gradient-bg-pink shadow-xl shadow-red-900/30 hover:opacity-95 transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-full text-base font-extrabold text-white gradient-bg-pink shadow-xl shadow-red-900/30 hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Continue & Generate Pass</span>
                 <Sparkles className="w-5 h-5" />
@@ -236,7 +236,7 @@ export default function RegistrationModal({ onClose }) {
 
                 <div className="text-left space-y-1.5">
                   <p className="text-xs text-slate-400">Participant ID:</p>
-                  <p className="text-xl font-mono font-black text-amber-400 tracking-wider">
+                  <p className="text-xl font-mono font-black text-[#f87171] tracking-wider">
                     {registeredUser.participantId}
                   </p>
                   <p className="text-lg font-bold text-white">{registeredUser.fullName}</p>
@@ -244,7 +244,7 @@ export default function RegistrationModal({ onClose }) {
                   <p className="text-xs text-red-300 font-semibold">{registeredUser.district} District • {registeredUser.competition}</p>
                   
                   <div className="pt-2 flex items-center gap-2 text-xs text-slate-400 bg-slate-900 px-3 py-1.5 rounded-full border border-slate-800">
-                    <Lock className="w-3.5 h-3.5 text-amber-400" />
+                    <Lock className="w-3.5 h-3.5 text-red-300" />
                     <span>App Password: <strong className="text-white font-mono">{registeredUser.password}</strong></span>
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export default function RegistrationModal({ onClose }) {
               </button>
               <button
                 onClick={onClose}
-                className="w-full sm:w-1/2 py-3 rounded-full text-white font-bold text-xs uppercase tracking-wider bg-[#3f0701] hover:bg-[#580c04] shadow-lg cursor-pointer"
+                className="w-full sm:w-1/2 py-3 rounded-full text-white font-bold text-xs uppercase tracking-wider bg-[#9e0804] hover:bg-[#c4120c] shadow-lg cursor-pointer"
               >
                 Done
               </button>

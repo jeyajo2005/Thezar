@@ -59,7 +59,7 @@ export default function AboutTheZarSection({ onOpenRegister }) {
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-[#9e0804] shrink-0" />
-                <span>₹40 Lakhs House Bumper + ₹25 Lakhs Cash Pool for winners</span>
+                <span>Grand House Prize + Mega Cash Prize Pool for winners</span>
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-[#9e0804] shrink-0" />

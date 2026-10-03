@@ -13,8 +13,8 @@ export default function NewsTickerBar() {
       id: 2,
       icon: Trophy,
       tag: 'PRIZE POOL',
-      tagColor: 'bg-amber-400 text-amber-950',
-      text: 'OVER ₹40 LAKHS PRIZE POOL INCLUDING GRAND HOUSE FOR STATEWIDE CHAMPIONS',
+      tagColor: 'bg-[#9e0804] text-white',
+      text: 'GRAND HOUSE PRIZE & MEGA CASH PRIZE POOL FOR STATEWIDE CHAMPIONS',
     },
     {
       id: 3,
