@@ -392,15 +392,16 @@ export default function DistrictJourneySection({ onOpenRegister }) {
             <div className="pt-2">
               <button
                 onClick={onOpenRegister}
-                className="w-full sm:w-auto px-9 py-4 rounded-full text-base font-bold text-white transition-all cursor-pointer shadow-xl inline-flex items-center justify-center gap-2.5 group"
+                className="w-full sm:w-auto px-9 py-4 rounded-full text-base font-black transition-all cursor-pointer shadow-xl inline-flex items-center justify-center gap-2.5 group hover:scale-[1.02]"
                 style={{
                   borderRadius: '9999px',
-                  background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
-                  boxShadow: '0 8px 24px rgba(63, 7, 1, 0.25)',
+                  background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                  color: '#071426',
+                  boxShadow: '0 8px 24px rgba(184, 133, 40, 0.35)',
                 }}
               >
                 <span>Register for {selectedDistrict.name} Round</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 text-[#071426] group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
 

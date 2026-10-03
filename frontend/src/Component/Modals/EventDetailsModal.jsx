@@ -198,9 +198,14 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
                 onClose();
                 onOpenRegister();
               }}
-              className="px-6 py-2.5 rounded-full font-bold text-white bg-[#3f0701] hover:bg-[#580c04] shadow-lg text-xs uppercase tracking-wider cursor-pointer"
+              className="px-6 py-2.5 rounded-full font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg hover:scale-105 transition-transform"
+              style={{
+                borderRadius: '9999px',
+                background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                color: '#071426',
+              }}
             >
-              Register Candidate Now &rarr;
+              <span className="font-extrabold text-[#071426]">Register Candidate Now &rarr;</span>
             </button>
           </div>
         </div>

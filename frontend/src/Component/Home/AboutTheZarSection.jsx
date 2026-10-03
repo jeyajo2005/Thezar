@@ -94,15 +94,16 @@ export default function AboutTheZarSection({ onOpenRegister }) {
                 <button
                   type="button"
                   onClick={onOpenRegister}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer"
+                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-black text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer hover:scale-105"
                   style={{
                     borderRadius: '9999px',
-                    background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
-                    boxShadow: '0 8px 20px rgba(63, 7, 1, 0.25)',
-                    color: '#FFFFFF',
+                    background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                    boxShadow: '0 6px 20px rgba(184, 133, 40, 0.35)',
+                    color: '#071426',
                   }}
                 >
-                  <span>REGISTER NOW</span>
+                  <span className="text-[#071426] font-extrabold">REGISTER NOW</span>
+                  <ArrowRight className="w-4 h-4 text-[#071426]" />
                 </button>
               )}
             </div>

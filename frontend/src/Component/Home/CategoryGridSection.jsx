@@ -111,12 +111,16 @@ export default function CategoryGridSection({ onOpenRegister }) {
                 <div className="pt-2 flex flex-wrap items-center gap-4">
                   <button
                     onClick={onOpenRegister}
-                    className="px-7 py-3.5 rounded-full bg-white text-[#3f0701] font-extrabold text-sm sm:text-base inline-flex items-center gap-2 shadow-lg shadow-black/20 hover:scale-105 transition-transform cursor-pointer"
-                    style={{ borderRadius: '9999px' }}
+                    className="px-8 py-3.5 rounded-full font-black text-xs sm:text-sm inline-flex items-center gap-2 shadow-lg shadow-black/20 hover:scale-105 transition-transform cursor-pointer"
+                    style={{
+                      borderRadius: '9999px',
+                      background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                      color: '#071426',
+                    }}
                   >
                     <span>Register for Cooking Competition</span>
-                    <div className="w-7 h-7 rounded-full bg-[#3f0701]/10 flex items-center justify-center">
-                      <ArrowUpRight className="w-4 h-4 text-[#3f0701]" />
+                    <div className="w-6 h-6 rounded-full bg-[#071426]/10 flex items-center justify-center">
+                      <ArrowUpRight className="w-3.5 h-3.5 text-[#071426]" />
                     </div>
                   </button>
                 </div>
@@ -211,11 +215,15 @@ export default function CategoryGridSection({ onOpenRegister }) {
 
                     <button
                       onClick={onOpenRegister}
-                      className="w-full mt-2 py-2.5 rounded-full bg-[#3f0701] text-white text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-[#580c04] transition-colors cursor-pointer"
-                      style={{ borderRadius: '9999px' }}
+                      className="w-full mt-2 py-2.5 rounded-full text-xs font-black flex items-center justify-center gap-1.5 transition-transform hover:scale-[1.02] cursor-pointer shadow-md"
+                      style={{
+                        borderRadius: '9999px',
+                        background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                        color: '#071426',
+                      }}
                     >
                       <span>Register {cat.title}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
+                      <ArrowUpRight className="w-3.5 h-3.5 text-[#071426]" />
                     </button>
                   </div>
                 </div>
@@ -249,11 +257,15 @@ export default function CategoryGridSection({ onOpenRegister }) {
               <div className="relative z-10 pt-4">
                 <button
                   onClick={onOpenRegister}
-                  className="w-full py-2.5 rounded-full bg-white text-[#3f0701] hover:bg-slate-100 text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] transition-transform cursor-pointer border border-white/30"
-                  style={{ borderRadius: '9999px' }}
+                  className="w-full py-2.5 rounded-full text-xs font-black flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] transition-transform cursor-pointer"
+                  style={{
+                    borderRadius: '9999px',
+                    background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                    color: '#071426',
+                  }}
                 >
                   <span>View Grand Finale Details</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#071426]" />
                 </button>
               </div>
             </div>

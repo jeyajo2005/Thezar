@@ -150,25 +150,28 @@ export default function Hero({ onOpenRegister }) {
           <div className="pt-3 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={onOpenRegister}
-              className="w-full sm:w-auto h-[44px] px-8 rounded-full text-[13px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-lg shadow-black/30 no-underline hover:no-underline"
+              className="w-full sm:w-auto h-[44px] px-8 rounded-full text-[13px] font-black uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-lg shadow-black/30 no-underline hover:no-underline"
               style={{
                 borderRadius: '9999px',
-                background: 'linear-gradient(135deg, #E6C587 0%, #D8AF67 50%, #B88E3E 100%)',
+                background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
                 color: '#071426',
+                boxShadow: '0 4px 16px rgba(184, 133, 40, 0.40)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background =
-                  'linear-gradient(135deg, #F0D59E 0%, #E6C587 50%, #C89945 100%)';
+                  'linear-gradient(135deg, #ECC880 0%, #DCB056 50%, #C49132 100%)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(184, 133, 40, 0.50)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background =
-                  'linear-gradient(135deg, #E6C587 0%, #D8AF67 50%, #B88E3E 100%)';
+                  'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)';
                 e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(184, 133, 40, 0.40)';
               }}
             >
-              <span>REGISTER NOW</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+              <span className="font-extrabold text-[#071426]">REGISTER NOW</span>
+              <ArrowRight className="w-4 h-4 text-[#071426] transition-transform duration-200 group-hover:translate-x-1" />
             </button>
 
             <a

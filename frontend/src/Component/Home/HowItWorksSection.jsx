@@ -120,11 +120,16 @@ export default function HowItWorksSection({ onOpenRegister }) {
             <div className="pt-4 pl-[75px] sm:pl-[88px]">
               <button
                 onClick={onOpenRegister}
-                className="px-8 py-3.5 rounded-full bg-[#3f0701] hover:bg-[#580c04] text-white text-xs sm:text-sm font-bold inline-flex items-center gap-2 shadow-lg shadow-[#3f0701]/25 transition-all cursor-pointer"
-                style={{ borderRadius: '9999px' }}
+                className="px-8 py-3.5 rounded-full text-xs sm:text-sm font-black inline-flex items-center gap-2 shadow-lg shadow-black/20 hover:scale-105 transition-all cursor-pointer"
+                style={{
+                  borderRadius: '9999px',
+                  background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                  color: '#071426',
+                  boxShadow: '0 6px 18px rgba(184, 133, 40, 0.35)',
+                }}
               >
                 <span>Register & Get Digital Pass</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#071426]" />
               </button>
             </div>
 

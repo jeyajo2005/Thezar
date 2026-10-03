@@ -73,6 +73,30 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Golden Pill Button as in user reference */
+.btn-gold-pill {
+  background: linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%);
+  color: #071426 !important;
+  border-radius: 9999px !important;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 14px rgba(184, 133, 40, 0.35);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.btn-gold-pill:hover {
+  background: linear-gradient(135deg, #ECC880 0%, #DCB056 50%, #C49132 100%);
+  color: #071426 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184, 133, 40, 0.45);
+}
+
 /* Reference Image Exact Theme Classes */
 .bg-convention-dark {
   background-color: #3f0701;
@@ -83,36 +107,32 @@
 }
 
 .btn-royal-rose {
-  background-color: #3f0701;
-  color: #ffffff;
-  border-radius: 4px;
+  background: linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%);
+  color: #071426 !important;
+  border-radius: 9999px !important;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 14px rgba(184, 133, 40, 0.35);
+}
+
+.btn-royal-rose:hover {
+  background: linear-gradient(135deg, #ECC880 0%, #DCB056 50%, #C49132 100%);
+  transform: translateY(-2px);
 }
 
 .btn-white-solid {
-  background-color: #ffffff;
-  color: #3f0701;
-  border-radius: 4px;
+  background: linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%);
+  color: #071426 !important;
+  border-radius: 9999px !important;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 14px rgba(184, 133, 40, 0.35);
 }
 
 .btn-white-solid:hover {
-  background-color: #f1f5f9;
-  color: #000000;
-}
-
-.btn-outline-glass {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-  border-radius: 4px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.btn-outline-glass:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-color: #ffffff;
+  background: linear-gradient(135deg, #ECC880 0%, #DCB056 50%, #C49132 100%);
+  color: #071426 !important;
+  transform: translateY(-2px);
 }
 
 .bottom-countdown-bar {

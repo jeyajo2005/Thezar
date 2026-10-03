@@ -47,9 +47,14 @@ export default function About() {
             <h2 className="text-3xl font-black text-white">Be Part of THEZAR 2026</h2>
             <button
               onClick={() => setIsRegisterOpen(true)}
-              className="px-8 py-3.5 rounded-full font-extrabold text-white gradient-bg-pink shadow-lg text-xs uppercase tracking-wider"
+              className="px-8 py-3.5 rounded-full font-black text-xs uppercase tracking-wider shadow-lg hover:scale-105 transition-transform cursor-pointer"
+              style={{
+                borderRadius: '9999px',
+                background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                color: '#071426',
+              }}
             >
-              Register Candidate Pass &rarr;
+              <span className="font-extrabold text-[#071426]">Register Candidate Pass &rarr;</span>
             </button>
           </div>
         </section>

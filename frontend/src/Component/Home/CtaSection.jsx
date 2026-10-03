@@ -42,15 +42,16 @@ export default function CtaSection({ onOpenRegister }) {
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={onOpenRegister}
-                className="w-full sm:w-auto px-9 py-4 rounded-full text-[#3f0701] font-black text-[14px] sm:text-[15px] uppercase tracking-[0.02em] shadow-xl shadow-black/30 hover:bg-slate-100 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-10 py-4 rounded-full font-black text-[14px] sm:text-[15px] uppercase tracking-[0.04em] shadow-xl shadow-black/30 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
                 style={{
                   borderRadius: '9999px',
-                  backgroundColor: '#FFFFFF',
-                  color: '#3f0701',
+                  background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                  color: '#071426',
+                  boxShadow: '0 8px 24px rgba(184, 133, 40, 0.40)',
                 }}
               >
-                <span>START YOUR JOURNEY NOW</span>
-                <ArrowRight className="w-4 h-4 text-[#3f0701]" />
+                <span className="font-extrabold text-[#071426]">START YOUR JOURNEY NOW</span>
+                <ArrowRight className="w-4 h-4 text-[#071426]" />
               </button>
 
               <a

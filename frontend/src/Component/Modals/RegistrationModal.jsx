@@ -203,10 +203,16 @@ export default function RegistrationModal({ onClose }) {
             <div className="pt-4">
               <button
                 type="submit"
-                className="w-full py-4 rounded-full text-base font-extrabold text-white bg-[#3f0701] hover:bg-[#580c04] shadow-xl shadow-[#3f0701]/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-4 rounded-full text-base font-black transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xl hover:scale-[1.01]"
+                style={{
+                  borderRadius: '9999px',
+                  background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                  color: '#071426',
+                  boxShadow: '0 8px 24px rgba(184, 133, 40, 0.40)',
+                }}
               >
-                <span>Continue & Generate Pass</span>
-                <Sparkles className="w-5 h-5" />
+                <span className="font-extrabold text-[#071426]">Continue & Generate Pass</span>
+                <Sparkles className="w-5 h-5 text-[#071426]" />
               </button>
             </div>
 
@@ -267,7 +273,12 @@ export default function RegistrationModal({ onClose }) {
               </button>
               <button
                 onClick={onClose}
-                className="w-full sm:w-1/2 py-3 rounded-full text-white font-bold text-xs uppercase tracking-wider bg-[#3f0701] hover:bg-[#580c04] shadow-lg cursor-pointer"
+                className="w-full sm:w-1/2 py-3 rounded-full font-black text-xs uppercase tracking-wider shadow-lg cursor-pointer hover:scale-[1.02] transition-transform"
+                style={{
+                  borderRadius: '9999px',
+                  background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                  color: '#071426',
+                }}
               >
                 Done
               </button>

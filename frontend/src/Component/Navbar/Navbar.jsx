@@ -131,27 +131,28 @@ export default function Navbar({ onOpenRegister }) {
             {/* Primary Pill Button: Register Now */}
             <button
               onClick={onOpenRegister}
-              className="w-[176px] h-[40px] rounded-full text-[14px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-250 cursor-pointer"
+              className="w-[176px] h-[40px] rounded-full text-[13px] font-black uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-md shadow-[#D1A44C]/30 hover:scale-[1.02]"
               style={{
                 borderRadius: '9999px',
                 width: '176px',
                 height: '40px',
-                background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
-                boxShadow: '0 8px 20px rgba(63, 7, 1, 0.25)',
+                background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                color: '#071426',
+                boxShadow: '0 4px 14px rgba(184, 133, 40, 0.35)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #240401 0%, #3f0701 100%)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #ECC880 0%, #DCB056 50%, #C49132 100%)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 12px 25px rgba(63, 7, 1, 0.35)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(184, 133, 40, 0.45)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)';
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(63, 7, 1, 0.25)';
+                e.currentTarget.style.boxShadow = '0 4px 14px rgba(184, 133, 40, 0.35)';
               }}
             >
-              <span>REGISTER NOW</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
+              <span className="font-extrabold text-[#071426]">REGISTER NOW</span>
+              <ArrowRight className="w-4 h-4 text-[#071426] transition-transform duration-200 group-hover:translate-x-[3px]" />
             </button>
           </div>
 
@@ -159,10 +160,11 @@ export default function Navbar({ onOpenRegister }) {
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={onOpenRegister}
-              className="h-9 px-4 rounded-full text-xs font-bold text-white uppercase tracking-wider shadow-sm cursor-pointer"
+              className="h-9 px-4 rounded-full text-xs font-black uppercase tracking-wider shadow-sm cursor-pointer"
               style={{
                 borderRadius: '9999px',
-                background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
+                background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                color: '#071426',
               }}
             >
               REGISTER
@@ -202,14 +204,15 @@ export default function Navbar({ onOpenRegister }) {
                   setMobileMenuOpen(false);
                   onOpenRegister();
                 }}
-                className="w-full h-11 rounded-full font-bold text-white flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-md"
+                className="w-full h-11 rounded-full font-black text-[#071426] flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-md"
                 style={{
                   borderRadius: '9999px',
-                  background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
+                  background: 'linear-gradient(135deg, #E0B970 0%, #D1A44C 50%, #B88528 100%)',
+                  color: '#071426',
                 }}
               >
-                <span>REGISTER CANDIDATE PASS</span>
-                <ArrowRight className="w-4 h-4" />
+                <span className="font-extrabold text-[#071426]">REGISTER CANDIDATE PASS</span>
+                <ArrowRight className="w-4 h-4 text-[#071426]" />
               </button>
             </div>
           </div>
