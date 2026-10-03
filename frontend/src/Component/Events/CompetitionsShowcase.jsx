@@ -41,17 +41,17 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
   ];
 
   return (
-    <section id="competitions" className="py-20 bg-slate-950 relative">
+    <section id="competitions" className="py-20 bg-white relative border-t border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">
+          <span className="text-xs font-mono font-bold text-[#3f0701] uppercase tracking-widest bg-[#FAF0F0] px-4 py-1.5 rounded-full border border-[#3f0701]/20">
             [ FOUR MAJOR COMPETITION TRACKS ]
           </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Statewide <span className="gradient-text">Competition Categories</span>
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+            Statewide <span className="text-[#3f0701]">Competition Categories</span>
           </h2>
-          <p className="text-slate-400 text-sm">
+          <p className="text-slate-600 text-sm max-w-xl mx-auto">
             Designed to identify, reward, and elevate talent across technology, culture, knowledge, and innovation.
           </p>
         </div>
@@ -62,41 +62,42 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
             return (
               <div
                 key={track.id}
-                className="glass-card rounded-3xl p-8 border border-slate-800 hover:border-slate-700 transition-all text-left flex flex-col justify-between space-y-6 group"
+                className="bg-white rounded-3xl p-8 border border-slate-200 shadow-md hover:shadow-xl hover:border-[#3f0701]/30 transition-all text-left flex flex-col justify-between space-y-6 group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className={`p-3.5 rounded-2xl bg-gradient-to-tr ${track.badgeColor} shadow-lg text-white`}>
+                    <div className={`p-3.5 rounded-2xl bg-gradient-to-tr ${track.badgeColor} shadow-md text-white`}>
                       <IconComp className="w-6 h-6" />
                     </div>
-                    <span className="text-xs font-bold font-mono text-amber-400 bg-slate-900 border border-amber-400/20 px-3 py-1 rounded-full flex items-center gap-1.5">
+                    <span className="text-xs font-bold font-mono text-[#3f0701] bg-[#FAF0F0] border border-[#3f0701]/20 px-3 py-1 rounded-full flex items-center gap-1.5">
                       <Trophy className="w-3.5 h-3.5" />
                       {track.prizes}
                     </span>
                   </div>
 
-                  <h3 className="text-2xl font-black text-white group-hover:text-rose-400 transition-colors">
+                  <h3 className="text-2xl font-black text-slate-900 group-hover:text-[#3f0701] transition-colors">
                     {track.title}
                   </h3>
 
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
                     {track.description}
                   </p>
 
                   <div className="pt-2 space-y-2">
                     {track.items.map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
-                        <CheckCircle className="w-4 h-4 text-rose-500 shrink-0" />
+                      <div key={idx} className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
+                        <CheckCircle className="w-4 h-4 text-[#3f0701] shrink-0" />
                         <span>{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800">
+                <div className="pt-4 border-t border-slate-100">
                   <button
                     onClick={onOpenRegister}
-                    className="w-full py-3 rounded-xl bg-slate-900 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors border border-slate-800"
+                    className="w-full py-3 rounded-full bg-slate-50 hover:bg-[#3f0701] text-slate-800 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors border border-slate-200 cursor-pointer shadow-sm"
+                    style={{ borderRadius: '9999px' }}
                   >
                     Enter This Track &rarr;
                   </button>

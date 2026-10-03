@@ -160,32 +160,32 @@ export default function ChristmasEventsHero({ onOpenRegister }) {
           </div>
         </div>
 
-        {/* Fluffy Snow Drift Divider Transition at Bottom (like Pinterest reference) */}
+        {/* Fluffy Snow Drift Divider Transition at Bottom (Curves gracefully into white background) */}
         <div className="absolute bottom-0 inset-x-0 z-20 pointer-events-none leading-none overflow-hidden">
           <svg
             viewBox="0 0 1440 100"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-12 sm:h-16 md:h-20 text-[#0f2a1e] block"
+            className="w-full h-12 sm:h-16 md:h-20 text-white block"
             preserveAspectRatio="none"
           >
             <path
               d="M0,50 C180,10 320,80 500,40 C680,5 820,70 1000,30 C1180,-5 1320,65 1440,35 L1440,100 L0,100 Z"
-              fill="#0f2a1e"
+              fill="#FFFFFF"
             />
           </svg>
         </div>
       </div>
 
-      {/* 2. "YOU MIGHT LIKE" / FESTIVE CIRCULAR TILES (EXACT TO PINTEREST SHOPIFY UI) */}
-      <section id="christmas-highlights" className="py-14 sm:py-16 bg-[#0f2a1e] text-center border-b border-emerald-900/60 relative">
+      {/* 2. "YOU MIGHT LIKE" / FESTIVE CIRCULAR TILES (EXACT TO PINTEREST SHOPIFY UI ON CLEAN WHITE BACKGROUND) */}
+      <section id="christmas-highlights" className="py-14 sm:py-16 bg-white text-center border-b border-slate-100 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-2xl mx-auto space-y-2 mb-10">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-black tracking-tight text-white">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-black tracking-tight text-slate-900">
               You Might Like
             </h2>
-            <p className="text-xs sm:text-sm text-emerald-200/80">
+            <p className="text-xs sm:text-sm text-slate-500">
               Here are some of our most anticipated Christmas & Holiday events people are in love with.
             </p>
           </div>
@@ -201,22 +201,22 @@ export default function ChristmasEventsHero({ onOpenRegister }) {
                 className="group flex flex-col items-center shrink-0 cursor-pointer space-y-3 transition-transform hover:-translate-y-1.5 duration-200"
               >
                 {/* Round Circular Tile */}
-                <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full p-1 bg-gradient-to-tr from-amber-400/80 via-emerald-400/40 to-red-400/80 shadow-lg group-hover:shadow-amber-400/30 transition-all">
-                  <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 border-2 border-white/20">
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full p-1 bg-gradient-to-tr from-amber-400/80 via-emerald-500/40 to-red-400/80 shadow-md group-hover:shadow-amber-400/40 transition-all">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 border-2 border-white">
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-115 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
                 </div>
 
                 {/* Title & Tag */}
                 <div className="text-center max-w-[130px]">
-                  <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors leading-tight">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-[#3f0701] transition-colors leading-tight">
                     {item.title}
                   </h4>
-                  <span className="text-[10px] text-emerald-300/70 font-medium block mt-0.5">
+                  <span className="text-[10px] text-emerald-700 font-semibold block mt-0.5">
                     {item.tag}
                   </span>
                 </div>
@@ -227,22 +227,22 @@ export default function ChristmasEventsHero({ onOpenRegister }) {
         </div>
       </section>
 
-      {/* 3. FEATURED CHRISTMAS EVENTS CARDS ROW */}
-      <section className="py-14 sm:py-16 bg-[#0c2218] border-b border-emerald-950">
+      {/* 3. FEATURED CHRISTMAS EVENTS CARDS ROW (ON SOFT LIGHT BACKGROUND) */}
+      <section className="py-14 sm:py-16 bg-[#F8FAFC] border-b border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 text-left">
             <div>
-              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-amber-300 bg-amber-950/60 px-3 py-1 rounded-full border border-amber-800/40">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#3f0701] bg-[#FAF0F0] px-3 py-1 rounded-full border border-[#3f0701]/20">
                 HOLIDAY HEADLINERS
               </span>
-              <h3 className="text-2xl sm:text-3xl font-black text-white mt-2">
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
                 Top Christmas Championship Competitions
               </h3>
             </div>
             <button
               onClick={onOpenRegister}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-300 hover:text-white uppercase tracking-wider cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3f0701] hover:text-[#580c04] uppercase tracking-wider cursor-pointer"
             >
               <span>Register for All Events</span>
               <ArrowRight className="w-4 h-4" />
@@ -253,7 +253,7 @@ export default function ChristmasEventsHero({ onOpenRegister }) {
             {featuredChristmasEvents.map((evt) => (
               <div
                 key={evt.id}
-                className="bg-[#112d20] rounded-2xl overflow-hidden border border-emerald-800/40 shadow-xl flex flex-col justify-between group hover:border-amber-400/60 transition-all duration-300 text-left"
+                className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl flex flex-col justify-between group hover:border-[#3f0701]/40 transition-all duration-300 text-left"
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
@@ -261,40 +261,40 @@ export default function ChristmasEventsHero({ onOpenRegister }) {
                     alt={evt.title}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#112d20] via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   
                   {/* Badge */}
-                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-red-600/90 text-white text-[10px] font-black uppercase tracking-wider backdrop-blur-sm border border-red-400/30">
+                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-red-600 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
                     {evt.badge}
                   </span>
                 </div>
 
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-wider block">
+                    <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider block">
                       {evt.category}
                     </span>
-                    <h4 className="text-base sm:text-lg font-black text-white group-hover:text-amber-300 transition-colors mt-1">
+                    <h4 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-[#3f0701] transition-colors mt-1">
                       {evt.title}
                     </h4>
 
-                    <div className="space-y-1.5 pt-3 text-xs text-slate-300">
+                    <div className="space-y-1.5 pt-3 text-xs text-slate-600">
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                        <Calendar className="w-3.5 h-3.5 text-[#3f0701] shrink-0" />
                         <span>{evt.date} • {evt.time}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                        <MapPin className="w-3.5 h-3.5 text-[#3f0701] shrink-0" />
                         <span className="truncate">{evt.venue}</span>
                       </div>
-                      <div className="flex items-center gap-2 pt-1 font-bold text-amber-300">
-                        <Trophy className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      <div className="flex items-center gap-2 pt-1 font-bold text-[#3f0701]">
+                        <Trophy className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                         <span>{evt.prize}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-emerald-900/60">
+                  <div className="pt-2 border-t border-slate-100">
                     <button
                       onClick={onOpenRegister}
                       className="w-full py-2.5 rounded-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md cursor-pointer transition-all"
