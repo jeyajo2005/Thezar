@@ -12,28 +12,28 @@ export default function WhyParticipateSection() {
           <div className="lg:col-span-6 text-left space-y-6">
             
             <div className="flex items-center gap-3">
-              <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
+              <span className="text-[12px] font-bold text-[#3f0701] tracking-[0.18em] uppercase">
                 TESTIMONIALS & IMPACT
               </span>
               <div
                 className="w-10 h-[2px] rounded-full"
                 style={{
-                  backgroundColor: '#D4A72C',
-                  boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                  backgroundColor: '#3f0701',
+                  boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
                 }}
               />
             </div>
 
-            <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
+            <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#3f0701] tracking-[-0.035em] uppercase leading-[1.05]">
               LOVED BY THOUSANDS OF{' '}
-              <span className="text-[#E11D48] font-serif italic lowercase tracking-normal">
+              <span className="text-[#3f0701] font-serif italic lowercase tracking-normal">
                 competitors
               </span>
             </h2>
 
             {/* Testimonial Quote Card */}
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xl space-y-4 relative">
-              <span className="text-5xl font-serif text-rose-400 leading-none">"</span>
+              <span className="text-5xl font-serif text-[#3f0701] leading-none">"</span>
               <p className="text-slate-600 text-sm italic font-serif leading-relaxed">
                 THEZAR transformed our team. Competing at Tirunelveli Round 2 and making it to the Chennai Grand Finale opened direct career opportunities and provided statewide recognition.
               </p>
@@ -86,7 +86,7 @@ export default function WhyParticipateSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
               <div className="relative z-10 text-left">
-                <span className="bg-rose-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                <span className="bg-[#3f0701] text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
                   STATISTICS & OUTREACH
                 </span>
               </div>
@@ -94,7 +94,7 @@ export default function WhyParticipateSection() {
               {/* 3 Stat Counter Box Grid */}
               <div className="relative z-10 grid grid-cols-3 gap-3 pt-8">
                 <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl text-center border border-white shadow-lg">
-                  <p className="text-xl sm:text-2xl font-black text-rose-600 font-mono">120+</p>
+                  <p className="text-xl sm:text-2xl font-black text-[#3f0701] font-mono">120+</p>
                   <p className="text-[10px] text-slate-600 font-bold uppercase tracking-wider mt-0.5">Colleges</p>
                 </div>
 

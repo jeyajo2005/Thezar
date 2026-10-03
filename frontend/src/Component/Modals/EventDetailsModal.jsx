@@ -38,7 +38,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
           
           <div className="absolute bottom-6 left-6 right-6 space-y-2">
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full text-xs font-black bg-rose-600 text-white uppercase tracking-wider">
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-[#3f0701] text-white uppercase tracking-wider border border-white/20">
                 {event.badge}
               </span>
               <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-slate-950/80 text-amber-300 border border-white/10">
@@ -49,9 +49,9 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
               {event.title}
             </h2>
             <div className="flex flex-wrap gap-4 text-xs text-slate-300 pt-1">
-              <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4 text-rose-400" /> {event.date}</span>
+              <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4 text-white" /> {event.date}</span>
               <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-amber-400" /> {event.time}</span>
-              <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-pink-400" /> {event.venue}</span>
+              <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-white" /> {event.venue}</span>
             </div>
           </div>
         </div>
@@ -61,9 +61,9 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`py-3.5 px-5 font-extrabold text-xs tracking-wider uppercase border-b-2 transition-all shrink-0 ${
+              className={`py-3.5 px-5 font-extrabold text-xs tracking-wider uppercase border-b-2 transition-all shrink-0 cursor-pointer ${
                 activeTab === tab
-                  ? 'border-rose-500 text-rose-400'
+                  ? 'border-white text-white'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -198,7 +198,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
                 onClose();
                 onOpenRegister();
               }}
-              className="px-6 py-2.5 rounded-full font-bold text-white gradient-bg-pink shadow-lg hover:opacity-90 text-xs uppercase tracking-wider"
+              className="px-6 py-2.5 rounded-full font-bold text-white bg-[#3f0701] hover:bg-[#580c04] shadow-lg text-xs uppercase tracking-wider cursor-pointer"
             >
               Register Candidate Now &rarr;
             </button>

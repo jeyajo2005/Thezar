@@ -40,17 +40,17 @@ export default function NewsTickerBar() {
   ];
 
   return (
-    <div className="w-full bg-[#071426] border-y border-rose-900/50 py-3.5 relative overflow-hidden shadow-xl select-none z-20">
+    <div className="w-full bg-[#3f0701] border-y border-white/10 py-3.5 relative overflow-hidden shadow-xl select-none z-20">
       
       {/* Background Ambient Glow Accent */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-rose-600/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-white/5 rounded-full blur-2xl pointer-events-none" />
       <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4 relative z-10">
         
         {/* Left Fixed Badge: BREAKING NEWS / ANNOUNCEMENTS */}
-        <div className="shrink-0 flex items-center gap-2 bg-gradient-to-r from-[#E11D48] to-[#FB7185] text-white px-3.5 py-1.5 rounded-full shadow-md text-[11px] font-mono font-black tracking-wider uppercase" style={{ borderRadius: '9999px' }}>
-          <Radio className="w-3.5 h-3.5 animate-pulse text-white" />
+        <div className="shrink-0 flex items-center gap-2 bg-white text-[#3f0701] px-3.5 py-1.5 rounded-full shadow-md text-[11px] font-mono font-black tracking-wider uppercase" style={{ borderRadius: '9999px' }}>
+          <Radio className="w-3.5 h-3.5 animate-pulse text-[#3f0701]" />
           <span className="hidden sm:inline">LATEST NEWS</span>
           <span className="sm:hidden">NEWS</span>
         </div>
@@ -59,8 +59,8 @@ export default function NewsTickerBar() {
         <div className="overflow-hidden whitespace-nowrap flex-1 relative group cursor-pointer">
           
           {/* Subtle Fading Edge Gradients */}
-          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#071426] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#071426] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#3f0701] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#3f0701] to-transparent z-10 pointer-events-none" />
 
           {/* Marquee Motion Wrapper */}
           <div className="inline-flex items-center gap-8 animate-news-marquee group-hover:[animation-play-state:paused]">

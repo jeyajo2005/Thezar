@@ -27,22 +27,22 @@ export default function AboutTheZarSection({ onOpenRegister }) {
             
             {/* Editorial Eyebrow with Small Gold Line */}
             <div className="flex items-center gap-3">
-              <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
+              <span className="text-[12px] font-bold text-[#3f0701] tracking-[0.18em] uppercase">
                 ABOUT THEZAR
               </span>
               <div
                 className="w-10 h-[2px] rounded-full"
                 style={{
-                  backgroundColor: '#D4A72C',
-                  boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                  backgroundColor: '#3f0701',
+                  boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
                 }}
               />
             </div>
 
             {/* Main Editorial Heading: 48-64px, weight 800, line-height 1.0 */}
-            <h2 className="text-[34px] sm:text-[46px] lg:text-[56px] font-extrabold text-[#071426] tracking-[-0.035em] leading-[1.0] uppercase">
+            <h2 className="text-[34px] sm:text-[46px] lg:text-[56px] font-extrabold text-[#3f0701] tracking-[-0.035em] leading-[1.0] uppercase">
               WHERE TALENT <br />
-              <span className="text-[#E11D48] font-serif italic lowercase tracking-normal">meets</span> <br />
+              <span className="text-[#3f0701] font-serif italic lowercase tracking-normal">meets</span> <br />
               OPPORTUNITY
             </h2>
 
@@ -54,15 +54,15 @@ export default function AboutTheZarSection({ onOpenRegister }) {
             {/* Feature Bullets */}
             <div className="space-y-2.5 pt-1 text-sm text-[#334155] font-medium">
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-[#FB7185] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#3f0701] shrink-0" />
                 <span>38 District preliminary stages leading to Chennai Mega Finals</span>
               </div>
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-[#FB7185] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#3f0701] shrink-0" />
                 <span>₹40 Lakhs House Bumper + ₹25 Lakhs Cash Pool for winners</span>
               </div>
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-[#FB7185] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#3f0701] shrink-0" />
                 <span>Direct mentorship and networking with state industry leaders</span>
               </div>
             </div>
@@ -71,20 +71,20 @@ export default function AboutTheZarSection({ onOpenRegister }) {
             <div className="pt-3 flex flex-wrap items-center gap-4">
               <a
                 href="#events"
-                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full border-2 border-[#E11D48] font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm no-underline hover:no-underline group"
+                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full border-2 border-[#3f0701] font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm no-underline hover:no-underline group"
                 style={{
-                  color: '#E11D48',
-                  borderColor: '#E11D48',
+                  color: '#3f0701',
+                  borderColor: '#3f0701',
                   borderRadius: '9999px',
                   textDecoration: 'none',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#E11D48';
+                  e.currentTarget.style.backgroundColor = '#3f0701';
                   e.currentTarget.style.color = '#FFFFFF';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = '#E11D48';
+                  e.currentTarget.style.color = '#3f0701';
                 }}
               >
                 <span>KNOW MORE</span>
@@ -94,10 +94,11 @@ export default function AboutTheZarSection({ onOpenRegister }) {
                 <button
                   type="button"
                   onClick={onOpenRegister}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md shadow-rose-500/25 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer"
                   style={{
                     borderRadius: '9999px',
-                    background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                    background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
+                    boxShadow: '0 8px 20px rgba(63, 7, 1, 0.25)',
                     color: '#FFFFFF',
                   }}
                 >
@@ -124,11 +125,11 @@ export default function AboutTheZarSection({ onOpenRegister }) {
               />
 
               {/* Subtle Gradient Over Bottom of Photo */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#071426]/70 via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#3f0701]/70 via-transparent to-transparent opacity-60" />
 
               {/* Photo Caption Badge */}
               <div className="absolute bottom-4 left-4 right-4 z-20 text-left text-white">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-rose-300 font-bold block">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-red-200 font-bold block">
                   STATEWIDE SYMPOSIUM
                 </span>
                 <p className="text-xs sm:text-sm font-semibold text-slate-100">
@@ -139,7 +140,7 @@ export default function AboutTheZarSection({ onOpenRegister }) {
               {/* Circular Play Button Overlapping the Image */}
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-gradient-to-r from-rose-600 to-rose-400 hover:from-rose-700 hover:to-rose-500 text-white flex items-center justify-center shadow-xl shadow-rose-500/30 hover:scale-110 transition-all duration-300 cursor-pointer"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-[#3f0701] hover:bg-[#580c04] text-white flex items-center justify-center shadow-xl shadow-[#3f0701]/40 hover:scale-110 transition-all duration-300 cursor-pointer"
                 aria-label="Play Introduction Video"
               >
                 <Play className="w-6 h-6 fill-current ml-0.5" />

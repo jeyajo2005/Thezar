@@ -203,7 +203,7 @@ export default function RegistrationModal({ onClose }) {
             <div className="pt-4">
               <button
                 type="submit"
-                className="w-full py-4 rounded-full text-base font-extrabold text-white gradient-bg-pink shadow-xl shadow-rose-600/30 hover:opacity-95 transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-full text-base font-extrabold text-white bg-[#3f0701] hover:bg-[#580c04] shadow-xl shadow-[#3f0701]/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Continue & Generate Pass</span>
                 <Sparkles className="w-5 h-5" />
@@ -216,11 +216,11 @@ export default function RegistrationModal({ onClose }) {
         {step === 2 && registeredUser && (
           <div className="p-6 sm:p-8 space-y-6 text-center">
             
-            <div className="bg-slate-950 rounded-2xl p-6 border-2 border-rose-500/50 shadow-2xl relative overflow-hidden space-y-4">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl"></div>
+            <div className="bg-slate-950 rounded-2xl p-6 border-2 border-[#3f0701]/50 shadow-2xl relative overflow-hidden space-y-4">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#3f0701]/20 rounded-full blur-2xl"></div>
 
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest">
+                <span className="text-xs font-mono font-bold text-red-200 uppercase tracking-widest">
                   THEZAR 2026 OFFICIAL PASS
                 </span>
                 <span className="text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded">
@@ -241,7 +241,7 @@ export default function RegistrationModal({ onClose }) {
                   </p>
                   <p className="text-lg font-bold text-white">{registeredUser.fullName}</p>
                   <p className="text-xs text-slate-300">{registeredUser.collegeName || 'Official Candidate'}</p>
-                  <p className="text-xs text-rose-400 font-semibold">{registeredUser.district} District • {registeredUser.competition}</p>
+                  <p className="text-xs text-red-200 font-semibold">{registeredUser.district} District • {registeredUser.competition}</p>
                   
                   <div className="pt-2 flex items-center gap-2 text-xs text-slate-400 bg-slate-900 px-3 py-1.5 rounded-full border border-slate-800">
                     <Lock className="w-3.5 h-3.5 text-amber-400" />
@@ -260,14 +260,14 @@ export default function RegistrationModal({ onClose }) {
             <div className="flex flex-col sm:flex-row items-center gap-3">
               <button
                 onClick={() => window.print()}
-                className="w-full sm:w-1/2 py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-all border border-slate-700 flex items-center justify-center gap-2"
+                className="w-full sm:w-1/2 py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-all border border-slate-700 flex items-center justify-center gap-2 cursor-pointer"
               >
-                <Download className="w-4 h-4 text-rose-400" />
+                <Download className="w-4 h-4 text-white" />
                 <span>Print Candidate Badge</span>
               </button>
               <button
                 onClick={onClose}
-                className="w-full sm:w-1/2 py-3 rounded-full text-white font-bold text-xs uppercase tracking-wider gradient-bg-pink shadow-lg"
+                className="w-full sm:w-1/2 py-3 rounded-full text-white font-bold text-xs uppercase tracking-wider bg-[#3f0701] hover:bg-[#580c04] shadow-lg cursor-pointer"
               >
                 Done
               </button>

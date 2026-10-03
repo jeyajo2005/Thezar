@@ -121,19 +121,19 @@ export default function LeaderboardSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-3">
-            <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
+            <span className="text-[12px] font-bold text-[#3f0701] tracking-[0.18em] uppercase">
               LIVE STANDINGS
             </span>
             <div
               className="w-10 h-[2px] rounded-full"
               style={{
-                backgroundColor: '#D4A72C',
-                boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                backgroundColor: '#3f0701',
+                boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
               }}
             />
           </div>
-          <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
-            THEZAR <span className="text-[#E11D48]">LEADERBOARD</span>
+          <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#3f0701] tracking-[-0.035em] uppercase leading-[1.05]">
+            THEZAR <span className="text-[#3f0701] underline decoration-[#3f0701]/30">LEADERBOARD</span>
           </h2>
           <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
             Live points tally updated across all 38 districts of Tamil Nadu after each competition round.
@@ -162,7 +162,7 @@ export default function LeaderboardSection() {
                 </div>
               </div>
               <div className="pt-2">
-                <h4 className="text-sm sm:text-base font-black text-[#071426] tracking-tight">{topThree[0].name}</h4>
+                <h4 className="text-sm sm:text-base font-black text-[#3f0701] tracking-tight">{topThree[0].name}</h4>
                 <p className="text-[11px] text-slate-500 font-semibold">{topThree[0].district}</p>
               </div>
               <div className={`w-full h-1.5 rounded-full ${topThree[0].lineColor} mt-2`} />
@@ -189,7 +189,7 @@ export default function LeaderboardSection() {
                 </div>
               </div>
               <div className="pt-3">
-                <h4 className="text-base sm:text-lg font-black text-[#071426] tracking-tight">{topThree[1].name}</h4>
+                <h4 className="text-base sm:text-lg font-black text-[#3f0701] tracking-tight">{topThree[1].name}</h4>
                 <p className="text-xs text-amber-600 font-extrabold uppercase tracking-wider">{topThree[1].district} Champion</p>
               </div>
               <div className={`w-full h-2 rounded-full ${topThree[1].lineColor} mt-2`} />
@@ -211,7 +211,7 @@ export default function LeaderboardSection() {
                 </div>
               </div>
               <div className="pt-2">
-                <h4 className="text-sm sm:text-base font-black text-[#071426] tracking-tight">{topThree[2].name}</h4>
+                <h4 className="text-sm sm:text-base font-black text-[#3f0701] tracking-tight">{topThree[2].name}</h4>
                 <p className="text-[11px] text-slate-500 font-semibold">{topThree[2].district}</p>
               </div>
               <div className={`w-full h-1.5 rounded-full ${topThree[2].lineColor} mt-2`} />
@@ -220,17 +220,17 @@ export default function LeaderboardSection() {
           </div>
 
           {/* FEATURED "YOUR PERFORMANCE" CARD (MATCHING REFERENCE DESIGN) */}
-          <div className="bg-rose-50/80 rounded-2xl p-4 sm:p-5 border border-rose-200 text-left shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="bg-[#FAF0F0] rounded-2xl p-4 sm:p-5 border border-[#3f0701]/20 text-left shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5 min-w-0">
               <img
                 src={tableData[0].avatar}
                 alt={tableData[0].name}
-                className="w-12 h-12 rounded-full object-cover border-2 border-rose-500 shadow-md shrink-0"
+                className="w-12 h-12 rounded-full object-cover border-2 border-[#3f0701] shadow-md shrink-0"
               />
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <h4 className="text-base font-extrabold text-[#071426] truncate">{tableData[0].name}</h4>
-                  <span className="bg-[#E11D48] text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase" style={{ borderRadius: '9999px' }}>
+                  <h4 className="text-base font-extrabold text-[#3f0701] truncate">{tableData[0].name}</h4>
+                  <span className="bg-[#3f0701] text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase" style={{ borderRadius: '9999px' }}>
                     Your Performance
                   </span>
                 </div>
@@ -239,14 +239,14 @@ export default function LeaderboardSection() {
             </div>
 
             {/* Metrics Row */}
-            <div className="flex items-center gap-6 text-xs sm:text-sm font-mono w-full sm:w-auto justify-between sm:justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-rose-200">
+            <div className="flex items-center gap-6 text-xs sm:text-sm font-mono w-full sm:w-auto justify-between sm:justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-[#3f0701]/20">
               <div>
                 <p className="text-[10px] text-slate-400 font-bold uppercase font-sans">Score</p>
                 <p className="font-extrabold text-slate-900">{tableData[0].score}</p>
               </div>
               <div>
                 <p className="text-[10px] text-slate-400 font-bold uppercase font-sans">Rank</p>
-                <p className="font-extrabold text-rose-600">{tableData[0].rankChange}</p>
+                <p className="font-extrabold text-[#3f0701]">{tableData[0].rankChange}</p>
               </div>
               <div>
                 <p className="text-[10px] text-slate-400 font-bold uppercase font-sans">Improvement</p>
@@ -280,7 +280,7 @@ export default function LeaderboardSection() {
                     className="w-10 h-10 rounded-full object-cover border border-white shadow-xs shrink-0"
                   />
                   <div className="min-w-0">
-                    <h5 className="text-sm font-bold text-[#071426] truncate">{row.name}</h5>
+                    <h5 className="text-sm font-bold text-[#3f0701] truncate">{row.name}</h5>
                     <p className="text-[11px] text-slate-500 font-medium">{row.district} District</p>
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export default function LeaderboardSection() {
                 </div>
 
                 {/* Rank */}
-                <div className="sm:col-span-2 text-left sm:text-center font-mono font-bold text-[#071426] text-sm">
+                <div className="sm:col-span-2 text-left sm:text-center font-mono font-bold text-[#3f0701] text-sm">
                   <span className="sm:hidden text-xs text-slate-400 font-sans mr-2">Rank:</span>
                   <span className="bg-slate-200/70 px-2 py-0.5 rounded-md text-xs">{row.rankChange}</span>
                 </div>

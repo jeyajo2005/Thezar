@@ -21,7 +21,7 @@ export default function Home() {
   const [selectedEventId, setSelectedEventId] = useState(null);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-rose-600 selection:text-white">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#3f0701] selection:text-white">
       
       {/* 01. Navbar */}
       <Navbar onOpenRegister={() => setIsRegisterOpen(true)} />

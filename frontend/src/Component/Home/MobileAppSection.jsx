@@ -27,25 +27,25 @@ export default function MobileAppSection() {
             <div className="lg:col-span-6 text-left space-y-6">
               
               <div className="flex items-center gap-3">
-                <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
+                <span className="text-[12px] font-bold text-[#3f0701] tracking-[0.18em] uppercase">
                   OFFICIAL MOBILE APP
                 </span>
                 <div
                   className="w-10 h-[2px] rounded-full"
                   style={{
-                    backgroundColor: '#D4A72C',
-                    boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                    backgroundColor: '#3f0701',
+                    boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
                   }}
                 />
               </div>
 
               <div className="space-y-2">
-                <h2 className="text-[36px] sm:text-[48px] lg:text-[54px] font-black text-[#071426] tracking-[-0.035em] leading-[1.05] uppercase">
+                <h2 className="text-[36px] sm:text-[48px] lg:text-[54px] font-black text-[#3f0701] tracking-[-0.035em] leading-[1.05] uppercase">
                   DOWNLOAD <br />
-                  <span className="text-[#E11D48]">THIS APP</span>
+                  <span className="text-[#3f0701] underline decoration-[#3f0701]/30">THIS APP</span>
                 </h2>
-                <div className="inline-flex items-center gap-2 bg-rose-50 border border-rose-200 text-[#E11D48] text-[11px] font-mono font-bold px-3 py-1 rounded-full uppercase" style={{ borderRadius: '9999px' }}>
-                  <Sparkles className="w-3.5 h-3.5 text-[#E11D48]" />
+                <div className="inline-flex items-center gap-2 bg-[#FAF0F0] border border-[#3f0701]/20 text-[#3f0701] text-[11px] font-mono font-bold px-3 py-1 rounded-full uppercase" style={{ borderRadius: '9999px' }}>
+                  <Sparkles className="w-3.5 h-3.5 text-[#3f0701]" />
                   <span>OPTIMIZED FOR 6.3" DISPLAY • ZERO BEZELS</span>
                 </div>
               </div>
@@ -63,7 +63,7 @@ export default function MobileAppSection() {
                   {/* Apple App Store */}
                   <a
                     href="#appstore"
-                    className="flex items-center gap-3 bg-[#071426] hover:bg-[#E11D48] text-white px-5 py-3 rounded-2xl shadow-md transition-colors w-52 border border-slate-800"
+                    className="flex items-center gap-3 bg-[#3f0701] hover:bg-[#580c04] text-white px-5 py-3 rounded-2xl shadow-md transition-colors w-52 border border-[#3f0701]/40"
                     style={{ borderRadius: '9999px' }}
                   >
                     <Apple className="w-6 h-6 text-white shrink-0 fill-current" />
@@ -76,7 +76,7 @@ export default function MobileAppSection() {
                   {/* Google Play Store */}
                   <a
                     href="#playstore"
-                    className="flex items-center gap-3 bg-[#071426] hover:bg-[#E11D48] text-white px-5 py-3 rounded-2xl shadow-md transition-colors w-52 border border-slate-800"
+                    className="flex items-center gap-3 bg-[#3f0701] hover:bg-[#580c04] text-white px-5 py-3 rounded-2xl shadow-md transition-colors w-52 border border-[#3f0701]/40"
                     style={{ borderRadius: '9999px' }}
                   >
                     <Play className="w-6 h-6 text-white shrink-0 fill-current" />
@@ -105,7 +105,7 @@ export default function MobileAppSection() {
                   Official TN Event App
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-rose-500" />
+                  <CheckCircle2 className="w-4 h-4 text-[#3f0701]" />
                   Instant QR Entry Pass
                 </span>
               </div>
@@ -116,7 +116,7 @@ export default function MobileAppSection() {
             <div className="lg:col-span-6 relative flex flex-col items-center justify-center pt-6 lg:pt-0">
               
               {/* Soft Ambient Background Aura */}
-              <div className="absolute w-80 h-80 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute w-80 h-80 bg-red-950/10 rounded-full blur-3xl pointer-events-none" />
 
               <div className="relative flex items-center justify-center gap-4 sm:gap-6">
                 
@@ -124,7 +124,7 @@ export default function MobileAppSection() {
                 {/* PHONE 1: 6.3-inch Real Flagship (Tilted Left - Live Pass) */}
                 {/* ========================================================= */}
                 <div className="relative flex flex-col items-center">
-                  <div className="relative w-[210px] sm:w-[245px] h-[440px] sm:h-[490px] rounded-[44px] p-[5px] bg-[#1a2332] border-[2.5px] border-slate-600/90 shadow-[0_25px_50px_-12px_rgba(7,20,38,0.5),0_0_0_1px_rgba(255,255,255,0.1),inset_0_1px_2px_rgba(255,255,255,0.25)] transform -rotate-6 hover:rotate-0 transition-all duration-500 z-10 group">
+                  <div className="relative w-[210px] sm:w-[245px] h-[440px] sm:h-[490px] rounded-[44px] p-[5px] bg-[#240401] border-[2.5px] border-[#3f0701] shadow-[0_25px_50px_-12px_rgba(63,7,1,0.5),0_0_0_1px_rgba(255,255,255,0.1),inset_0_1px_2px_rgba(255,255,255,0.25)] transform -rotate-6 hover:rotate-0 transition-all duration-500 z-10 group">
                     
                     {/* Hardware Buttons on Chassis */}
                     <div className="absolute -left-[3.5px] top-20 w-[2.5px] h-7 bg-slate-500 rounded-l" />
@@ -135,7 +135,7 @@ export default function MobileAppSection() {
                     <div className="absolute top-[3px] left-1/2 -translate-x-1/2 w-12 h-[2.5px] bg-slate-700 rounded-full z-40" />
 
                     {/* 6.3" Screen Display (Ultra-thin uniform bezel & chin: rounded-[39px]) */}
-                    <div className="relative w-full h-full bg-[#081224] rounded-[39px] overflow-hidden flex flex-col justify-between border border-white/5">
+                    <div className="relative w-full h-full bg-[#150201] rounded-[39px] overflow-hidden flex flex-col justify-between border border-white/5">
                       
                       {/* Diagonal Glass Sheen Reflection */}
                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none z-30" />
@@ -163,7 +163,7 @@ export default function MobileAppSection() {
                         {/* App Header */}
                         <div className="flex items-center justify-between pb-1.5 border-b border-white/10">
                           <div className="flex items-center gap-1.5">
-                            <div className="w-5 h-5 rounded-md bg-gradient-to-tr from-rose-600 to-rose-400 flex items-center justify-center text-white text-[9px] font-black">
+                            <div className="w-5 h-5 rounded-md bg-[#3f0701] flex items-center justify-center text-white text-[9px] font-black border border-white/20">
                               TZ
                             </div>
                             <span className="text-[10px] font-extrabold text-white">TheZar 2026</span>
@@ -175,7 +175,7 @@ export default function MobileAppSection() {
                         </div>
 
                         {/* Candidate QR Card */}
-                        <div className="bg-gradient-to-br from-rose-600 via-rose-500 to-rose-700 p-3 rounded-2xl text-white text-center shadow-lg relative overflow-hidden">
+                        <div className="bg-gradient-to-br from-[#3f0701] via-[#580c04] to-[#240401] p-3 rounded-2xl text-white text-center shadow-lg relative overflow-hidden border border-white/10">
                           <div className="flex justify-between items-center text-[9px] font-mono text-rose-100 pb-1">
                             <span>ENTRY PASS</span>
                             <span className="bg-white/20 px-1.5 py-0.5 rounded">#TZ-3841</span>

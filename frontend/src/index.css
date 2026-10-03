@@ -3,9 +3,10 @@
 :root {
   --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
-  --color-navy: #071426;
-  --color-primary: #E11D48;
-  --color-accent: #FB7185;
+  --color-navy: #3f0701;
+  --color-primary: #3f0701;
+  --color-accent: #ffffff;
+  --color-maroon-light: #580c04;
   --color-gold: #D4A72C;
   --color-light-gold: #F5D77A;
   --color-white: #FFFFFF;
@@ -18,7 +19,7 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: #0b0d17;
+    background-color: #3f0701;
     color: #ffffff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -61,7 +62,7 @@
 
 /* Text Gradients */
 .text-gradient-thezar {
-  background: linear-gradient(90deg, #FB7185 0%, #FDA4AF 100%);
+  background: linear-gradient(90deg, #FFFFFF 0%, #FECACA 50%, #FFFFFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -74,22 +75,22 @@
 
 /* Reference Image Exact Theme Classes */
 .bg-convention-dark {
-  background-color: #0b0d17;
+  background-color: #3f0701;
 }
 
 .bg-royal-rose {
-  background-color: #E11D48;
+  background-color: #3f0701;
 }
 
 .btn-royal-rose {
-  background-color: #E11D48;
+  background-color: #3f0701;
   color: #ffffff;
   border-radius: 4px;
 }
 
 .btn-white-solid {
   background-color: #ffffff;
-  color: #0b0d17;
+  color: #3f0701;
   border-radius: 4px;
   font-weight: 800;
   letter-spacing: 1px;

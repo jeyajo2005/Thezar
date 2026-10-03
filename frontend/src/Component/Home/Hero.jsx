@@ -5,12 +5,12 @@ export default function Hero({ onOpenRegister }) {
   return (
     <section
       id="home"
-      className="relative flex flex-col justify-between overflow-hidden min-h-[600px] md:min-h-[650px] lg:min-h-[700px] bg-[#071426]"
+      className="relative flex flex-col justify-between overflow-hidden min-h-[600px] md:min-h-[650px] lg:min-h-[700px] bg-[#3f0701]"
       style={{
         fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
       }}
     >
-      {/* 1. Background Image & Dark Navy Gradients for High Readability */}
+      {/* 1. Background Image & Dark Maroon Gradients for High Readability */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={heroSpeakerImg}
@@ -23,7 +23,7 @@ export default function Hero({ onOpenRegister }) {
           className="absolute inset-0 z-[1] pointer-events-none md:hidden"
           style={{
             background:
-              'linear-gradient(180deg, rgba(7, 20, 38, 0.92) 0%, rgba(7, 20, 38, 0.75) 55%, rgba(7, 20, 38, 0.95) 100%)',
+              'linear-gradient(180deg, rgba(63, 7, 1, 0.94) 0%, rgba(63, 7, 1, 0.78) 55%, rgba(63, 7, 1, 0.98) 100%)',
           }}
         />
         {/* Desktop horizontal gradient overlay: Dark on left for text contrast */}
@@ -31,12 +31,12 @@ export default function Hero({ onOpenRegister }) {
           className="hidden md:block absolute inset-0 z-[1] pointer-events-none"
           style={{
             background:
-              'linear-gradient(90deg, rgba(7, 20, 38, 0.95) 0%, rgba(7, 20, 38, 0.82) 42%, rgba(7, 20, 38, 0.35) 75%, rgba(7, 20, 38, 0.1) 100%)',
+              'linear-gradient(90deg, rgba(63, 7, 1, 0.96) 0%, rgba(63, 7, 1, 0.85) 42%, rgba(63, 7, 1, 0.45) 75%, rgba(63, 7, 1, 0.15) 100%)',
           }}
         />
 
         {/* Ambient glow accent */}
-        <div className="absolute top-1/4 left-10 w-96 h-96 bg-rose-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       {/* Main Hero Content */}
@@ -44,8 +44,8 @@ export default function Hero({ onOpenRegister }) {
         <div className="max-w-[560px] text-left space-y-4 sm:space-y-5">
           
           {/* 1. TOP EYEBROW HEADER */}
-          <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-300">
-            38 DISTRICTS <span className="text-[#FB7185] mx-1.5">|</span> TAMIL NADU <span className="text-[#FB7185] mx-1.5">|</span> STATEWIDE LEAGUE <span className="text-[#FB7185] mx-1.5">|</span> THEZAR 2026
+          <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-white/80">
+            38 DISTRICTS <span className="text-white/60 mx-1.5">|</span> TAMIL NADU <span className="text-white/60 mx-1.5">|</span> STATEWIDE LEAGUE <span className="text-white/60 mx-1.5">|</span> THEZAR 2026
           </div>
 
           {/* 2. TYPOGRAPHIC HEADING STACK */}
@@ -56,7 +56,7 @@ export default function Hero({ onOpenRegister }) {
             <span
               className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-extrabold text-transparent bg-clip-text"
               style={{
-                backgroundImage: 'linear-gradient(90deg, #E11D48 0%, #FB7185 50%, #F43F5E 100%)',
+                backgroundImage: 'linear-gradient(90deg, #FFFFFF 0%, #FEE2E2 50%, #FFFFFF 100%)',
               }}
             >
               STATEWIDE
@@ -68,7 +68,7 @@ export default function Hero({ onOpenRegister }) {
 
           {/* 3. SUBTITLE */}
           <div>
-            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-200 leading-relaxed">
+            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-100 leading-relaxed">
               Bringing people together across 38 districts of Tamil Nadu through multi-disciplinary competitions, creativity, innovation, and unforgettable experiences.
             </p>
           </div>
@@ -77,64 +77,65 @@ export default function Hero({ onOpenRegister }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 max-w-[500px]">
             {/* Multi-Disciplinary Events */}
             <div className="flex items-start gap-2.5">
-              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Trophy className="w-4 h-4 text-[#FB7185]" />
+              <div className="p-2 rounded-xl bg-white/[0.12] border border-white/20 text-white shrink-0">
+                <Trophy className="w-4 h-4 text-white" />
               </div>
               <div>
                 <div className="text-[13px] font-bold text-white leading-tight">Multi-Disciplinary</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">38 District Events</div>
+                <div className="text-[11px] text-white/80 mt-0.5">38 District Events</div>
               </div>
             </div>
 
             {/* 38 Districts */}
             <div className="flex items-start gap-2.5">
-              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <MapPin className="w-4 h-4 text-[#FB7185]" />
+              <div className="p-2 rounded-xl bg-white/[0.12] border border-white/20 text-white shrink-0">
+                <MapPin className="w-4 h-4 text-white" />
               </div>
               <div>
                 <div className="text-[13px] font-bold text-white leading-tight">38 Districts</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">Statewide Stages</div>
+                <div className="text-[11px] text-white/80 mt-0.5">Statewide Stages</div>
               </div>
             </div>
 
             {/* Open to Everyone */}
             <div className="flex items-start gap-2.5">
-              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Users className="w-4 h-4 text-[#FB7185]" />
+              <div className="p-2 rounded-xl bg-white/[0.12] border border-white/20 text-white shrink-0">
+                <Users className="w-4 h-4 text-white" />
               </div>
               <div>
                 <div className="text-[13px] font-bold text-white leading-tight">Open to Everyone</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">5,000+ Participants</div>
+                <div className="text-[11px] text-white/80 mt-0.5">5,000+ Participants</div>
               </div>
             </div>
 
             {/* Grand Championship */}
             <div className="flex items-start gap-2.5">
-              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Sparkles className="w-4 h-4 text-[#FB7185]" />
+              <div className="p-2 rounded-xl bg-white/[0.12] border border-white/20 text-white shrink-0">
+                <Sparkles className="w-4 h-4 text-white" />
               </div>
               <div>
                 <div className="text-[13px] font-bold text-white leading-tight">Grand Championship</div>
-                <div className="text-[11px] text-slate-300 mt-0.5">Trophies & Awards</div>
+                <div className="text-[11px] text-white/80 mt-0.5">Trophies & Awards</div>
               </div>
             </div>
           </div>
 
-          {/* 5. CTA ACTION BUTTONS (Rose Palette - Full Pill Radius) */}
+          {/* 5. CTA ACTION BUTTONS (Crisp White Solid & Translucent Glass) */}
           <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={onOpenRegister}
-              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-7 rounded-full text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-md shadow-rose-500/25 no-underline hover:no-underline"
+              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-7 rounded-full text-[13px] font-extrabold text-[#3f0701] uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-lg shadow-black/25 no-underline hover:no-underline"
               style={{
                 borderRadius: '9999px',
-                background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                backgroundColor: '#FFFFFF',
+                color: '#3f0701',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #BE123C 0%, #E11D48 100%)';
+                e.currentTarget.style.backgroundColor = '#F8FAFC';
                 e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)';
+                e.currentTarget.style.backgroundColor = '#FFFFFF';
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
@@ -148,17 +149,17 @@ export default function Hero({ onOpenRegister }) {
               style={{
                 borderRadius: '9999px',
                 textDecoration: 'none',
-                background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.30)',
+                background: 'rgba(255, 255, 255, 0.12)',
+                border: '1px solid rgba(255, 255, 255, 0.40)',
                 backdropFilter: 'blur(8px)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.16)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.22)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.7)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.30)';
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.40)';
               }}
             >
               EXPLORE EVENTS

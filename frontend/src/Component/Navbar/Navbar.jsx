@@ -49,7 +49,7 @@ export default function Navbar({ onOpenRegister }) {
               className="h-8 sm:h-9 w-auto object-contain rounded-full group-hover:scale-105 transition-transform duration-200"
             />
             <span className="text-sm sm:text-base font-extrabold text-slate-900 tracking-wider uppercase font-sans">
-              THEZAR <span className="text-[#E11D48]">2026</span>
+              THEZAR <span className="text-[#3f0701]">2026</span>
             </span>
           </Link>
 
@@ -66,12 +66,12 @@ export default function Navbar({ onOpenRegister }) {
                   to={link.path}
                   className={`nav-link-clean text-[14px] font-semibold tracking-[-0.01em] relative transition-colors duration-200 no-underline hover:no-underline group ${
                     isCurrent
-                      ? 'text-[#E11D48] bg-[#FFF1F2] px-3.5 py-1.5 rounded-full font-bold'
-                      : 'hover:text-[#E11D48] py-1'
+                      ? 'text-[#3f0701] bg-[#FAF0F0] px-3.5 py-1.5 rounded-full font-bold'
+                      : 'hover:text-[#3f0701] py-1'
                   }`}
                   style={{
                     textDecoration: 'none',
-                    color: isCurrent ? '#E11D48' : '#334155',
+                    color: isCurrent ? '#3f0701' : '#334155',
                   }}
                 >
                   <span>{link.name}</span>
@@ -81,7 +81,7 @@ export default function Navbar({ onOpenRegister }) {
                     <span
                       className="absolute bottom-[-5px] left-0 w-0 h-[2px] rounded-full transition-all duration-250 ease-out group-hover:w-full pointer-events-none"
                       style={{
-                        background: 'linear-gradient(90deg, #E11D48, #FB7185)',
+                        background: '#3f0701',
                       }}
                     />
                   )}
@@ -94,7 +94,7 @@ export default function Navbar({ onOpenRegister }) {
           <div className="hidden md:flex items-center gap-3 shrink-0">
             {/* Search Circular Button */}
             <button
-              className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#FFF1F2] hover:border-[#FECDD3] hover:text-[#E11D48] hover:-translate-y-px transition-all duration-200 cursor-pointer"
+              className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#FAF0F0] hover:border-[#3f0701]/30 hover:text-[#3f0701] hover:-translate-y-px transition-all duration-200 cursor-pointer"
               aria-label="Search"
               style={{
                 borderRadius: '50%',
@@ -107,7 +107,7 @@ export default function Navbar({ onOpenRegister }) {
 
             {/* Wishlist / Heart Circular Button */}
             <button
-              className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#FFF7F9] hover:border-[#F9A8D4] hover:text-[#E94B75] hover:-translate-y-px transition-all duration-200 cursor-pointer"
+              className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#FAF0F0] hover:border-[#3f0701]/30 hover:text-[#3f0701] hover:-translate-y-px transition-all duration-200 cursor-pointer"
               aria-label="Wishlist"
               style={{
                 borderRadius: '50%',
@@ -136,18 +136,18 @@ export default function Navbar({ onOpenRegister }) {
                 borderRadius: '9999px',
                 width: '176px',
                 height: '40px',
-                background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
-                boxShadow: '0 8px 20px rgba(225, 29, 72, 0.20)',
+                background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
+                boxShadow: '0 8px 20px rgba(63, 7, 1, 0.25)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #BE123C 0%, #E11D48 100%)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #240401 0%, #3f0701 100%)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 12px 25px rgba(225, 29, 72, 0.28)';
+                e.currentTarget.style.boxShadow = '0 12px 25px rgba(63, 7, 1, 0.35)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)';
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(225, 29, 72, 0.20)';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(63, 7, 1, 0.25)';
               }}
             >
               <span>REGISTER NOW</span>
@@ -162,14 +162,14 @@ export default function Navbar({ onOpenRegister }) {
               className="h-9 px-4 rounded-full text-xs font-bold text-white uppercase tracking-wider shadow-sm cursor-pointer"
               style={{
                 borderRadius: '9999px',
-                background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
               }}
             >
               REGISTER
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="w-10 h-10 rounded-full text-[#334155] hover:text-[#071426] bg-[#F8FAFC] hover:bg-[#FFF1F2] border border-[#E2E8F0] flex items-center justify-center transition-colors cursor-pointer"
+              className="w-10 h-10 rounded-full text-[#334155] hover:text-[#3f0701] bg-[#F8FAFC] hover:bg-[#FAF0F0] border border-[#E2E8F0] flex items-center justify-center transition-colors cursor-pointer"
               aria-label="Toggle Menu"
               style={{
                 borderRadius: '50%',
@@ -190,7 +190,7 @@ export default function Navbar({ onOpenRegister }) {
                 key={link.name}
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-full text-[14px] font-semibold text-[#334155] hover:text-[#E11D48] hover:bg-[#FFF1F2] transition-colors no-underline hover:no-underline nav-link-clean"
+                className="block px-4 py-2.5 rounded-full text-[14px] font-semibold text-[#334155] hover:text-[#3f0701] hover:bg-[#FAF0F0] transition-colors no-underline hover:no-underline nav-link-clean"
                 style={{ textDecoration: 'none' }}
               >
                 {link.name}
@@ -205,7 +205,7 @@ export default function Navbar({ onOpenRegister }) {
                 className="w-full h-11 rounded-full font-bold text-white flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-md"
                 style={{
                   borderRadius: '9999px',
-                  background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                  background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
                 }}
               >
                 <span>REGISTER CANDIDATE PASS</span>

@@ -133,13 +133,13 @@ function HTML5CanvasMap({ selectedDistrictId, setSelectedDistrictId, hoveredDist
 
         if (isSelected) {
           const grad = ctx.createRadialGradient(coord.x, coord.y, 2, coord.x, coord.y, 15);
-          grad.addColorStop(0, '#FB7185');
-          grad.addColorStop(1, '#E11D48');
+          grad.addColorStop(0, '#580c04');
+          grad.addColorStop(1, '#3f0701');
           ctx.fillStyle = grad;
         } else if (isHovered) {
-          ctx.fillStyle = '#E11D48';
+          ctx.fillStyle = '#3f0701';
         } else if (isLive) {
-          ctx.fillStyle = '#F43F5E';
+          ctx.fillStyle = '#580c04';
         } else {
           ctx.fillStyle = '#475569';
         }
@@ -167,7 +167,7 @@ function HTML5CanvasMap({ selectedDistrictId, setSelectedDistrictId, hoveredDist
           const rectY = coord.y - radius - 34;
 
           // Tooltip Dark Card
-          ctx.fillStyle = isSelected ? '#071426' : '#1E293B';
+          ctx.fillStyle = isSelected ? '#3f0701' : '#240401';
           ctx.beginPath();
           if (ctx.roundRect) {
             ctx.roundRect(rectX, rectY, rectW, rectH, 15);
@@ -175,7 +175,7 @@ function HTML5CanvasMap({ selectedDistrictId, setSelectedDistrictId, hoveredDist
             ctx.rect(rectX, rectY, rectW, rectH);
           }
           ctx.fill();
-          ctx.strokeStyle = '#E11D48';
+          ctx.strokeStyle = '#3f0701';
           ctx.lineWidth = 1.8;
           ctx.stroke();
 
@@ -291,21 +291,21 @@ export default function DistrictJourneySection({ onOpenRegister }) {
             {/* Header Badge */}
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
+                <span className="text-[12px] font-bold text-[#3f0701] tracking-[0.18em] uppercase">
                   WHERE WE OPERATE
                 </span>
                 <div
                   className="w-10 h-[2px] rounded-full"
                   style={{
-                    backgroundColor: '#D4A72C',
-                    boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                    backgroundColor: '#3f0701',
+                    boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
                   }}
                 />
               </div>
               
-              <h2 className="text-[32px] sm:text-[44px] lg:text-[48px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
+              <h2 className="text-[32px] sm:text-[44px] lg:text-[48px] font-extrabold text-[#3f0701] tracking-[-0.035em] uppercase leading-[1.05]">
                 38 DISTRICTS. <br />
-                <span className="text-[#E11D48]">ONE GRAND STAGE.</span>
+                <span className="text-[#3f0701] underline decoration-[#3f0701]/30">ONE GRAND STAGE.</span>
               </h2>
 
               <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed pt-1">
@@ -315,7 +315,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
 
             {/* Quick District Selector Dropdown */}
             <div className="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-sm flex items-center gap-3">
-              <MapPin className="w-5 h-5 text-[#E11D48] shrink-0 ml-1" />
+              <MapPin className="w-5 h-5 text-[#3f0701] shrink-0 ml-1" />
               <div className="flex-1 min-w-0">
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   Select District / Region
@@ -324,7 +324,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                   <select
                     value={selectedDistrictId}
                     onChange={(e) => setSelectedDistrictId(Number(e.target.value))}
-                    className="w-full bg-transparent text-sm sm:text-base font-bold text-[#071426] focus:outline-none appearance-none cursor-pointer pr-6 py-0.5"
+                    className="w-full bg-transparent text-sm sm:text-base font-bold text-[#3f0701] focus:outline-none appearance-none cursor-pointer pr-6 py-0.5"
                   >
                     {DISTRICTS_DATA.map((dist) => (
                       <option key={dist.id} value={dist.id}>
@@ -341,18 +341,18 @@ export default function DistrictJourneySection({ onOpenRegister }) {
             <div
               className="bg-white p-6 sm:p-7 rounded-2xl border border-rose-100 shadow-md relative overflow-hidden transition-all duration-300"
               style={{
-                borderLeft: '5px solid #E11D48',
+                borderLeft: '5px solid #3f0701',
               }}
             >
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[11px] font-bold font-mono bg-rose-50 text-[#E11D48] px-3 py-1 rounded-full uppercase tracking-wider" style={{ borderRadius: '9999px' }}>
+                    <span className="text-[11px] font-bold font-mono bg-[#FAF0F0] text-[#3f0701] px-3 py-1 rounded-full uppercase tracking-wider" style={{ borderRadius: '9999px' }}>
                       {selectedDistrict.code} • {selectedDistrict.region} TN
                     </span>
                     {selectedDistrict.status === 'Live' ? (
-                      <span className="inline-flex items-center gap-1.5 text-[11px] font-black text-rose-600 font-mono bg-rose-100/70 px-2.5 py-0.5 rounded-full" style={{ borderRadius: '9999px' }}>
-                        <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-black text-[#3f0701] font-mono bg-[#FAF0F0] px-2.5 py-0.5 rounded-full" style={{ borderRadius: '9999px' }}>
+                        <span className="w-2 h-2 rounded-full bg-[#3f0701] animate-pulse"></span>
                         LIVE NOW
                       </span>
                     ) : (
@@ -363,7 +363,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                     )}
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#071426]">
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#3f0701]">
                     {selectedDistrict.name} District Round
                   </h3>
                 </div>
@@ -371,7 +371,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 text-xs sm:text-sm text-slate-600 border-t border-slate-100 mt-4">
                 <div className="flex items-center gap-2.5">
-                  <Calendar className="w-4 h-4 text-[#E11D48] shrink-0" />
+                  <Calendar className="w-4 h-4 text-[#3f0701] shrink-0" />
                   <div>
                     <p className="text-[10px] text-slate-400 font-bold uppercase">Date & Schedule</p>
                     <p className="font-bold text-slate-800">{selectedDistrict.date}</p>
@@ -392,10 +392,11 @@ export default function DistrictJourneySection({ onOpenRegister }) {
             <div className="pt-2">
               <button
                 onClick={onOpenRegister}
-                className="w-full sm:w-auto px-9 py-4 rounded-full text-base font-bold text-white transition-all cursor-pointer shadow-xl shadow-rose-500/25 inline-flex items-center justify-center gap-2.5 group"
+                className="w-full sm:w-auto px-9 py-4 rounded-full text-base font-bold text-white transition-all cursor-pointer shadow-xl inline-flex items-center justify-center gap-2.5 group"
                 style={{
                   borderRadius: '9999px',
-                  background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                  background: 'linear-gradient(135deg, #3f0701 0%, #580c04 100%)',
+                  boxShadow: '0 8px 24px rgba(63, 7, 1, 0.25)',
                 }}
               >
                 <span>Register for {selectedDistrict.name} Round</span>
@@ -412,8 +413,8 @@ export default function DistrictJourneySection({ onOpenRegister }) {
               
               {/* Card Header Switcher */}
               <div className="flex items-center justify-between mb-3 z-20 relative">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-[#E11D48] uppercase bg-rose-50 px-3 py-1 rounded-full border border-rose-100 flex items-center gap-1.5" style={{ borderRadius: '9999px' }}>
-                  <Sparkles className="w-3 h-3 text-[#E11D48]" />
+                <span className="text-[10px] font-mono font-bold tracking-widest text-[#3f0701] uppercase bg-[#FAF0F0] px-3 py-1 rounded-full border border-[#3f0701]/20 flex items-center gap-1.5" style={{ borderRadius: '9999px' }}>
+                  <Sparkles className="w-3 h-3 text-[#3f0701]" />
                   TN 38 DISTRICTS MAP
                 </span>
 
@@ -422,7 +423,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                   <button
                     onClick={() => setMapMode('canvas')}
                     className={`px-2.5 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1 ${
-                      mapMode === 'canvas' ? 'bg-[#071426] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                      mapMode === 'canvas' ? 'bg-[#3f0701] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
                     <Layers className="w-3 h-3" />
@@ -431,7 +432,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                   <button
                     onClick={() => setMapMode('svg')}
                     className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
-                      mapMode === 'svg' ? 'bg-[#071426] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                      mapMode === 'svg' ? 'bg-[#3f0701] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
                     Vector Pin Overlay
@@ -464,8 +465,8 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                   >
                     <defs>
                       <linearGradient id="roseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#E11D48" />
-                        <stop offset="100%" stopColor="#FB7185" />
+                        <stop offset="0%" stopColor="#3f0701" />
+                        <stop offset="100%" stopColor="#580c04" />
                       </linearGradient>
 
                       <filter id="glowPin" x="-30%" y="-30%" width="160%" height="160%">
@@ -480,7 +481,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                       y1="512"
                       x2={activeCoord.x}
                       y2={activeCoord.y}
-                      stroke="#E11D48"
+                      stroke="#3f0701"
                       strokeWidth="2.5"
                       strokeDasharray="6 4"
                       className="opacity-60 animate-pulse"
@@ -514,7 +515,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                           {/* Outer Node Body */}
                           <circle
                             r={isSelected ? "14" : isHovered ? "11" : "7.5"}
-                            fill={isSelected ? "url(#roseGradient)" : isHovered ? "#E11D48" : isLive ? "#F43F5E" : "#475569"}
+                            fill={isSelected ? "url(#roseGradient)" : isHovered ? "#3f0701" : isLive ? "#580c04" : "#475569"}
                             stroke="#FFFFFF"
                             strokeWidth={isSelected ? "3" : "2"}
                             filter={isSelected ? "url(#glowPin)" : "none"}
@@ -536,8 +537,8 @@ export default function DistrictJourneySection({ onOpenRegister }) {
                                 width="84"
                                 height="26"
                                 rx="13"
-                                fill={isSelected ? "#071426" : "#1E293B"}
-                                stroke="#E11D48"
+                                fill={isSelected ? "#3f0701" : "#240401"}
+                                stroke="#3f0701"
                                 strokeWidth="1.8"
                                 className="shadow-2xl"
                               />
@@ -565,7 +566,7 @@ export default function DistrictJourneySection({ onOpenRegister }) {
               <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500 font-semibold bg-slate-50 px-4 py-2 rounded-full border border-slate-200/80">
                 <div className="flex items-center gap-3">
                   <span className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#E11D48]"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#3f0701]"></span>
                     Selected
                   </span>
                   <span className="flex items-center gap-1.5">

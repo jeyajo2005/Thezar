@@ -48,13 +48,13 @@ export default function CountdownSection() {
           
           {/* Left Column: Heading */}
           <div className="lg:col-span-5 text-left space-y-2">
-            <div className="inline-flex items-center gap-2 text-[12px] font-bold text-[#E11D48] uppercase tracking-[0.18em]">
+            <div className="inline-flex items-center gap-2 text-[12px] font-bold text-[#3f0701] uppercase tracking-[0.18em]">
               <Calendar className="w-3.5 h-3.5" />
               <span>NEXT DISTRICT STAGE</span>
             </div>
             
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#071426] tracking-[-0.03em] leading-tight">
-              Count <span className="text-[#E11D48]">Every Second</span> <br className="hidden sm:block" />
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#3f0701] tracking-[-0.03em] leading-tight">
+              Count <span className="text-[#3f0701] underline decoration-[#3f0701]/30">Every Second</span> <br className="hidden sm:block" />
               Until the Event
             </h3>
             
@@ -69,7 +69,7 @@ export default function CountdownSection() {
               
               {/* Days */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#071426] tracking-[-0.04em] block leading-none">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#3f0701] tracking-[-0.04em] block leading-none">
                   {timeLeft.days}
                 </span>
                 <span className="text-[11px] sm:text-[12px] font-semibold text-[#64748B] uppercase tracking-[0.12em] mt-2 block">
@@ -81,7 +81,7 @@ export default function CountdownSection() {
 
               {/* Hours */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#071426] tracking-[-0.04em] block leading-none">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#3f0701] tracking-[-0.04em] block leading-none">
                   {timeLeft.hours}
                 </span>
                 <span className="text-[11px] sm:text-[12px] font-semibold text-[#64748B] uppercase tracking-[0.12em] mt-2 block">
@@ -93,7 +93,7 @@ export default function CountdownSection() {
 
               {/* Minutes */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#071426] tracking-[-0.04em] block leading-none">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#3f0701] tracking-[-0.04em] block leading-none">
                   {timeLeft.minutes}
                 </span>
                 <span className="text-[11px] sm:text-[12px] font-semibold text-[#64748B] uppercase tracking-[0.12em] mt-2 block">
@@ -105,10 +105,10 @@ export default function CountdownSection() {
 
               {/* Seconds */}
               <div className="text-center min-w-[55px] sm:min-w-[80px]">
-                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#E11D48] tracking-[-0.04em] block leading-none">
+                <span className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-[#3f0701] tracking-[-0.04em] block leading-none">
                   {timeLeft.seconds}
                 </span>
-                <span className="text-[11px] sm:text-[12px] font-semibold text-[#E11D48] uppercase tracking-[0.12em] mt-2 block">
+                <span className="text-[11px] sm:text-[12px] font-semibold text-[#3f0701] uppercase tracking-[0.12em] mt-2 block">
                   SECONDS
                 </span>
               </div>

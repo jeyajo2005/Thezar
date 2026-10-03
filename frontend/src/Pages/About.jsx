@@ -18,13 +18,13 @@ export default function About() {
       <main className="flex-1 space-y-0">
         
         {/* 02 About Hero */}
-        <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-950 text-center relative overflow-hidden">
+        <section className="py-20 bg-gradient-to-b from-[#3f0701] to-[#240401] text-center relative overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 space-y-4">
-            <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest bg-rose-500/10 px-3.5 py-1.5 rounded-full border border-rose-500/20">
+            <span className="text-xs font-mono font-bold text-white uppercase tracking-widest bg-white/10 px-3.5 py-1.5 rounded-full border border-white/20">
               ABOUT THEZAR PLATFORM
             </span>
             <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
-              Celebrating <span className="gradient-text">Youth & Talent</span>
+              Celebrating <span className="text-white underline decoration-white/40">Youth & Talent</span>
             </h1>
             <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
               Learn about our journey, vision, and mission to empower participants across all 38 districts of Tamil Nadu.

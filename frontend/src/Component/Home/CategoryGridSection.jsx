@@ -60,19 +60,19 @@ export default function CategoryGridSection({ onOpenRegister }) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
           <div className="flex items-center justify-center gap-3">
-            <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
+            <span className="text-[12px] font-bold text-[#3f0701] tracking-[0.18em] uppercase">
               1ST FEATURED COMPETITION • TIRUNELVELI DISTRICT
             </span>
             <div
               className="w-10 h-[2px] rounded-full"
               style={{
-                backgroundColor: '#D4A72C',
-                boxShadow: '0 0 8px rgba(212, 167, 44, 0.30)',
+                backgroundColor: '#3f0701',
+                boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
               }}
             />
           </div>
-          <h2 className="text-[32px] sm:text-[44px] lg:text-[48px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
-            GRAND COOKING <span className="text-[#E11D48]">CHAMPIONSHIP</span>
+          <h2 className="text-[32px] sm:text-[44px] lg:text-[48px] font-extrabold text-[#3f0701] tracking-[-0.035em] uppercase leading-[1.05]">
+            GRAND COOKING <span className="text-[#3f0701] underline decoration-[#3f0701]/30">CHAMPIONSHIP</span>
           </h2>
           <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
             TheZar 2026 kicks off with the Grand Cooking Championship in Tirunelveli District! 3 participant categories available with Video Reel Round 1 followed by Face-to-Face Live Cooking Stage Round 2.
@@ -83,40 +83,40 @@ export default function CategoryGridSection({ onOpenRegister }) {
         <div className="space-y-6">
           
           {/* TOP WIDE HERO BENTO CARD - FEATURED COOKING CHAMPIONSHIP */}
-          <div className="relative rounded-3xl bg-[#071426] p-8 sm:p-12 text-white overflow-hidden shadow-2xl border border-slate-800">
+          <div className="relative rounded-3xl bg-[#3f0701] p-8 sm:p-12 text-white overflow-hidden shadow-2xl border border-[#3f0701]/50">
             {/* Background Accent Lines */}
             <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full border border-white/10 pointer-events-none" />
-            <div className="absolute -right-10 -top-10 w-72 h-72 rounded-full border border-rose-500/20 pointer-events-none" />
+            <div className="absolute -right-10 -top-10 w-72 h-72 rounded-full border border-white/10 pointer-events-none" />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
               
               {/* Left Column Info */}
               <div className="lg:col-span-7 space-y-6 text-left">
-                <div className="inline-flex items-center gap-2 bg-rose-500/15 border border-rose-500/30 text-rose-300 text-[11px] font-mono font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                  <Flame className="w-3.5 h-3.5 text-amber-400" />
+                <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-[11px] font-mono font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  <Flame className="w-3.5 h-3.5 text-amber-300" />
                   <span>TIRUNELVELI DISTRICT ROUND 1 NOW OPEN</span>
                 </div>
 
                 <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1]">
                   Tirunelveli District <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-400 to-rose-300">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-100 to-white">
                     Grand Cooking Championship
                   </span>
                 </h3>
 
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+                <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-xl">
                   Showcase your culinary magic! Step 1: Upload a short 60-sec recipe preparation video reel. Shortlisted participants perform Face-to-Face live in front of master chefs & judges in Tirunelveli!
                 </p>
 
                 <div className="pt-2 flex flex-wrap items-center gap-4">
                   <button
                     onClick={onOpenRegister}
-                    className="px-7 py-3.5 rounded-full bg-gradient-to-r from-[#E11D48] to-[#FB7185] text-white font-bold text-sm sm:text-base inline-flex items-center gap-2 shadow-lg shadow-rose-600/30 hover:scale-105 transition-transform cursor-pointer"
+                    className="px-7 py-3.5 rounded-full bg-white text-[#3f0701] font-extrabold text-sm sm:text-base inline-flex items-center gap-2 shadow-lg shadow-black/20 hover:scale-105 transition-transform cursor-pointer"
                     style={{ borderRadius: '9999px' }}
                   >
                     <span>Register for Cooking Competition</span>
-                    <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
-                      <ArrowUpRight className="w-4 h-4 text-white" />
+                    <div className="w-7 h-7 rounded-full bg-[#3f0701]/10 flex items-center justify-center">
+                      <ArrowUpRight className="w-4 h-4 text-[#3f0701]" />
                     </div>
                   </button>
                 </div>
@@ -128,10 +128,10 @@ export default function CategoryGridSection({ onOpenRegister }) {
                   
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-2xl font-black text-[#071426] tracking-tight">3 Divisions</p>
+                      <p className="text-2xl font-black text-[#3f0701] tracking-tight">3 Divisions</p>
                       <p className="text-xs text-slate-500 font-medium">Kids • Adults • Men & Women</p>
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-rose-50 text-[#E11D48] flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-full bg-[#FAF0F0] text-[#3f0701] flex items-center justify-center font-bold">
                       <ChefHat className="w-5 h-5" />
                     </div>
                   </div>
@@ -139,11 +139,11 @@ export default function CategoryGridSection({ onOpenRegister }) {
                   <div className="space-y-2 pt-1 text-xs">
                     <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 font-semibold">
                       <span className="text-slate-600">Round 1: Video Reel Upload</span>
-                      <span className="text-rose-600 font-bold">Online</span>
+                      <span className="text-[#3f0701] font-bold">Online</span>
                     </div>
-                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-rose-50/70 border border-rose-100 font-semibold">
+                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#FAF0F0] border border-[#3f0701]/20 font-semibold">
                       <span className="text-slate-800">Round 2: Live Stage Cook-Off</span>
-                      <span className="text-[#E11D48] font-bold">Tirunelveli</span>
+                      <span className="text-[#3f0701] font-bold">Tirunelveli</span>
                     </div>
                   </div>
 
@@ -187,10 +187,10 @@ export default function CategoryGridSection({ onOpenRegister }) {
                       </span>
                     </div>
 
-                    <h4 className="text-xl font-black text-[#071426] tracking-tight leading-snug">
+                    <h4 className="text-xl font-black text-[#3f0701] tracking-tight leading-snug">
                       {cat.title}
                     </h4>
-                    <p className="text-[11px] font-bold text-rose-600 uppercase tracking-wider mt-0.5 font-mono">
+                    <p className="text-[11px] font-bold text-[#3f0701] uppercase tracking-wider mt-0.5 font-mono">
                       {cat.subtitle}
                     </p>
 
@@ -202,7 +202,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
                   <div className="pt-5 border-t border-slate-100 space-y-2 mt-4">
                     <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
                       <span>R1: Video Reel</span>
-                      <span className="text-rose-600 font-bold">Online</span>
+                      <span className="text-[#3f0701] font-bold">Online</span>
                     </div>
                     <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
                       <span>R2: Live Stage</span>
@@ -211,7 +211,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
 
                     <button
                       onClick={onOpenRegister}
-                      className="w-full mt-2 py-2.5 rounded-full bg-[#071426] text-white text-xs font-bold flex items-center justify-center gap-1.5 group-hover:bg-[#E11D48] transition-colors cursor-pointer"
+                      className="w-full mt-2 py-2.5 rounded-full bg-[#3f0701] text-white text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-[#580c04] transition-colors cursor-pointer"
                       style={{ borderRadius: '9999px' }}
                     >
                       <span>Register {cat.title}</span>
@@ -229,7 +229,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
                 alt="Statewide Cooking Grand Finale Stage"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#071426] via-[#071426]/85 to-rose-900/60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#3f0701] via-[#3f0701]/85 to-[#3f0701]/60" />
 
               <div className="relative z-10">
                 <div className="w-10 h-10 rounded-2xl bg-amber-500/30 backdrop-blur-md text-amber-300 flex items-center justify-center mb-4 border border-white/20">
@@ -249,7 +249,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
               <div className="relative z-10 pt-4">
                 <button
                   onClick={onOpenRegister}
-                  className="w-full py-2.5 rounded-full bg-gradient-to-r from-rose-600 to-amber-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] transition-transform cursor-pointer border border-white/30"
+                  className="w-full py-2.5 rounded-full bg-white text-[#3f0701] hover:bg-slate-100 text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] transition-transform cursor-pointer border border-white/30"
                   style={{ borderRadius: '9999px' }}
                 >
                   <span>View Grand Finale Details</span>
