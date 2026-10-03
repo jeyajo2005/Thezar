@@ -1,5 +1,5 @@
 import heroSpeakerImg from '../../assets/Young_woman.png';
-import { Calendar, MapPin, Users, Lightbulb, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, Users, Lightbulb, ArrowRight, Trophy, Sparkles } from 'lucide-react';
 
 export default function Hero({ onOpenRegister }) {
   return (
