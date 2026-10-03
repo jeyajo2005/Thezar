@@ -28,10 +28,25 @@ export default function Events() {
 
       <main className="flex-1 space-y-0">
         
-        {/* 02 Festive Christmas Events Hero & Category Highlights (Above Upcoming Events) */}
+        {/* 02 Original Official Event Schedule Hero (First) */}
+        <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-950 text-center relative overflow-hidden">
+          <div className="max-w-4xl mx-auto px-4 space-y-4">
+            <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20">
+              STATEWIDE DISTRICT CALENDAR & VENUES
+            </span>
+            <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
+              Official <span className="gradient-text">Event Schedule</span>
+            </h1>
+            <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+              Browse event dates, competition guidelines, venue maps, and timetable details for all 38 districts of Tamil Nadu.
+            </p>
+          </div>
+        </section>
+
+        {/* 03 Christmas Events Showcase (Next) */}
         <ChristmasEventsHero onOpenRegister={() => setIsRegisterOpen(true)} />
 
-        {/* 03 & 04 Upcoming Events Grid */}
+        {/* 04 Upcoming Events Grid (Next) */}
         <EventsGrid
           onOpenRegister={() => setIsRegisterOpen(true)}
           onSelectEvent={(evtId) => setSelectedEventId(evtId)}
