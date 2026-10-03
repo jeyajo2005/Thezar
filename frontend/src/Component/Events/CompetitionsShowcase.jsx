@@ -15,7 +15,7 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
       id: 'cultural',
       title: 'Cultural Festivals',
       icon: Music,
-      badgeColor: 'from-pink-500 to-rose-700',
+      badgeColor: 'from-[#9e0804] to-[#730502]',
       prizes: '₹6,50,000 Total Pool',
       items: ['Choreography & Group Dance', 'Battle of the Bands & Folk Music', 'Theatrical Drama & Skit', 'Classical Vocal Showcase'],
       description: 'Unleash artistic expression and traditional Tamil culture on the grand statewide stage.'
@@ -45,7 +45,7 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">
+          <span className="text-xs font-mono font-bold text-red-300 uppercase tracking-widest bg-[#9e0804]/10 px-3 py-1 rounded-full border border-[#9e0804]/20">
             [ FOUR MAJOR COMPETITION TRACKS ]
           </span>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
@@ -75,7 +75,7 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
                     </span>
                   </div>
 
-                  <h3 className="text-2xl font-black text-white group-hover:text-rose-400 transition-colors">
+                  <h3 className="text-2xl font-black text-white group-hover:text-red-300 transition-colors">
                     {track.title}
                   </h3>
 
@@ -86,7 +86,7 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
                   <div className="pt-2 space-y-2">
                     {track.items.map((item, idx) => (
                       <div key={idx} className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
-                        <CheckCircle className="w-4 h-4 text-rose-500 shrink-0" />
+                        <CheckCircle className="w-4 h-4 text-[#9e0804] shrink-0" />
                         <span>{item}</span>
                       </div>
                     ))}
@@ -96,7 +96,7 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
                 <div className="pt-4 border-t border-slate-800">
                   <button
                     onClick={onOpenRegister}
-                    className="w-full py-3 rounded-xl bg-slate-900 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors border border-slate-800"
+                    className="w-full py-3 rounded-xl bg-slate-900 hover:bg-[#9e0804] text-slate-200 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors border border-slate-800"
                   >
                     Enter This Track &rarr;
                   </button>

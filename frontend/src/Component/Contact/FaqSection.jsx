@@ -26,7 +26,7 @@ export default function FaqSection() {
   return (
     <section className="py-16 bg-slate-950">
       <div className="max-w-4xl mx-auto px-4 text-left space-y-6">
-        <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest">[ 07 • FAQ ]</span>
+        <span className="text-xs font-mono font-bold text-red-300 uppercase tracking-widest">[ 07 • FAQ ]</span>
         <h2 className="text-3xl font-black text-white">Frequently Asked Questions</h2>
 
         <div className="space-y-3">
@@ -38,7 +38,7 @@ export default function FaqSection() {
             >
               <div className="p-4 flex items-center justify-between font-bold text-xs sm:text-sm text-white">
                 <span>{faq.q}</span>
-                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${openFaq === idx ? 'rotate-180 text-rose-500' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${openFaq === idx ? 'rotate-180 text-[#9e0804]' : ''}`} />
               </div>
               {openFaq === idx && (
                 <div className="px-4 pb-4 text-xs text-slate-300 border-t border-slate-800/80 pt-3 leading-relaxed">

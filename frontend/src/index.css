@@ -4,8 +4,8 @@
   --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --color-navy: #071426;
-  --color-primary: #E11D48;
-  --color-accent: #FB7185;
+  --color-primary: #9e0804;
+  --color-accent: #9e0804;
   --color-gold: #D4A72C;
   --color-light-gold: #F5D77A;
   --color-white: #FFFFFF;
@@ -61,7 +61,7 @@
 
 /* Text Gradients */
 .text-gradient-thezar {
-  background: linear-gradient(90deg, #FB7185 0%, #FDA4AF 100%);
+  background: linear-gradient(90deg, #9e0804 0%, #c4120c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -72,17 +72,22 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Gradient Background Class */
+.gradient-bg-pink {
+  background: linear-gradient(135deg, #9e0804 0%, #730502 100%);
+}
+
 /* Reference Image Exact Theme Classes */
 .bg-convention-dark {
   background-color: #0b0d17;
 }
 
 .bg-royal-rose {
-  background-color: #E11D48;
+  background-color: #9e0804;
 }
 
 .btn-royal-rose {
-  background-color: #E11D48;
+  background-color: #9e0804;
   color: #ffffff;
   border-radius: 4px;
 }

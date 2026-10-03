@@ -61,7 +61,7 @@ export default function Events() {
         {/* 07 Rules & Guidelines Section */}
         <section className="py-16 bg-slate-900">
           <div className="max-w-5xl mx-auto px-4 text-left space-y-6">
-            <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">
+            <span className="text-xs font-mono font-bold text-red-300 uppercase tracking-widest bg-[#9e0804]/10 px-3 py-1 rounded-full border border-[#9e0804]/20">
               07 • OFFICIAL RULES & GUIDELINES
             </span>
             <h2 className="text-3xl font-black text-white">State Tournament Rules</h2>

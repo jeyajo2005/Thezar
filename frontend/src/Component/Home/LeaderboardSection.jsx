@@ -121,7 +121,7 @@ export default function LeaderboardSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-3">
-            <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
+            <span className="text-[12px] font-bold text-[#9e0804] tracking-[0.18em] uppercase">
               LIVE STANDINGS
             </span>
             <div
@@ -133,7 +133,7 @@ export default function LeaderboardSection() {
             />
           </div>
           <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
-            THEZAR <span className="text-[#E11D48]">LEADERBOARD</span>
+            THEZAR <span className="text-[#9e0804]">LEADERBOARD</span>
           </h2>
           <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
             Live points tally updated across all 38 districts of Tamil Nadu after each competition round.
@@ -220,17 +220,17 @@ export default function LeaderboardSection() {
           </div>
 
           {/* FEATURED "YOUR PERFORMANCE" CARD (MATCHING REFERENCE DESIGN) */}
-          <div className="bg-rose-50/80 rounded-2xl p-4 sm:p-5 border border-rose-200 text-left shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="bg-[#9e080410] rounded-2xl p-4 sm:p-5 border border-[#9e080430] text-left shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5 min-w-0">
               <img
                 src={tableData[0].avatar}
                 alt={tableData[0].name}
-                className="w-12 h-12 rounded-full object-cover border-2 border-rose-500 shadow-md shrink-0"
+                className="w-12 h-12 rounded-full object-cover border-2 border-[#9e0804] shadow-md shrink-0"
               />
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <h4 className="text-base font-extrabold text-[#071426] truncate">{tableData[0].name}</h4>
-                  <span className="bg-[#E11D48] text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase" style={{ borderRadius: '9999px' }}>
+                  <span className="bg-[#9e0804] text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase" style={{ borderRadius: '9999px' }}>
                     Your Performance
                   </span>
                 </div>
@@ -239,14 +239,14 @@ export default function LeaderboardSection() {
             </div>
 
             {/* Metrics Row */}
-            <div className="flex items-center gap-6 text-xs sm:text-sm font-mono w-full sm:w-auto justify-between sm:justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-rose-200">
+            <div className="flex items-center gap-6 text-xs sm:text-sm font-mono w-full sm:w-auto justify-between sm:justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-[#9e080430]">
               <div>
                 <p className="text-[10px] text-slate-400 font-bold uppercase font-sans">Score</p>
                 <p className="font-extrabold text-slate-900">{tableData[0].score}</p>
               </div>
               <div>
                 <p className="text-[10px] text-slate-400 font-bold uppercase font-sans">Rank</p>
-                <p className="font-extrabold text-rose-600">{tableData[0].rankChange}</p>
+                <p className="font-extrabold text-[#9e0804]">{tableData[0].rankChange}</p>
               </div>
               <div>
                 <p className="text-[10px] text-slate-400 font-bold uppercase font-sans">Improvement</p>
@@ -311,7 +311,7 @@ export default function LeaderboardSection() {
           {/* Full Leaderboard Button */}
           {/* <div className="pt-4 border-t border-slate-100 text-center">
             <button
-              className="inline-flex items-center gap-2 text-xs font-extrabold text-rose-600 hover:text-rose-800 uppercase tracking-widest cursor-pointer"
+              className="inline-flex items-center gap-2 text-xs font-extrabold text-[#9e0804] hover:text-[#730502] uppercase tracking-widest cursor-pointer"
             >
               <span>VIEW FULL LEADERBOARD (38 DISTRICTS)</span>
               <ArrowRight className="w-4 h-4" />

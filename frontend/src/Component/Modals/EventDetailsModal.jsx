@@ -10,9 +10,9 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
   const getCompetitionIcon = (type) => {
     switch (type) {
       case 'Technical': return <Code className="w-5 h-5 text-emerald-400" />;
-      case 'Cultural': return <Music className="w-5 h-5 text-pink-400" />;
+      case 'Cultural': return <Music className="w-5 h-5 text-red-300" />;
       case 'Quiz': return <HelpCircle className="w-5 h-5 text-amber-400" />;
-      case 'Innovation': return <Zap className="w-5 h-5 text-rose-400" />;
+      case 'Innovation': return <Zap className="w-5 h-5 text-red-400" />;
       default: return <Shield className="w-5 h-5 text-sky-400" />;
     }
   };
@@ -38,7 +38,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
           
           <div className="absolute bottom-6 left-6 right-6 space-y-2">
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full text-xs font-black bg-rose-600 text-white uppercase tracking-wider">
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-[#9e0804] text-white uppercase tracking-wider">
                 {event.badge}
               </span>
               <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-slate-950/80 text-amber-300 border border-white/10">
@@ -49,9 +49,9 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
               {event.title}
             </h2>
             <div className="flex flex-wrap gap-4 text-xs text-slate-300 pt-1">
-              <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4 text-rose-400" /> {event.date}</span>
+              <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4 text-red-300" /> {event.date}</span>
               <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-amber-400" /> {event.time}</span>
-              <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-pink-400" /> {event.venue}</span>
+              <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-red-300" /> {event.venue}</span>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
               onClick={() => setActiveTab(tab)}
               className={`py-3.5 px-5 font-extrabold text-xs tracking-wider uppercase border-b-2 transition-all shrink-0 ${
                 activeTab === tab
-                  ? 'border-rose-500 text-rose-400'
+                  ? 'border-[#9e0804] text-red-300'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -110,7 +110,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
                 {event.competitions.map((comp, i) => (
                   <div key={i} className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-full border border-rose-500/20">
+                      <span className="text-xs font-mono font-bold text-red-300 bg-[#9e0804]/10 px-2.5 py-1 rounded-full border border-[#9e0804]/20">
                         {comp.type}
                       </span>
                       <span className="text-xs font-bold text-amber-400 flex items-center gap-1">
@@ -151,7 +151,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
             <div className="space-y-4">
               <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-2">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-rose-400" />
+                  <MapPin className="w-5 h-5 text-red-300" />
                   <span>{event.venue}</span>
                 </h3>
                 <p className="text-xs text-slate-400">
@@ -162,7 +162,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
                     href={`https://maps.google.com/?q=${encodeURIComponent(event.venue)}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-bold text-rose-400 underline hover:text-rose-300"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-red-300 underline hover:text-red-200"
                   >
                     Open in Google Maps &rarr;
                   </a>

@@ -58,7 +58,7 @@ export default function AdminTeaserSection() {
                 <span className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300">
                   <Bell className="w-4 h-4" />
                 </span>
-                <span className="text-xs font-bold text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-lg border border-rose-500/20">
+                <span className="text-xs font-bold text-red-300 bg-[#9e0804]/10 px-2.5 py-1 rounded-lg border border-[#9e0804]/20">
                   Super Admin
                 </span>
               </div>
@@ -70,7 +70,7 @@ export default function AdminTeaserSection() {
             
             {/* Admin Sidebar Navigation */}
             <div className="lg:col-span-3 bg-slate-950/60 border-r border-slate-800/80 p-4 space-y-1 hidden lg:block text-xs font-semibold">
-              <div className="px-3 py-2 rounded-xl bg-rose-600 text-white flex items-center gap-2 font-bold">
+              <div className="px-3 py-2 rounded-xl bg-[#9e0804] text-white flex items-center gap-2 font-bold">
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Dashboard</span>
               </div>
@@ -107,7 +107,7 @@ export default function AdminTeaserSection() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
                   <div className="flex items-center gap-2 text-xs text-slate-400">
-                    <Users className="w-4 h-4 text-rose-400" />
+                    <Users className="w-4 h-4 text-red-300" />
                     <span>Total Participants</span>
                   </div>
                   <p className="text-2xl font-black text-white mt-1">8,420</p>
@@ -123,18 +123,18 @@ export default function AdminTeaserSection() {
 
                 <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
                   <div className="flex items-center gap-2 text-xs text-slate-400">
-                    <MapPin className="w-4 h-4 text-pink-400" />
+                    <MapPin className="w-4 h-4 text-red-300" />
                     <span>Districts</span>
                   </div>
                   <p className="text-2xl font-black text-white mt-1">38</p>
                 </div>
 
-                <div className="bg-slate-950 p-4 rounded-2xl border border-rose-500/40 bg-rose-950/20">
-                  <div className="flex items-center gap-2 text-xs text-rose-400">
-                    <Radio className="w-4 h-4 text-rose-500 animate-ping" />
+                <div className="bg-slate-950 p-4 rounded-2xl border border-[#9e0804]/40 bg-[#9e0804]/20">
+                  <div className="flex items-center gap-2 text-xs text-red-300">
+                    <Radio className="w-4 h-4 text-[#9e0804] animate-ping" />
                     <span>Live Stage</span>
                   </div>
-                  <p className="text-2xl font-black text-rose-400 mt-1">1 Live</p>
+                  <p className="text-2xl font-black text-red-300 mt-1">1 Live</p>
                 </div>
               </div>
 
@@ -158,10 +158,10 @@ export default function AdminTeaserSection() {
                     <div>
                       <div className="flex justify-between text-slate-300 font-medium mb-1">
                         <span>Live Stage (Tirunelveli)</span>
-                        <span className="font-mono text-rose-400 font-bold">1 / 38</span>
+                        <span className="font-mono text-red-300 font-bold">1 / 38</span>
                       </div>
                       <div className="w-full h-2 rounded-full bg-slate-900 overflow-hidden">
-                        <div className="h-full bg-rose-500 w-[3%]"></div>
+                        <div className="h-full bg-[#9e0804] w-[3%]"></div>
                       </div>
                     </div>
 

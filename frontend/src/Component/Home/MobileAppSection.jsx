@@ -27,7 +27,7 @@ export default function MobileAppSection() {
             <div className="lg:col-span-6 text-left space-y-6">
               
               <div className="flex items-center gap-3">
-                <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
+                <span className="text-[12px] font-bold text-[#9e0804] tracking-[0.18em] uppercase">
                   OFFICIAL MOBILE APP
                 </span>
                 <div
@@ -42,10 +42,10 @@ export default function MobileAppSection() {
               <div className="space-y-2">
                 <h2 className="text-[36px] sm:text-[48px] lg:text-[54px] font-black text-[#071426] tracking-[-0.035em] leading-[1.05] uppercase">
                   DOWNLOAD <br />
-                  <span className="text-[#E11D48]">THIS APP</span>
+                  <span className="text-[#9e0804]">THIS APP</span>
                 </h2>
-                <div className="inline-flex items-center gap-2 bg-rose-50 border border-rose-200 text-[#E11D48] text-[11px] font-mono font-bold px-3 py-1 rounded-full uppercase" style={{ borderRadius: '9999px' }}>
-                  <Sparkles className="w-3.5 h-3.5 text-[#E11D48]" />
+                <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-[#9e0804] text-[11px] font-mono font-bold px-3 py-1 rounded-full uppercase" style={{ borderRadius: '9999px' }}>
+                  <Sparkles className="w-3.5 h-3.5 text-[#9e0804]" />
                   <span>OPTIMIZED FOR 6.3" DISPLAY • ZERO BEZELS</span>
                 </div>
               </div>
@@ -63,7 +63,7 @@ export default function MobileAppSection() {
                   {/* Apple App Store */}
                   <a
                     href="#appstore"
-                    className="flex items-center gap-3 bg-[#071426] hover:bg-[#E11D48] text-white px-5 py-3 rounded-2xl shadow-md transition-colors w-52 border border-slate-800"
+                    className="flex items-center gap-3 bg-[#071426] hover:bg-[#9e0804] text-white px-5 py-3 rounded-2xl shadow-md transition-colors w-52 border border-slate-800"
                     style={{ borderRadius: '9999px' }}
                   >
                     <Apple className="w-6 h-6 text-white shrink-0 fill-current" />
@@ -76,7 +76,7 @@ export default function MobileAppSection() {
                   {/* Google Play Store */}
                   <a
                     href="#playstore"
-                    className="flex items-center gap-3 bg-[#071426] hover:bg-[#E11D48] text-white px-5 py-3 rounded-2xl shadow-md transition-colors w-52 border border-slate-800"
+                    className="flex items-center gap-3 bg-[#071426] hover:bg-[#9e0804] text-white px-5 py-3 rounded-2xl shadow-md transition-colors w-52 border border-slate-800"
                     style={{ borderRadius: '9999px' }}
                   >
                     <Play className="w-6 h-6 text-white shrink-0 fill-current" />
@@ -105,7 +105,7 @@ export default function MobileAppSection() {
                   Official TN Event App
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-rose-500" />
+                  <CheckCircle2 className="w-4 h-4 text-[#9e0804]" />
                   Instant QR Entry Pass
                 </span>
               </div>
@@ -116,7 +116,7 @@ export default function MobileAppSection() {
             <div className="lg:col-span-6 relative flex flex-col items-center justify-center pt-6 lg:pt-0">
               
               {/* Soft Ambient Background Aura */}
-              <div className="absolute w-80 h-80 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute w-80 h-80 bg-[#9e0804]/10 rounded-full blur-3xl pointer-events-none" />
 
               <div className="relative flex items-center justify-center gap-4 sm:gap-6">
                 
@@ -163,7 +163,7 @@ export default function MobileAppSection() {
                         {/* App Header */}
                         <div className="flex items-center justify-between pb-1.5 border-b border-white/10">
                           <div className="flex items-center gap-1.5">
-                            <div className="w-5 h-5 rounded-md bg-gradient-to-tr from-rose-600 to-rose-400 flex items-center justify-center text-white text-[9px] font-black">
+                            <div className="w-5 h-5 rounded-md bg-gradient-to-tr from-[#9e0804] to-[#c4120c] flex items-center justify-center text-white text-[9px] font-black">
                               TZ
                             </div>
                             <span className="text-[10px] font-extrabold text-white">TheZar 2026</span>
@@ -175,8 +175,8 @@ export default function MobileAppSection() {
                         </div>
 
                         {/* Candidate QR Card */}
-                        <div className="bg-gradient-to-br from-rose-600 via-rose-500 to-rose-700 p-3 rounded-2xl text-white text-center shadow-lg relative overflow-hidden">
-                          <div className="flex justify-between items-center text-[9px] font-mono text-rose-100 pb-1">
+                        <div className="bg-gradient-to-br from-[#9e0804] via-[#730502] to-[#590301] p-3 rounded-2xl text-white text-center shadow-lg relative overflow-hidden">
+                          <div className="flex justify-between items-center text-[9px] font-mono text-red-100 pb-1">
                             <span>ENTRY PASS</span>
                             <span className="bg-white/20 px-1.5 py-0.5 rounded">#TZ-3841</span>
                           </div>
@@ -184,7 +184,7 @@ export default function MobileAppSection() {
                           <div className="bg-white p-1.5 rounded-xl inline-block shadow-md my-1">
                             <QRCodeSVG value="https://thezar2026.tn.gov.in/pass/TZ-3841" size={76} />
                           </div>
-                          <p className="text-[8px] font-mono text-rose-100">Scan at Tirunelveli Venue</p>
+                          <p className="text-[8px] font-mono text-red-100">Scan at Tirunelveli Venue</p>
                         </div>
 
                         {/* Event Details Card */}
@@ -292,7 +292,7 @@ export default function MobileAppSection() {
 
                           <div className="bg-slate-800/80 p-2 rounded-xl border border-slate-700/60 flex items-center justify-between text-[10px]">
                             <div className="flex items-center gap-2">
-                              <span className="w-4 text-center font-mono font-bold text-rose-400">#3</span>
+                              <span className="w-4 text-center font-mono font-bold text-red-300">#3</span>
                               <span className="font-bold text-white">Jane Cooper</span>
                             </div>
                             <span className="font-mono text-slate-300">3,420 pts</span>
@@ -300,8 +300,8 @@ export default function MobileAppSection() {
                         </div>
 
                         {/* Live Round Notification Banner */}
-                        <div className="bg-rose-500/15 border border-rose-500/30 p-2 rounded-xl text-[9px] text-slate-300 flex items-center gap-1.5">
-                          <Flame className="w-3 h-3 text-rose-500 shrink-0" />
+                        <div className="bg-[#9e0804]/20 border border-[#9e0804]/30 p-2 rounded-xl text-[9px] text-slate-300 flex items-center gap-1.5">
+                          <Flame className="w-3 h-3 text-[#9e0804] shrink-0" />
                           <span className="truncate">Tirunelveli Round 1 Videos Live</span>
                         </div>
 

@@ -6,7 +6,7 @@ export default function NewsTickerBar() {
       id: 1,
       icon: Flame,
       tag: 'LIVE NOW',
-      tagColor: 'bg-rose-500 text-white',
+      tagColor: 'bg-[#9e0804] text-white',
       text: 'TIRUNELVELI DISTRICT ROUND 1 REGISTRATION IS NOW OPEN — GRAND COOKING CHAMPIONSHIP',
     },
     {
@@ -40,16 +40,16 @@ export default function NewsTickerBar() {
   ];
 
   return (
-    <div className="w-full bg-[#071426] border-y border-rose-900/50 py-3.5 relative overflow-hidden shadow-xl select-none z-20">
+    <div className="w-full bg-[#071426] border-y border-[#9e0804]/50 py-3.5 relative overflow-hidden shadow-xl select-none z-20">
       
       {/* Background Ambient Glow Accent */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-rose-600/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-[#9e0804]/20 rounded-full blur-2xl pointer-events-none" />
       <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4 relative z-10">
         
         {/* Left Fixed Badge: BREAKING NEWS / ANNOUNCEMENTS */}
-        <div className="shrink-0 flex items-center gap-2 bg-gradient-to-r from-[#E11D48] to-[#FB7185] text-white px-3.5 py-1.5 rounded-full shadow-md text-[11px] font-mono font-black tracking-wider uppercase" style={{ borderRadius: '9999px' }}>
+        <div className="shrink-0 flex items-center gap-2 bg-gradient-to-r from-[#9e0804] to-[#730502] text-white px-3.5 py-1.5 rounded-full shadow-md text-[11px] font-mono font-black tracking-wider uppercase" style={{ borderRadius: '9999px' }}>
           <Radio className="w-3.5 h-3.5 animate-pulse text-white" />
           <span className="hidden sm:inline">LATEST NEWS</span>
           <span className="sm:hidden">NEWS</span>

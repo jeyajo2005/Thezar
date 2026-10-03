@@ -20,7 +20,7 @@ export default function About() {
         {/* 02 About Hero */}
         <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-950 text-center relative overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 space-y-4">
-            <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest bg-rose-500/10 px-3.5 py-1.5 rounded-full border border-rose-500/20">
+            <span className="text-xs font-mono font-bold text-red-300 uppercase tracking-widest bg-[#9e0804]/10 px-3.5 py-1.5 rounded-full border border-[#9e0804]/20">
               ABOUT THEZAR PLATFORM
             </span>
             <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight">

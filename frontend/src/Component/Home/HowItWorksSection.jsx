@@ -45,7 +45,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
         {/* CENTERED HEADER (Matching Reference Image) */}
         <div className="text-center max-w-2xl mx-auto space-y-2 mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-3">
-            <span className="text-[12px] font-bold text-[#E11D48] tracking-[0.18em] uppercase">
+            <span className="text-[12px] font-bold text-[#9e0804] tracking-[0.18em] uppercase">
               SIMPLE STEPS
             </span>
             <div
@@ -57,7 +57,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
             />
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#071426] tracking-tight uppercase">
-            HOW IT <span className="text-[#E11D48]">WORKS</span>
+            HOW IT <span className="text-[#9e0804]">WORKS</span>
           </h2>
           <p className="text-slate-500 text-sm sm:text-base leading-relaxed pt-1">
             No confusion or delays. Just fast, simple and transparent talent selection.
@@ -72,7 +72,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
             <div className="relative w-full max-w-md sm:max-w-lg">
               
               {/* Soft Ambient Backdrop Light */}
-              <div className="absolute -left-10 -bottom-10 w-72 h-72 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -left-10 -bottom-10 w-72 h-72 bg-[#9e0804]/10 rounded-full blur-3xl pointer-events-none" />
               
               {/* Main Person Portrait Card */}
               <div className="relative rounded-[32px] overflow-hidden shadow-2xl border border-slate-100 aspect-[4/3.8] bg-slate-100 group">
@@ -104,7 +104,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
 
                   {/* Step Title & Description */}
                   <div className="pt-1 space-y-1 max-w-lg">
-                    <h3 className="text-lg sm:text-xl font-bold text-[#071426] tracking-tight group-hover:text-[#E11D48] transition-colors">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#071426] tracking-tight group-hover:text-[#9e0804] transition-colors">
                       {step.title}
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
@@ -120,7 +120,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
             <div className="pt-4 pl-[75px] sm:pl-[88px]">
               <button
                 onClick={onOpenRegister}
-                className="px-8 py-3.5 rounded-full bg-[#071426] hover:bg-[#E11D48] text-white text-xs sm:text-sm font-bold inline-flex items-center gap-2 shadow-lg transition-all cursor-pointer"
+                className="px-8 py-3.5 rounded-full bg-[#071426] hover:bg-[#9e0804] text-white text-xs sm:text-sm font-bold inline-flex items-center gap-2 shadow-lg transition-all cursor-pointer"
                 style={{ borderRadius: '9999px' }}
               >
                 <span>Register & Get Digital Pass</span>

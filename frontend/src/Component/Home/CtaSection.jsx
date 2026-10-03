@@ -9,8 +9,8 @@ export default function CtaSection({ onOpenRegister }) {
         <div className="relative rounded-2xl bg-[#071426] p-8 sm:p-16 lg:p-20 text-center overflow-hidden shadow-2xl border border-slate-800">
           
           {/* Subtle Ambient Radial Lighting */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-rose-600/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-20 right-10 w-80 h-80 bg-rose-400/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#9e0804]/25 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-20 right-10 w-80 h-80 bg-[#730502]/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto space-y-6">
             
@@ -42,10 +42,10 @@ export default function CtaSection({ onOpenRegister }) {
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={onOpenRegister}
-                className="w-full sm:w-auto px-9 py-4 rounded-full text-white font-extrabold text-[14px] sm:text-[15px] uppercase tracking-[0.02em] shadow-xl shadow-rose-600/30 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-9 py-4 rounded-full text-white font-extrabold text-[14px] sm:text-[15px] uppercase tracking-[0.02em] shadow-xl shadow-red-900/40 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
                 style={{
                   borderRadius: '9999px',
-                  background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                  background: 'linear-gradient(135deg, #9e0804 0%, #c4120c 100%)',
                   color: '#FFFFFF',
                 }}
               >

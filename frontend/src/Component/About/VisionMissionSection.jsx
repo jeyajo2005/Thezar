@@ -16,7 +16,7 @@ export default function VisionMissionSection() {
         </div>
 
         <div className="glass-card p-8 rounded-3xl border border-slate-800 space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-2xl bg-[#9e0804]/10 text-red-300 border border-[#9e0804]/20 flex items-center justify-center">
             <Target className="w-6 h-6" />
           </div>
           <h3 className="text-xl font-extrabold text-white">Our Mission</h3>

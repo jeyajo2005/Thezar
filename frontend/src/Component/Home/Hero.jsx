@@ -36,7 +36,7 @@ export default function Hero({ onOpenRegister }) {
         />
 
         {/* Ambient glow accent */}
-        <div className="absolute top-1/4 left-10 w-96 h-96 bg-rose-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#9e0804]/20 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       {/* Main Hero Content */}
@@ -45,7 +45,7 @@ export default function Hero({ onOpenRegister }) {
           
           {/* 1. TOP EYEBROW HEADER */}
           <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-300">
-            38 DISTRICTS <span className="text-[#FB7185] mx-1.5">|</span> TAMIL NADU <span className="text-[#FB7185] mx-1.5">|</span> STATEWIDE LEAGUE <span className="text-[#FB7185] mx-1.5">|</span> THEZAR 2026
+            38 DISTRICTS <span className="text-[#c4120c] mx-1.5">|</span> TAMIL NADU <span className="text-[#c4120c] mx-1.5">|</span> STATEWIDE LEAGUE <span className="text-[#c4120c] mx-1.5">|</span> THEZAR 2026
           </div>
 
           {/* 2. TYPOGRAPHIC HEADING STACK */}
@@ -56,7 +56,7 @@ export default function Hero({ onOpenRegister }) {
             <span
               className="text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-extrabold text-transparent bg-clip-text"
               style={{
-                backgroundImage: 'linear-gradient(90deg, #E11D48 0%, #FB7185 50%, #F43F5E 100%)',
+                backgroundImage: 'linear-gradient(90deg, #c4120c 0%, #9e0804 50%, #e31b14 100%)',
               }}
             >
               STATEWIDE
@@ -77,8 +77,8 @@ export default function Hero({ onOpenRegister }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 max-w-[500px]">
             {/* Multi-Disciplinary Events */}
             <div className="flex items-start gap-2.5">
-              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Trophy className="w-4 h-4 text-[#FB7185]" />
+              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#c4120c] shrink-0">
+                <Trophy className="w-4 h-4 text-[#c4120c]" />
               </div>
               <div>
                 <div className="text-[13px] font-bold text-white leading-tight">Multi-Disciplinary</div>
@@ -88,8 +88,8 @@ export default function Hero({ onOpenRegister }) {
 
             {/* 38 Districts */}
             <div className="flex items-start gap-2.5">
-              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <MapPin className="w-4 h-4 text-[#FB7185]" />
+              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#c4120c] shrink-0">
+                <MapPin className="w-4 h-4 text-[#c4120c]" />
               </div>
               <div>
                 <div className="text-[13px] font-bold text-white leading-tight">38 Districts</div>
@@ -99,8 +99,8 @@ export default function Hero({ onOpenRegister }) {
 
             {/* Open to Everyone */}
             <div className="flex items-start gap-2.5">
-              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Users className="w-4 h-4 text-[#FB7185]" />
+              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#c4120c] shrink-0">
+                <Users className="w-4 h-4 text-[#c4120c]" />
               </div>
               <div>
                 <div className="text-[13px] font-bold text-white leading-tight">Open to Everyone</div>
@@ -110,8 +110,8 @@ export default function Hero({ onOpenRegister }) {
 
             {/* Grand Championship */}
             <div className="flex items-start gap-2.5">
-              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#FB7185] shrink-0">
-                <Sparkles className="w-4 h-4 text-[#FB7185]" />
+              <div className="p-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#c4120c] shrink-0">
+                <Sparkles className="w-4 h-4 text-[#c4120c]" />
               </div>
               <div>
                 <div className="text-[13px] font-bold text-white leading-tight">Grand Championship</div>
@@ -124,17 +124,17 @@ export default function Hero({ onOpenRegister }) {
           <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={onOpenRegister}
-              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-7 rounded-full text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-md shadow-rose-500/25 no-underline hover:no-underline"
+              className="w-full sm:w-auto h-[42px] sm:h-[44px] px-7 rounded-full text-[13px] font-bold text-white uppercase tracking-wider flex items-center justify-center gap-2 group transition-all duration-200 cursor-pointer shadow-md shadow-[#9e0804]/25 no-underline hover:no-underline"
               style={{
                 borderRadius: '9999px',
-                background: 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)',
+                background: 'linear-gradient(135deg, #9e0804 0%, #730502 100%)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #BE123C 0%, #E11D48 100%)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #730502 0%, #9e0804 100%)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #E11D48 0%, #FB7185 100%)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #9e0804 0%, #730502 100%)';
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >

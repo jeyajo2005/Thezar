@@ -88,7 +88,7 @@ export default function RegistrationModal({ onClose }) {
                   placeholder="e.g. Suman Kumar"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-rose-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
                 />
               </div>
             </div>
@@ -106,7 +106,7 @@ export default function RegistrationModal({ onClose }) {
                     placeholder="student@college.edu"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-rose-500 transition-colors"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
                   />
                 </div>
               </div>
@@ -123,7 +123,7 @@ export default function RegistrationModal({ onClose }) {
                     placeholder="+91 98765 43210"
                     value={formData.mobile}
                     onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-rose-500 transition-colors"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
                   />
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function RegistrationModal({ onClose }) {
                     placeholder="e.g. ABC College of Engineering"
                     value={formData.collegeName}
                     onChange={(e) => setFormData({ ...formData, collegeName: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-rose-500 transition-colors"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
                   />
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default function RegistrationModal({ onClose }) {
                 <select
                   value={formData.year}
                   onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-rose-500 transition-colors"
+                  className="w-full px-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
                 >
                   <option value="1st Year">1st Year</option>
                   <option value="2nd Year">2nd Year</option>
@@ -173,7 +173,7 @@ export default function RegistrationModal({ onClose }) {
                 <select
                   value={formData.district}
                   onChange={(e) => setFormData({ ...formData, district: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-rose-500 transition-colors font-semibold text-rose-400"
+                  className="w-full px-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors font-semibold text-[#9e0804]"
                 >
                   {DISTRICTS_DATA.map((d) => (
                     <option key={d.id} value={d.name}>
@@ -190,7 +190,7 @@ export default function RegistrationModal({ onClose }) {
                 <select
                   value={formData.competition}
                   onChange={(e) => setFormData({ ...formData, competition: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-rose-500 transition-colors font-semibold text-amber-400"
+                  className="w-full px-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors font-semibold text-amber-400"
                 >
                   <option value="Technical Hackathon">Technical Hackathon</option>
                   <option value="Cultural Dance Fest">Cultural Dance Fest</option>
@@ -203,7 +203,7 @@ export default function RegistrationModal({ onClose }) {
             <div className="pt-4">
               <button
                 type="submit"
-                className="w-full py-4 rounded-full text-base font-extrabold text-white gradient-bg-pink shadow-xl shadow-rose-600/30 hover:opacity-95 transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-full text-base font-extrabold text-white gradient-bg-pink shadow-xl shadow-red-900/30 hover:opacity-95 transition-all flex items-center justify-center gap-2"
               >
                 <span>Continue & Generate Pass</span>
                 <Sparkles className="w-5 h-5" />
@@ -216,11 +216,11 @@ export default function RegistrationModal({ onClose }) {
         {step === 2 && registeredUser && (
           <div className="p-6 sm:p-8 space-y-6 text-center">
             
-            <div className="bg-slate-950 rounded-2xl p-6 border-2 border-rose-500/50 shadow-2xl relative overflow-hidden space-y-4">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl"></div>
+            <div className="bg-slate-950 rounded-2xl p-6 border-2 border-[#9e0804]/50 shadow-2xl relative overflow-hidden space-y-4">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#9e0804]/10 rounded-full blur-2xl"></div>
 
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest">
+                <span className="text-xs font-mono font-bold text-red-300 uppercase tracking-widest">
                   THEZAR 2026 OFFICIAL PASS
                 </span>
                 <span className="text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded">
@@ -241,7 +241,7 @@ export default function RegistrationModal({ onClose }) {
                   </p>
                   <p className="text-lg font-bold text-white">{registeredUser.fullName}</p>
                   <p className="text-xs text-slate-300">{registeredUser.collegeName || 'Official Candidate'}</p>
-                  <p className="text-xs text-rose-400 font-semibold">{registeredUser.district} District • {registeredUser.competition}</p>
+                  <p className="text-xs text-red-300 font-semibold">{registeredUser.district} District • {registeredUser.competition}</p>
                   
                   <div className="pt-2 flex items-center gap-2 text-xs text-slate-400 bg-slate-900 px-3 py-1.5 rounded-full border border-slate-800">
                     <Lock className="w-3.5 h-3.5 text-amber-400" />
@@ -262,7 +262,7 @@ export default function RegistrationModal({ onClose }) {
                 onClick={() => window.print()}
                 className="w-full sm:w-1/2 py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-all border border-slate-700 flex items-center justify-center gap-2"
               >
-                <Download className="w-4 h-4 text-rose-400" />
+                <Download className="w-4 h-4 text-red-300" />
                 <span>Print Candidate Badge</span>
               </button>
               <button
