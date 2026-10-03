@@ -8,7 +8,7 @@ export default function RegistrationModal({ onClose }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     fullName: '',
-    email: '',
+    email: 'hellosuman29@gmail.com',
     mobile: '',
     collegeName: '',
     department: 'Computer Science & Engineering',
@@ -103,7 +103,7 @@ export default function RegistrationModal({ onClose }) {
                   <input
                     type="email"
                     required
-                    placeholder="student@college.edu"
+                    placeholder="hellosuman29@gmail.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors"

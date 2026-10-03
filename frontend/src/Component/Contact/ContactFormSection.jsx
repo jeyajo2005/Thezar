@@ -37,7 +37,7 @@ export default function ContactFormSection() {
               <input
                 type="email"
                 required
-                placeholder="student@college.edu"
+                placeholder="hellosuman29@gmail.com"
                 className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:outline-none focus:border-[#9e0804]"
               />
             </div>
