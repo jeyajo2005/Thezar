@@ -1,28 +1,59 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, Heart, ArrowRight } from 'lucide-react';
 import thezarLogo from '../../assets/thezar_logo.png';
 
 export default function Navbar({ onOpenRegister }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 15);
+
+      const sections = ['home', 'events', 'districts', 'about-thezar', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Events', path: '/events' },
-    { name: 'Districts', path: '/districts' },
-    { name: 'About TheZar', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Home', targetId: 'home' },
+    { name: 'Events', targetId: 'events' },
+    { name: 'Districts', targetId: 'districts' },
+    { name: 'About TheZar', targetId: 'about-thezar' },
+    { name: 'Contact', targetId: 'contact' },
   ];
+
+  const scrollToSection = (e, targetId) => {
+    if (e) e.preventDefault();
+    setMobileMenuOpen(false);
+    setActiveSection(targetId);
+
+    const element = document.getElementById(targetId);
+    if (element) {
+      const offset = 70;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   return (
     <header
@@ -38,9 +69,10 @@ export default function Navbar({ onOpenRegister }) {
         <div className="flex items-center justify-between h-[62px] md:h-[68px] min-h-[62px] md:min-h-[68px]">
           
           {/* 1. Official TheZar Logo & Brand Text */}
-          <Link
-            to="/"
-            className="flex items-center gap-2 shrink-0 no-underline hover:no-underline nav-link-clean group"
+          <a
+            href="#home"
+            onClick={(e) => scrollToSection(e, 'home')}
+            className="flex items-center gap-2 shrink-0 no-underline hover:no-underline nav-link-clean group cursor-pointer"
             style={{ textDecoration: 'none' }}
           >
             <img
@@ -51,23 +83,22 @@ export default function Navbar({ onOpenRegister }) {
             <span className="text-sm sm:text-base font-extrabold text-slate-900 tracking-wider uppercase font-sans">
               THEZAR <span className="text-[#9e0804]">2026</span>
             </span>
-          </Link>
+          </a>
 
           {/* 2. Centered Navigation for Desktop */}
           <nav className="hidden md:flex items-center gap-7 lg:gap-8">
             {navLinks.map((link) => {
-              const isCurrent =
-                location.pathname === link.path ||
-                (link.path === '/' && (location.pathname === '/' || location.pathname === ''));
+              const isCurrent = activeSection === link.targetId;
 
               return (
-                <Link
+                <a
                   key={link.name}
-                  to={link.path}
-                  className={`nav-link-clean text-[14px] font-semibold tracking-[-0.01em] relative transition-colors duration-200 no-underline hover:no-underline group ${
+                  href={`#${link.targetId}`}
+                  onClick={(e) => scrollToSection(e, link.targetId)}
+                  className={`nav-link-clean text-[14px] font-semibold tracking-[-0.01em] relative transition-colors duration-200 no-underline hover:no-underline group cursor-pointer ${
                     isCurrent
                       ? 'text-[#9e0804] bg-[#9e080415] px-3.5 py-1.5 rounded-full font-bold'
-                      : 'hover:text-[#9e0804] py-1'
+                      : 'hover:text-[#9e0804] py-1 text-slate-700'
                   }`}
                   style={{
                     textDecoration: 'none',
@@ -76,7 +107,6 @@ export default function Navbar({ onOpenRegister }) {
                 >
                   <span>{link.name}</span>
                   
-                  {/* Custom Animated Gradient Underline (Active on hover only, never on initial load or active pill) */}
                   {!isCurrent && (
                     <span
                       className="absolute bottom-[-5px] left-0 w-0 h-[2px] rounded-full transition-all duration-250 ease-out group-hover:w-full pointer-events-none"
@@ -85,7 +115,7 @@ export default function Navbar({ onOpenRegister }) {
                       }}
                     />
                   )}
-                </Link>
+                </a>
               );
             })}
           </nav>
@@ -94,6 +124,7 @@ export default function Navbar({ onOpenRegister }) {
           <div className="hidden md:flex items-center gap-3 shrink-0">
             {/* Search Circular Button */}
             <button
+              onClick={(e) => scrollToSection(e, 'events')}
               className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#9e080410] hover:border-[#9e080430] hover:text-[#9e0804] hover:-translate-y-px transition-all duration-200 cursor-pointer"
               aria-label="Search"
               style={{
@@ -107,6 +138,7 @@ export default function Navbar({ onOpenRegister }) {
 
             {/* Wishlist / Heart Circular Button */}
             <button
+              onClick={(e) => scrollToSection(e, 'competitions')}
               className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#9e080410] hover:border-[#9e080430] hover:text-[#9e0804] hover:-translate-y-px transition-all duration-200 cursor-pointer"
               aria-label="Wishlist"
               style={{
@@ -186,15 +218,15 @@ export default function Navbar({ onOpenRegister }) {
         {mobileMenuOpen && (
           <div className="md:hidden pb-4 pt-2 border-t border-slate-200 space-y-1 text-left animate-in fade-in slide-in-from-top-2 duration-200">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.name}
-                to={link.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-full text-[14px] font-semibold text-[#334155] hover:text-[#9e0804] hover:bg-[#9e080410] transition-colors no-underline hover:no-underline nav-link-clean"
+                href={`#${link.targetId}`}
+                onClick={(e) => scrollToSection(e, link.targetId)}
+                className="block px-4 py-2.5 rounded-full text-[14px] font-semibold text-[#334155] hover:text-[#9e0804] hover:bg-[#9e080410] transition-colors no-underline hover:no-underline nav-link-clean cursor-pointer"
                 style={{ textDecoration: 'none' }}
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
             <div className="pt-2 px-1">
               <button

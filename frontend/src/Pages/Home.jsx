@@ -10,6 +10,9 @@ import NewsTickerBar from '../Component/Home/NewsTickerBar';
 import HowItWorksSection from '../Component/Home/HowItWorksSection';
 import LeaderboardSection from '../Component/Home/LeaderboardSection';
 import MobileAppSection from '../Component/Home/MobileAppSection';
+import ContactInfoSection from '../Component/Contact/ContactInfoSection';
+import ContactFormSection from '../Component/Contact/ContactFormSection';
+import FaqSection from '../Component/Contact/FaqSection';
 import CtaSection from '../Component/Home/CtaSection';
 import Footer from '../Component/Footer/Footer';
 
@@ -28,7 +31,7 @@ export default function Home() {
 
       <main className="flex-1 space-y-0">
         
-        {/* 02. Hero & 03. Curved Hero Divider (Integrated) */}
+        {/* 02. Hero & 03. Curved Hero Divider */}
         <Hero
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
@@ -38,7 +41,7 @@ export default function Home() {
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
 
-        {/* 05. Floating Countdown Card (Overlaps About & Events) */}
+        {/* 05. Floating Countdown Card */}
         <CountdownSection
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
@@ -59,12 +62,12 @@ export default function Home() {
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
 
-    
         {/* 09. How TheZar Works */}
         <HowItWorksSection
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
-    {/* 08b. Animated News Heading Line Ticker */}
+
+        {/* 08b. Animated News Heading Line Ticker */}
         <NewsTickerBar />
 
         {/* 10. Leaderboard Preview */}
@@ -73,14 +76,29 @@ export default function Home() {
         {/* 11. Mobile App Promotion */}
         <MobileAppSection />
 
-        {/* 12. Final Registration CTA */}
+        {/* 12. Contact & FAQ Section */}
+        <section id="contact" className="py-16 bg-[#071426] text-white border-t border-slate-800 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 text-left items-start">
+              <div className="lg:col-span-5">
+                <ContactInfoSection />
+              </div>
+              <div className="lg:col-span-7">
+                <ContactFormSection />
+              </div>
+            </div>
+            <FaqSection />
+          </div>
+        </section>
+
+        {/* 13. Final Registration CTA */}
         <CtaSection
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
 
       </main>
 
-      {/* 13. Footer */}
+      {/* 14. Footer */}
       <Footer onOpenRegister={() => setIsRegisterOpen(true)} />
 
       {/* Modals */}
