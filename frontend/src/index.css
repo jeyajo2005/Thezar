@@ -153,3 +153,95 @@
   background: #ffffff;
   color: #000000;
 }
+
+/* ========================================================
+   LUXURY CHRISTMAS THEME DESIGN SYSTEM (HOME 2)
+   ======================================================== */
+.font-christmas {
+  font-family: 'Alex Brush', cursive;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel Decorative', serif;
+}
+
+.christmas-glass-card {
+  background: linear-gradient(135deg, rgba(74, 4, 4, 0.72) 0%, rgba(35, 3, 3, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.christmas-glass-card-light {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.christmas-gold-glow {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.45), 0 0 50px rgba(212, 175, 55, 0.2);
+}
+
+.christmas-red-glow {
+  box-shadow: 0 0 30px rgba(158, 8, 4, 0.6), 0 0 60px rgba(115, 5, 2, 0.3);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFF7D6 0%, #FFDF73 30%, #D4AF37 70%, #996515 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.snow-gradient-text {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes gentleBob {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1.5deg);
+  }
+}
+
+@keyframes twinkleLight {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 8px #FFD700);
+  }
+}
+
+@keyframes goldShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-gentle-bob {
+  animation: gentleBob 4.5s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: twinkleLight 2.5s ease-in-out infinite;
+}
+
+.gold-shimmer-btn {
+  background: linear-gradient(90deg, #D4AF37 0%, #FFF3B0 40%, #D4AF37 80%);
+  background-size: 200% 100%;
+  animation: goldShimmer 3.5s linear infinite;
+}
+

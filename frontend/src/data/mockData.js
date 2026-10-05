@@ -36,7 +36,8 @@ export const DISTRICTS_DATA = [
   { id: 35, name: "Villupuram", code: "VPM", region: "East", date: "04 Feb 2027", venue: "TACW Campus", status: "Upcoming", participants: 290, eventsCount: 7 },
   { id: 36, name: "Chengalpattu", code: "CGP", region: "North", date: "08 Feb 2027", venue: "SRM Institute, Kattankulathur", status: "Upcoming", participants: 680, eventsCount: 16 },
   { id: 37, name: "Tiruvannamalai", code: "TVM", region: "North", date: "12 Feb 2027", venue: "SKP Engineering College", status: "Upcoming", participants: 300, eventsCount: 8 },
-  { id: 38, name: "Grand Finale - Chennai", code: "FIN", region: "Statewide", date: "20 Feb 2027", venue: "Nehru Indoor Stadium, Chennai", status: "Upcoming", participants: 1200, eventsCount: 20 }
+  { id: 38, name: "Tirupur", code: "TPR", region: "West", date: "16 Feb 2027", venue: "Chikkanna Government Arts College", status: "Upcoming", participants: 310, eventsCount: 8 },
+  { id: 39, name: "Grand Finale - Chennai", code: "FIN", region: "Statewide", date: "20 Feb 2027", venue: "Nehru Indoor Stadium, Chennai", status: "Upcoming", participants: 1200, eventsCount: 20 }
 ];
 
 export const EVENTS_LIST = [

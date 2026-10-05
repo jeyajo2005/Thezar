@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Navbar from '../Component/Navbar/Navbar';
 import Hero from '../Component/Home/Hero';
+import CurtainIntro from '../Component/Home/CurtainIntro';
 import AboutTheZarSection from '../Component/Home/AboutTheZarSection';
 import CountdownSection from '../Component/Home/CountdownSection';
 import EventsGrid from '../Component/Events/EventsGrid';
@@ -22,10 +23,31 @@ import EventDetailsModal from '../Component/Modals/EventDetailsModal';
 export default function Home() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
+  const [heroRevealed, setHeroRevealed] = useState(false);
+  const [introKey, setIntroKey] = useState(1);
+  const [showIntro, setShowIntro] = useState(true);
+
+  const handleReplayIntro = () => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setHeroRevealed(false);
+    setShowIntro(false);
+    setTimeout(() => {
+      setIntroKey((k) => k + 1);
+      setShowIntro(true);
+    }, 50);
+  };
 
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#9e0804] selection:text-white">
-      
+      {/* 00. Cinematic Theater Velvet Curtain Intro Animation (Inspired by Mahira) */}
+      {showIntro && (
+        <CurtainIntro
+          key={introKey}
+          onStartReveal={() => setHeroRevealed(true)}
+          onComplete={() => setHeroRevealed(true)}
+        />
+      )}
+
       {/* 01. Navbar */}
       <Navbar onOpenRegister={() => setIsRegisterOpen(true)} />
 
@@ -33,7 +55,9 @@ export default function Home() {
         
         {/* 02. Hero & 03. Curved Hero Divider */}
         <Hero
+          isRevealed={heroRevealed}
           onOpenRegister={() => setIsRegisterOpen(true)}
+          onReplayIntro={handleReplayIntro}
         />
 
         {/* 04. About TheZar */}
