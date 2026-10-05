@@ -137,7 +137,7 @@ export default function Navbar({ onOpenRegister }) {
             </button>
 
             {/* Wishlist / Heart Circular Button */}
-            <button
+            {/* <button
               onClick={(e) => scrollToSection(e, 'competitions')}
               className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#9e080410] hover:border-[#9e080430] hover:text-[#9e0804] hover:-translate-y-px transition-all duration-200 cursor-pointer"
               aria-label="Wishlist"
@@ -148,7 +148,7 @@ export default function Navbar({ onOpenRegister }) {
               }}
             >
               <Heart className="w-4 h-4" />
-            </button>
+            </button> */}
 
             {/* Subtle Vertical Divider */}
             <span

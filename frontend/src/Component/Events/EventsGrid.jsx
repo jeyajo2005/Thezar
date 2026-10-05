@@ -1,18 +1,43 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { EVENTS_LIST } from '../../data/mockData';
 import { Calendar, MapPin, ArrowRight, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
   const [filterCategory, setFilterCategory] = useState('All');
+  const [eventsList, setEventsList] = useState(EVENTS_LIST);
   const [activeDot, setActiveDot] = useState(0);
   const sliderRef = useRef(null);
 
-  const categories = ['All', 'Live Now', 'Technical', 'Cultural', 'Quiz', 'Innovation'];
+  useEffect(() => {
+    fetch('http://localhost:5000/api/events')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.events) && data.events.length > 0) {
+          // Format DB events for EventsGrid display
+          const formatted = data.events.map((ev) => ({
+            id: ev.eventId || ev.id,
+            title: ev.title,
+            district: ev.district || 'Tirunelveli',
+            date: ev.date || '12.12.2026',
+            venue: ev.venue || 'Tirunelveli District Arena',
+            status: 'Upcoming',
+            price: ev.price,
+            badge: ev.category || 'Competitions',
+            image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80',
+            competitions: [{ name: ev.title, prize: `₹${ev.price > 0 ? ev.price : 'Free'} Entry` }]
+          }));
+          setEventsList(formatted);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
-  const filteredEvents = EVENTS_LIST.filter((evt) => {
+  const categories = ['All', 'Live Now', 'Singing Solo', 'Choir & Bands', 'Dance Showcase', 'Special Contest'];
+
+  const filteredEvents = eventsList.filter((evt) => {
     if (filterCategory === 'All') return true;
     if (filterCategory === 'Live Now') return evt.status === 'Live';
-    return evt.competitions?.some((c) => c.type === filterCategory);
+    return evt.badge?.toLowerCase().includes(filterCategory.toLowerCase()) || evt.title?.toLowerCase().includes(filterCategory.toLowerCase());
   });
 
   const handleScroll = () => {

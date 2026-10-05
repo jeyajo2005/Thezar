@@ -78,7 +78,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
               <div>
                 <h3 className="text-base font-bold text-white mb-2">About This District Round</h3>
                 <p className="text-slate-300 text-sm leading-relaxed">
-                  {event.description} Participants from all colleges across {event.district} district can enter multiple tracks including coding hackathons, dance, music, quiz, and hardware showcase. Top 3 finalists advance directly to the Statewide Grand Finale in Chennai!
+                  {event.description} Participants from across {event.district} district can enter multiple tracks including solo singing, choirs, live music bands, choreography dance, Santa Claus acts, and culinary competitions. Top performers advance to the Grand Stage!
                 </p>
               </div>
 

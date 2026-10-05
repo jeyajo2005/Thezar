@@ -67,20 +67,22 @@ export default function CtaSection({ onOpenRegister }) {
             <div className="flex flex-col items-start lg:items-end gap-3.5 shrink-0">
               
               {/* Buttons Row */}
-              <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full sm:w-auto">
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-3.5 w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={(e) => scrollToSection(e, 'events')}
-                  className="px-6 py-2.5 rounded-xl bg-white hover:bg-red-50 text-[#9e0804] font-extrabold text-xs sm:text-sm tracking-wide shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  className="px-7 py-3 !rounded-full bg-white hover:bg-red-50 text-[#9e0804] font-extrabold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.03] active:scale-[0.97]"
+                  style={{ borderRadius: '9999px' }}
                 >
                   <span>Explore Events</span>
-                  <ArrowRight className="w-4 h-4 text-[#9e0804]" />
+                  <ArrowRight className="w-4 h-4 text-[#9e0804] transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
 
                 <button
                   type="button"
                   onClick={(e) => scrollToSection(e, 'contact')}
-                  className="px-6 py-2.5 rounded-xl border border-white/80 hover:bg-white/10 text-white font-bold text-xs sm:text-sm tracking-wide transition-all duration-200 flex items-center justify-center cursor-pointer hover:border-white"
+                  className="px-7 py-3 !rounded-full border-2 border-white/80 hover:bg-white/15 text-white font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 flex items-center justify-center cursor-pointer hover:border-white hover:scale-[1.03] active:scale-[0.97] backdrop-blur-xs"
+                  style={{ borderRadius: '9999px' }}
                 >
                   <span>Contact Us</span>
                 </button>

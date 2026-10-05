@@ -1,7 +1,30 @@
+import { useState, useEffect } from 'react';
 import heroSpeakerImg from '../../assets/Young_woman.png';
 import { Calendar, MapPin, Users, Lightbulb, ArrowRight, Trophy, Sparkles } from 'lucide-react';
 
 export default function Hero({ onOpenRegister }) {
+  const [siteContent, setSiteContent] = useState({
+    heroEyebrow: '1ST DISTRICT STAGE | TIRUNELVELI | TALENT CHAMPIONSHIP | THEZAR 2026',
+    heroTitleLine1: 'STATEWIDE TALENT',
+    heroTitleLine2: 'SHOWCASE PLATFORM',
+    heroTitleLine3: 'CHAMPIONSHIP',
+    heroSubtitle: 'Unleashing & Elevating Extraordinary Talent Across 38 Districts. 1st Live Competition Stage Hosted in Tirunelveli.'
+  });
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/site-content')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.content) {
+          setSiteContent((prev) => ({
+            ...prev,
+            ...data.content
+          }));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <section
       id="home"
@@ -27,7 +50,7 @@ export default function Hero({ onOpenRegister }) {
           }}
         />
 
-        {/* Desktop horizontal cinematic gradient: Deep dark on left 45%, fading gracefully across speaker */}
+        {/* Desktop horizontal cinematic gradient */}
         <div
           className="hidden md:block absolute inset-0 z-[1] pointer-events-none"
           style={{
@@ -46,14 +69,14 @@ export default function Hero({ onOpenRegister }) {
           
           {/* 1. TOP EYEBROW HEADER */}
           <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.20em] uppercase text-slate-300">
-            1ST DISTRICT STAGE <span className="text-[#c4120c] mx-1.5">|</span> TIRUNELVELI <span className="text-[#c4120c] mx-1.5">|</span> TALENT CHAMPIONSHIP <span className="text-[#c4120c] mx-1.5">|</span> THEZAR 2026
+            {siteContent.heroEyebrow}
           </div>
 
-          {/* 2. TYPOGRAPHIC HEADING STACK (STATEWIDE TALENT SHOWCASE CHAMPIONSHIP) */}
+          {/* 2. TYPOGRAPHIC HEADING STACK */}
           <div className="pt-0.5">
             <h1 className="flex flex-col uppercase tracking-tight leading-[1.02]">
               <span className="text-[24px] sm:text-[32px] md:text-[38px] lg:text-[44px] font-black text-white tracking-tight">
-                STATEWIDE TALENT
+                {siteContent.heroTitleLine1}
               </span>
               <span
                 className="text-[24px] sm:text-[32px] md:text-[38px] lg:text-[44px] font-black text-transparent bg-clip-text"
@@ -62,14 +85,14 @@ export default function Hero({ onOpenRegister }) {
                     'linear-gradient(90deg, #FFFFFF 0%, #F87171 40%, #C4120C 75%, #9E0804 100%)',
                 }}
               >
-                SHOWCASE PLATFORM
+                {siteContent.heroTitleLine2}
               </span>
               <span className="text-[22px] sm:text-[30px] md:text-[36px] lg:text-[42px] font-bold text-white tracking-[0.02em]">
-                CHAMPIONSHIP
+                {siteContent.heroTitleLine3}
               </span>
             </h1>
 
-            {/* Decorative Maroon Red Accent Bar under CHAMPIONSHIP */}
+            {/* Decorative Maroon Red Accent Bar */}
             <div
               className="w-20 h-[3px] mt-2 rounded-full"
               style={{
@@ -81,8 +104,7 @@ export default function Hero({ onOpenRegister }) {
           {/* 3. SUBTITLE */}
           <div className="pt-0.5">
             <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium text-slate-200 leading-snug">
-              Unleashing & Elevating Extraordinary Talent Across 38 Districts <br className="hidden sm:inline" />
-              1st Live Competition Stage Hosted in Tirunelveli
+              {siteContent.heroSubtitle}
             </p>
             {/* Small accent bar under subtitle */}
             <div
@@ -102,7 +124,7 @@ export default function Hero({ onOpenRegister }) {
               </div>
               <div>
                 <div className="text-[14px] font-bold text-white leading-tight">Tirunelveli Stage</div>
-                <div className="text-[12px] text-slate-300/85 mt-0.5">Oct 10, 2026 • 10:00 AM</div>
+                <div className="text-[12px] text-slate-300/85 mt-0.5">Dec 12, 2026 • 09:00 AM</div>
               </div>
             </div>
 
@@ -113,7 +135,7 @@ export default function Hero({ onOpenRegister }) {
               </div>
               <div>
                 <div className="text-[14px] font-bold text-white leading-tight">Tirunelveli District</div>
-                <div className="text-[12px] text-slate-300/85 mt-0.5">Main Convention Hall</div>
+                <div className="text-[12px] text-slate-300/85 mt-0.5">District Arena Hall</div>
               </div>
             </div>
 
@@ -123,8 +145,8 @@ export default function Hero({ onOpenRegister }) {
                 <Users className="w-4 h-4 text-[#c4120c]" />
               </div>
               <div>
-                <div className="text-[14px] font-bold text-white leading-tight">Talent Competitions</div>
-                <div className="text-[12px] text-slate-300/85 mt-0.5">Cooking • Cultural • Tech</div>
+                <div className="text-[14px] font-bold text-white leading-tight">Carol Fiesta Tracks</div>
+                <div className="text-[12px] text-slate-300/85 mt-0.5">Singing • Choirs • Dance</div>
               </div>
             </div>
 
@@ -135,12 +157,12 @@ export default function Hero({ onOpenRegister }) {
               </div>
               <div>
                 <div className="text-[14px] font-bold text-white leading-tight">Statewide League</div>
-                <div className="text-[12px] text-slate-300/85 mt-0.5">Round 1 Reel & Live Round 2</div>
+                <div className="text-[12px] text-slate-300/85 mt-0.5">Solo & Group Championships</div>
               </div>
             </div>
           </div>
 
-          {/* 5. CTA ACTION BUTTONS (Maroon Red + Glass) */}
+          {/* 5. CTA ACTION BUTTONS */}
           <div className="pt-3 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={onOpenRegister}
