@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/config';
 import { mockResults } from '@/services/mockData';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ResultsScreen() {
+  const insets = useSafeAreaInsets();
   const currentUserResult = mockResults.find((r) => r.isCurrentUser);
 
   return (
@@ -15,7 +16,13 @@ export default function ResultsScreen() {
         <Text style={styles.subtitle}>Tirunelveli District Round 2</Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: Math.max(insets.bottom, 16) + 85 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
         {/* User Card Highlight */}
         {currentUserResult && (
           <View style={styles.userCard}>
@@ -75,7 +82,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgDark,
   },
   header: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 14,
+    paddingBottom: 14,
     borderBottomWidth: 1,
     borderBottomColor: Colors.cardBorder,
     backgroundColor: Colors.white,
@@ -88,7 +97,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 12,
-    color: Colors.pink,
+    color: Colors.primary,
     marginTop: 4,
     fontWeight: '700',
   },
@@ -97,7 +106,7 @@ const styles = StyleSheet.create({
   },
   userCard: {
     backgroundColor: Colors.pinkLight,
-    borderColor: Colors.pink,
+    borderColor: Colors.primary,
     borderWidth: 1.5,
     borderRadius: 16,
     padding: 18,

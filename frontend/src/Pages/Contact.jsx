@@ -18,34 +18,36 @@ export default function Contact() {
       <main className="flex-1 space-y-0">
         
         {/* 02 Contact Hero */}
-        <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-950 text-center relative overflow-hidden">
+        <section className="py-20 bg-gradient-to-b from-[#3f0701] to-[#1a0301] text-center relative overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 space-y-4">
-            <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20">
-              SECRETARIAT & PARTICIPANT HELP DESK
+            <span className="text-xs font-mono font-bold text-red-200 uppercase tracking-widest bg-white/10 px-3.5 py-1.5 rounded-full border border-white/20">
+              TAMIL NADU STATEWIDE COMPETITION & CAROL FIESTA HELPDESK
             </span>
             <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
-              Get in <span className="gradient-text">Touch with Us</span>
+              Event <span className="gradient-text">Enquiry & Secretariat</span>
             </h1>
-            <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
-              Have questions regarding district venues, competition rules, or candidate pass generation? We are here to assist.
+            <p className="text-red-100/90 text-sm sm:text-base max-w-2xl mx-auto">
+              Official helpdesk for the <strong>Christmas Carol Fiesta 2026 (Dec 12, Tirunelveli)</strong> and the <strong>Statewide 38-District Championship (Jan 10, 2027)</strong>.
             </p>
           </div>
         </section>
 
         {/* 03 & 04 Contact Info & Form */}
-        <section className="py-16 bg-slate-900">
-          <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-10 text-left">
-            <div className="lg:col-span-5">
-              <ContactInfoSection />
+        <section className="py-16 bg-[#F8FAFC] text-slate-900">
+          <div className="max-w-6xl mx-auto px-4 space-y-10">
+            <div className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-slate-200/80 shadow-xl">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 text-left items-stretch">
+                <div className="lg:col-span-5 flex flex-col h-full">
+                  <ContactInfoSection />
+                </div>
+                <div className="lg:col-span-7 flex flex-col h-full lg:border-l lg:border-slate-100 lg:pl-10 xl:pl-12">
+                  <ContactFormSection />
+                </div>
+              </div>
             </div>
-            <div className="lg:col-span-7">
-              <ContactFormSection />
-            </div>
+            <FaqSection />
           </div>
         </section>
-
-        {/* 07 FAQ */}
-        <FaqSection />
 
       </main>
 

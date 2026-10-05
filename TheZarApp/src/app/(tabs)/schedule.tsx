@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/config';
 import { mockSchedule } from '@/services/mockData';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ScheduleScreen() {
+  const insets = useSafeAreaInsets();
+
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
@@ -13,7 +15,13 @@ export default function ScheduleScreen() {
         <Text style={styles.subtitle}>10 OCTOBER 2026</Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.list}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.list,
+          { paddingBottom: Math.max(insets.bottom, 16) + 85 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
         {mockSchedule.map((item, index) => {
           const isOngoing = item.status === 'Ongoing';
           return (
@@ -62,7 +70,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgDark,
   },
   header: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 14,
+    paddingBottom: 14,
     borderBottomWidth: 1,
     borderBottomColor: Colors.cardBorder,
     backgroundColor: Colors.white,
@@ -75,7 +85,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 12,
-    color: Colors.pink,
+    color: Colors.primary,
     marginTop: 4,
     fontWeight: '700',
   },
@@ -94,7 +104,7 @@ const styles = StyleSheet.create({
     gap: 14,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
+    shadowOpacity: 0.04,
     shadowRadius: 4,
     elevation: 1,
   },

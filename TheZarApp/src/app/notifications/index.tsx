@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/config';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function NotificationsScreen() {
+  const insets = useSafeAreaInsets();
   const notifications = [
     {
       id: '1',
@@ -37,7 +38,7 @@ export default function NotificationsScreen() {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={20} color={Colors.textLight} />
@@ -45,7 +46,13 @@ export default function NotificationsScreen() {
         <Text style={styles.headerTitle}>Notifications</Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: Math.max(insets.bottom, 20) + 30 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
         {notifications.map((n) => (
           <View key={n.id} style={styles.card}>
             <View style={styles.iconBox}>
@@ -71,7 +78,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: Colors.cardBorder,
     backgroundColor: Colors.white,
@@ -98,10 +106,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.cardBorder,
     gap: 14,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 4,
-    elevation: 1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    elevation: 2,
   },
   iconBox: {
     width: 38,

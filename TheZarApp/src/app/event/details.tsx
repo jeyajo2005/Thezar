@@ -6,15 +6,17 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/config';
 import { mockEvent } from '@/services/mockData';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function EventDetailsScreen() {
+  const insets = useSafeAreaInsets();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={20} color={Colors.textLight} />
@@ -22,7 +24,13 @@ export default function EventDetailsScreen() {
         <Text style={styles.headerTitle}>Event Details</Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: Math.max(insets.bottom, 20) + 30 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.badgeRow}>
           <View style={styles.statusBadge}>
             <Text style={styles.statusText}>{mockEvent.status}</Text>
@@ -68,7 +76,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: Colors.cardBorder,
     backgroundColor: Colors.white,
@@ -124,10 +133,10 @@ const styles = StyleSheet.create({
     gap: 12,
     marginBottom: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 4,
-    elevation: 1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    elevation: 2,
   },
   infoRow: {
     flexDirection: 'row',

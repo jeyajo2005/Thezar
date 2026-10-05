@@ -21,7 +21,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'bottom', 'left', 'right']}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.inner}
@@ -103,10 +103,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.cardBorder,
     borderWidth: 1,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
+    elevation: 3,
   },
   cardTitle: {
     fontSize: 20,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.8,
   },
   input: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#F8FAFC',
     borderColor: Colors.cardBorder,
     borderWidth: 1,
     borderRadius: 8,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   button: {
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.primary,
     borderRadius: 8,
     paddingVertical: 14,
     alignItems: 'center',

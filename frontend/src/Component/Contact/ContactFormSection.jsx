@@ -1,8 +1,16 @@
 import { useState } from 'react';
-import { Send, CheckCircle2 } from 'lucide-react';
+import { Send, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 export default function ContactFormSection() {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    district: '',
+    category: 'Christmas Carol Fiesta 2026 (Tirunelveli)',
+    message: '',
+  });
 
   const handleContactSubmit = (e) => {
     e.preventDefault();
@@ -10,67 +18,182 @@ export default function ContactFormSection() {
   };
 
   return (
-    <div className="bg-slate-950 p-8 rounded-3xl border border-slate-800 shadow-2xl text-left">
-      <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest">[ 04 • ENQUIRY FORM ]</span>
-      <h3 className="text-xl font-extrabold text-white mt-1 mb-6">Send an Official Message</h3>
-
-      {formSubmitted ? (
-        <div className="p-6 bg-emerald-950/40 border border-emerald-500/50 rounded-2xl text-center space-y-2">
-          <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
-          <h4 className="text-lg font-bold text-white">Message Sent Successfully!</h4>
-          <p className="text-xs text-slate-300">Our district convenor team will respond within 24 hours.</p>
+    <div className="h-full flex flex-col justify-between text-left space-y-6">
+      <div className="space-y-6">
+        {/* Decorative Tag & Line - Exactly matches left side top */}
+        <div className="flex items-center gap-3">
+          <span className="text-[12px] font-bold text-[#9e0804] tracking-[0.18em] uppercase font-mono">
+            STATEWIDE EVENT ENQUIRY
+          </span>
+          <div
+            className="w-10 h-[2px] rounded-full"
+            style={{
+              backgroundColor: '#9e0804',
+              boxShadow: '0 0 8px rgba(158, 8, 4, 0.40)',
+            }}
+          />
         </div>
-      ) : (
-        <form onSubmit={handleContactSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Your Full Name</label>
-              <input
-                type="text"
-                required
-                placeholder="Suman Kumar"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:outline-none focus:border-[#9e0804]"
-              />
+
+        {/* Main Title & Description - Exactly matches left side typography */}
+        <div className="space-y-2">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#3f0701] tracking-tight leading-tight">
+            Send an Event Enquiry
+          </h2>
+          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+            Submit participation questions, category details, or team registrations for the <strong>Christmas Carol Fiesta 2026 (Dec 12, Tirunelveli)</strong> and the <strong>Statewide Tamil Nadu Championship (Starting Jan 10, 2027)</strong>.
+          </p>
+        </div>
+
+        {formSubmitted ? (
+          <div className="p-8 sm:p-10 bg-emerald-50/70 border border-emerald-200/90 rounded-2xl text-center space-y-3.5 my-6">
+            <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
+            <h4 className="text-xl font-black text-[#3f0701]">Event Enquiry Submitted!</h4>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-sm mx-auto leading-relaxed">
+              Thank you for registering your enquiry. Our Tirunelveli Event Convenor Team will review your details and contact you within 24 hours.
+            </p>
+            <button
+              type="button"
+              onClick={() => setFormSubmitted(false)}
+              className="mt-2 text-xs font-bold text-[#9e0804] hover:underline cursor-pointer inline-flex items-center gap-1.5"
+            >
+              <span>Submit another enquiry</span>
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleContactSubmit} className="space-y-3">
+            {/* Row 1: Participant / Team Leader Name & Contact Phone Number */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Participant / Leader Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. Sumanth Raja"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 text-xs placeholder:text-slate-400 focus:outline-none focus:border-[#9e0804] focus:ring-1 focus:ring-[#9e0804] focus:bg-white shadow-2xs transition-all"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Contact Phone Number *
+                </label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  placeholder="+91 97903 51878"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 text-xs placeholder:text-slate-400 focus:outline-none focus:border-[#9e0804] focus:ring-1 focus:ring-[#9e0804] focus:bg-white shadow-2xs transition-all"
+                />
+              </div>
             </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Email Address</label>
-              <input
-                type="email"
-                required
-                placeholder="hellosuman29@gmail.com"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:outline-none focus:border-[#9e0804]"
-              />
+
+            {/* Row 2: Email Address & Home District */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="thezarevents@gmail.com"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 text-xs placeholder:text-slate-400 focus:outline-none focus:border-[#9e0804] focus:ring-1 focus:ring-[#9e0804] focus:bg-white shadow-2xs transition-all"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Home District *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.district}
+                  onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                  placeholder="e.g. Tirunelveli, Chennai..."
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 text-xs placeholder:text-slate-400 focus:outline-none focus:border-[#9e0804] focus:ring-1 focus:ring-[#9e0804] focus:bg-white shadow-2xs transition-all"
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-400 mb-1">District / College Name</label>
-            <input
-              type="text"
-              placeholder="e.g. Tirunelveli District / ABC College"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:outline-none focus:border-[#9e0804]"
-            />
-          </div>
+            {/* Row 3: Event Interest / Competition Category */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                Event / Competition Interest *
+              </label>
+              <select
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-[#9e0804] focus:ring-1 focus:ring-[#9e0804] focus:bg-white shadow-2xs transition-all"
+              >
+                <option value="Christmas Carol Fiesta 2026 (Tirunelveli)">
+                  Christmas Carol Fiesta 2026 (Dec 12, Tirunelveli)
+                </option>
+                <option value="Statewide Tamil Nadu Championship (38 Districts)">
+                  Statewide Tamil Nadu Championship (Starting Jan 10, 2027)
+                </option>
+                <option value="Choir / Music Band Registration">
+                  Choir / Music Band Registration (Cat II)
+                </option>
+                <option value="Singing / Solo Competition">
+                  Solo Singing Competition (Kids & Adults - Cat I)
+                </option>
+                <option value="Dance / Santa Claus Competition">
+                  Dance & Santa Claus Competition (Cat III & IV)
+                </option>
+                <option value="General Enquiry / Passes / Logistics">
+                  General Event Enquiry / Venue Entry Passes
+                </option>
+              </select>
+            </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-400 mb-1">Enquiry Message</label>
-            <textarea
-              rows={4}
-              required
-              placeholder="Write your question or request..."
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:outline-none focus:border-[#9e0804]"
-            ></textarea>
-          </div>
+            {/* Row 4: Enquiry Details or Question */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                Enquiry Details or Question *
+              </label>
+              <textarea
+                rows={3}
+                required
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                placeholder="Please mention your event questions, team size, accompaniment requirements, or special requests..."
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 text-xs placeholder:text-slate-400 focus:outline-none focus:border-[#9e0804] focus:ring-1 focus:ring-[#9e0804] focus:bg-white shadow-2xs transition-all resize-none"
+              ></textarea>
+            </div>
 
-          <button
-            type="submit"
-            className="w-full py-3.5 rounded-xl font-extrabold text-white gradient-bg-pink shadow-lg text-xs uppercase tracking-wider flex items-center justify-center gap-2"
-          >
-            <Send className="w-4 h-4" />
-            <span>Submit Enquiry</span>
-          </button>
-        </form>
-      )}
+            {/* Submit Button in Burgundy Site Theme */}
+            <button
+              type="submit"
+              className="w-full py-3.5 px-8 rounded-full font-bold text-white text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-[0_6px_20px_rgba(158,8,4,0.32)] hover:shadow-[0_8px_25px_rgba(158,8,4,0.45)]"
+              style={{
+                borderRadius: '9999px',
+                background: 'linear-gradient(135deg, #9e0804 0%, #730502 100%)',
+              }}
+            >
+              <Send className="w-4 h-4" />
+              <span>Submit Event Enquiry</span>
+            </button>
+          </form>
+        )}
+      </div>
+
+      {/* Bottom Block: SLA Assurance Guarantee - Exactly matches left side footer level */}
+      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+          <span>Official response guaranteed within <strong>24 hours</strong></span>
+        </div>
+        <span className="hidden sm:inline-flex items-center gap-1 font-mono text-[10px] text-slate-400 uppercase tracking-wider">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#9e0804]" />
+          Tirunelveli Secretariat
+        </span>
+      </div>
     </div>
   );
 }

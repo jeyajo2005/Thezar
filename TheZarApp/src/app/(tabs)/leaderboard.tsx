@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/config';
 import { mockLeaderboard } from '@/services/mockData';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function LeaderboardScreen() {
+  const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<'Individual' | 'College' | 'District'>('Individual');
 
   return (
@@ -36,7 +37,13 @@ export default function LeaderboardScreen() {
         ))}
       </View>
 
-      <ScrollView contentContainerStyle={styles.list}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.list,
+          { paddingBottom: Math.max(insets.bottom, 16) + 85 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
         {mockLeaderboard.map((item) => (
           <View key={item.rank} style={styles.row}>
             <View style={styles.rankCol}>
@@ -72,7 +79,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgDark,
   },
   header: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 14,
+    paddingBottom: 14,
     borderBottomWidth: 1,
     borderBottomColor: Colors.cardBorder,
     backgroundColor: Colors.white,
@@ -85,14 +94,14 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 12,
-    color: Colors.pink,
+    color: Colors.primary,
     marginTop: 4,
     fontWeight: '700',
   },
   tabBar: {
     flexDirection: 'row',
-    backgroundColor: '#F3F4F6',
-    padding: 6,
+    backgroundColor: '#F1F5F9',
+    padding: 5,
     margin: 16,
     borderRadius: 12,
     borderWidth: 1,
@@ -105,7 +114,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   activeTab: {
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.primary,
   },
   tabText: {
     color: Colors.textMuted,

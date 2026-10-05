@@ -37,7 +37,7 @@ export default function AiAssistantScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'bottom', 'left', 'right']}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={20} color={Colors.textLight} />
@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: Colors.cardBorder,
     backgroundColor: Colors.white,
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: '800',
-    color: Colors.pink,
+    color: Colors.primary,
   },
   inner: {
     flex: 1,
@@ -128,13 +129,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
+    shadowOpacity: 0.04,
     shadowRadius: 4,
     elevation: 1,
   },
   userBubble: {
     alignSelf: 'flex-end',
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.primary,
   },
   bubbleText: {
     fontSize: 14,
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#F8FAFC',
     borderColor: Colors.cardBorder,
     borderWidth: 1,
     borderRadius: 24,
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   sendBtn: {
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.primary,
     width: 42,
     height: 42,
     borderRadius: 21,

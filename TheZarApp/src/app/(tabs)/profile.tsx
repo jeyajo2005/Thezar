@@ -6,20 +6,27 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/config';
 import { mockUser } from '@/services/mockData';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ProfileScreen() {
+  const insets = useSafeAreaInsets();
   const handleLogout = () => {
     router.replace('/auth/login');
   };
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: Math.max(insets.bottom, 16) + 95 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
         {/* User Card Header */}
         <View style={styles.profileCard}>
           <View style={styles.avatar}>
@@ -55,19 +62,19 @@ export default function ProfileScreen() {
           <Text style={styles.sectionTitle}>OPTIONS</Text>
 
           <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/notifications' as any)}>
-            <Ionicons name="notifications-outline" size={20} color={Colors.pink} />
+            <Ionicons name="notifications-outline" size={20} color={Colors.primary} />
             <Text style={styles.menuText}>Notifications</Text>
             <Ionicons name="chevron-forward" size={18} color={Colors.textMuted} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/enquiry' as any)}>
-            <Ionicons name="help-circle-outline" size={20} color={Colors.pink} />
+            <Ionicons name="help-circle-outline" size={20} color={Colors.primary} />
             <Text style={styles.menuText}>Help & Enquiry</Text>
             <Ionicons name="chevron-forward" size={18} color={Colors.textMuted} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/ai' as any)}>
-            <Ionicons name="chatbubbles-outline" size={20} color={Colors.pink} />
+            <Ionicons name="chatbubbles-outline" size={20} color={Colors.primary} />
             <Text style={styles.menuText}>TheZar AI Assistant</Text>
             <Ionicons name="chevron-forward" size={18} color={Colors.textMuted} />
           </TouchableOpacity>
@@ -108,7 +115,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
@@ -125,7 +132,7 @@ const styles = StyleSheet.create({
   },
   participantId: {
     fontSize: 13,
-    color: Colors.pink,
+    color: Colors.primary,
     fontWeight: '700',
     marginTop: 4,
   },

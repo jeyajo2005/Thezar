@@ -6,16 +6,24 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/config';
 import { mockUser, mockEvent, mockAnnouncements } from '@/services/mockData';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
+
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: Math.max(insets.bottom, 16) + 85 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Top Header */}
         <View style={styles.header}>
           <View>

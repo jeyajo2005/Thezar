@@ -8,12 +8,13 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/config';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function EnquiryScreen() {
+  const insets = useSafeAreaInsets();
   const [category, setCategory] = useState('Competition');
   const [message, setMessage] = useState('');
 
@@ -24,7 +25,7 @@ export default function EnquiryScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={20} color={Colors.textLight} />
@@ -32,7 +33,13 @@ export default function EnquiryScreen() {
         <Text style={styles.headerTitle}>Help & Enquiry</Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: Math.max(insets.bottom, 24) + 40 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
         <Text style={styles.cardTitle}>What do you need help with?</Text>
 
         <Text style={styles.label}>Select Category</Text>
@@ -77,7 +84,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: Colors.cardBorder,
     backgroundColor: Colors.white,
@@ -122,8 +130,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   activeCatBtn: {
-    backgroundColor: Colors.pink,
-    borderColor: Colors.pink,
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
   },
   catText: {
     color: Colors.textMuted,
@@ -134,7 +142,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   textArea: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#F8FAFC',
     borderColor: Colors.cardBorder,
     borderWidth: 1,
     borderRadius: 12,
@@ -146,7 +154,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   submitBtn: {
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.primary,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',

@@ -8,7 +8,7 @@ export default function RegistrationModal({ onClose }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     fullName: '',
-    email: 'hellosuman29@gmail.com',
+    email: 'thezarevents@gmail.com',
     mobile: '',
     collegeName: '',
     department: 'Computer Science & Engineering',
@@ -51,7 +51,7 @@ export default function RegistrationModal({ onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
       <div className="relative w-full max-w-xl bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl my-8 text-left">
-        
+
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-950/70 hover:bg-slate-800 text-slate-400 hover:text-white border border-white/10 transition-colors"
@@ -75,7 +75,7 @@ export default function RegistrationModal({ onClose }) {
 
         {step === 1 && (
           <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[500px] overflow-y-auto">
-            
+
             <div>
               <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                 Full Name *
@@ -103,7 +103,7 @@ export default function RegistrationModal({ onClose }) {
                   <input
                     type="email"
                     required
-                    placeholder="hellosuman29@gmail.com"
+                    placeholder="thezarevents@gmail.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
@@ -120,7 +120,7 @@ export default function RegistrationModal({ onClose }) {
                   <input
                     type="tel"
                     required
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 97903 51878"
                     value={formData.mobile}
                     onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                     className="w-full pl-10 pr-4 py-2.5 rounded-[10px] bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
@@ -215,7 +215,7 @@ export default function RegistrationModal({ onClose }) {
 
         {step === 2 && registeredUser && (
           <div className="p-6 sm:p-8 space-y-6 text-center">
-            
+
             <div className="bg-slate-950 rounded-2xl p-6 border-2 border-[#9e0804]/50 shadow-2xl relative overflow-hidden space-y-4">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#9e0804]/10 rounded-full blur-2xl"></div>
 
@@ -242,7 +242,7 @@ export default function RegistrationModal({ onClose }) {
                   <p className="text-lg font-bold text-white">{registeredUser.fullName}</p>
                   <p className="text-xs text-slate-300">{registeredUser.collegeName || 'Official Candidate'}</p>
                   <p className="text-xs text-red-300 font-semibold">{registeredUser.district} District • {registeredUser.competition}</p>
-                  
+
                   <div className="pt-2 flex items-center gap-2 text-xs text-slate-400 bg-slate-900 px-3 py-1.5 rounded-full border border-slate-800">
                     <Lock className="w-3.5 h-3.5 text-red-300" />
                     <span>App Password: <strong className="text-white font-mono">{registeredUser.password}</strong></span>

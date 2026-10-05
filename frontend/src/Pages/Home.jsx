@@ -77,14 +77,17 @@ export default function Home() {
         <MobileAppSection />
 
         {/* 12. Contact & FAQ Section */}
-        <section id="contact" className="py-16 bg-[#071426] text-white border-t border-slate-800 relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 text-left items-start">
-              <div className="lg:col-span-5">
-                <ContactInfoSection />
-              </div>
-              <div className="lg:col-span-7">
-                <ContactFormSection />
+        <section id="contact" className="py-12 sm:py-16 bg-[#F8FAFC] text-slate-900 border-t border-slate-200/80 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10">
+            {/* Main Contact Card Container */}
+            <div className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-slate-200/80 shadow-xl relative overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 text-left items-stretch">
+                <div className="lg:col-span-5 flex flex-col h-full">
+                  <ContactInfoSection />
+                </div>
+                <div className="lg:col-span-7 flex flex-col h-full lg:border-l lg:border-slate-100 lg:pl-10 xl:pl-12">
+                  <ContactFormSection />
+                </div>
               </div>
             </div>
             <FaqSection />

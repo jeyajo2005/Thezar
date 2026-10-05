@@ -20,7 +20,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
       <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl my-8 text-left">
-        
+
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-950/70 hover:bg-slate-800 text-slate-400 hover:text-white border border-white/10 transition-colors"
@@ -35,7 +35,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
-          
+
           <div className="absolute bottom-6 left-6 right-6 space-y-2">
             <div className="flex items-center gap-2">
               <span className="px-3 py-1 rounded-full text-xs font-black bg-[#9e0804] text-white uppercase tracking-wider">
@@ -61,11 +61,10 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`py-3.5 px-5 font-extrabold text-xs tracking-wider uppercase border-b-2 transition-all shrink-0 cursor-pointer ${
-                activeTab === tab
-                  ? 'border-[#9e0804] text-red-300'
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
-              }`}
+              className={`py-3.5 px-5 font-extrabold text-xs tracking-wider uppercase border-b-2 transition-all shrink-0 cursor-pointer ${activeTab === tab
+                ? 'border-[#9e0804] text-red-300'
+                : 'border-transparent text-slate-400 hover:text-slate-200'
+                }`}
             >
               {tab}
             </button>
@@ -73,7 +72,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
         </div>
 
         <div className="p-6 sm:p-8 max-h-[450px] overflow-y-auto space-y-6">
-          
+
           {activeTab === 'Overview' && (
             <div className="space-y-6">
               <div>
@@ -175,7 +174,7 @@ export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) 
             <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-3 text-xs text-slate-300">
               <h3 className="text-base font-bold text-white">District Event Coordinators</h3>
               <p>📍 District Convenor: Prof. K. Sundaram (Dept of CSE)</p>
-              <p>📞 Helpline: +91 98765 43210 / +91 98400 11223</p>
+              <p>📞 Helpline: +91 97903 51878 / +91 98400 11223</p>
               <p>✉️ Official Mail: support.tirunelveli@thezar2026.tn.gov.in</p>
             </div>
           )}
