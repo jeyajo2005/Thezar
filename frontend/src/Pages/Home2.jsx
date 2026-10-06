@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ChristmasNavbar from '../Component/Home2/ChristmasNavbar';
 import ChristmasHero from '../Component/Home2/ChristmasHero';
+import IndexBannerCarousel from '../Component/Home/IndexBannerCarousel';
 import ChristmasAboutSection from '../Component/Home2/ChristmasAboutSection';
 import ChristmasEventsSection from '../Component/Home2/ChristmasEventsSection';
 import ChristmasExperienceSection from '../Component/Home2/ChristmasExperienceSection';
@@ -22,6 +23,9 @@ export default function Home2() {
         
         {/* 02. Cinematic 3D Christmas Hero Section (Three.js Flying Santa, Decorated Tree & Floating Gifts) */}
         <ChristmasHero onOpenRegister={() => setIsRegisterOpen(true)} />
+
+        {/* 02B. Dynamic Storefront Index Banner Showcase (Synced Live from Admin CMS) */}
+        <IndexBannerCarousel onOpenRegister={() => setIsRegisterOpen(true)} />
 
         {/* 03. The Spirit of Christmas: Story, 3D Wreath Visual & Animated Counters */}
         <ChristmasAboutSection onOpenRegister={() => setIsRegisterOpen(true)} />

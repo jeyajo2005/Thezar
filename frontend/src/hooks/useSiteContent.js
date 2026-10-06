@@ -290,6 +290,30 @@ export function useSiteContent() {
 
   useEffect(() => {
     fetchContent();
+
+    const handleStorageChange = (e) => {
+      if (e.key === 'tzr_site_content' && e.newValue) {
+        try {
+          setContent(prev => ({ ...prev, ...JSON.parse(e.newValue) }));
+        } catch {}
+      }
+    };
+
+    const handleCustomUpdate = () => {
+      fetchContent();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('tzr_content_updated', handleCustomUpdate);
+
+    // Periodic check every 10 seconds to keep storefront aligned with backend
+    const interval = setInterval(fetchContent, 10000);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('tzr_content_updated', handleCustomUpdate);
+    };
   }, [fetchContent]);
 
   return { content, loading, refreshContent: fetchContent };

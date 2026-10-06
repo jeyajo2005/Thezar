@@ -23,6 +23,14 @@ const updateSiteContent = async (req, res) => {
       content = new SiteContent(req.body);
     } else {
       Object.assign(content, req.body);
+      if (req.body.desktopBanners) {
+        content.desktopBanners = req.body.desktopBanners;
+        content.markModified('desktopBanners');
+      }
+      if (req.body.mobileBanners) {
+        content.mobileBanners = req.body.mobileBanners;
+        content.markModified('mobileBanners');
+      }
     }
     await content.save();
     res.json({ success: true, message: 'Site content updated successfully!', content });
@@ -31,16 +39,29 @@ const updateSiteContent = async (req, res) => {
   }
 };
 
-// PUT /api/admin/site-content/banner-slot (Save single slot)
+// PUT /api/admin/site-content/banner-slot (Save or delete single slot)
 const updateBannerSlot = async (req, res) => {
   try {
-    const { type, slot, title, image, link } = req.body;
+    const { type, slot, title, image, link, action } = req.body;
     let content = await SiteContent.findOne();
     if (!content) {
       content = new SiteContent();
     }
     const targetKey = type === 'mobile' ? 'mobileBanners' : 'desktopBanners';
     let bannerList = content[targetKey] ? [...content[targetKey]] : [];
+
+    if (action === 'delete') {
+      bannerList = bannerList.filter((b) => b.slot !== Number(slot));
+      content[targetKey] = bannerList;
+      content.markModified(targetKey);
+      await content.save();
+      return res.json({
+        success: true,
+        message: `${type === 'mobile' ? 'Mobile' : 'Desktop'} Banner Slot ${slot} deleted successfully!`,
+        content
+      });
+    }
+
     const index = bannerList.findIndex((b) => b.slot === Number(slot));
     const updatedBanner = {
       slot: Number(slot),
