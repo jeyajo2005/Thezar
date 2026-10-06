@@ -31,6 +31,43 @@ const updateSiteContent = async (req, res) => {
   }
 };
 
+// PUT /api/admin/site-content/banner-slot (Save single slot)
+const updateBannerSlot = async (req, res) => {
+  try {
+    const { type, slot, title, image, link } = req.body;
+    let content = await SiteContent.findOne();
+    if (!content) {
+      content = new SiteContent();
+    }
+    const targetKey = type === 'mobile' ? 'mobileBanners' : 'desktopBanners';
+    let bannerList = content[targetKey] ? [...content[targetKey]] : [];
+    const index = bannerList.findIndex((b) => b.slot === Number(slot));
+    const updatedBanner = {
+      slot: Number(slot),
+      title: title !== undefined ? title : (index !== -1 ? bannerList[index].title : ''),
+      image: image !== undefined ? image : (index !== -1 ? bannerList[index].image : ''),
+      link: link || '/events',
+      size: type === 'mobile' ? 'Portrait' : '1500 * 500 px',
+      active: true
+    };
+    if (index !== -1) {
+      bannerList[index] = { ...bannerList[index], ...updatedBanner };
+    } else {
+      bannerList.push(updatedBanner);
+    }
+    content[targetKey] = bannerList;
+    content.markModified(targetKey);
+    await content.save();
+    res.json({
+      success: true,
+      message: `${type === 'mobile' ? 'Mobile' : 'Desktop'} Banner Slot ${slot} saved successfully!`,
+      content
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 // POST /api/enquiries
 const createEnquiry = async (req, res) => {
   try {
@@ -81,6 +118,7 @@ const updateEnquiryStatus = async (req, res) => {
 module.exports = {
   getSiteContent,
   updateSiteContent,
+  updateBannerSlot,
   createEnquiry,
   getAllEnquiries,
   updateEnquiryStatus

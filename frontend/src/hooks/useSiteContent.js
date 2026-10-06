@@ -145,6 +145,60 @@ export const defaultSiteContent = {
     }
   ],
 
+  // 6. Index Banners (Storefront Desktop & Mobile Banners)
+  desktopBanners: [
+    {
+      slot: 1,
+      title: 'Traditional Flavours & Grand Stage',
+      image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1500&h=500&q=80',
+      link: '/events',
+      size: '1500 * 500 px',
+      active: true
+    },
+    {
+      slot: 2,
+      title: 'Daily Health Mixes & Festive Arena',
+      image: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=1500&h=500&q=80',
+      link: '/events',
+      size: '1500 * 500 px',
+      active: true
+    },
+    {
+      slot: 3,
+      title: 'Statewide Championship & Event Details',
+      image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1500&h=500&q=80',
+      link: '/events',
+      size: '1500 * 500 px',
+      active: true
+    }
+  ],
+  mobileBanners: [
+    {
+      slot: 1,
+      title: 'Mobile Pass - Festive Season',
+      image: 'https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=750&h=1000&q=80',
+      link: '/events',
+      size: 'Portrait',
+      active: true
+    },
+    {
+      slot: 2,
+      title: 'Mobile Pass - Culinary Battle',
+      image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=750&h=1000&q=80',
+      link: '/events',
+      size: 'Portrait',
+      active: true
+    },
+    {
+      slot: 3,
+      title: 'Mobile Pass - Music & Dance Gala',
+      image: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=750&h=1000&q=80',
+      link: '/events',
+      size: 'Portrait',
+      active: true
+    }
+  ],
+
   // Countdown & Featured
   countdownTitle: 'Count Every Second Until the Event',
   countdownEventName: 'Christmas Carol Fiesta 2026 Grand Stage',

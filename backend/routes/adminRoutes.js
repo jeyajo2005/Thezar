@@ -25,6 +25,7 @@ const {
 const {
   getSiteContent,
   updateSiteContent,
+  updateBannerSlot,
   getAllEnquiries,
   updateEnquiryStatus
 } = require('../controllers/siteContentController');
@@ -66,6 +67,7 @@ router.post('/announcements', createAnnouncement);
 // 9. Site Content CMS & Profile
 router.get('/site-content', getSiteContent);
 router.put('/site-content', updateSiteContent);
+router.put('/site-content/banner-slot', updateBannerSlot);
 
 // 10. Enquiries / Help Desk
 router.get('/enquiries', getAllEnquiries);

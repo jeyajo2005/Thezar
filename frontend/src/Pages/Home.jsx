@@ -9,6 +9,7 @@ import EventsGrid from '../Component/Events/EventsGrid';
 import DistrictJourneySection from '../Component/Home/DistrictJourneySection';
 import CategoryGridSection from '../Component/Home/CategoryGridSection';
 import NewsTickerBar from '../Component/Home/NewsTickerBar';
+import IndexBannerCarousel from '../Component/Home/IndexBannerCarousel';
 import HowItWorksSection from '../Component/Home/HowItWorksSection';
 import LeaderboardSection from '../Component/Home/LeaderboardSection';
 import MobileAppSection from '../Component/Home/MobileAppSection';
@@ -60,6 +61,9 @@ export default function Home() {
           onOpenRegister={() => setIsRegisterOpen(true)}
           onReplayIntro={handleReplayIntro}
         />
+
+        {/* 03b. Live Storefront Hero Banners (Desktop 1500x500 & Mobile Portrait) */}
+        <IndexBannerCarousel onOpenRegister={() => setIsRegisterOpen(true)} />
 
         {/* 04. About TheZar */}
         <AboutTheZarSection

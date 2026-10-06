@@ -380,10 +380,65 @@ export default function AdminDashboard({ view }) {
     youtube: 'https://youtube.com/@thezarevents',
     whatsapp: '+91 97903 51878',
     footerText: 'TheZar 2026 Statewide Championship • Official Portal',
-    copyright: '© 2026 TheZar Statewide Championship. All Rights Reserved.'
+    copyright: '© 2026 TheZar Statewide Championship. All Rights Reserved.',
+    // 8. Storefront Index Banners (Desktop & Mobile)
+    desktopBanners: [
+      {
+        slot: 1,
+        title: 'Traditional Flavours',
+        image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1500&h=500&q=80',
+        link: '/events',
+        size: '1500 * 500 px',
+        active: true
+      },
+      {
+        slot: 2,
+        title: 'Daily Health Mixes',
+        image: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=1500&h=500&q=80',
+        link: '/events',
+        size: '1500 * 500 px',
+        active: true
+      },
+      {
+        slot: 3,
+        title: 'Hi Suvai Products Details',
+        image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1500&h=500&q=80',
+        link: '/events',
+        size: '1500 * 500 px',
+        active: true
+      }
+    ],
+    mobileBanners: [
+      {
+        slot: 1,
+        title: 'Mobile Pass - Traditional Flavours',
+        image: 'https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=750&h=1000&q=80',
+        link: '/events',
+        size: 'Portrait',
+        active: true
+      },
+      {
+        slot: 2,
+        title: 'Mobile Pass - Health Mixes',
+        image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=750&h=1000&q=80',
+        link: '/events',
+        size: 'Portrait',
+        active: true
+      },
+      {
+        slot: 3,
+        title: 'Mobile Pass - Product Details',
+        image: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=750&h=1000&q=80',
+        link: '/events',
+        size: 'Portrait',
+        active: true
+      }
+    ]
   });
 
-  const [cmsTab, setCmsTab] = useState('homepage');
+  const [cmsTab, setCmsTab] = useState('banners_index');
+  const [savingSlot, setSavingSlot] = useState(null);
+  const [bannerToast, setBannerToast] = useState(null);
 
   // Settings State
   const [settingsForm, setSettingsForm] = useState({
@@ -899,6 +954,86 @@ export default function AdminDashboard({ view }) {
     }
   };
 
+  // 🖼️ Index Banners Slot File Picker & Preview
+  const handleBannerFileSelect = (type, slot, e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target.result;
+      const targetKey = type === 'mobile' ? 'mobileBanners' : 'desktopBanners';
+      setSiteContent((prev) => {
+        const list = [...(prev[targetKey] || [])];
+        const idx = list.findIndex((b) => b.slot === slot);
+        if (idx !== -1) {
+          list[idx] = { ...list[idx], image: dataUrl, fileName: file.name };
+        } else {
+          list.push({
+            slot,
+            image: dataUrl,
+            fileName: file.name,
+            title: `Banner Slot ${slot}`,
+            link: '/events',
+            size: type === 'mobile' ? 'Portrait' : '1500 * 500 px',
+            active: true
+          });
+        }
+        return { ...prev, [targetKey]: list };
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // 🖼️ Index Banners Title / Caption Edit
+  const handleBannerTitleChange = (type, slot, val) => {
+    const targetKey = type === 'mobile' ? 'mobileBanners' : 'desktopBanners';
+    setSiteContent((prev) => {
+      const list = [...(prev[targetKey] || [])];
+      const idx = list.findIndex((b) => b.slot === slot);
+      if (idx !== -1) {
+        list[idx] = { ...list[idx], title: val };
+      } else {
+        list.push({ slot, title: val, active: true });
+      }
+      return { ...prev, [targetKey]: list };
+    });
+  };
+
+  // 🖼️ Save Single Banner Slot (Save Slot 1, Save Slot 2, Save Mobile 1, etc.)
+  const handleSaveBannerSlot = async (type, slot) => {
+    const slotKey = `${type}-${slot}`;
+    setSavingSlot(slotKey);
+    try {
+      const targetKey = type === 'mobile' ? 'mobileBanners' : 'desktopBanners';
+      const currentBanner = (siteContent[targetKey] || []).find((b) => b.slot === slot) || {};
+
+      const res = await fetch('/api/admin/site-content/banner-slot', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type,
+          slot,
+          title: currentBanner.title || '',
+          image: currentBanner.image || '',
+          link: currentBanner.link || '/events'
+        })
+      });
+
+      // Synchronize in local cache immediately
+      localStorage.setItem('tzr_site_content', JSON.stringify(siteContent));
+
+      setBannerToast(`${type === 'mobile' ? 'Mobile' : 'Desktop'} Banner Slot ${slot} saved successfully! 🎉`);
+      setTimeout(() => setBannerToast(null), 3500);
+    } catch (err) {
+      console.warn('Fallback saved banner slot locally:', err);
+      localStorage.setItem('tzr_site_content', JSON.stringify(siteContent));
+      setBannerToast(`${type === 'mobile' ? 'Mobile' : 'Desktop'} Banner Slot ${slot} saved locally.`);
+      setTimeout(() => setBannerToast(null), 3500);
+    } finally {
+      setSavingSlot(null);
+    }
+  };
+
   // Enquiry Reply
   const handleSendReply = async (e) => {
     e.preventDefault();
@@ -1339,6 +1474,24 @@ export default function AdminDashboard({ view }) {
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Dashboard</span>
               </div>
+            </button>
+
+            {/* Banners (Exact User Screenshot: Index Banners Desktop & Mobile) */}
+            <button
+              onClick={() => { setActiveTab('banners'); setSubTab(''); }}
+              className={`w-full px-3 py-2.5 rounded-xl flex items-center justify-between transition-colors cursor-pointer ${
+                activeTab === 'banners' ? 'bg-[#7c3aed] text-white font-bold shadow-xs' : 'hover:bg-slate-100 hover:text-slate-900'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <ImageIcon className="w-4 h-4" />
+                <span>Banners</span>
+              </div>
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                activeTab === 'banners' ? 'bg-white/20 text-white' : 'bg-purple-100 text-[#7c3aed]'
+              }`}>
+                Live
+              </span>
             </button>
 
             {/* 2. Events (Hierarchical: All Events, Create Event, Event Categories) */}
@@ -2327,6 +2480,263 @@ export default function AdminDashboard({ view }) {
                 </div>
               </div>
 
+            </div>
+
+          </div>
+        )}
+
+        {/* ========================================================
+            🖼️ MODULE: INDEX BANNERS (Exact User Screenshot: Desktop & Mobile Banners)
+            ======================================================== */}
+        {activeTab === 'banners' && (
+          <div className="space-y-6">
+            
+            {/* Toast Notification */}
+            {bannerToast && (
+              <div className="bg-emerald-600 text-white font-bold text-xs px-4 py-3 rounded-xl shadow-md flex items-center justify-between animate-fade-in">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-200" />
+                  <span>{bannerToast}</span>
+                </div>
+                <button type="button" onClick={() => setBannerToast(null)} className="cursor-pointer">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+
+            {/* Header: Title + Subtitle + Live Link */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h1 className="text-2xl font-black text-slate-900 tracking-tight">Index Banners</h1>
+                <p className="text-xs text-slate-500 mt-1">Manage desktop and mobile hero banners on the storefront homepage</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href="/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-colors shadow-2xs"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                  <span>View Live Storefront</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={handleSaveCMS}
+                  className="px-4 py-2 rounded-xl bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-bold text-xs flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>Save All Banners</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Top 3 Preview Cards Grid (Matches User Screenshot) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((slot) => {
+                const banner = (siteContent.desktopBanners || []).find((b) => b.slot === slot) || {
+                  slot,
+                  title: `Desktop Banner ${slot}`,
+                  image: '',
+                  size: '1500 * 500 px'
+                };
+                return (
+                  <div key={slot} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs flex flex-col">
+                    <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-slate-100">
+                      <span className="font-bold text-sm text-slate-900">Desktop Banner {slot}</span>
+                      {slot === 1 ? (
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded bg-slate-900 text-white">
+                          DEFAULT / ACTIVE
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                          SLOT {slot}
+                        </span>
+                      )}
+                    </div>
+                    <div className="w-full bg-[#111827] flex items-center justify-center relative overflow-hidden" style={{ aspectRatio: '1500 / 500' }}>
+                      {banner.image ? (
+                        <img
+                          src={banner.image}
+                          alt={banner.title || `Slot ${slot}`}
+                          className="w-full h-full object-cover object-center transition-transform hover:scale-105 duration-300"
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center text-slate-500 gap-1.5 p-4 text-center">
+                          <ImageIcon className="w-8 h-8 opacity-40 text-slate-400" />
+                          <span className="text-[11px] font-medium text-slate-400">Slot {slot} Preview</span>
+                        </div>
+                      )}
+                      {banner.title && (
+                        <div className="absolute bottom-2 left-2 right-2 bg-black/60 backdrop-blur-xs text-white px-2.5 py-1 rounded-md text-[11px] font-bold truncate">
+                          {banner.title}
+                        </div>
+                      )}
+                    </div>
+                    <div className="py-2.5 px-4 text-center text-xs font-semibold text-slate-400 bg-white border-t border-slate-100">
+                      Size: 1500 * 500 px
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Section 1: Upload Custom Desktop Banners */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-5">
+              <h3 className="text-base font-bold text-slate-900">Upload Custom Desktop Banners</h3>
+              <div className="space-y-3.5">
+                {[1, 2, 3].map((slot) => {
+                  const banner = (siteContent.desktopBanners || []).find((b) => b.slot === slot) || {
+                    slot,
+                    title: slot === 1 ? 'Traditional Flavours' : slot === 2 ? 'Daily Health Mixes' : 'Hi Suvai Products Details',
+                    image: '',
+                    fileName: ''
+                  };
+                  return (
+                    <div
+                      key={slot}
+                      className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-slate-300 transition-colors"
+                    >
+                      <div className="flex items-center gap-4 min-w-[260px]">
+                        <span className="font-bold text-sm text-slate-900 w-16 shrink-0">Slot {slot}</span>
+                        <div className="w-24 h-12 rounded-lg bg-slate-900 border border-slate-200 overflow-hidden flex items-center justify-center shrink-0 shadow-2xs">
+                          {banner.image ? (
+                            <img src={banner.image} alt={banner.title} className="w-full h-full object-cover" />
+                          ) : (
+                            <ImageIcon className="w-4 h-4 text-slate-500" />
+                          )}
+                        </div>
+                        <div className="text-xs font-semibold text-slate-700 whitespace-nowrap">
+                          Desktop Image <span className="text-slate-400 font-normal">(1500×500):</span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-1 flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        {/* File chooser matching screenshot */}
+                        <label className="flex-1 min-w-[220px] flex items-center bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 cursor-pointer hover:border-purple-400 transition-colors shadow-2xs">
+                          <span className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded border border-slate-300 mr-2 shrink-0">
+                            Choose File
+                          </span>
+                          <span className="text-xs text-slate-500 truncate">
+                            {banner.fileName || (banner.image ? 'Custom image loaded' : 'No file chosen')}
+                          </span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleBannerFileSelect('desktop', slot, e)}
+                            className="hidden"
+                          />
+                        </label>
+
+                        {/* Title / Caption Input */}
+                        <input
+                          type="text"
+                          value={banner.title || ''}
+                          onChange={(e) => handleBannerTitleChange('desktop', slot, e.target.value)}
+                          placeholder={slot === 1 ? 'Traditional Flavours' : slot === 2 ? 'Daily Health Mixes' : 'Hi Suvai Products Details'}
+                          className="flex-1 min-w-[180px] px-3.5 py-2 text-xs font-medium text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-purple-600 focus:ring-1 focus:ring-purple-600 shadow-2xs"
+                        />
+
+                        {/* Save Slot Button */}
+                        <button
+                          type="button"
+                          onClick={() => handleSaveBannerSlot('desktop', slot)}
+                          disabled={savingSlot === `desktop-${slot}`}
+                          className="px-5 py-2 bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-xs font-bold rounded-lg transition-all shadow-xs shrink-0 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 disabled:opacity-50 min-w-[105px]"
+                        >
+                          {savingSlot === `desktop-${slot}` ? (
+                            <>
+                              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                              <span>Saving...</span>
+                            </>
+                          ) : (
+                            <span>Save Slot {slot}</span>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Section 2: Upload Custom Mobile Banners */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-5">
+              <h3 className="text-base font-bold text-slate-900">Upload Custom Mobile Banners</h3>
+              <div className="space-y-3.5">
+                {[1, 2, 3].map((slot) => {
+                  const banner = (siteContent.mobileBanners || []).find((b) => b.slot === slot) || {
+                    slot,
+                    title: `Mobile Slot ${slot}`,
+                    image: '',
+                    fileName: ''
+                  };
+                  return (
+                    <div
+                      key={slot}
+                      className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-slate-300 transition-colors"
+                    >
+                      <div className="flex items-center gap-4 min-w-[280px]">
+                        <span className="font-bold text-sm text-slate-900 w-28 shrink-0">Mobile Slot {slot}</span>
+                        <div className="w-9 h-14 rounded-lg bg-slate-900 border border-slate-200 overflow-hidden flex items-center justify-center shrink-0 shadow-2xs">
+                          {banner.image ? (
+                            <img src={banner.image} alt={banner.title} className="w-full h-full object-cover" />
+                          ) : (
+                            <Smartphone className="w-4 h-4 text-slate-500" />
+                          )}
+                        </div>
+                        <div className="text-xs font-semibold text-slate-700 whitespace-nowrap">
+                          Mobile Image <span className="text-slate-400 font-normal">(Portrait):</span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-1 flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        {/* File chooser */}
+                        <label className="flex-1 min-w-[220px] flex items-center bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 cursor-pointer hover:border-purple-400 transition-colors shadow-2xs">
+                          <span className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded border border-slate-300 mr-2 shrink-0">
+                            Choose File
+                          </span>
+                          <span className="text-xs text-slate-500 truncate">
+                            {banner.fileName || (banner.image ? 'Mobile image loaded' : 'No file chosen')}
+                          </span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleBannerFileSelect('mobile', slot, e)}
+                            className="hidden"
+                          />
+                        </label>
+
+                        {/* Optional Title input */}
+                        <input
+                          type="text"
+                          value={banner.title || ''}
+                          onChange={(e) => handleBannerTitleChange('mobile', slot, e.target.value)}
+                          placeholder={`Mobile Slot ${slot} Title`}
+                          className="flex-1 min-w-[180px] px-3.5 py-2 text-xs font-medium text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-purple-600 focus:ring-1 focus:ring-purple-600 shadow-2xs"
+                        />
+
+                        {/* Save Mobile Button */}
+                        <button
+                          type="button"
+                          onClick={() => handleSaveBannerSlot('mobile', slot)}
+                          disabled={savingSlot === `mobile-${slot}`}
+                          className="px-5 py-2 bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-xs font-bold rounded-lg transition-all shadow-xs shrink-0 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 disabled:opacity-50 min-w-[120px]"
+                        >
+                          {savingSlot === `mobile-${slot}` ? (
+                            <>
+                              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                              <span>Saving...</span>
+                            </>
+                          ) : (
+                            <span>Save Mobile {slot}</span>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
           </div>
@@ -3355,7 +3765,8 @@ export default function AdminDashboard({ view }) {
             {/* CMS Section Tabs */}
             <div className="flex flex-wrap gap-2 border-b border-slate-100 pb-3 text-xs font-bold">
               {[
-                { id: 'banner', label: '📢 Index Banner & Ticker' },
+                { id: 'banners_index', label: '🖼️ Storefront Banners (Desktop/Mobile)' },
+                { id: 'banner', label: '📢 Ticker & Announcement' },
                 { id: 'homepage', label: '🏠 Homepage Hero' },
                 { id: 'about', label: 'ℹ️ About Section' },
                 { id: 'events', label: '🏆 Events & Competitions' },
@@ -3379,6 +3790,31 @@ export default function AdminDashboard({ view }) {
             </div>
 
             {/* CMS Content Inputs */}
+
+            {/* 0. STOREFRONT BANNERS STUDIO LINK */}
+            {cmsTab === 'banners_index' && (
+              <div className="space-y-4 text-xs">
+                <div className="p-5 rounded-2xl bg-purple-50/70 border border-purple-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <h4 className="font-black text-slate-900 text-sm flex items-center gap-2">
+                      <ImageIcon className="w-4 h-4 text-[#7c3aed]" />
+                      <span>Dedicated Storefront Banners Studio</span>
+                    </h4>
+                    <p className="text-slate-600">
+                      Upload and manage the 3 Desktop Banners (1500×500) and 3 Mobile Banners (Portrait) for the storefront homepage.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('banners')}
+                    className="px-5 py-2.5 rounded-xl bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-bold text-xs shadow-xs transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <span>Open Banners Editor</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* 1. INDEX BANNER & TICKER */}
             {cmsTab === 'banner' && (
