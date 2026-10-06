@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Send, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Send, CheckCircle2, ShieldCheck, ChevronDown } from 'lucide-react';
+import { COUNTRY_CODES } from '../Modals/RegistrationModal';
 
 export default function ContactFormSection() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
+    countryCode: '+91',
     phone: '',
     email: '',
     district: '',
@@ -14,6 +16,10 @@ export default function ContactFormSection() {
 
   const handleContactSubmit = (e) => {
     e.preventDefault();
+    if (formData.phone.length !== 10) {
+      alert('Please enter a valid 10-digit mobile number.');
+      return;
+    }
     setFormSubmitted(true);
   };
 
@@ -77,17 +83,44 @@ export default function ContactFormSection() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                  Contact Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="+91 97903 51878"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 text-xs placeholder:text-slate-400 focus:outline-none focus:border-[#9e0804] focus:ring-1 focus:ring-[#9e0804] focus:bg-white shadow-2xs transition-all"
-                />
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700">
+                    Contact Phone Number *
+                  </label>
+                  <span className="text-[10px] font-mono text-slate-400">
+                    {formData.phone ? `${formData.phone.length}/10` : '10 digits'}
+                  </span>
+                </div>
+                <div className="flex items-center rounded-xl bg-slate-50/80 border border-slate-200 focus-within:border-[#9e0804] focus-within:ring-1 focus-within:ring-[#9e0804] focus-within:bg-white shadow-2xs transition-all overflow-hidden">
+                  <div className="relative bg-slate-100/80 border-r border-slate-200 shrink-0">
+                    <select
+                      value={formData.countryCode || '+91'}
+                      onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                      className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs font-bold text-slate-800 cursor-pointer focus:outline-none"
+                      title="Select Country Code"
+                    >
+                      {COUNTRY_CODES.map((c) => (
+                        <option key={`contact-phone-${c.country}-${c.code}`} value={c.code}>
+                          {c.flag} {c.code} ({c.name})
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="w-3 h-3 text-slate-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
+                  <input
+                    type="tel"
+                    required
+                    inputMode="numeric"
+                    maxLength={10}
+                    value={formData.phone}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                      setFormData({ ...formData, phone: digits });
+                    }}
+                    placeholder="9790351878"
+                    className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs focus:outline-none font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal placeholder:text-slate-400"
+                  />
+                </div>
               </div>
             </div>
 

@@ -15,7 +15,7 @@ export default function FaqSection() {
     },
     {
       q: 'When does the Statewide Tamil Nadu Championship League officially begin?',
-      a: 'The overall statewide championship officially launches from Tirunelveli on January 10, 2027, and expands across all 38 districts of Tamil Nadu featuring cooking championships, cultural arts, and digital reel contests.'
+      a: 'The overall statewide championship officially launches from Tirunelveli on January 10, 2027, and expands across all 38 districts of Tamil Nadu featuring music championships, cultural arts, and digital reel contests.'
     },
     {
       q: 'Who can participate in these events?',

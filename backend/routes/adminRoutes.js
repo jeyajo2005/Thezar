@@ -6,6 +6,9 @@ const {
   getAllParticipants,
   getAllRegistrations,
   verifyRegistration,
+  updateRegistration,
+  deleteRegistration,
+  resendRegistrationPass,
   getEvents,
   addEvent,
   deleteEvent,
@@ -37,6 +40,9 @@ router.get('/stats', getDashboardStats);
 router.get('/participants', getAllParticipants);
 router.get('/registrations', getAllRegistrations);
 router.put('/registrations/:id/verify', verifyRegistration);
+router.put('/registrations/:id', updateRegistration);
+router.delete('/registrations/:id', deleteRegistration);
+router.post('/registrations/:id/resend-pass', resendRegistrationPass);
 
 // 3. Events & Categories
 router.get('/events', getEvents);

@@ -72,14 +72,16 @@ export default function Navbar({ onOpenRegister }) {
           <a
             href="#home"
             onClick={(e) => scrollToSection(e, 'home')}
-            className="flex items-center gap-2 shrink-0 no-underline hover:no-underline nav-link-clean group cursor-pointer"
+            className="flex items-center gap-2.5 shrink-0 no-underline hover:no-underline nav-link-clean group cursor-pointer"
             style={{ textDecoration: 'none' }}
           >
-            <img
-              src={thezarLogo}
-              alt="TheZar Events 2026"
-              className="h-8 sm:h-9 w-auto object-contain rounded-full group-hover:scale-105 transition-transform duration-200"
-            />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden shadow-sm flex items-center justify-center shrink-0 border border-amber-400/50 bg-[#3a0604]">
+              <img
+                src={thezarLogo}
+                alt="TheZar Events 2026"
+                className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-200"
+              />
+            </div>
             <span className="text-sm sm:text-base font-extrabold text-slate-900 tracking-wider uppercase font-sans">
               THEZAR <span className="text-[#9e0804]">2026</span>
             </span>

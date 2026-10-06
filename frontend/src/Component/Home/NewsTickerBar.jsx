@@ -1,43 +1,53 @@
 import { Flame, Sparkles, Trophy, Video, MapPin, Radio } from 'lucide-react';
+import { useSiteContent } from '../../context/SiteContentContext';
+
+const ICON_LIST = [Flame, Trophy, Video, MapPin, Sparkles];
 
 export default function NewsTickerBar() {
-  const newsItems = [
-    {
-      id: 1,
-      icon: Flame,
-      tag: 'LIVE NOW',
-      tagColor: 'bg-[#9e0804] text-white',
-      text: 'TIRUNELVELI DISTRICT ROUND 1 REGISTRATION IS NOW OPEN — GRAND COOKING CHAMPIONSHIP',
-    },
-    {
-      id: 2,
-      icon: Trophy,
-      tag: 'PRIZE POOL',
-      tagColor: 'bg-[#9e0804] text-white',
-      text: 'GRAND HOUSE PRIZE & MEGA CASH PRIZE POOL FOR STATEWIDE CHAMPIONS',
-    },
-    {
-      id: 3,
-      icon: Video,
-      tag: 'ROUND 1',
-      tagColor: 'bg-sky-500 text-white',
-      text: 'UPLOAD 60-SEC VIDEO REEL ONLINE — NO CODING OR TECHNICAL TESTS REQUIRED',
-    },
-    {
-      id: 4,
-      icon: MapPin,
-      tag: '38 DISTRICTS',
-      tagColor: 'bg-emerald-500 text-white',
-      text: 'LIVE AUDITORIUM STAGE PERFORMANCES ACROSS ALL 38 TAMIL NADU DISTRICTS',
-    },
-    {
-      id: 5,
-      icon: Sparkles,
-      tag: 'CATEGORIES',
-      tagColor: 'bg-purple-500 text-white',
-      text: '3 DIVISIONS OPEN: KIDS (6-14 YRS), ADULTS (15+ YRS) & MEN / WOMEN OPEN CATEGORY',
-    },
-  ];
+  const { siteContent } = useSiteContent();
+
+  const newsItems = (siteContent.newsTickerItems && siteContent.newsTickerItems.length > 0)
+    ? siteContent.newsTickerItems.map((item, idx) => ({
+        ...item,
+        icon: ICON_LIST[idx % ICON_LIST.length]
+      }))
+    : [
+        {
+          id: 1,
+          icon: Flame,
+          tag: 'LIVE NOW',
+          tagColor: 'bg-[#9e0804] text-white',
+          text: 'TIRUNELVELI DISTRICT REGISTRATION IS NOW OPEN — CAROL FIESTA 2026 COMPETITIONS',
+        },
+        {
+          id: 2,
+          icon: Trophy,
+          tag: 'PRIZE POOL',
+          tagColor: 'bg-[#9e0804] text-white',
+          text: 'GRAND HOUSE PRIZE & MEGA CASH PRIZE POOL FOR STATEWIDE CHAMPIONS',
+        },
+        {
+          id: 3,
+          icon: Video,
+          tag: 'ROUND 1',
+          tagColor: 'bg-sky-500 text-white',
+          text: 'UPLOAD 60-SEC VIDEO REEL ONLINE — NO CODING OR TECHNICAL TESTS REQUIRED',
+        },
+        {
+          id: 4,
+          icon: MapPin,
+          tag: '38 DISTRICTS',
+          tagColor: 'bg-emerald-500 text-white',
+          text: 'LIVE AUDITORIUM STAGE PERFORMANCES ACROSS ALL 38 TAMIL NADU DISTRICTS',
+        },
+        {
+          id: 5,
+          icon: Sparkles,
+          tag: 'CATEGORIES',
+          tagColor: 'bg-purple-500 text-white',
+          text: '4 DIVISIONS OPEN: SINGING SOLO, CHOIR & BANDS, DANCE SHOWCASE & SANTA CLAUS CONTEST',
+        },
+      ];
 
   return (
     <div className="w-full bg-[#071426] border-y border-[#9e0804]/50 py-3.5 relative overflow-hidden shadow-xl select-none z-20">

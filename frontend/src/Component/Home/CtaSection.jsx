@@ -3,8 +3,11 @@ import rank1 from '../../assets/rank1_avatar.jpg';
 import rank2 from '../../assets/rank2_avatar.jpg';
 import rank3 from '../../assets/rank3_avatar.jpg';
 import cheerfulContestant from '../../assets/cheerful_contestant.jpg';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 export default function CtaSection({ onOpenRegister }) {
+  const { siteContent } = useSiteContent();
+
   const scrollToSection = (e, targetId) => {
     if (e) e.preventDefault();
     const element = document.getElementById(targetId);
@@ -49,17 +52,17 @@ export default function CtaSection({ onOpenRegister }) {
               {/* Pill Badge */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-[#9e0804] text-[11px] sm:text-xs font-extrabold shadow-xs">
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#9e0804] shrink-0" />
-                <span>Season 2026 Registrations Open</span>
+                <span>{siteContent.ctaEyebrow || 'Season 2026 Registrations Open'}</span>
               </div>
 
               {/* Heading */}
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                Ready to Elevate Your Talent?
+                {siteContent.ctaTitle || 'Ready to Elevate Your Talent?'}
               </h2>
 
               {/* Subtitle */}
               <p className="text-red-100/90 text-xs sm:text-sm leading-relaxed font-normal">
-                Don’t miss out on the latest championship fixtures and exclusive competitions. Your stage awaits.
+                {siteContent.ctaSubtitle || 'Don’t miss out on the latest championship fixtures and exclusive competitions. Your stage awaits.'}
               </p>
             </div>
 

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, ArrowUp, ArrowRight, ShieldCheck, CheckCircle2, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, ShieldCheck, CheckCircle2, Send } from 'lucide-react';
 import thezarLogo from '../../assets/thezar_logo.png';
+import footerLuxuryBg from '../../assets/footer_luxury_bg.png';
 
-// Social Media Icons with Official Brand Vector Graphics
+// Social Media Icons
 const FacebookIcon = (props) => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" {...props}>
     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -71,491 +72,265 @@ export default function Footer({ onOpenRegister }) {
   };
 
   return (
-    <footer className="w-full relative selection:bg-[#9e0804] selection:text-white">
+    <footer
+      className="w-full relative overflow-hidden bg-[#FAF7F2] text-[#2C1810]"
+      style={{
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+      }}
+    >
+      {/* Background Luxury Ribbon Art Layer with deep, rich burgundy corner accents */}
+      <div
+        className="absolute inset-0 pointer-events-none bg-cover bg-center bg-no-repeat transition-opacity duration-300"
+        style={{
+          backgroundImage: `url(${footerLuxuryBg})`,
+          backgroundPosition: 'center bottom',
+          backgroundSize: 'cover',
+          filter: 'contrast(1.15) saturate(1.2) brightness(0.95)',
+        }}
+        aria-hidden="true"
+      />
 
-      {/* ========================================================
-          1. TOP DECORATIVE SECTION: CONTINUOUS REALISTIC CITY SKYLINE SILHOUETTE
-          Updated to exact user swatch color: #071426 (Midnight Black / Deep Slate)
-          - Transparent sky above silhouette allowing clean page background to shine through
-          - Seamless, zero-gap transition directly into the #071426 footer body
-          ======================================================== */}
-      <div className="w-full leading-none overflow-hidden -mb-[1px] pointer-events-none select-none">
-        <svg
-          viewBox="0 0 1440 120"
-          className="w-full h-16 sm:h-24 md:h-28 lg:h-32 xl:h-36 block"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Secondary depth layer (distant city skyline silhouette) */}
-          <path
-            d="M 0,120 
-               L 0,78 
-               L 10,78 L 10,54 L 26,54 L 26,72 
-               L 45,72 L 45,40 L 58,40 L 58,22 L 60,22 L 60,40 L 74,40 L 74,68 
-               L 105,68 L 105,48 L 122,48 L 122,32 L 134,32 L 134,48 L 148,48 L 148,70 
-               L 178,70 L 178,38 L 195,38 L 195,16 L 197,16 L 197,38 L 212,38 L 212,65 
-               L 245,65 L 245,45 L 268,45 L 268,70 
-               L 298,70 L 298,32 L 315,32 L 315,18 L 317,18 L 317,32 L 332,32 L 332,68 
-               L 368,68 L 368,50 L 392,50 L 392,34 L 408,34 L 408,50 L 424,50 L 424,70 
-               L 455,70 L 455,36 L 474,36 L 474,14 L 476,14 L 476,36 L 492,36 L 492,64 
-               L 522,64 L 522,46 L 544,46 L 544,68 
-               L 572,68 L 572,36 L 590,36 L 590,22 L 605,22 L 605,36 L 618,36 L 618,62 
-               L 652,62 L 652,38 L 672,38 L 672,18 L 674,18 L 674,38 L 688,38 L 688,68 
-               L 720,68 L 720,48 L 740,48 L 740,26 L 754,26 L 754,48 L 768,48 L 768,72 
-               L 802,72 L 802,34 L 820,34 L 820,14 L 822,14 L 822,34 L 836,34 L 836,64 
-               L 868,64 L 868,44 L 892,44 L 892,68 
-               L 922,68 L 922,35 L 940,35 L 940,20 L 942,20 L 942,35 L 956,35 L 956,65 
-               L 988,65 L 988,48 L 1008,48 L 1008,32 L 1024,32 L 1024,48 L 1038,48 L 1038,70 
-               L 1072,70 L 1072,36 L 1090,36 L 1090,16 L 1092,16 L 1092,36 L 1106,36 L 1106,62 
-               L 1138,62 L 1138,42 L 1160,42 L 1160,68 
-               L 1192,68 L 1192,34 L 1210,34 L 1210,20 L 1225,20 L 1225,34 L 1238,34 L 1238,65 
-               L 1272,65 L 1272,38 L 1290,38 L 1290,18 L 1292,18 L 1292,38 L 1308,38 L 1308,68 
-               L 1338,68 L 1338,46 L 1358,46 L 1358,28 L 1374,28 L 1374,46 L 1390,46 L 1390,70 
-               L 1440,70 
-               L 1440,120 L 0,120 Z"
-            fill="#0f2540"
-            opacity="0.5"
-          />
+      {/* Decorative Gold Top Edge Accent */}
+      <div className="relative w-full h-[3px] bg-gradient-to-r from-[#D4AF37]/30 via-[#6B1414] to-[#D4AF37]/40" />
 
-          {/* Primary Foreground City Skyline Silhouette - Solid #071426 */}
-          <path
-            d="M 0,120
-               L 0,68
-               L 12,68 L 12,56 L 24,56 L 24,70 L 34,70
-               L 34,44 L 42,44 L 42,24 L 44,24 L 44,44 L 54,44
-               L 54,62 L 68,62 L 68,50 L 78,38 L 92,38 L 92,50 L 102,50
-               L 102,72 L 116,72 L 116,46 L 130,46 L 130,34 L 140,34 L 140,46 L 150,46
-               L 150,64 L 168,64 L 168,30 L 184,30 L 184,16 L 186,16 L 186,30 L 198,30
-               L 198,54 L 218,54 L 218,72 L 234,72
-               L 234,48 L 244,36 L 260,36 L 260,48 L 270,48
-               L 270,60 L 288,60 L 288,32 L 298,32 L 298,14 L 300,14 L 300,32 L 310,32
-               L 310,52 L 328,52 L 328,74 L 344,74
-               L 344,42 L 365,42 L 365,58 L 382,58
-               L 382,44 L 394,32 L 410,32 L 410,44 L 420,44
-               L 420,62 L 436,62
-               L 436,28 L 450,28 L 450,12 L 452,12 L 452,28 L 466,28
-               L 466,54 L 486,54 L 486,68 L 502,68
-               L 502,44 L 518,44 L 518,34 L 528,34 L 528,44 L 538,44
-               L 538,58 L 555,58 L 555,44 L 568,30 L 585,30 L 585,44 L 595,44
-               L 595,66 L 612,66
-               L 612,36 L 628,36 L 628,18 L 630,18 L 630,36 L 642,36
-               L 642,52 L 660,52 L 660,72 L 676,72
-               L 676,42 L 696,42 L 696,56 L 712,56
-               L 712,30 L 724,18 L 734,18 L 734,6 L 736,6 L 736,18 L 746,18 L 746,30 L 758,30
-               L 758,54 L 775,54 L 775,68 L 792,68
-               L 792,44 L 808,44 L 808,32 L 818,32 L 818,44 L 828,44
-               L 828,62 L 846,62
-               L 846,34 L 860,34 L 860,16 L 862,16 L 862,34 L 874,34
-               L 874,52 L 894,52 L 894,72 L 910,72
-               L 910,42 L 930,42 L 930,58 L 946,58
-               L 946,44 L 958,30 L 976,30 L 976,44 L 986,44
-               L 986,64 L 1004,64
-               L 1004,32 L 1020,32 L 1020,14 L 1022,14 L 1022,32 L 1034,32
-               L 1034,54 L 1054,54 L 1054,68 L 1070,68
-               L 1070,42 L 1090,42 L 1090,58 L 1106,58
-               L 1106,24 L 1120,24 L 1120,8 L 1122,8 L 1122,24 L 1134,24
-               L 1134,48 L 1154,48 L 1154,66 L 1170,66
-               L 1170,36 L 1188,36 L 1188,54 L 1204,54
-               L 1204,42 L 1218,28 L 1235,28 L 1235,42 L 1246,42
-               L 1246,60 L 1264,60
-               L 1264,32 L 1278,32 L 1278,16 L 1280,16 L 1280,32 L 1292,32
-               L 1292,54 L 1312,54 L 1312,70 L 1330,70
-               L 1330,42 L 1348,42 L 1348,56 L 1366,56
-               L 1366,38 L 1380,26 L 1396,26 L 1396,38 L 1408,38
-               L 1408,58 L 1440,58
-               L 1440,120
-               L 0,120 Z"
-            fill="#071426"
-          />
-        </svg>
-      </div>
+      {/* Main Content Area */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-16 md:pt-20 pb-12">
 
-      {/* ========================================================
-          2. MAIN FOOTER CONTENT: 4-COLUMN GRID
-          - Color Scheme: User swatch color #071426
-          - Removed harsh white borders, replaced with subtle #132a48 dividers
-          - Rounded pill-shaped buttons (no boxy design)
-          - Authentic social media platform brand colors
-          ======================================================== */}
-      <div className="w-full bg-[#071426] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 text-left">
+        {/* Top Grid: 4 Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-12 text-left">
 
-            {/* ================= COLUMN 1: ABOUT US ================= */}
-            <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-bold text-white tracking-wider uppercase border-b border-[#132a48] pb-2">
-                ABOUT US
-              </h3>
-
-              <div className="flex items-center gap-2.5 pt-1">
+          {/* Column 1: Brand & Identity (4 Columns) */}
+          <div className="lg:col-span-4 space-y-5">
+            <div className="flex items-center gap-3.5">
+              <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#3a0604] shadow-md border-2 border-[#D4AF37]/80 flex items-center justify-center transition-transform hover:scale-105 shrink-0 overflow-hidden">
                 <img
                   src={thezarLogo}
-                  alt="TheZar Logo"
-                  className="w-8 h-8 rounded-full object-contain bg-white/10 p-0.5"
+                  alt="THEZAR Logo"
+                  className="w-full h-full object-cover scale-105 rounded-full"
                 />
-                <span className="font-extrabold text-white text-base tracking-wide">
-                  TheZar Events
+              </div>
+              <div>
+                <span className="font-serif text-2xl font-black tracking-wider bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#4A0A0A] bg-clip-text text-transparent block">
+                  THEZAR
+                </span>
+                <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#D4AF37] block -mt-0.5">
+                  State Youth Championship
                 </span>
               </div>
+            </div>
 
-              <p className="text-slate-300 text-xs sm:text-[13px] leading-relaxed">
-                Tamil Nadu’s premier youth talent championship and cultural festival platform. Dedicated to discovering, celebrating, and empowering extraordinary talents across all 38 districts.
+            <p className="text-sm text-[#4A3B3E] leading-relaxed font-normal max-w-sm">
+              Tamil Nadu’s premier youth talent championship and cultural festival platform. Dedicated to discovering, celebrating, and empowering extraordinary talents across all 38 districts.
+            </p>
+
+            {/* Social Icons Bar */}
+            <div className="pt-2">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-[#6B1414] mb-3 flex items-center gap-2">
+                <span>Connect With Us</span>
+                <span className="w-8 h-[1px] bg-[#D4AF37]" />
               </p>
-
-              {/* Social Media Links with ORIGINAL BRAND COLORS */}
-              <div className="pt-2">
-                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">
-                  Connect With Us
-                </p>
-                <div className="flex items-center gap-2.5">
-                  {/* Facebook - Official #1877F2 */}
-                  <a
-                    href="https://facebook.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Facebook"
-                    className="w-9 h-9 rounded-full bg-[#1877F2] text-white flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 shadow-md shadow-blue-900/30"
-                  >
-                    <FacebookIcon />
-                  </a>
-
-                  {/* Instagram - Official Signature Radial Gradient */}
-                  <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Instagram"
-                    className="w-9 h-9 rounded-full text-white flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 shadow-md shadow-pink-900/30"
-                    style={{
-                      background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)',
-                    }}
-                  >
-                    <InstagramIcon />
-                  </a>
-
-                  {/* YouTube - Official #FF0000 */}
-                  <a
-                    href="https://youtube.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="YouTube"
-                    className="w-9 h-9 rounded-full bg-[#FF0000] text-white flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 shadow-md shadow-red-900/30"
-                  >
-                    <YoutubeIcon />
-                  </a>
-
-                  {/* Twitter / X - Official Sleek Black / Dark */}
-                  <a
-                    href="https://twitter.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Twitter / X"
-                    className="w-9 h-9 rounded-full bg-[#000000] border border-slate-700 text-white flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 shadow-md shadow-black/40"
-                  >
-                    <TwitterIcon />
-                  </a>
-
-                  {/* WhatsApp - Official #25D366 */}
-                  <a
-                    href="https://wa.me/919790351878"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="WhatsApp"
-                    className="w-9 h-9 rounded-full bg-[#25D366] text-white flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 shadow-md shadow-emerald-900/30"
-                  >
-                    <WhatsAppIcon />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* ================= COLUMN 2: ADDRESS ================= */}
-            <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-bold text-white tracking-wider uppercase border-b border-[#132a48] pb-2">
-                ADDRESS
-              </h3>
-
-              <div className="space-y-3.5 text-xs sm:text-[13px] pt-1">
-                {/* Email */}
-                <div>
-                  <a
-                    href="mailto:thezarevents@gmail.com"
-                    className="text-slate-300 hover:text-white transition-colors flex items-center gap-2.5 font-medium group"
-                  >
-                    <div className="w-8 h-8 rounded-full bg-[#0c1f38] border border-[#163761]/60 flex items-center justify-center shrink-0 group-hover:bg-[#9e0804] group-hover:border-[#9e0804] transition-colors">
-                      <Mail className="w-3.5 h-3.5 text-sky-300 group-hover:text-white" />
-                    </div>
-                    <span className="truncate">thezarevents@gmail.com</span>
-                  </a>
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <a
-                    href="tel:+919790351878"
-                    className="text-slate-300 hover:text-white transition-colors flex items-center gap-2.5 font-mono font-medium group"
-                  >
-                    <div className="w-8 h-8 rounded-full bg-[#0c1f38] border border-[#163761]/60 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:border-emerald-600 transition-colors">
-                      <Phone className="w-3.5 h-3.5 text-emerald-400 group-hover:text-white" />
-                    </div>
-                    <span>97903 51878</span>
-                  </a>
-                </div>
-
-                {/* Secretariat Address */}
-                <div className="flex items-start gap-2.5 text-slate-300 leading-relaxed">
-                  <div className="w-8 h-8 rounded-full bg-[#0c1f38] border border-[#163761]/60 flex items-center justify-center shrink-0 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5 text-rose-400" />
-                  </div>
-                  <div>
-                    <span className="font-semibold text-white block text-xs">Central Secretariat:</span>
-                    <span>Tirunelveli 627001, Tamil Nadu</span>
-                  </div>
-                </div>
-
-                {/* Event Hub */}
-                <div className="pl-10 text-[11px] text-slate-400 font-medium">
-                  Main Event Stage: Tirunelveli Hub
-                </div>
-              </div>
-            </div>
-
-            {/* ================= COLUMN 3: COMPANY ================= */}
-            <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-bold text-white tracking-wider uppercase border-b border-[#132a48] pb-2">
-                COMPANY
-              </h3>
-
-              {/* Links with '>' bullet styling matching reference screenshot */}
-              <ul className="space-y-2.5 text-xs sm:text-[13px] pt-1">
-                <li>
-                  <button
-                    onClick={(e) => scrollToSection(e, 'home')}
-                    className="text-slate-300 hover:text-white hover:translate-x-1.5 transition-all inline-flex items-center gap-2 cursor-pointer group text-left"
-                  >
-                    <span className="text-rose-400 group-hover:text-red-400 font-bold">&gt;</span>
-                    <span>Home</span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={(e) => scrollToSection(e, 'about-thezar')}
-                    className="text-slate-300 hover:text-white hover:translate-x-1.5 transition-all inline-flex items-center gap-2 cursor-pointer group text-left"
-                  >
-                    <span className="text-rose-400 group-hover:text-red-400 font-bold">&gt;</span>
-                    <span>About Us</span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={(e) => scrollToSection(e, 'events')}
-                    className="text-slate-300 hover:text-white hover:translate-x-1.5 transition-all inline-flex items-center gap-2 cursor-pointer group text-left"
-                  >
-                    <span className="text-rose-400 group-hover:text-red-400 font-bold">&gt;</span>
-                    <span>Events &amp; Schedule</span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={(e) => scrollToSection(e, 'districts')}
-                    className="text-slate-300 hover:text-white hover:translate-x-1.5 transition-all inline-flex items-center gap-2 cursor-pointer group text-left"
-                  >
-                    <span className="text-rose-400 group-hover:text-red-400 font-bold">&gt;</span>
-                    <span>38 Districts Gallery</span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={onOpenRegister}
-                    className="text-slate-300 hover:text-white hover:translate-x-1.5 transition-all inline-flex items-center gap-2 cursor-pointer group text-left"
-                  >
-                    <span className="text-rose-400 group-hover:text-red-400 font-bold">&gt;</span>
-                    <span>Event Registration</span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={(e) => scrollToSection(e, 'contact')}
-                    className="text-slate-300 hover:text-white hover:translate-x-1.5 transition-all inline-flex items-center gap-2 cursor-pointer group text-left"
-                  >
-                    <span className="text-rose-400 group-hover:text-red-400 font-bold">&gt;</span>
-                    <span>Contact &amp; FAQ</span>
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            {/* ================= COLUMN 4: NEWSLETTER ================= */}
-            <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-bold text-white tracking-wider uppercase border-b border-[#132a48] pb-2">
-                NEWSLETTER
-              </h3>
-
-              <p className="text-slate-300 text-xs sm:text-[13px] leading-relaxed pt-1">
-                Keep up on our always evolving championship schedules, district fixtures, and exclusive announcements. Enter your e-mail and subscribe to our newsletter.
-              </p>
-
-              {subscribed ? (
-                <div className="p-3.5 rounded-full bg-[#0c1f38] border border-emerald-500/50 text-xs text-emerald-300 flex items-center justify-center gap-2.5 animate-fadeIn">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Thank you for subscribing to TheZar!</span>
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="pt-1">
-                  {/* Exact Reference Design: Seamless Pill Bar with Paper Plane Send Button */}
-                  <div
-                    className="flex items-stretch w-full bg-[#0c1f38] border border-[#163761] overflow-hidden shadow-inner focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-400/20 transition-all"
-                    style={{ borderRadius: '9999px' }}
-                  >
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email address..."
-                      className="flex-1 bg-transparent pl-5 pr-3 py-3 text-xs text-white placeholder-slate-400 focus:outline-none min-w-0 border-0"
-                      style={{ outline: 'none', boxShadow: 'none' }}
-                    />
-                    <button
-                      type="submit"
-                      aria-label="Subscribe to Newsletter"
-                      className="px-4 bg-[#142c4c] hover:bg-[#9e0804] text-white flex items-center justify-center transition-all duration-200 cursor-pointer border-0 border-l border-[#163761] group shrink-0"
-                      style={{
-                        borderTopRightRadius: '9999px',
-                        borderBottomRightRadius: '9999px',
-                      }}
+              <div className="flex items-center gap-2.5">
+                {[
+                  { icon: InstagramIcon, href: 'https://instagram.com', label: 'Instagram' },
+                  { icon: FacebookIcon, href: 'https://facebook.com', label: 'Facebook' },
+                  { icon: YoutubeIcon, href: 'https://youtube.com', label: 'YouTube' },
+                  { icon: TwitterIcon, href: 'https://twitter.com', label: 'Twitter' },
+                  { icon: WhatsAppIcon, href: 'https://wa.me/919790351878', label: 'WhatsApp' },
+                ].map((s, idx) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={idx}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      className="w-9 h-9 rounded-full bg-white hover:bg-[#6B1414] text-[#6B1414] hover:text-[#FAF7F2] border border-[#D4AF37]/50 shadow-sm flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#D4AF37]"
                     >
-                      <Send className="w-4 h-4 text-slate-200 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </button>
-                  </div>
-                </form>
-              )}
+                      <Icon />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
-
           </div>
 
-          {/* ========================================================
-              3. BOTTOM FOOTER AREA (TRUST, PAYMENT & COPYRIGHT)
-              - Removed harsh white borders, replaced with subtle #132a48 dividers
-              - Pill shaped badges and back-to-top button
-              ======================================================== */}
-          <div className="mt-12 pt-8 border-t border-[#132a48] space-y-6">
-
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-
-              {/* Left: Trust & Security Badges (Pill Rounded) */}
-              <div className="flex items-center gap-3 shrink-0">
-                {/* Trust Badge 1 */}
-                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c1f38] border border-[#163761]/60 text-[11px] text-slate-200">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <div className="text-left leading-tight">
-                    <span className="block font-black text-white text-[10px] tracking-wider uppercase">TRUSTED EVENTS</span>
-                    <span className="text-[9px] text-slate-400">Official Portal</span>
-                  </div>
-                </div>
-
-                {/* Trust Badge 2 (PCI DSS) */}
-                {/* <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#0c1f38] border border-[#163761]/60 text-[11px] font-mono font-bold text-white">
-                  <span className="text-rose-400 font-black">PCI</span>
-                  <span className="text-white text-[10px]">DSS</span>
-                  <span className="text-[9px] text-emerald-400 font-sans font-normal ml-0.5">COMPLIANT</span>
-                </div> */}
-              </div>
-
-              {/* Center: TheZar Championship details & Mini District Pills */}
-              <div className="text-center space-y-2 max-w-md">
-                <p className="text-xs text-slate-300 font-medium">
-                  Official Festival Platform of Tamil Nadu Statewide Talent Championship &amp; Christmas Carol Fiesta.
-                </p>
-                <p className="text-[11px] text-slate-400 font-mono">
-                  thezarevents@gmail.com • 97903 51878
-                </p>
-                <span
-                  className="text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-[#0c1f38] border border-[#163761]/50 text-slate-300 uppercase tracking-wider"
-                >
-                  38 Districts Championship
-                </span>
-                {/* Miniature District Badges (Pill Rounded) */}
-                {/* <div className="flex flex-wrap items-center justify-center gap-1.5 pt-1">
-                  {['Tirunelveli', 'Chennai', 'Madurai', 'Coimbatore', 'Salem', 'Trichy', 'Kanyakumari', '+31 Districts'].map((d, i) => (
-                    <span
-                      key={i}
-                      className="text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-[#0c1f38] border border-[#163761]/50 text-slate-300 uppercase tracking-wider"
-                    >
-                      {d}
-                    </span>
-                  ))}
-                </div> */}
-              </div>
-
-              {/* Right: Payment Provider Badges (Pill Rounded) */}
-              <div className="flex items-center gap-2.5 shrink-0">
-                {/* UPI */}
-                <div className="h-7 px-3 rounded-full bg-[#0c1f38] border border-[#163761]/60 flex items-center justify-center text-white font-extrabold text-[11px] tracking-wider">
-                  UPI
-                </div>
-
-                {/* Mastercard */}
-                <div className="h-7 px-3 rounded-full bg-[#0c1f38] border border-[#163761]/60 flex items-center justify-center gap-0.5">
-                  <div className="w-3.5 h-3.5 rounded-full bg-[#EB001B] opacity-90 -mr-1" />
-                  <div className="w-3.5 h-3.5 rounded-full bg-[#F79E1B] opacity-90" />
-                </div>
-
-                {/* Visa */}
-                <div className="h-7 px-3.5 rounded-full bg-[#0c1f38] border border-[#163761]/60 flex items-center justify-center text-white font-black italic text-xs tracking-wider">
-                  VISA
-                </div>
-
-                {/* RuPay */}
-                <div className="h-7 px-3 rounded-full bg-[#0c1f38] border border-[#163761]/60 flex items-center justify-center text-white font-bold text-[10px] tracking-wide">
-                  RuPay
-                </div>
-              </div>
-
+          {/* Column 2: Navigation Links (2.5 Columns) */}
+          <div className="lg:col-span-2 space-y-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#6B1414] font-sans">
+                Navigation
+              </p>
+              <div className="w-8 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#B38728] mt-1.5" />
             </div>
+            <ul className="space-y-2.5 text-sm text-[#4A3B3E] list-none p-0 m-0">
+              {[
+                { label: 'Home', id: 'home' },
+                { label: 'About Us', id: 'about-thezar' },
+                { label: 'Events & Schedule', id: 'events' },
+                { label: '38 Districts Gallery', id: 'districts' },
+                { label: 'Event Registration', action: onOpenRegister },
+                { label: 'Contact & FAQ', id: 'contact' },
+              ].map((link, idx) => (
+                <li key={idx}>
+                  <button
+                    onClick={(e) => link.action ? link.action() : scrollToSection(e, link.id)}
+                    className="group flex items-center gap-2 text-left text-[#4A3B3E] hover:text-[#6B1414] transition-colors font-medium bg-transparent border-none p-0 cursor-pointer"
+                  >
+                    <span className="text-[#D4AF37] text-xs transition-transform group-hover:translate-x-1 font-bold">›</span>
+                    <span>{link.label}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* Legal Links, Copyright & Back to Top (Pill Rounded) */}
-            <div className="pt-4 border-t border-[#132a48] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-              <p>© 2026 TheZar. All rights reserved.</p>
-
-              <div className="flex items-center gap-4 text-[11px]">
-                <button
-                  onClick={(e) => scrollToSection(e, 'contact')}
-                  className="hover:text-white transition-colors cursor-pointer"
-                >
-                  Privacy Policy
-                </button>
-                <span>•</span>
-                <button
-                  onClick={(e) => scrollToSection(e, 'contact')}
-                  className="hover:text-white transition-colors cursor-pointer"
-                >
-                  Terms &amp; Conditions
-                </button>
-                <span>•</span>
-                <button
-                  onClick={(e) => scrollToSection(e, 'contact')}
-                  className="hover:text-white transition-colors cursor-pointer"
-                >
-                  Refund Policy
-                </button>
-              </div>
-
-              {/* Back to Top - Fully Rounded Pill */}
-              <button
-                onClick={scrollToTop}
-                className="px-4 py-2 rounded-full bg-[#0c1f38] hover:bg-[#9e0804] text-white border border-[#163761]/60 transition-all flex items-center gap-1.5 text-xs font-bold cursor-pointer hover:-translate-y-0.5 shadow-sm"
+          {/* Column 3: Secretariat & Contact Info (3 Columns) */}
+          <div className="lg:col-span-3 space-y-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#6B1414] font-sans">
+                Central Secretariat
+              </p>
+              <div className="w-8 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#B38728] mt-1.5" />
+            </div>
+            <div className="space-y-3.5 text-sm text-[#4A3B3E]">
+              <a
+                href="mailto:thezarevents@gmail.com"
+                className="flex items-center gap-3 text-[#4A3B3E] hover:text-[#6B1414] transition-colors group no-underline"
+                style={{ color: '#4A3B3E', textDecoration: 'none' }}
               >
-                <span>Back to top</span>
-                <ArrowUp className="w-3.5 h-3.5 text-slate-300" />
-              </button>
+                <div className="w-8 h-8 rounded-full bg-white border border-[#D4AF37]/50 flex items-center justify-center shrink-0 shadow-sm group-hover:border-[#6B1414] group-hover:bg-[#6B1414]/5 transition-all">
+                  <Mail className="w-3.5 h-3.5 text-[#6B1414]" />
+                </div>
+                <span className="text-xs sm:text-sm font-medium">thezarevents@gmail.com</span>
+              </a>
+
+              <a
+                href="tel:+919790351878"
+                className="flex items-center gap-3 text-[#4A3B3E] hover:text-[#6B1414] transition-colors group no-underline"
+                style={{ color: '#4A3B3E', textDecoration: 'none' }}
+              >
+                <div className="w-8 h-8 rounded-full bg-white border border-[#D4AF37]/50 flex items-center justify-center shrink-0 shadow-sm group-hover:border-[#6B1414] group-hover:bg-[#6B1414]/5 transition-all">
+                  <Phone className="w-3.5 h-3.5 text-[#6B1414]" />
+                </div>
+                <span className="text-xs sm:text-sm font-medium font-mono">97903 51878</span>
+              </a>
+
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-white border border-[#D4AF37]/50 flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#6B1414]" />
+                </div>
+                <div className="text-xs leading-relaxed">
+                  <strong className="block text-[#6B1414] font-semibold">Secretariat Office:</strong>
+                  Tirunelveli 627001, Tamil Nadu
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 4: Newsletter & Updates (3.5 / 4 Columns) */}
+          <div className="lg:col-span-3.5 xl:col-span-3 space-y-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#6B1414] font-sans">
+                Official Newsletter
+              </p>
+              <div className="w-8 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#B38728] mt-1.5" />
             </div>
 
+            <p className="text-xs text-[#4A3B3E] leading-relaxed">
+              Keep up on championship schedules, district fixtures, and exclusive stage announcements.
+            </p>
+
+            {subscribed ? (
+              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-800 flex items-center gap-2.5 shadow-sm">
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+                <span className="font-medium">Thank you for subscribing!</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="w-full">
+                <div
+                  className="flex items-center w-full bg-white/95 rounded-full border border-[#D4AF37]/60 shadow-sm focus-within:border-[#6B1414] focus-within:ring-2 focus-within:ring-[#6B1414]/15 overflow-hidden transition-all h-10 sm:h-11"
+                  style={{ borderRadius: '9999px' }}
+                >
+                  <div className="pl-3 sm:pl-3.5 pr-1.5 flex items-center justify-center text-[#8C7A7C] shrink-0 pointer-events-none">
+                    <Mail className="w-4 h-4 text-[#8C7A7C]" />
+                  </div>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email address..."
+                    className="w-full h-full bg-transparent border-none text-xs sm:text-[13px] text-[#2C1810] placeholder-[#8C7A7C] focus:outline-none px-1 tracking-tight"
+                  />
+                  <button
+                    type="submit"
+                    aria-label="Subscribe to newsletter"
+                    className="h-full px-3.5 sm:px-4 bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#6B1414] hover:from-[#540F0F] hover:to-[#781717] text-white flex items-center justify-center transition-all duration-200 cursor-pointer shrink-0 border-l border-[#D4AF37]/40"
+                  >
+                    <Send className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
 
         </div>
-      </div>
 
+        {/* Divider with Gold Accent */}
+        <div className="mt-14 pt-6 border-t border-[#D4AF37]/35 relative">
+          <div className="absolute left-1/2 -top-[5px] -translate-x-1/2 w-12 h-[3px] bg-[#D4AF37] rounded-full" />
+        </div>
+
+        {/* Bottom Bar: Trust Badges, Legal Links, Powered By, and Back to Top */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-2 text-xs text-[#5D4A4D]">
+
+          {/* Trust Badge & Districs */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 border border-[#D4AF37]/50 shadow-sm" style={{ borderRadius: '9999px' }}>
+              <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+              <span className="font-bold text-[11px] tracking-wider uppercase text-[#6B1414]">
+                Trusted Events
+              </span>
+            </div>
+            <span className="hidden sm:inline text-[#8C7A7C]">•</span>
+            <span className="text-[11px] font-semibold text-[#6B1414]">
+              38 Districts Championship
+            </span>
+          </div>
+
+          {/* Legal Links */}
+          <div className="flex items-center gap-3 text-[11px] text-[#6B1414] font-medium">
+            <button onClick={(e) => scrollToSection(e, 'contact')} className="hover:underline bg-transparent border-none p-0 cursor-pointer text-[#6B1414]">Privacy Policy</button>
+            <span className="text-[#D4AF37]">•</span>
+            <button onClick={(e) => scrollToSection(e, 'contact')} className="hover:underline bg-transparent border-none p-0 cursor-pointer text-[#6B1414]">Terms &amp; Conditions</button>
+            <span className="text-[#D4AF37]">•</span>
+            <button onClick={(e) => scrollToSection(e, 'contact')} className="hover:underline bg-transparent border-none p-0 cursor-pointer text-[#6B1414]">Refund Policy</button>
+          </div>
+
+          {/* Copyright, Powered by & Back to Top */}
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="text-left sm:text-right">
+              <p className="m-0 font-normal text-xs">
+                © 2026 <strong className="text-[#6B1414] font-semibold">THEZAR</strong>. All rights reserved.
+              </p>
+              <p className="m-0 text-[10px] text-[#8C7A7C] tracking-wide mt-0.5">
+                Powered by <span className="text-[#6B1414] font-bold">Kaira Technologies</span>
+              </p>
+            </div>
+            <button
+              onClick={scrollToTop}
+              className="px-3 sm:px-4 py-2.5 rounded-full bg-white hover:bg-[#6B1414] text-[#6B1414] hover:text-[#FAF7F2] border border-[#D4AF37]/60 shadow-sm hover:shadow-md text-xs font-semibold flex items-center gap-1.5 transition-all duration-300 cursor-pointer hover:-translate-y-0.5"
+              style={{ borderRadius: '9999px' }}
+            >
+              <span>Back to Top</span>
+              <ArrowUp className="w-3.5 h-3.5 text-[#D4AF37]" />
+            </button>
+          </div>
+
+        </div>
+
+      </div>
     </footer>
   );
 }

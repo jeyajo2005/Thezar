@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import aboutAudienceImg from '../../assets/about_audience.jpg';
 import { Play, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 export default function AboutTheZarSection({ onOpenRegister }) {
+  const { siteContent } = useSiteContent();
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
@@ -28,7 +30,7 @@ export default function AboutTheZarSection({ onOpenRegister }) {
             {/* Editorial Eyebrow with Small Gold Line */}
             <div className="flex items-center gap-3">
               <span className="text-[12px] font-bold text-[#9e0804] tracking-[0.18em] uppercase">
-                ABOUT THEZAR
+                {siteContent.aboutEyebrow || 'ABOUT THEZAR'}
               </span>
               <div
                 className="w-10 h-[2px] rounded-full"
@@ -39,31 +41,37 @@ export default function AboutTheZarSection({ onOpenRegister }) {
               />
             </div>
 
-            {/* Main Editorial Heading: 48-64px, weight 800, line-height 1.0 */}
+            {/* Main Editorial Heading */}
             <h2 className="text-[34px] sm:text-[46px] lg:text-[56px] font-extrabold text-[#3f0701] tracking-[-0.035em] leading-[1.0] uppercase">
-              WHERE TALENT <br />
-              <span className="text-[#9e0804] font-serif italic lowercase tracking-normal">meets</span> <br />
-              OPPORTUNITY
+              {siteContent.aboutTitle ? (
+                <span>{siteContent.aboutTitle}</span>
+              ) : (
+                <>
+                  WHERE TALENT <br />
+                  <span className="text-[#9e0804] font-serif italic lowercase tracking-normal">meets</span> <br />
+                  OPPORTUNITY
+                </>
+              )}
             </h2>
 
             {/* Editorial Description */}
             <p className="text-[#64748B] text-sm sm:text-base lg:text-[17px] font-normal leading-[1.7] tracking-[-0.01em] max-w-xl">
-              TheZar brings participants together across Tamil Nadu through district-level competitions, innovation, creativity and achievement. From competitions to cultural spectacles, this is the definitive stage for state champions.
+              {siteContent.aboutDescription || 'TheZar brings participants together across Tamil Nadu through district-level competitions, innovation, creativity and achievement.'}
             </p>
 
             {/* Feature Bullets */}
             <div className="space-y-2.5 pt-1 text-sm text-[#334155] font-medium">
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-[#9e0804] shrink-0" />
-                <span>38 District preliminary stages leading to Chennai Mega Finals</span>
+                <span>{siteContent.aboutBullet1 || '38 District preliminary stages leading to Chennai Mega Finals'}</span>
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-[#9e0804] shrink-0" />
-                <span>Grand House Prize + Mega Cash Prize Pool for winners</span>
+                <span>{siteContent.aboutBullet2 || 'Grand House Prize + Mega Cash Prize Pool for winners'}</span>
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-[#9e0804] shrink-0" />
-                <span>Direct mentorship and networking with state industry leaders</span>
+                <span>{siteContent.aboutBullet3 || 'Direct mentorship and networking with state industry leaders'}</span>
               </div>
             </div>
 

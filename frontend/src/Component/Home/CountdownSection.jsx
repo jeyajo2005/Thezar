@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Calendar } from 'lucide-react';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 export default function CountdownSection() {
-  const [siteContent, setSiteContent] = useState({
-    countdownTitle: 'Count Every Second Until the Event',
-    countdownEventName: 'Christmas Carol Fiesta 2026 Grand Stage',
-    countdownTargetDate: '2026-12-12T09:00:00.000Z',
-    countdownVenue: 'Tirunelveli District Arena'
-  });
+  const { siteContent } = useSiteContent();
 
   const [timeLeft, setTimeLeft] = useState({
     days: '08',
@@ -15,20 +11,6 @@ export default function CountdownSection() {
     minutes: '42',
     seconds: '12'
   });
-
-  useEffect(() => {
-    fetch('http://localhost:5000/api/site-content')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success && data.content) {
-          setSiteContent((prev) => ({
-            ...prev,
-            ...data.content
-          }));
-        }
-      })
-      .catch(() => {});
-  }, []);
 
   const targetDate = new Date(siteContent.countdownTargetDate || '2026-12-12T09:00:00').getTime();
 

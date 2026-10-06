@@ -1,29 +1,9 @@
-import { useState, useEffect } from 'react';
 import heroSpeakerImg from '../../assets/Young_woman.png';
 import { Calendar, MapPin, Users, Lightbulb, ArrowRight, Trophy, Sparkles } from 'lucide-react';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 export default function Hero({ onOpenRegister }) {
-  const [siteContent, setSiteContent] = useState({
-    heroEyebrow: '1ST DISTRICT STAGE | TIRUNELVELI | TALENT CHAMPIONSHIP | THEZAR 2026',
-    heroTitleLine1: 'STATEWIDE TALENT',
-    heroTitleLine2: 'SHOWCASE PLATFORM',
-    heroTitleLine3: 'CHAMPIONSHIP',
-    heroSubtitle: 'Unleashing & Elevating Extraordinary Talent Across 38 Districts. 1st Live Competition Stage Hosted in Tirunelveli.'
-  });
-
-  useEffect(() => {
-    fetch('http://localhost:5000/api/site-content')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success && data.content) {
-          setSiteContent((prev) => ({
-            ...prev,
-            ...data.content
-          }));
-        }
-      })
-      .catch(() => {});
-  }, []);
+  const { siteContent } = useSiteContent();
 
   return (
     <section

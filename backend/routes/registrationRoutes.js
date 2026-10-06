@@ -219,7 +219,13 @@ router.post('/register', async (req, res) => {
 
 // Public Site Content & Enquiry Routes
 const { getSiteContent, createEnquiry } = require('../controllers/siteContentController');
+const { getCompetitions, getAnnouncements, getDistricts, getResults } = require('../controllers/adminController');
+
 router.get('/site-content', getSiteContent);
+router.get('/competitions', getCompetitions);
+router.get('/announcements', getAnnouncements);
+router.get('/districts', getDistricts);
+router.get('/results', getResults);
 router.post('/enquiries', createEnquiry);
 
 module.exports = router;

@@ -3,46 +3,59 @@ import { Trophy, ArrowRight, Crown, TrendingUp, Sparkles, Star } from 'lucide-re
 import rank1Img from '../../assets/rank1_avatar.jpg';
 import rank2Img from '../../assets/rank2_avatar.jpg';
 import rank3Img from '../../assets/rank3_avatar.jpg';
+import { useSiteContent } from '../../context/SiteContentContext';
+
+const AVATAR_MAP = [rank2Img, rank1Img, rank3Img];
 
 export default function LeaderboardSection() {
+  const { siteContent } = useSiteContent();
   const [tab, setTab] = useState('Individual');
 
-  const topThree = [
-    {
-      rank: 2,
-      name: 'Wade Warren',
-      district: 'Tirunelveli',
-      score: '3,546',
-      subtitle: 'Cooking Champion',
-      avatar: rank2Img,
-      badgeBg: 'bg-[#38BDF8] text-white',
-      ringColor: 'border-[#38BDF8]',
-      lineColor: 'bg-[#38BDF8]',
-    },
-    {
-      rank: 1,
-      name: 'Robert Fox',
-      district: 'Chennai',
-      score: '3,890',
-      subtitle: 'Statewide Master Chef',
-      avatar: rank1Img,
-      badgeBg: 'bg-[#F59E0B] text-white',
-      ringColor: 'border-[#F59E0B]',
-      lineColor: 'bg-[#F59E0B]',
-      isCrown: true,
-    },
-    {
-      rank: 3,
-      name: 'Jane Cooper',
-      district: 'Madurai',
-      score: '3,420',
-      subtitle: 'South Region Leader',
-      avatar: rank3Img,
-      badgeBg: 'bg-[#F43F5E] text-white',
-      ringColor: 'border-[#F43F5E]',
-      lineColor: 'bg-[#F43F5E]',
-    },
-  ];
+  const topThree = (siteContent.leaderboardTopThree && siteContent.leaderboardTopThree.length > 0)
+    ? siteContent.leaderboardTopThree.map((item, idx) => ({
+        ...item,
+        avatar: AVATAR_MAP[idx % AVATAR_MAP.length] || rank1Img,
+        badgeBg: idx === 1 ? 'bg-[#F59E0B] text-white' : idx === 0 ? 'bg-[#38BDF8] text-white' : 'bg-[#F43F5E] text-white',
+        ringColor: idx === 1 ? 'border-[#F59E0B]' : idx === 0 ? 'border-[#38BDF8]' : 'border-[#F43F5E]',
+        lineColor: idx === 1 ? 'bg-[#F59E0B]' : idx === 0 ? 'bg-[#38BDF8]' : 'bg-[#F43F5E]',
+        isCrown: idx === 1
+      }))
+    : [
+        {
+          rank: 2,
+          name: 'Wade Warren',
+          district: 'Tirunelveli',
+          score: '3,546',
+          subtitle: 'Solo Vocal Champion',
+          avatar: rank2Img,
+          badgeBg: 'bg-[#38BDF8] text-white',
+          ringColor: 'border-[#38BDF8]',
+          lineColor: 'bg-[#38BDF8]',
+        },
+        {
+          rank: 1,
+          name: 'Robert Fox',
+          district: 'Chennai',
+          score: '3,890',
+          subtitle: 'Statewide Carol Champion',
+          avatar: rank1Img,
+          badgeBg: 'bg-[#F59E0B] text-white',
+          ringColor: 'border-[#F59E0B]',
+          lineColor: 'bg-[#F59E0B]',
+          isCrown: true,
+        },
+        {
+          rank: 3,
+          name: 'Jane Cooper',
+          district: 'Madurai',
+          score: '3,420',
+          subtitle: 'South Region Leader',
+          avatar: rank3Img,
+          badgeBg: 'bg-[#F43F5E] text-white',
+          ringColor: 'border-[#F43F5E]',
+          lineColor: 'bg-[#F43F5E]',
+        },
+      ];
 
   const tableData = [
     {
@@ -122,7 +135,7 @@ export default function LeaderboardSection() {
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-3">
             <span className="text-[12px] font-bold text-[#9e0804] tracking-[0.18em] uppercase">
-              LIVE STANDINGS
+              {siteContent.leaderboardEyebrow || 'LIVE STANDINGS'}
             </span>
             <div
               className="w-10 h-[2px] rounded-full"
@@ -133,10 +146,10 @@ export default function LeaderboardSection() {
             />
           </div>
           <h2 className="text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold text-[#071426] tracking-[-0.035em] uppercase leading-[1.05]">
-            THEZAR <span className="text-[#9e0804]">LEADERBOARD</span>
+            {siteContent.leaderboardTitle || 'THEZAR LEADERBOARD'}
           </h2>
           <p className="text-[#64748B] text-sm sm:text-base font-normal leading-relaxed">
-            Live points tally updated across all 38 districts of Tamil Nadu after each competition round.
+            {siteContent.leaderboardSubtitle || 'Live points tally updated across all 38 districts of Tamil Nadu after each competition round.'}
           </p>
         </div>
 

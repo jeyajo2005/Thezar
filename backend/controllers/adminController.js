@@ -200,6 +200,91 @@ const verifyRegistration = async (req, res) => {
   }
 };
 
+// Update Registration Details
+const updateRegistration = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { fullName, email, phone, district, paymentStatus, utrNumber, totalAmount, registrationType, groupName } = req.body;
+
+    const reg = await Registration.findOne({ registrationId: id });
+    if (!reg) {
+      return res.status(404).json({ success: false, message: 'Registration not found' });
+    }
+
+    if (paymentStatus) reg.paymentStatus = paymentStatus;
+    if (utrNumber !== undefined) reg.utrNumber = utrNumber;
+    if (totalAmount !== undefined) reg.totalAmount = Number(totalAmount);
+    if (registrationType) reg.registrationType = registrationType;
+
+    await reg.save();
+
+    // Update associated User profile if exists
+    if (reg.userId) {
+      const user = await User.findById(reg.userId);
+      if (user) {
+        if (fullName) user.fullName = fullName;
+        if (email) user.email = email;
+        if (phone) user.phone = phone;
+        if (district) user.district = district;
+        await user.save();
+      }
+    }
+
+    // Update associated Group if exists
+    if (reg.registrationType === 'group' || groupName) {
+      const group = await GroupRegistration.findOne({ registrationId: id });
+      if (group) {
+        if (groupName) group.groupName = groupName;
+        if (fullName) group.groupLeaderName = fullName;
+        if (email) group.groupLeaderEmail = email;
+        if (phone) group.groupLeaderPhone = phone;
+        if (district) group.district = district;
+        await group.save();
+      }
+    }
+
+    await logAdminAction('Admin', 'REGISTRATION_UPDATE', 'Registrations', id, `Updated registration ${id}`);
+    res.json({ success: true, message: 'Registration details updated successfully', registration: reg });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// Delete Registration
+const deleteRegistration = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const reg = await Registration.findOneAndDelete({ registrationId: id });
+    if (!reg) {
+      return res.status(404).json({ success: false, message: 'Registration not found' });
+    }
+
+    await Payment.deleteMany({ registrationId: id });
+    await GroupRegistration.deleteMany({ registrationId: id });
+    await logAdminAction('Admin', 'REGISTRATION_DELETE', 'Registrations', id, `Deleted registration ${id}`);
+
+    res.json({ success: true, message: `Registration ${id} deleted successfully` });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// Resend Pass Notification
+const resendRegistrationPass = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const reg = await Registration.findOne({ registrationId: id }).populate('userId');
+    if (!reg) {
+      return res.status(404).json({ success: false, message: 'Registration not found' });
+    }
+
+    await logAdminAction('Admin', 'RESEND_PASS', 'Registrations', id, `Resent pass confirmation notification to candidate`);
+    res.json({ success: true, message: `Digital gate pass notification resent for ${id}` });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 // 6. Events Module
 const getEvents = async (req, res) => {
   try {
@@ -319,7 +404,7 @@ const getCompetitions = async (req, res) => {
         { competitionId: 'COMP-01', name: 'Solo Singing (Kids & Adults)', eventId: 'evt-carol-adult-solo', eventName: 'Carol Fiesta 2026', category: 'Singing', type: 'Individual', fee: 699, venue: 'Acoustic Stage 1', status: 'Active' },
         { competitionId: 'COMP-02', name: 'Choir & Festive Bands Battle', eventId: 'evt-carol-choirs-bands', eventName: 'Carol Fiesta 2026', category: 'Choir', type: 'Group', fee: 199, venue: 'Grand Auditorium', status: 'Active' },
         { competitionId: 'COMP-03', name: 'Choreography Dance Clash', eventId: 'evt-carol-group-dance', eventName: 'Carol Fiesta 2026', category: 'Dance', type: 'Group', fee: 199, venue: 'Open Arena', status: 'Active' },
-        { competitionId: 'COMP-04', name: 'Grand Cooking Championship', eventId: 'evt-cooking-01', eventName: 'Statewide League', category: 'Culinary', type: 'Individual', fee: 499, venue: 'Food Arena Hall B', status: 'Active' }
+        { competitionId: 'COMP-04', name: 'Grand Santa Claus Character Act', eventId: 'evt-carol-santa', eventName: 'Carol Fiesta 2026', category: 'Special Contest', type: 'Individual', fee: 699, venue: 'Festive Center Stage', status: 'Active' }
       ];
       comps = await Competition.insertMany(defaultComps);
     }
@@ -471,6 +556,9 @@ module.exports = {
   getAllParticipants,
   getAllRegistrations,
   verifyRegistration,
+  updateRegistration,
+  deleteRegistration,
+  resendRegistrationPass,
   getEvents,
   addEvent,
   deleteEvent,

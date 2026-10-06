@@ -14,8 +14,11 @@ import {
   Download,
   QrCode
 } from 'lucide-react';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 export default function MobileAppSection() {
+  const { siteContent } = useSiteContent();
+
   return (
     <section id="mobile-app" className="py-10 sm:py-14 bg-[#F8FAFC] text-slate-900 relative overflow-hidden">
       {/* Background Watermark */}
@@ -42,7 +45,7 @@ export default function MobileAppSection() {
               
               <div className="flex items-center gap-3">
                 <span className="text-[12px] font-bold text-[#9e0804] tracking-[0.18em] uppercase">
-                  OFFICIAL MOBILE APP
+                  {siteContent.mobileAppEyebrow || 'OFFICIAL MOBILE APP'}
                 </span>
                 <div
                   className="w-10 h-[2px] rounded-full"
@@ -55,8 +58,14 @@ export default function MobileAppSection() {
 
               <div className="space-y-2">
                 <h2 className="text-[32px] sm:text-[42px] lg:text-[48px] font-black text-[#3f0701] tracking-[-0.035em] leading-[1.05] uppercase">
-                  OUR APP IS AVAILABLE <br />
-                  <span className="text-[#9e0804]">DOWNLOAD IT NOW</span>
+                  {siteContent.mobileAppTitle ? (
+                    <span>{siteContent.mobileAppTitle}</span>
+                  ) : (
+                    <>
+                      OUR APP IS AVAILABLE <br />
+                      <span className="text-[#9e0804]">DOWNLOAD IT NOW</span>
+                    </>
+                  )}
                 </h2>
                 <div 
                   className="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-[#9e0804] text-[11px] font-mono font-bold px-3 py-1 rounded-full uppercase"
@@ -68,7 +77,8 @@ export default function MobileAppSection() {
               </div>
 
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg font-normal">
-                Tamil Nadu's premier talent championship app is now available for download! Register for categories, upload your competition video reels, track real-time scores across all 38 districts, and access your instant QR venue entry pass.
+                {siteContent.mobileAppSubtitle ||
+                  "Tamil Nadu's premier talent championship app is now available for download! Register for categories, upload your competition video reels, track real-time scores across all 38 districts, and access your instant QR venue entry pass."}
               </p>
 
               {/* App Feature Highlights */}
@@ -301,7 +311,7 @@ export default function MobileAppSection() {
                           <span className="bg-amber-200/70 text-amber-950 font-bold px-1.5 py-0.5 rounded text-[7.5px]">#TZ-3841</span>
                         </div>
                         <p className="text-[8px] text-slate-600 leading-tight">
-                          Sumanth Raja • Cooking Championship • Tirunelveli
+                          Sumanth Raja • Solo Vocal Championship • Tirunelveli
                         </p>
                       </div>
 

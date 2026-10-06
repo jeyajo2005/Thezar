@@ -29,8 +29,41 @@ import {
   Info,
   Clock,
   Printer,
-  Sparkle
+  Sparkle,
+  ChevronDown
 } from 'lucide-react';
+
+export const COUNTRY_CODES = [
+  { code: '+91', country: 'IN', flag: '🇮🇳', name: 'India' },
+  { code: '+1', country: 'US', flag: '🇺🇸', name: 'USA / Canada' },
+  { code: '+44', country: 'GB', flag: '🇬🇧', name: 'United Kingdom' },
+  { code: '+971', country: 'AE', flag: '🇦🇪', name: 'UAE' },
+  { code: '+65', country: 'SG', flag: '🇸🇬', name: 'Singapore' },
+  { code: '+60', country: 'MY', flag: '🇲🇾', name: 'Malaysia' },
+  { code: '+94', country: 'LK', flag: '🇱🇰', name: 'Sri Lanka' },
+  { code: '+61', country: 'AU', flag: '🇦🇺', name: 'Australia' },
+  { code: '+966', country: 'SA', flag: '🇸🇦', name: 'Saudi Arabia' },
+  { code: '+974', country: 'QA', flag: '🇶🇦', name: 'Qatar' },
+  { code: '+965', country: 'KW', flag: '🇰🇼', name: 'Kuwait' },
+  { code: '+968', country: 'OM', flag: '🇴🇲', name: 'Oman' },
+  { code: '+973', country: 'BH', flag: '🇧🇭', name: 'Bahrain' },
+  { code: '+49', country: 'DE', flag: '🇩🇪', name: 'Germany' },
+  { code: '+33', country: 'FR', flag: '🇫🇷', name: 'France' },
+  { code: '+64', country: 'NZ', flag: '🇳🇿', name: 'New Zealand' },
+  { code: '+27', country: 'ZA', flag: '🇿🇦', name: 'South Africa' },
+  { code: '+63', country: 'PH', flag: '🇵🇭', name: 'Philippines' },
+  { code: '+62', country: 'ID', flag: '🇮🇩', name: 'Indonesia' },
+  { code: '+977', country: 'NP', flag: '🇳🇵', name: 'Nepal' },
+  { code: '+880', country: 'BD', flag: '🇧🇩', name: 'Bangladesh' },
+  { code: '+960', country: 'MV', flag: '🇲🇻', name: 'Maldives' },
+  { code: '+230', country: 'MU', flag: '🇲🇺', name: 'Mauritius' },
+  { code: '+39', country: 'IT', flag: '🇮🇹', name: 'Italy' },
+  { code: '+41', country: 'CH', flag: '🇨🇭', name: 'Switzerland' },
+  { code: '+31', country: 'NL', flag: '🇳🇱', name: 'Netherlands' },
+  { code: '+81', country: 'JP', flag: '🇯🇵', name: 'Japan' },
+  { code: '+82', country: 'KR', flag: '🇰🇷', name: 'South Korea' },
+  { code: '+86', country: 'CN', flag: '🇨🇳', name: 'China' },
+];
 
 const CATEGORIES_DATA = [
   {
@@ -104,18 +137,6 @@ const CATEGORIES_DATA = [
     prizes: 'Grand Prize ₹20,000',
     badge: 'Special Stage',
     description: 'Best Santa Claus costume, festive crowd interaction & stage act.'
-  },
-  {
-    id: 'cat-5-cooking',
-    categoryGroup: 'Category V: Grand Culinary',
-    subCategory: 'Grand Cooking Championship',
-    type: 'individual',
-    eventId: 'evt-grand-cooking',
-    feePerUnit: 999,
-    feeLabel: '₹999 per team',
-    prizes: '1st ₹1,00,000 + Trophy',
-    badge: 'Mega Prize',
-    description: 'Statewide festive cooking championship with live masterchef jury.'
   }
 ];
 
@@ -173,15 +194,6 @@ const FALLBACK_EVENTS = [
     date: '12.12.2026',
     price: 699,
     venue: 'Tirunelveli District Arena'
-  },
-  {
-    id: 'evt-grand-cooking',
-    eventId: 'evt-grand-cooking',
-    title: 'Grand Cooking Championship 2026 (Category V)',
-    category: 'Cooking Championship',
-    date: '12.12.2026',
-    price: 999,
-    venue: 'Master Kitchen Arena'
   }
 ];
 
@@ -206,7 +218,9 @@ export default function RegistrationModal({ onClose }) {
     participantName: '',
     address: '',
     district: 'Tirunelveli',
+    countryCode: '+91',
     phone: '',
+    altCountryCode: '+91',
     altPhone: '',
     email: ''
   });
@@ -218,7 +232,9 @@ export default function RegistrationModal({ onClose }) {
     groupLeaderName: '',
     groupLeaderAddress: '',
     district: 'Tirunelveli',
+    countryCode: '+91',
     groupLeaderPhone: '',
+    altCountryCode: '+91',
     altPhone: '',
     email: ''
   });
@@ -341,7 +357,15 @@ export default function RegistrationModal({ onClose }) {
 
     if (registrationType === 'individual') {
       if (!individualData.participantName.trim() || !individualData.phone.trim() || !individualData.email.trim()) {
-        alert('Please fill out all required participant details (Full Name, Phone & Email).');
+        alert('Please fill out all required participant details (Full Name, Mobile Number & Email).');
+        return;
+      }
+      if (individualData.phone.length !== 10) {
+        alert('Mobile Number must be exactly 10 digits.');
+        return;
+      }
+      if (individualData.altPhone && individualData.altPhone.length !== 10) {
+        alert('Alternate Mobile Number must be exactly 10 digits.');
         return;
       }
     } else {
@@ -352,6 +376,14 @@ export default function RegistrationModal({ onClose }) {
         !groupData.email.trim()
       ) {
         alert('Please fill out all required group & leader details.');
+        return;
+      }
+      if (groupData.groupLeaderPhone.length !== 10) {
+        alert('Leader Mobile Number must be exactly 10 digits.');
+        return;
+      }
+      if (groupData.altPhone && groupData.altPhone.length !== 10) {
+        alert('Alternate Mobile Number must be exactly 10 digits.');
         return;
       }
     }
@@ -370,7 +402,10 @@ export default function RegistrationModal({ onClose }) {
     const activeUtr = utrNumber || testUtr || `UTR${Date.now().toString().slice(-10)}`;
     const candidateName = registrationType === 'individual' ? individualData.participantName : groupData.groupName;
     const candidateEmail = registrationType === 'individual' ? individualData.email : groupData.email;
-    const candidatePhone = registrationType === 'individual' ? individualData.phone : groupData.groupLeaderPhone;
+    const formattedPhone = registrationType === 'individual'
+      ? `${individualData.countryCode || '+91'} ${individualData.phone}`
+      : `${groupData.countryCode || '+91'} ${groupData.groupLeaderPhone}`;
+    const candidatePhone = formattedPhone;
 
     const payload = {
       registrationType,
@@ -389,8 +424,9 @@ export default function RegistrationModal({ onClose }) {
             participantName: individualData.participantName,
             address: individualData.address,
             district: individualData.district,
-            phone: individualData.phone,
-            altPhone: individualData.altPhone,
+            countryCode: individualData.countryCode || '+91',
+            phone: formattedPhone,
+            altPhone: individualData.altPhone ? `${individualData.altCountryCode || '+91'} ${individualData.altPhone}` : '',
             email: individualData.email
           }
         : {
@@ -399,8 +435,9 @@ export default function RegistrationModal({ onClose }) {
             groupLeaderName: groupData.groupLeaderName,
             groupLeaderAddress: groupData.groupLeaderAddress || groupData.groupAddress,
             district: groupData.district,
-            groupLeaderPhone: groupData.groupLeaderPhone,
-            groupLeaderAltPhone: groupData.altPhone,
+            countryCode: groupData.countryCode || '+91',
+            groupLeaderPhone: formattedPhone,
+            groupLeaderAltPhone: groupData.altPhone ? `${groupData.altCountryCode || '+91'} ${groupData.altPhone}` : '',
             groupLeaderEmail: groupData.email,
             members: groupMembers.filter((m) => m.name.trim() !== '')
           })
@@ -777,19 +814,48 @@ export default function RegistrationModal({ onClose }) {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                      Mobile Number *
-                    </label>
-                    <div className="relative">
-                      <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Mobile Number *
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">
+                        {individualData.phone ? `${individualData.phone.length}/10` : '10 digits'}
+                      </span>
+                    </div>
+                    <div
+                      className="flex items-center rounded-xl bg-white border border-slate-300 focus-within:ring-2 focus-within:ring-[#9e0804]/20 focus-within:border-[#9e0804] transition-all overflow-hidden"
+                      style={{ borderRadius: '12px' }}
+                    >
+                      {/* Country Code Selector */}
+                      <div className="relative bg-slate-50 border-r border-slate-200 shrink-0">
+                        <select
+                          value={individualData.countryCode || '+91'}
+                          onChange={(e) => setIndividualData({ ...individualData, countryCode: e.target.value })}
+                          className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs sm:text-sm font-bold text-slate-800 cursor-pointer focus:outline-none"
+                          title="Select Country Code"
+                        >
+                          {COUNTRY_CODES.map((c) => (
+                            <option key={`ind-phone-${c.country}-${c.code}`} value={c.code}>
+                              {c.flag} {c.code} ({c.name})
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="w-3 h-3 text-slate-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
+
+                      {/* 10-Digit Mobile Input */}
                       <input
                         type="tel"
                         required
-                        placeholder="+91 97903 51878"
+                        inputMode="numeric"
+                        maxLength={10}
+                        placeholder="9790351878"
                         value={individualData.phone}
-                        onChange={(e) => setIndividualData({ ...individualData, phone: e.target.value })}
-                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#9e0804]/20 focus:border-[#9e0804] transition-all"
-                        style={{ borderRadius: '12px' }}
+                        onChange={(e) => {
+                          const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                          setIndividualData({ ...individualData, phone: digits });
+                        }}
+                        className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs sm:text-sm focus:outline-none font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal placeholder:text-slate-400"
                       />
                     </div>
                   </div>
@@ -797,17 +863,47 @@ export default function RegistrationModal({ onClose }) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                      Alternate Phone <span className="text-slate-400 font-normal">(Optional)</span>
-                    </label>
-                    <input
-                      type="tel"
-                      placeholder="+91 98765 43210"
-                      value={individualData.altPhone}
-                      onChange={(e) => setIndividualData({ ...individualData, altPhone: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#9e0804]/20 focus:border-[#9e0804] transition-all"
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Alternate Phone <span className="text-slate-400 font-normal">(Optional)</span>
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">
+                        {individualData.altPhone ? `${individualData.altPhone.length}/10` : '10 digits'}
+                      </span>
+                    </div>
+                    <div
+                      className="flex items-center rounded-xl bg-white border border-slate-300 focus-within:ring-2 focus-within:ring-[#9e0804]/20 focus-within:border-[#9e0804] transition-all overflow-hidden"
                       style={{ borderRadius: '12px' }}
-                    />
+                    >
+                      <div className="relative bg-slate-50 border-r border-slate-200 shrink-0">
+                        <select
+                          value={individualData.altCountryCode || '+91'}
+                          onChange={(e) => setIndividualData({ ...individualData, altCountryCode: e.target.value })}
+                          className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs sm:text-sm font-bold text-slate-800 cursor-pointer focus:outline-none"
+                          title="Select Country Code"
+                        >
+                          {COUNTRY_CODES.map((c) => (
+                            <option key={`ind-alt-${c.country}-${c.code}`} value={c.code}>
+                              {c.flag} {c.code} ({c.name})
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="w-3 h-3 text-slate-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
+
+                      <input
+                        type="tel"
+                        inputMode="numeric"
+                        maxLength={10}
+                        placeholder="9876543210"
+                        value={individualData.altPhone}
+                        onChange={(e) => {
+                          const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                          setIndividualData({ ...individualData, altPhone: digits });
+                        }}
+                        className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs sm:text-sm focus:outline-none font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal placeholder:text-slate-400"
+                      />
+                    </div>
                   </div>
 
                   <div>
@@ -863,33 +959,66 @@ export default function RegistrationModal({ onClose }) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                      Leader Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="+91 97903 51878"
-                      value={groupData.groupLeaderPhone}
-                      onChange={(e) => setGroupData({ ...groupData, groupLeaderPhone: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#9e0804]/20 focus:border-[#9e0804] transition-all"
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Leader Phone Number *
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">
+                        {groupData.groupLeaderPhone ? `${groupData.groupLeaderPhone.length}/10` : '10 digits'}
+                      </span>
+                    </div>
+                    <div
+                      className="flex items-center rounded-xl bg-white border border-slate-300 focus-within:ring-2 focus-within:ring-[#9e0804]/20 focus-within:border-[#9e0804] transition-all overflow-hidden"
                       style={{ borderRadius: '12px' }}
-                    />
+                    >
+                      <div className="relative bg-slate-50 border-r border-slate-200 shrink-0">
+                        <select
+                          value={groupData.countryCode || '+91'}
+                          onChange={(e) => setGroupData({ ...groupData, countryCode: e.target.value })}
+                          className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs sm:text-sm font-bold text-slate-800 cursor-pointer focus:outline-none"
+                          title="Select Country Code"
+                        >
+                          {COUNTRY_CODES.map((c) => (
+                            <option key={`grp-phone-${c.country}-${c.code}`} value={c.code}>
+                              {c.flag} {c.code} ({c.name})
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="w-3 h-3 text-slate-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
+
+                      <input
+                        type="tel"
+                        required
+                        inputMode="numeric"
+                        maxLength={10}
+                        placeholder="9790351878"
+                        value={groupData.groupLeaderPhone}
+                        onChange={(e) => {
+                          const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                          setGroupData({ ...groupData, groupLeaderPhone: digits });
+                        }}
+                        className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs sm:text-sm focus:outline-none font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal placeholder:text-slate-400"
+                      />
+                    </div>
                   </div>
 
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
                       Leader Email Address *
                     </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="leader@choir.org"
-                      value={groupData.email}
-                      onChange={(e) => setGroupData({ ...groupData, email: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#9e0804]/20 focus:border-[#9e0804] transition-all"
-                      style={{ borderRadius: '12px' }}
-                    />
+                    <div className="relative">
+                      <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="email"
+                        required
+                        placeholder="leader@choir.org"
+                        value={groupData.email}
+                        onChange={(e) => setGroupData({ ...groupData, email: e.target.value })}
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#9e0804]/20 focus:border-[#9e0804] transition-all"
+                        style={{ borderRadius: '12px' }}
+                      />
+                    </div>
                   </div>
                 </div>
 

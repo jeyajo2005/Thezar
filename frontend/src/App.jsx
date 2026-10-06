@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { SiteContentProvider } from './context/SiteContentContext';
 import Home from './Pages/Home';
 import Admin from './Pages/Admin';
 
@@ -22,9 +23,10 @@ function PublicAdminLoginRoute({ children }) {
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
+    <SiteContentProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
         
         {/* Public Admin Login Route */}
         <Route
@@ -52,5 +54,6 @@ export default function App() {
         <Route path="*" element={<Home />} />
       </Routes>
     </Router>
+    </SiteContentProvider>
   );
 }

@@ -30,13 +30,13 @@ export default function CompetitionsShowcase({ onOpenRegister }) {
       description: 'Expressive rhythm and visual spectacle featuring synchronized group troupes and freestyle soloists.'
     },
     {
-      id: 'culinary',
-      title: 'Grand Cooking & Special Acts',
-      icon: Flame,
+      id: 'santa',
+      title: 'Santa Claus & Special Acts',
+      icon: Trophy,
       badgeColor: 'from-emerald-600 to-teal-800',
-      prizes: '₹1,20,000 Total Pool',
-      items: ['Grand Cooking Championship (₹1 Lakh 1st Prize)', 'Santa Claus Stage Character Contest', 'Authentic Recipe Plating', 'Masterchef Judging Panel'],
-      description: 'Live culinary battle preparing authentic festive cuisines and exciting Santa Claus stage presentations.'
+      prizes: '₹50,000 Total Pool',
+      items: ['Santa Claus Character Contest', 'Festive Stage Theme Presentation', 'Live Audience Interaction', 'Celebrity Jury Evaluation'],
+      description: 'Festive stage character competition featuring Santa Claus costume acts, creative presentations, and interactive entertainment.'
     }
   ];
 

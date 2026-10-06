@@ -1,28 +1,31 @@
 import { MapPin, Video, Trophy, ArrowRight, UserCheck, QrCode, Sparkles, CheckCircle2 } from 'lucide-react';
 import contestantImg from '../../assets/cheerful_contestant.jpg';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 export default function HowItWorksSection({ onOpenRegister }) {
+  const { siteContent } = useSiteContent();
+
   const steps = [
     {
       id: 1,
-      title: 'Select District & Register',
-      desc: 'Choose your district arena (e.g. Tirunelveli Cooking, Cultural or Arts) & generate your verified digital admission pass.',
+      title: siteContent.howItWorksStep1Title || 'Select District & Register',
+      desc: siteContent.howItWorksStep1Desc || 'Choose your district arena (e.g. Tirunelveli Singing, Choirs, Dance or Arts) & generate your verified digital admission pass.',
       icon: UserCheck,
-      iconBg: 'bg-[#DCFCE7] text-[#15803D]', // Soft mint green
+      iconBg: 'bg-[#DCFCE7] text-[#15803D]',
     },
     {
       id: 2,
-      title: 'Submit 60-Sec Video Reel',
-      desc: 'Record & upload a short video reel showing your talent for district jury evaluation & shortlisting.',
+      title: siteContent.howItWorksStep2Title || 'Submit 60-Sec Video Reel',
+      desc: siteContent.howItWorksStep2Desc || 'Record & upload a short video reel showing your talent for district jury evaluation & shortlisting.',
       icon: Video,
-      iconBg: 'bg-[#F1F5F9] text-[#334155]', // Soft slate
+      iconBg: 'bg-[#F1F5F9] text-[#334155]',
     },
     {
       id: 3,
-      title: 'Face-to-Face Live Stage',
-      desc: 'Perform live before grand judges & audience at your district auditorium and advance to Chennai Finals!',
+      title: siteContent.howItWorksStep3Title || 'Face-to-Face Live Stage',
+      desc: siteContent.howItWorksStep3Desc || 'Perform live before grand judges & audience at your district auditorium and advance to Chennai Finals!',
       icon: Trophy,
-      iconBg: 'bg-[#FEF3C7] text-[#92400E]', // Soft warm amber
+      iconBg: 'bg-[#FEF3C7] text-[#92400E]',
     },
   ];
 
@@ -42,11 +45,11 @@ export default function HowItWorksSection({ onOpenRegister }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* CENTERED HEADER (Matching Reference Image) */}
+        {/* CENTERED HEADER */}
         <div className="text-center max-w-2xl mx-auto space-y-2 mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-3">
             <span className="text-[12px] font-bold text-[#9e0804] tracking-[0.18em] uppercase">
-              SIMPLE STEPS
+              {siteContent.howItWorksEyebrow || 'SIMPLE 3-STEP JOURNEY'}
             </span>
             <div
               className="w-10 h-[2px] rounded-full"
@@ -57,7 +60,7 @@ export default function HowItWorksSection({ onOpenRegister }) {
             />
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#071426] tracking-tight uppercase">
-            HOW IT <span className="text-[#9e0804]">WORKS</span>
+            {siteContent.howItWorksTitle || 'HOW THEZAR'} <span className="text-[#9e0804]">{siteContent.howItWorksHighlight || 'WORKS'}</span>
           </h2>
           <p className="text-slate-500 text-sm sm:text-base leading-relaxed pt-1">
             No confusion or delays. Just fast, simple and transparent talent selection.

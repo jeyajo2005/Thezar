@@ -3,6 +3,7 @@ import Navbar from '../Component/Navbar/Navbar';
 import Hero from '../Component/Home/Hero';
 import AboutTheZarSection from '../Component/Home/AboutTheZarSection';
 import CountdownSection from '../Component/Home/CountdownSection';
+import ChristmasEventsSection from '../Component/Home/ChristmasEventsSection';
 import EventsGrid from '../Component/Events/EventsGrid';
 import DistrictJourneySection from '../Component/Home/DistrictJourneySection';
 import CategoryGridSection from '../Component/Home/CategoryGridSection';
@@ -44,6 +45,12 @@ export default function Home() {
         {/* 05. Floating Countdown Card */}
         <CountdownSection
           onOpenRegister={() => setIsRegisterOpen(true)}
+        />
+
+        {/* 05b. Christmas Special Events */}
+        <ChristmasEventsSection
+          onOpenRegister={() => setIsRegisterOpen(true)}
+          onSelectEvent={(evtId) => setSelectedEventId(evtId)}
         />
 
         {/* 06. Upcoming Events */}

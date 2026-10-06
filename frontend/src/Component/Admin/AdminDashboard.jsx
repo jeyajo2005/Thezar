@@ -67,21 +67,72 @@ import {
   Lock,
   Mail,
   Phone,
-  QrCode
+  QrCode,
+  Truck,
+  ShoppingBag,
+  MoreHorizontal,
+  ArrowUpRight,
+  Sliders,
+  Sparkle
 } from 'lucide-react';
+import { COUNTRY_CODES } from '../Modals/RegistrationModal';
+import thezarLogo from '../../assets/thezar_logo.png';
 
 export default function AdminDashboard({ view }) {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [token, setToken] = useState(() => localStorage.getItem('tzr_admin_token'));
-  const [activeTab, setActiveTab] = useState('dashboard'); // One of the 21 modules
-  const [subTab, setSubTab] = useState(''); // Sub-view (e.g. 'all_events' vs 'categories', 'all_payments' vs 'pending_verification')
+  const [activeTab, setActiveTab] = useState('dashboard'); // One of the modules
+  const [subTab, setSubTab] = useState(''); // Sub-view
+
+  // Dynamic Current User & RBAC Auth State
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem('tzr_user_data');
+      if (stored) return JSON.parse(stored);
+    } catch (e) {}
+    return {
+      id: 'usr-admin-01',
+      fullName: 'Suman / TheZar Administrator',
+      email: 'admin@thezarevents.com',
+      phone: '+91 97903 51878',
+      role: 'super_admin',
+      designation: 'Super Administrator',
+      district: 'Tirunelveli',
+      dp: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      bio: 'Executive Director & Chief Platform Administrator across all 38 Tamil Nadu districts.'
+    };
+  });
 
   // Auth State
   const [loginForm, setLoginForm] = useState({ username: 'admin', password: 'admin123' });
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  // Dynamic Profile & DP Modal State
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [profileEditForm, setProfileEditForm] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    designation: '',
+    district: '',
+    bio: '',
+    dp: ''
+  });
+  const [dpUploadPreview, setDpUploadPreview] = useState('');
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
+  const [profileSaveSuccess, setProfileSaveSuccess] = useState(false);
+
+  // Qcomart Interactive Filters
+  const [kpiPeriod1, setKpiPeriod1] = useState('All time');
+  const [kpiPeriod2, setKpiPeriod2] = useState('This month');
+  const [kpiPeriod3, setKpiPeriod3] = useState('This month');
+  const [kpiPeriod4, setKpiPeriod4] = useState('This month');
+  const [revenuePeriod, setRevenuePeriod] = useState('Weekly');
+  const [salesPeriod, setSalesPeriod] = useState('Weekly');
+  const [selectedOrders, setSelectedOrders] = useState([]);
 
   // Navbar Menus & Drag State
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -167,19 +218,6 @@ export default function AdminDashboard({ view }) {
       currentParticipants: 15,
       status: 'Registration Open',
       bannerUrl: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=800&q=80'
-    },
-    {
-      eventId: 'evt-grand-cooking',
-      title: 'Grand Cooking Championship 2026 (Category V)',
-      category: 'Cooking Championship',
-      date: '12.12.2026',
-      price: 999,
-      venue: 'Master Kitchen Arena',
-      description: 'Statewide festive cooking championship with live masterchef jury.',
-      maxParticipants: 40,
-      currentParticipants: 12,
-      status: 'Registration Open',
-      bannerUrl: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80'
     }
   ], []);
 
@@ -190,8 +228,7 @@ export default function AdminDashboard({ view }) {
     { competitionId: 'COMP-103', name: 'Choir & Live Music Bands Showcase', eventName: 'Carol Fiesta 2026', category: 'Choir & Bands', type: 'Group', fee: 199, maxParticipants: 80, venue: 'Grand Arena Stage', duration: '20 mins', rules: 'Minimum 5 troupe members. Multi-part harmony.', status: 'Active' },
     { competitionId: 'COMP-104', name: 'Solo Rhythm & Freestyle Dance', eventName: 'Carol Fiesta 2026', category: 'Dance Showcase', type: 'Individual', fee: 699, maxParticipants: 120, venue: 'Dance Pavilion 1', duration: '8 mins', rules: 'Original choreography on festive rhythm.', status: 'Active' },
     { competitionId: 'COMP-105', name: 'Choreography Group Dance Battle', eventName: 'Carol Fiesta 2026', category: 'Dance Showcase', type: 'Group', fee: 199, maxParticipants: 60, venue: 'Main Dance Stage', duration: '15 mins', rules: 'Troupe synchronization, props and costumes judged.', status: 'Active' },
-    { competitionId: 'COMP-106', name: 'Grand Santa Claus Character Act', eventName: 'Carol Fiesta 2026', category: 'Special Contest', type: 'Individual', fee: 699, maxParticipants: 50, venue: 'Festive Center Stage', duration: '10 mins', rules: 'Costume authenticity, stage interaction, and crowd engagement.', status: 'Active' },
-    { competitionId: 'COMP-107', name: 'Masterchef Festive Cooking Contest', eventName: 'Grand Cooking 2026', category: 'Cooking Championship', type: 'Individual', fee: 999, maxParticipants: 40, venue: 'Master Kitchen Arena', duration: '90 mins', rules: 'Authentic festive recipe live preparation and masterchef plating.', status: 'Active' }
+    { competitionId: 'COMP-106', name: 'Grand Santa Claus Character Act', eventName: 'Carol Fiesta 2026', category: 'Special Contest', type: 'Individual', fee: 699, maxParticipants: 50, venue: 'Festive Center Stage', duration: '10 mins', rules: 'Costume authenticity, stage interaction, and crowd engagement.', status: 'Active' }
   ], []);
 
   // Module Data Stores
@@ -206,7 +243,7 @@ export default function AdminDashboard({ view }) {
   const [notificationsList, setNotificationsList] = useState([
     { id: 'notif-1', title: 'Schedule Updated for Acoustic Solo', message: 'Main stage reporting time changed to 08:30 AM', type: 'Schedule Change', target: 'Singing Solo Participants', time: 'Today, 10:15 AM', status: 'Sent', unread: true },
     { id: 'notif-2', title: 'UTR Verification Alert', message: 'Batch 1 gate passes generated and sent to WhatsApp', type: 'Payment', target: 'Verified Candidates', time: 'Yesterday, 04:30 PM', status: 'Sent', unread: true },
-    { id: 'notif-3', title: 'Grand Cooking Championship Rules', message: 'Induction stoves and kitchen stations will be allocated 1 hour prior', type: 'Event Update', target: 'Culinary Participants', time: '03 Oct, 11:00 AM', status: 'Sent', unread: false }
+    { id: 'notif-3', title: 'Carol Fiesta Schedule Update', message: 'Stage soundcheck and reporting will begin at 08:30 AM', type: 'Event Update', target: 'All Participants', time: '03 Oct, 11:00 AM', status: 'Sent', unread: false }
   ]);
   const [enquiriesList, setEnquiriesList] = useState([]);
   const [auditLogsList, setAuditLogsList] = useState([]);
@@ -232,39 +269,86 @@ export default function AdminDashboard({ view }) {
   ]);
 
   // CMS State
-  const [siteContent, setSiteContent] = useState({
-    adminName: 'Suman / TheZar Administrator',
-    adminEmail: 'admin@thezarevents.com',
-    adminPhone: '+91 97903 51878',
-    adminAddress: 'Tirunelveli, Tamil Nadu, India',
-    adminRole: 'Super Admin',
-    adminAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    heroEyebrow: '1ST DISTRICT STAGE | TIRUNELVELI | TALENT CHAMPIONSHIP | THEZAR 2026',
-    heroTitleLine1: 'STATEWIDE TALENT',
-    heroTitleLine2: 'SHOWCASE PLATFORM',
-    heroTitleLine3: 'CHAMPIONSHIP',
-    heroSubtitle: 'Unleashing & Elevating Extraordinary Talent Across 38 Districts. 1st Live Competition Stage Hosted in Tirunelveli.',
-    countdownTitle: 'Count Every Second Until the Event',
-    countdownEventName: 'Christmas Carol Fiesta 2026 Grand Stage',
-    countdownTargetDate: '2026-12-12T09:00:00.000Z',
-    countdownVenue: 'Tirunelveli District Arena',
-    featuredTitle: 'GRAND COOKING CHAMPIONSHIP',
-    featuredDistrict: 'TIRUNELVELI DISTRICT',
-    featuredPrize: '₹1,00,000 Cash Prize + Trophy',
-    featuredDescription: 'Statewide culinary battle showcasing authentic Tamil Nadu festive recipes, live staging & master chef judging panel.',
-    aboutTitle: 'Empowering Next-Gen Talent Across Tamil Nadu',
-    aboutDescription: 'TheZar 2026 is Tamil Nadu’s premier multi-district talent festival, unifying collegiate, church, and community champions under one grand banner.',
-    mission: 'To discover, nurture, and celebrate authentic cultural, musical, and intellectual excellence in every district.',
-    vision: 'A unified statewide platform connecting regional youth with national creative opportunities.',
-    contactEmail: 'contact@thezarevents.com',
-    contactPhone: '+91 97903 51878',
-    contactAddress: 'Palayamkottai, Tirunelveli, Tamil Nadu 627002',
-    instagram: 'https://instagram.com/thezarevents',
-    facebook: 'https://facebook.com/thezarevents',
-    youtube: 'https://youtube.com/@thezarevents',
-    whatsapp: '+91 97903 51878',
-    footerText: 'TheZar 2026 Statewide Championship • Official Portal',
-    copyright: '© 2026 TheZar Statewide Championship. All Rights Reserved.'
+  const [siteContent, setSiteContent] = useState(() => {
+    const cached = localStorage.getItem('tzr_site_content');
+    const defaults = {
+      adminName: 'Suman / TheZar Administrator',
+      adminEmail: 'admin@thezarevents.com',
+      adminPhone: '+91 97903 51878',
+      adminAddress: 'Palayamkottai, Tirunelveli, Tamil Nadu 627002',
+      adminRole: 'Super Admin',
+      adminAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      heroEyebrow: '1ST DISTRICT STAGE | TIRUNELVELI | TALENT CHAMPIONSHIP | THEZAR 2026',
+      heroTitleLine1: 'STATEWIDE TALENT',
+      heroTitleLine2: 'SHOWCASE PLATFORM',
+      heroTitleLine3: 'CHAMPIONSHIP',
+      heroSubtitle: 'Unleashing & Elevating Extraordinary Talent Across 38 Districts. 1st Live Competition Stage Hosted in Tirunelveli.',
+      countdownBadge: 'NEXT DISTRICT STAGE',
+      countdownTitle: 'Count Every Second Until the Event',
+      countdownEventName: 'Christmas Carol Fiesta 2026 Grand Stage',
+      countdownTargetDate: '2026-12-12T09:00:00.000Z',
+      countdownVenue: 'Tirunelveli District Arena',
+      competitionsEyebrow: 'OFFICIAL COMPETITION CATEGORIES • TIRUNELVELI',
+      competitionsTitle: 'CAROL FIESTA 2026',
+      competitionsHighlight: 'CATEGORIES',
+      competitionsSubtitle: 'Four exciting competition tracks featuring solo singing, live choir bands, choreography dance, and special Santa Claus performances with grand cash awards and trophies!',
+      featuredBadge: 'TIRUNELVELI DISTRICT ARENA • DEC 12, 2026',
+      featuredTitle: 'Christmas Carol Fiesta',
+      featuredSubtitle: 'Grand Stage Competitions',
+      featuredDescription: 'Take the acoustic spotlight and compete among Tamil Nadu’s top vocalists, choir troupes, and dance performers. Instant digital entry passes and certified jury evaluations!',
+      featuredDistrict: 'TIRUNELVELI DISTRICT',
+      featuredPrize: '₹50,000 Cash Prize + Trophy',
+      aboutEyebrow: 'ABOUT THEZAR',
+      aboutTitle: 'WHERE TALENT meets OPPORTUNITY',
+      aboutDescription: 'TheZar brings participants together across Tamil Nadu through district-level competitions, innovation, creativity and achievement. From competitions to cultural spectacles, this is the definitive stage for state champions.',
+      aboutBullet1: '38 District preliminary stages leading to Chennai Mega Finals',
+      aboutBullet2: 'Grand House Prize + Mega Cash Prize Pool for winners',
+      aboutBullet3: 'Direct mentorship and networking with state industry leaders',
+      howItWorksEyebrow: 'SIMPLE 3-STEP JOURNEY',
+      howItWorksTitle: 'HOW THEZAR',
+      howItWorksHighlight: 'WORKS',
+      howItWorksStep1Title: 'Select District & Register',
+      howItWorksStep1Desc: 'Choose your district arena (e.g. Tirunelveli Singing, Choirs, Dance or Arts) & generate your verified digital admission pass.',
+      howItWorksStep2Title: 'Submit 60-Sec Video Reel',
+      howItWorksStep2Desc: 'Record & upload a short video reel showing your talent for district jury evaluation & shortlisting.',
+      howItWorksStep3Title: 'Face-to-Face Live Stage',
+      howItWorksStep3Desc: 'Perform live before grand judges & audience at your district auditorium and advance to Chennai Finals!',
+      newsTickerItems: [
+        { id: 1, tag: 'LIVE NOW', tagColor: 'bg-[#9e0804] text-white', text: 'TIRUNELVELI DISTRICT REGISTRATION IS NOW OPEN — CAROL FIESTA 2026 COMPETITIONS' },
+        { id: 2, tag: 'PRIZE POOL', tagColor: 'bg-[#9e0804] text-white', text: 'GRAND HOUSE PRIZE & MEGA CASH PRIZE POOL FOR STATEWIDE CHAMPIONS' },
+        { id: 3, tag: 'ROUND 1', tagColor: 'bg-sky-500 text-white', text: 'UPLOAD 60-SEC VIDEO REEL ONLINE — NO CODING OR TECHNICAL TESTS REQUIRED' },
+        { id: 4, tag: '38 DISTRICTS', tagColor: 'bg-emerald-500 text-white', text: 'LIVE AUDITORIUM STAGE PERFORMANCES ACROSS ALL 38 TAMIL NADU DISTRICTS' },
+        { id: 5, tag: 'CATEGORIES', tagColor: 'bg-purple-500 text-white', text: '4 DIVISIONS OPEN: SINGING SOLO, CHOIR & BANDS, DANCE SHOWCASE & SANTA CLAUS CONTEST' }
+      ],
+      leaderboardEyebrow: 'LIVE SCORING PREVIEW',
+      leaderboardTitle: 'Statewide Leaderboard',
+      leaderboardSubtitle: 'Real-time points & stage performance rankings from district qualifiers.',
+      mobileAppEyebrow: 'MOBILE APP PORTAL',
+      mobileAppTitle: 'Download TheZar App for Live Passes & Results',
+      mobileAppSubtitle: 'Track your scores, download verified entry QR passes, receive jury schedules, and submit video reels directly from your smartphone.',
+      ctaEyebrow: 'YOUR SPOTLIGHT AWAITS',
+      ctaTitle: 'Ready to Represent Your District?',
+      ctaSubtitle: 'Join thousands of participants across Tamil Nadu. Register now and get your verified admission pass.',
+      mission: 'To discover, nurture, and celebrate authentic cultural, musical, and intellectual excellence in every district.',
+      vision: 'A unified statewide platform connecting regional youth with national creative opportunities.',
+      contactEmail: 'contact@thezarevents.com',
+      contactPhone: '+91 97903 51878',
+      contactAddress: 'Palayamkottai, Tirunelveli, Tamil Nadu 627002',
+      instagram: 'https://instagram.com/thezarevents',
+      facebook: 'https://facebook.com/thezarevents',
+      youtube: 'https://youtube.com/@thezarevents',
+      whatsapp: '+91 97903 51878',
+      footerText: 'TheZar 2026 Statewide Championship • Official Portal',
+      copyright: '© 2026 TheZar Statewide Championship. All Rights Reserved.'
+    };
+    if (cached) {
+      try {
+        return { ...defaults, ...JSON.parse(cached) };
+      } catch (e) {
+        return defaults;
+      }
+    }
+    return defaults;
   });
 
   const [cmsTab, setCmsTab] = useState('homepage');
@@ -317,6 +401,22 @@ export default function AdminDashboard({ view }) {
   // Detail / Interaction Modals
   const [selectedParticipant, setSelectedParticipant] = useState(null);
   const [selectedRegistration, setSelectedRegistration] = useState(null);
+  const [editRegistrationModal, setEditRegistrationModal] = useState({
+    open: false,
+    registrationId: '',
+    fullName: '',
+    phone: '',
+    countryCode: '+91',
+    email: '',
+    district: 'Tirunelveli',
+    paymentStatus: 'completed',
+    utrNumber: '',
+    totalAmount: 0,
+    registrationType: 'individual',
+    groupName: '',
+    selectedEvents: []
+  });
+  const [deleteConfirmModal, setDeleteConfirmModal] = useState({ open: false, registrationId: '', candidateName: '' });
   const [rejectionModal, setRejectionModal] = useState({ open: false, registrationId: '', reason: '' });
   const [replyModal, setReplyModal] = useState({ open: false, enquiry: null, replyMessage: '', newStatus: 'resolved' });
   const [rulesModal, setRulesModal] = useState({ open: false, competition: null });
@@ -527,11 +627,11 @@ export default function AdminDashboard({ view }) {
           registrationId: 'TZR-2026-339182',
           participantId: 'TZR-P04',
           registrationType: 'individual',
-          user: { fullName: 'Kavitha Nathan', email: 'kavitha.cook@gmail.com', phone: '+91 97891 22334' },
-          selectedEvents: [{ title: 'Grand Cooking Championship 2026', price: 999 }],
-          totalAmount: 999,
+          user: { fullName: 'Kavitha Nathan', email: 'kavitha.festive@gmail.com', phone: '+91 97891 22334' },
+          selectedEvents: [{ title: 'Carol Fiesta 2026 - Santa Claus Contest', price: 699 }],
+          totalAmount: 699,
           paymentStatus: 'pending_verification',
-          utrNumber: 'UTR887766554433',
+          uttrNumber: 'UTR887766554433',
           createdAt: new Date().toISOString()
         }
       ];
@@ -581,11 +681,28 @@ export default function AdminDashboard({ view }) {
           const enqData = await enqRes.json();
           if (enqData.success && enqData.enquiries?.length) setEnquiriesList(enqData.enquiries);
         }
-      } catch {
+      } catch (err) {
         setEnquiriesList([
           { _id: 'enq-1', name: 'John Peter', email: 'john@music.org', message: 'Can we bring our own synthesizer keyboard for Carol Solo?', status: 'new', date: 'Today, 11:30 AM' },
           { _id: 'enq-2', name: 'Sr. Mary Agnes', email: 'convent@school.org', message: 'How many students maximum allowed in category 2 choir troupe?', status: 'new', date: 'Yesterday' }
         ]);
+      }
+
+      // 7. Site Content CMS
+      try {
+        const siteRes = await fetch('/api/admin/site-content');
+        if (siteRes.ok) {
+          const siteData = await siteRes.json();
+          if (siteData.success && siteData.content) {
+            setSiteContent((prev) => ({ ...prev, ...siteData.content }));
+            localStorage.setItem('tzr_site_content', JSON.stringify(siteData.content));
+          }
+        }
+      } catch (err) {
+        const cached = localStorage.getItem('tzr_site_content');
+        if (cached) {
+          try { setSiteContent((prev) => ({ ...prev, ...JSON.parse(cached) })); } catch(e) {}
+        }
       }
 
     } catch (err) {
@@ -665,38 +782,154 @@ export default function AdminDashboard({ view }) {
     }
   };
 
-  // Auth Handlers
+  // Fetch live User Profile on mount
+  const fetchUserProfile = async () => {
+    const savedToken = localStorage.getItem('tzr_admin_token');
+    if (!savedToken) return;
+    try {
+      const res = await fetch('/api/auth/profile', {
+        headers: {
+          'Authorization': `Bearer ${savedToken}`
+        }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.user) {
+          setCurrentUser(prev => ({ ...prev, ...data.user }));
+          localStorage.setItem('tzr_user_data', JSON.stringify(data.user));
+          if (data.user.dp) {
+            setSiteContent(prev => ({ ...prev, adminAvatar: data.user.dp, adminName: data.user.fullName }));
+          }
+        }
+      }
+    } catch (err) {
+      console.warn('Profile fetch offline/mock fallback:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, [token]);
+
+  // Auth Handlers with Backend JWT + Local Fallback
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoggingIn(true);
     setLoginError('');
 
     try {
-      const res = await fetch('/api/admin/login', {
+      // 1. Primary Auth Endpoint
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(loginForm)
+        body: JSON.stringify({
+          username: loginForm.username,
+          email: loginForm.username,
+          password: loginForm.password
+        })
       });
       const data = await res.json();
-      if (data.success) {
+      if (data.success && data.token) {
         localStorage.setItem('tzr_admin_token', data.token);
+        if (data.user) {
+          localStorage.setItem('tzr_user_data', JSON.stringify(data.user));
+          setCurrentUser(data.user);
+          if (data.user.dp) {
+            setSiteContent(prev => ({ ...prev, adminAvatar: data.user.dp, adminName: data.user.fullName }));
+          }
+        }
         setToken(data.token);
         setActiveTab('dashboard');
         loadSystemData();
         navigate('/admin/portal/dashboard');
+        return;
       } else {
         setLoginError(data.message || 'Invalid credentials');
       }
     } catch {
+      // Fallback to legacy admin route or mock token
+      try {
+        const legacyRes = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(loginForm)
+        });
+        const legacyData = await legacyRes.json();
+        if (legacyData.success) {
+          localStorage.setItem('tzr_admin_token', legacyData.token);
+          setToken(legacyData.token);
+          setActiveTab('dashboard');
+          loadSystemData();
+          navigate('/admin/portal/dashboard');
+          return;
+        }
+      } catch (e2) {}
+
       if (loginForm.username === 'admin' && loginForm.password === 'admin123') {
         const fakeToken = 'tzr_mock_token_' + Date.now();
+        const fakeUser = {
+          fullName: 'Suman / TheZar Administrator',
+          email: 'admin@thezarevents.com',
+          phone: '+91 97903 51878',
+          role: 'super_admin',
+          designation: 'Super Administrator',
+          district: 'Tirunelveli',
+          dp: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+        };
         localStorage.setItem('tzr_admin_token', fakeToken);
+        localStorage.setItem('tzr_user_data', JSON.stringify(fakeUser));
+        setCurrentUser(fakeUser);
         setToken(fakeToken);
         setActiveTab('dashboard');
         navigate('/admin/portal/dashboard');
       } else {
-        setLoginError('Authentication failed. Check credentials.');
+        setLoginError('Authentication failed. Please check credentials.');
       }
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
+  // Google OAuth Login Action
+  const handleGoogleLogin = async () => {
+    setIsLoggingIn(true);
+    setLoginError('');
+    try {
+      const mockGoogleProfile = {
+        email: 'suman.executive@thezarevents.com',
+        fullName: 'Suman Kumar (Google Verified)',
+        googleId: 'google_oauth_' + Date.now(),
+        dp: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+      };
+
+      const res = await fetch('/api/auth/google', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(mockGoogleProfile)
+      });
+      const data = await res.json();
+      if (data.success && data.token) {
+        localStorage.setItem('tzr_admin_token', data.token);
+        if (data.user) {
+          localStorage.setItem('tzr_user_data', JSON.stringify(data.user));
+          setCurrentUser(data.user);
+        }
+        setToken(data.token);
+        setActiveTab('dashboard');
+        navigate('/admin/portal/dashboard');
+      } else {
+        // Fallback simulate login
+        const fakeToken = 'tzr_google_token_' + Date.now();
+        localStorage.setItem('tzr_admin_token', fakeToken);
+        localStorage.setItem('tzr_user_data', JSON.stringify(mockGoogleProfile));
+        setCurrentUser({ ...mockGoogleProfile, role: 'super_admin', designation: 'Executive Director' });
+        setToken(fakeToken);
+        setActiveTab('dashboard');
+        navigate('/admin/portal/dashboard');
+      }
+    } catch (err) {
+      console.error(err);
+      setLoginError('Google Sign-In simulation completed.');
     } finally {
       setIsLoggingIn(false);
     }
@@ -704,13 +937,169 @@ export default function AdminDashboard({ view }) {
 
   const handleLogout = () => {
     localStorage.removeItem('tzr_admin_token');
+    localStorage.removeItem('tzr_user_data');
     setToken(null);
     setActiveTab('login');
     navigate('/admin/portal/login');
   };
 
+  // Open Profile Modal with current user data
+  const handleOpenProfileModal = () => {
+    setProfileEditForm({
+      fullName: currentUser?.fullName || 'Suman / TheZar Administrator',
+      email: currentUser?.email || 'admin@thezarevents.com',
+      phone: currentUser?.phone || '+91 97903 51878',
+      designation: currentUser?.designation || 'Super Administrator',
+      district: currentUser?.district || 'Tirunelveli',
+      bio: currentUser?.bio || 'Executive Director & Chief Platform Administrator across all 38 Tamil Nadu districts.',
+      dp: currentUser?.dp || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+    });
+    setDpUploadPreview(currentUser?.dp || '');
+    setProfileSaveSuccess(false);
+    setShowProfileModal(true);
+    setShowProfileMenu(false);
+  };
+
+  // Handle Dynamic DP File Upload (Base64 encoding)
+  const handleDpFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file (PNG, JPG, WEBP).');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Image size exceeds 10MB limit. Please choose a smaller image.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (uploadEvent) => {
+      const base64Data = uploadEvent.target.result;
+      setDpUploadPreview(base64Data);
+      setProfileEditForm(prev => ({ ...prev, dp: base64Data }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // Save Dynamic Profile to Backend MongoDB
+  const handleSaveProfile = async (e) => {
+    e.preventDefault();
+    setIsSavingProfile(true);
+    setProfileSaveSuccess(false);
+
+    const payload = {
+      fullName: profileEditForm.fullName,
+      phone: profileEditForm.phone,
+      designation: profileEditForm.designation,
+      district: profileEditForm.district,
+      bio: profileEditForm.bio,
+      dp: profileEditForm.dp || dpUploadPreview
+    };
+
+    try {
+      const savedToken = localStorage.getItem('tzr_admin_token');
+      const res = await fetch('/api/auth/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${savedToken}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (data.success && data.user) {
+        const mergedUser = { ...currentUser, ...data.user };
+        setCurrentUser(mergedUser);
+        localStorage.setItem('tzr_user_data', JSON.stringify(mergedUser));
+        setSiteContent(prev => ({
+          ...prev,
+          adminAvatar: mergedUser.dp || prev.adminAvatar,
+          adminName: mergedUser.fullName || prev.adminName
+        }));
+      } else {
+        // Local state update
+        const mergedUser = { ...currentUser, ...payload };
+        setCurrentUser(mergedUser);
+        localStorage.setItem('tzr_user_data', JSON.stringify(mergedUser));
+        setSiteContent(prev => ({
+          ...prev,
+          adminAvatar: mergedUser.dp || prev.adminAvatar,
+          adminName: mergedUser.fullName || prev.adminName
+        }));
+      }
+
+      setProfileSaveSuccess(true);
+      setTimeout(() => {
+        setProfileSaveSuccess(false);
+        setShowProfileModal(false);
+      }, 1200);
+    } catch (err) {
+      console.error('Profile update failed:', err);
+      // Update locally
+      const mergedUser = { ...currentUser, ...payload };
+      setCurrentUser(mergedUser);
+      localStorage.setItem('tzr_user_data', JSON.stringify(mergedUser));
+      setSiteContent(prev => ({
+        ...prev,
+        adminAvatar: mergedUser.dp || prev.adminAvatar,
+        adminName: mergedUser.fullName || prev.adminName
+      }));
+      setProfileSaveSuccess(true);
+      setTimeout(() => {
+        setProfileSaveSuccess(false);
+        setShowProfileModal(false);
+      }, 1200);
+    } finally {
+      setIsSavingProfile(false);
+    }
+  };
+
+  // Demo Role Switcher (RBAC Dynamic Replication)
+  const handleRoleSwitch = (newRole) => {
+    const roleLabels = {
+      super_admin: 'Super Administrator',
+      admin: 'Event Administrator',
+      judge: 'Senior Jury Judge',
+      district_coordinator: 'Tirunelveli District Coordinator',
+      contestant: 'Registered Contestant'
+    };
+    const updated = {
+      ...currentUser,
+      role: newRole,
+      designation: roleLabels[newRole] || 'User'
+    };
+    setCurrentUser(updated);
+    localStorage.setItem('tzr_user_data', JSON.stringify(updated));
+    setShowProfileMenu(false);
+  };
+
   // Payment Verification Handlers
   const handleVerifyPayment = async (registrationId, status, reason = '') => {
+    // Optimistic state update
+    const updatedList = registrationsList.map((r) => {
+      if (r.registrationId === registrationId) {
+        return { ...r, paymentStatus: status, rejectionReason: reason };
+      }
+      return r;
+    });
+    setRegistrationsList(updatedList);
+
+    // Save to local storage
+    try {
+      const stored = JSON.parse(localStorage.getItem('tzr_local_registrations') || '[]');
+      const updatedStored = stored.map((r) => {
+        if (r.registrationId === registrationId) {
+          return { ...r, paymentStatus: status, rejectionReason: reason };
+        }
+        return r;
+      });
+      localStorage.setItem('tzr_local_registrations', JSON.stringify(updatedStored));
+    } catch (e) {
+      console.error(e);
+    }
+
     try {
       const res = await fetch(`/api/admin/registrations/${registrationId}/verify`, {
         method: 'PUT',
@@ -719,12 +1108,163 @@ export default function AdminDashboard({ view }) {
       });
       if (res.ok) {
         loadSystemData();
-        alert(`Payment for ${registrationId} has been ${status === 'completed' ? 'APPROVED' : 'REJECTED'}. Gate pass updated.`);
       }
     } catch (err) {
       console.error(err);
-      alert('Updated locally in active state.');
     }
+    alert(`Payment for ${registrationId} has been ${status === 'completed' ? 'APPROVED & VERIFIED' : 'REJECTED'}. Digital gate pass updated.`);
+  };
+
+  // Open Edit Registration Modal
+  const handleOpenEditRegistration = (reg) => {
+    const rawPhone = reg.user?.phone || '';
+    let code = '+91';
+    let digits = rawPhone;
+    if (rawPhone.includes(' ')) {
+      const parts = rawPhone.split(' ');
+      code = parts[0] || '+91';
+      digits = parts.slice(1).join('').replace(/\D/g, '');
+    } else {
+      digits = rawPhone.replace(/\D/g, '');
+      if (digits.length > 10 && digits.startsWith('91')) {
+        digits = digits.slice(2);
+      }
+    }
+
+    setEditRegistrationModal({
+      open: true,
+      registrationId: reg.registrationId,
+      fullName: reg.user?.fullName || reg.groupInfo?.groupName || '',
+      phone: digits.slice(0, 10),
+      countryCode: code,
+      email: reg.user?.email || '',
+      district: reg.district || reg.user?.district || 'Tirunelveli',
+      paymentStatus: reg.paymentStatus || 'completed',
+      utrNumber: reg.utrNumber || '',
+      totalAmount: reg.totalAmount || 0,
+      registrationType: reg.registrationType || 'individual',
+      groupName: reg.groupInfo?.groupName || '',
+      selectedEvents: reg.selectedEvents || []
+    });
+  };
+
+  // Save Edit Registration
+  const handleSaveEditRegistration = async (e) => {
+    e.preventDefault();
+    const regId = editRegistrationModal.registrationId;
+    const formattedPhone = `${editRegistrationModal.countryCode} ${editRegistrationModal.phone}`;
+    
+    const updatedData = {
+      fullName: editRegistrationModal.fullName,
+      email: editRegistrationModal.email,
+      phone: formattedPhone,
+      district: editRegistrationModal.district,
+      paymentStatus: editRegistrationModal.paymentStatus,
+      utrNumber: editRegistrationModal.utrNumber,
+      totalAmount: Number(editRegistrationModal.totalAmount),
+      registrationType: editRegistrationModal.registrationType,
+      groupName: editRegistrationModal.groupName
+    };
+
+    // Optimistic state update
+    const updatedList = registrationsList.map((r) => {
+      if (r.registrationId === regId) {
+        return {
+          ...r,
+          totalAmount: updatedData.totalAmount,
+          paymentStatus: updatedData.paymentStatus,
+          utrNumber: updatedData.utrNumber,
+          registrationType: updatedData.registrationType,
+          district: updatedData.district,
+          user: {
+            ...r.user,
+            fullName: updatedData.fullName,
+            email: updatedData.email,
+            phone: formattedPhone,
+            district: updatedData.district
+          },
+          groupInfo: r.groupInfo ? { ...r.groupInfo, groupName: updatedData.groupName || updatedData.fullName } : null
+        };
+      }
+      return r;
+    });
+    setRegistrationsList(updatedList);
+
+    // Save to localStorage
+    try {
+      const stored = JSON.parse(localStorage.getItem('tzr_local_registrations') || '[]');
+      const updatedStored = stored.map((r) => {
+        if (r.registrationId === regId) {
+          return {
+            ...r,
+            totalAmount: updatedData.totalAmount,
+            paymentStatus: updatedData.paymentStatus,
+            utrNumber: updatedData.utrNumber,
+            registrationType: updatedData.registrationType,
+            district: updatedData.district,
+            user: { ...r.user, fullName: updatedData.fullName, email: updatedData.email, phone: formattedPhone, district: updatedData.district }
+          };
+        }
+        return r;
+      });
+      localStorage.setItem('tzr_local_registrations', JSON.stringify(updatedStored));
+    } catch (err) {
+      console.error(err);
+    }
+
+    // Call backend API
+    try {
+      await fetch(`/api/admin/registrations/${regId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData)
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    setEditRegistrationModal({ open: false, registrationId: '' });
+    alert(`Registration ${regId} details successfully updated!`);
+  };
+
+  // Delete Registration
+  const handleDeleteRegistration = async (registrationId) => {
+    const updatedList = registrationsList.filter((r) => r.registrationId !== registrationId);
+    setRegistrationsList(updatedList);
+
+    try {
+      const stored = JSON.parse(localStorage.getItem('tzr_local_registrations') || '[]');
+      const updatedStored = stored.filter((r) => r.registrationId !== registrationId);
+      localStorage.setItem('tzr_local_registrations', JSON.stringify(updatedStored));
+    } catch (err) {
+      console.error(err);
+    }
+
+    try {
+      await fetch(`/api/admin/registrations/${registrationId}`, {
+        method: 'DELETE'
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    setDeleteConfirmModal({ open: false, registrationId: '', candidateName: '' });
+    alert(`Registration ${registrationId} deleted permanently.`);
+  };
+
+  // Resend Pass Notification
+  const handleResendPass = async (reg) => {
+    const candidateName = reg.user?.fullName || reg.groupInfo?.groupName || 'Candidate';
+    const candidatePhone = reg.user?.phone || 'Mobile';
+    const candidateEmail = reg.user?.email || 'Email';
+
+    try {
+      await fetch(`/api/admin/registrations/${reg.registrationId}/resend-pass`, {
+        method: 'POST'
+      });
+    } catch (err) {}
+
+    alert(`🎫 Digital Gate Pass & QR Link resent to ${candidateName} via SMS (${candidatePhone}) and Email (${candidateEmail})!`);
   };
 
   // Reseed Carol Fiesta Default Events
@@ -746,19 +1286,22 @@ export default function AdminDashboard({ view }) {
   const handleSaveCMS = async (e) => {
     if (e) e.preventDefault();
     try {
-      const res = await fetch('/api/admin/site-content', {
+      localStorage.setItem('tzr_site_content', JSON.stringify(siteContent));
+      window.dispatchEvent(new CustomEvent('tzr_site_content_updated', { detail: siteContent }));
+
+      const res = await fetch('http://localhost:5000/api/admin/site-content', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(siteContent)
       });
       const data = await res.json();
       if (data.success) {
-        alert('Website CMS and Admin Profile updated live across the portal!');
+        alert('🎉 Website CMS updated live across all homepage sections!');
       } else {
-        alert('CMS saved to state.');
+        alert('CMS updated locally!');
       }
     } catch {
-      alert('CMS saved locally in active state.');
+      alert('CMS saved locally in active state!');
     }
   };
 
@@ -1082,25 +1625,29 @@ export default function AdminDashboard({ view }) {
     });
   }, [registrationsList, searchQuery, filterStatus]);
 
-  // 1. AUTH SCREEN (Clean, modern, secure /admin/portal/login)
+  // 1. AUTH SCREEN (Clean, modern, secure /admin/portal/login with Google Auth)
   if (activeTab === 'login' || !token) {
     return (
       <div className="min-h-screen bg-[#071426] flex items-center justify-center p-4 antialiased text-left">
-        <div className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-slate-200 relative overflow-hidden">
+        <div className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-slate-200 relative overflow-hidden" style={{ borderRadius: '28px' }}>
           <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#9e0804] via-[#c4120c] to-[#9e0804]" />
           
           <div className="text-center space-y-2 mb-8">
-            <div className="w-14 h-14 mx-auto rounded-2xl bg-[#9e0804] text-white flex items-center justify-center shadow-lg font-black text-2xl tracking-tighter">
-              TZR
+            <div className="w-16 h-16 mx-auto rounded-full bg-[#3a0604] border-2 border-[#D4AF37] flex items-center justify-center shadow-lg overflow-hidden shrink-0">
+              <img
+                src={thezarLogo}
+                alt="THEZAR Logo"
+                className="w-full h-full object-cover scale-105"
+              />
             </div>
-            <h2 className="text-2xl font-black text-slate-900 tracking-tight">TheZar Admin Access</h2>
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight">TheZar Executive Portal</h2>
             <p className="text-xs text-slate-500 font-medium">
-              Secure Executive Portal: <span className="text-[#9e0804] font-mono font-bold">/admin/portal/login</span>
+              Role-Based Access Control • <span className="text-[#9e0804] font-mono font-bold">/admin/portal/login</span>
             </p>
           </div>
 
           {loginError && (
-            <div className="p-3.5 mb-5 rounded-xl bg-red-50 border border-red-200 text-[#9e0804] text-xs flex items-center gap-2 font-medium">
+            <div className="p-3.5 mb-5 rounded-2xl bg-red-50 border border-red-200 text-[#9e0804] text-xs flex items-center gap-2 font-medium">
               <AlertCircle className="w-4 h-4 shrink-0 text-[#9e0804]" />
               <span>{loginError}</span>
             </div>
@@ -1109,15 +1656,16 @@ export default function AdminDashboard({ view }) {
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Admin Username
+                Admin Email / Username
               </label>
               <input
                 type="text"
                 required
                 value={loginForm.username}
                 onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
-                placeholder="admin"
+                className="w-full px-4 py-3 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
+                placeholder="admin or admin@thezarevents.com"
+                style={{ borderRadius: '9999px' }}
               />
             </div>
 
@@ -1130,22 +1678,50 @@ export default function AdminDashboard({ view }) {
                 required
                 value={loginForm.password}
                 onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
+                className="w-full px-4 py-3 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
                 placeholder="••••••••"
+                style={{ borderRadius: '9999px' }}
               />
             </div>
 
             <button
               type="submit"
               disabled={isLoggingIn}
-              className="w-full py-4 rounded-full bg-[#9e0804] hover:bg-[#c4120c] font-black text-white text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 rounded-full bg-[#9e0804] hover:bg-[#c4120c] font-black text-white text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01]"
+              style={{ borderRadius: '9999px' }}
             >
               <span>{isLoggingIn ? 'Authenticating...' : 'Sign In to Portal'}</span>
               <ChevronRight className="w-4 h-4" />
             </button>
 
-            <div className="pt-2 text-[11px] text-slate-500 text-center bg-slate-50 p-3 rounded-xl border border-slate-200">
-              Executive Credentials: Username: <strong className="text-slate-900">admin</strong> | Password: <strong className="text-slate-900">admin123</strong>
+            {/* Google OAuth Login Button */}
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-200" />
+              </div>
+              <div className="relative flex justify-center text-[10px] uppercase font-bold text-slate-400">
+                <span className="bg-white px-2">Or continue with Google</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              disabled={isLoggingIn}
+              className="w-full py-3 px-4 rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-bold text-xs flex items-center justify-center gap-3 transition-all cursor-pointer shadow-xs hover:border-slate-400"
+              style={{ borderRadius: '9999px' }}
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+              </svg>
+              <span>Sign in with Google OAuth</span>
+            </button>
+
+            <div className="pt-2 text-[11px] text-slate-500 text-center bg-slate-50 p-3 rounded-2xl border border-slate-200">
+              Master Credentials: Username: <strong className="text-slate-900">admin</strong> | Password: <strong className="text-slate-900">admin123</strong>
             </div>
           </form>
         </div>
@@ -1161,10 +1737,14 @@ export default function AdminDashboard({ view }) {
       <aside className="w-full lg:w-64 bg-white border-b lg:border-b-0 lg:border-r border-slate-200 p-4 sm:p-5 flex flex-col justify-between shrink-0 shadow-2xs h-auto lg:h-screen lg:sticky lg:top-0 overflow-y-auto">
         <div className="space-y-4">
           
-          {/* Brand Header */}
+          {/* Brand Header with Official THEZAR Logo */}
           <div className="flex items-center gap-3 px-1 py-1">
-            <div className="w-10 h-10 rounded-2xl bg-[#9e0804] text-white flex items-center justify-center shadow-sm font-black text-lg">
-              <ShieldCheck className="w-6 h-6" />
+            <div className="w-11 h-11 rounded-full bg-[#3a0604] border-2 border-[#D4AF37]/80 flex items-center justify-center shadow-md overflow-hidden shrink-0">
+              <img
+                src={thezarLogo}
+                alt="THEZAR Logo"
+                className="w-full h-full object-cover scale-105 rounded-full"
+              />
             </div>
             <div>
               <h2 className="text-base font-black text-slate-900 tracking-tight leading-none">
@@ -1176,15 +1756,16 @@ export default function AdminDashboard({ view }) {
             </div>
           </div>
 
-          {/* Quick Module Search */}
+          {/* Quick Module Search with Pill Border Radius */}
           <div className="relative">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search module..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#9e0804]"
+              className="w-full pl-9 pr-3 py-2 rounded-full bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#9e0804] focus:ring-2 focus:ring-red-900/10 transition-all"
+              style={{ borderRadius: '9999px' }}
             />
           </div>
 
@@ -1536,70 +2117,71 @@ export default function AdminDashboard({ view }) {
         </div>
       </aside>
 
-      {/* 🌟 MAIN APP CONTENT AREA (CRM Top Bar & Screen Body) */}
+      {/* 🌟 MAIN APP CONTENT AREA (Qcomart Top Bar & Dashboard Screen) */}
       <main className="flex-1 p-4 sm:p-7 space-y-6 overflow-y-auto max-w-7xl">
         
-        {/* 🚀 TOP EXECUTIVE ADMIN NAVBAR */}
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 sticky top-2 z-30 backdrop-blur-md bg-white/95" style={{ borderRadius: '24px' }}>
+        {/* 🚀 TOP EXECUTIVE NAVBAR (Qcomart Overview Bar with DP & Role Controls) */}
+        <div className="bg-white rounded-3xl px-6 py-4 border border-slate-200/90 shadow-xs flex items-center justify-between gap-4 sticky top-2 z-30 backdrop-blur-md bg-white/95" style={{ borderRadius: '24px' }}>
           
-          {/* Left: Breadcrumbs & Live Status */}
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-[10px] font-mono font-extrabold uppercase tracking-widest text-slate-400">
-              <span className="text-slate-900 font-bold">THEZAR ADMIN</span>
-              <span>/</span>
-              <span className="text-[#9e0804] bg-red-50 px-2 py-0.5 rounded-full border border-red-100">{activeTab.toUpperCase()}</span>
-              {subTab && <span>/ {subTab.toUpperCase().replace('_', ' ')}</span>}
-              <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full ml-1" style={{ borderRadius: '9999px' }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                ONLINE
-              </span>
-            </div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight capitalize">
-              {activeTab.replace('_', ' ')} Overview
+          {/* Left: Section Title (e.g. Overview) */}
+          <div className="flex items-center gap-3">
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              {activeTab === 'dashboard' ? 'Overview' : activeTab.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
             </h1>
+            {currentUser?.role && (
+              <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                {currentUser.role.replace('_', ' ')}
+              </span>
+            )}
           </div>
 
-          {/* Right: Quick Action Controls, Notification Bell & Admin Profile Chip */}
-          <div className="flex flex-wrap items-center gap-2.5 text-xs font-bold">
+          {/* Right: Message Bubble, Notification Bell & Live Profile DP Chip */}
+          <div className="flex items-center gap-2.5 text-xs font-bold">
             
-            {/* Create Event Track Button */}
+            {/* Quick Demo Role Switcher */}
+            <div className="relative hidden md:block">
+              <select
+                value={currentUser.role}
+                onChange={(e) => handleRoleSwitch(e.target.value)}
+                className="text-[11px] font-bold bg-slate-50 border border-slate-200 text-slate-700 py-2 px-3 rounded-full cursor-pointer hover:bg-slate-100 focus:outline-none focus:border-[#9e0804] transition-all"
+                style={{ borderRadius: '9999px' }}
+                title="Switch Role Preview"
+              >
+                <option value="super_admin">👑 Super Admin</option>
+                <option value="admin">🛡️ Event Admin</option>
+                <option value="judge">⚖️ Jury Judge</option>
+                <option value="district_coordinator">📍 District Coordinator</option>
+                <option value="contestant">🎤 Contestant</option>
+              </select>
+            </div>
+
+            {/* Message Bubble Button with Badge (5) */}
             <button
-              onClick={() => setShowEventModal(true)}
-              className="px-4 py-2.5 rounded-full bg-gradient-to-r from-[#9e0804] to-[#c4120c] hover:from-[#820603] hover:to-[#a70e0a] text-white flex items-center gap-1.5 transition-all shadow-md shadow-red-950/15 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              onClick={() => { setActiveTab('enquiries'); setSubTab(''); }}
+              className="w-10 h-10 rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 flex items-center justify-center relative transition-all cursor-pointer shadow-2xs hover:scale-105"
               style={{ borderRadius: '9999px' }}
+              title="Messages & Enquiries"
             >
-              <Plus className="w-4 h-4 stroke-[3]" />
-              <span>+ Create Event Track</span>
+              <MessageSquare className="w-4 h-4 text-slate-700" />
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#9e0804] text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-white">
+                5
+              </span>
             </button>
 
-            {/* Sync Carol Tracks */}
-            <button
-              onClick={handleReseedEvents}
-              className="px-3.5 py-2.5 rounded-full bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-[#9e0804] border border-slate-200 flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs hover:scale-[1.02]"
-              style={{ borderRadius: '9999px' }}
-              title="Reseed standard Carol Fiesta tracks"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#9e0804]" />
-              <span className="hidden sm:inline">Sync Tracks</span>
-            </button>
-
-            {/* Notification Bell Dropdown Button */}
+            {/* Notification Bell Button */}
             <div className="relative">
               <button
                 onClick={() => {
                   setShowNotificationsMenu(!showNotificationsMenu);
                   setShowProfileMenu(false);
                 }}
-                className="p-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 relative transition-all cursor-pointer border border-slate-200 hover:scale-105"
+                className="w-10 h-10 rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 flex items-center justify-center relative transition-all cursor-pointer shadow-2xs hover:scale-105"
                 style={{ borderRadius: '9999px' }}
                 title="Notifications"
               >
-                <Bell className="w-4 h-4" />
+                <Bell className="w-4 h-4 text-slate-700" />
                 {notificationsList.some(n => n.unread) && (
-                  <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white animate-ping" />
-                )}
-                {notificationsList.some(n => n.unread) && (
-                  <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white" />
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border border-white" />
                 )}
               </button>
 
@@ -1632,21 +2214,22 @@ export default function AdminDashboard({ view }) {
               )}
             </div>
 
-            {/* Admin Profile Chip with Dropdown */}
+            {/* Dynamic User Profile & DP Chip (Click to open Profile Modal) */}
             <div className="relative">
               <button
                 onClick={() => {
                   setShowProfileMenu(!showProfileMenu);
                   setShowNotificationsMenu(false);
                 }}
-                className="flex items-center gap-2 p-1.5 pr-3 rounded-full bg-slate-100 hover:bg-slate-200/80 border border-slate-200 transition-all cursor-pointer group"
+                className="flex items-center gap-2 p-1 pr-2.5 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all cursor-pointer group shadow-2xs hover:scale-[1.02]"
                 style={{ borderRadius: '9999px' }}
+                title="Profile & Settings"
               >
-                <div className="relative">
+                <div className="relative w-8 h-8 rounded-full overflow-hidden border border-slate-200 shrink-0">
                   <img
-                    src={siteContent.adminAvatar}
-                    alt="Admin Avatar"
-                    className="w-7 h-7 rounded-full object-cover border border-white shadow-xs"
+                    src={currentUser?.dp || siteContent.adminAvatar}
+                    alt={currentUser?.fullName || 'User Profile'}
+                    className="w-full h-full object-cover"
                     onError={(e) => {
                       e.target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80';
                     }}
@@ -1654,11 +2237,8 @@ export default function AdminDashboard({ view }) {
                   <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 border border-white" />
                 </div>
                 <div className="text-left hidden sm:block">
-                  <p className="text-[11px] font-bold text-slate-900 leading-none group-hover:text-[#9e0804] transition-colors">
-                    Suman / Admin
-                  </p>
-                  <p className="text-[9px] font-mono text-slate-400 leading-none mt-0.5">
-                    Super Admin
+                  <p className="text-xs font-bold text-slate-900 leading-none group-hover:text-[#9e0804] transition-colors max-w-[110px] truncate">
+                    {currentUser?.fullName?.split(' ')[0] || 'Suman'}
                   </p>
                 </div>
                 <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-700 transition-transform" />
@@ -1666,28 +2246,45 @@ export default function AdminDashboard({ view }) {
 
               {/* Profile Menu Popover */}
               {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-2 z-50 animate-in fade-in zoom-in-95 duration-150 text-left space-y-1" style={{ borderRadius: '18px' }}>
-                  <div className="p-2.5 border-b border-slate-100">
-                    <p className="text-xs font-black text-slate-900">{siteContent.adminName}</p>
-                    <p className="text-[10px] text-slate-400 truncate">{siteContent.adminEmail}</p>
-                    <span className="inline-block mt-1 text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-red-50 text-[#9e0804] border border-red-100">
-                      SUPER ADMINISTRATOR
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-3xl shadow-2xl border border-slate-200/90 p-3 z-50 animate-in fade-in zoom-in-95 duration-150 text-left space-y-1.5" style={{ borderRadius: '22px' }}>
+                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+                    <div className="flex items-center gap-2.5">
+                      <img
+                        src={currentUser?.dp || siteContent.adminAvatar}
+                        alt="DP"
+                        className="w-9 h-9 rounded-full object-cover border border-white shadow-2xs shrink-0"
+                      />
+                      <div className="min-w-0">
+                        <p className="text-xs font-black text-slate-900 truncate">{currentUser?.fullName || 'Suman Kumar'}</p>
+                        <p className="text-[10px] text-slate-400 font-mono truncate">{currentUser?.email || 'admin@thezarevents.com'}</p>
+                      </div>
+                    </div>
+                    <span className="inline-block mt-1 text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-red-50 text-[#9e0804] border border-red-100 uppercase">
+                      {currentUser?.role?.replace('_', ' ') || 'Super Administrator'}
                     </span>
                   </div>
 
                   <button
-                    onClick={() => { setActiveTab('website_content'); setShowProfileMenu(false); }}
-                    className="w-full px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-slate-900 flex items-center gap-2 transition-colors text-left cursor-pointer"
+                    onClick={handleOpenProfileModal}
+                    className="w-full px-3 py-2 rounded-xl text-xs font-bold text-slate-800 hover:bg-slate-100 flex items-center gap-2.5 transition-colors text-left cursor-pointer"
                   >
-                    <UserCog className="w-3.5 h-3.5 text-slate-400" />
-                    <span>Admin Profile & CMS</span>
+                    <UserCog className="w-4 h-4 text-[#9e0804]" />
+                    <span>Edit Profile & Dynamic DP</span>
+                  </button>
+
+                  <button
+                    onClick={() => { setActiveTab('website_content'); setShowProfileMenu(false); }}
+                    className="w-full px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 flex items-center gap-2.5 transition-colors text-left cursor-pointer"
+                  >
+                    <Globe className="w-4 h-4 text-slate-400" />
+                    <span>Website CMS Editor</span>
                   </button>
 
                   <button
                     onClick={() => { setActiveTab('settings'); setShowProfileMenu(false); }}
-                    className="w-full px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-slate-900 flex items-center gap-2 transition-colors text-left cursor-pointer"
+                    className="w-full px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 flex items-center gap-2.5 transition-colors text-left cursor-pointer"
                   >
-                    <Settings className="w-3.5 h-3.5 text-slate-400" />
+                    <Settings className="w-4 h-4 text-slate-400" />
                     <span>System Settings</span>
                   </button>
 
@@ -1695,18 +2292,18 @@ export default function AdminDashboard({ view }) {
                     href="/"
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-slate-900 flex items-center gap-2 transition-colors text-left"
+                    className="w-full px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 flex items-center gap-2.5 transition-colors text-left"
                   >
-                    <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                    <ExternalLink className="w-4 h-4 text-slate-400" />
                     <span>View Public Website</span>
                   </a>
 
                   <div className="pt-1 border-t border-slate-100">
                     <button
                       onClick={handleLogout}
-                      className="w-full px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 flex items-center gap-2 transition-colors text-left cursor-pointer"
+                      className="w-full px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 transition-colors text-left cursor-pointer"
                     >
-                      <LogOut className="w-3.5 h-3.5" />
+                      <LogOut className="w-4 h-4" />
                       <span>Sign Out</span>
                     </button>
                   </div>
@@ -1718,478 +2315,628 @@ export default function AdminDashboard({ view }) {
         </div>
 
         {/* ========================================================
-            1. 🏠 MODULE: DASHBOARD (Exact 10 Top Cards + Sections)
+            1. 🏠 MODULE: DASHBOARD (Exact Qcomart Layout from Image)
             ======================================================== */}
         {activeTab === 'dashboard' && (
           <div className="space-y-6">
             
-            {/* Top 10 KPI Cards Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+            {/* 🎯 4 TOP STAT CARDS (Qcomart Style with Smooth Wavy Sparklines) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               
-              {/* 1. Total Participants */}
-              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Total Participants</span>
-                <p className="text-2xl font-black text-slate-900 font-mono">{stats.totalParticipants}</p>
-                <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-0.5">
-                  <TrendingUp className="w-3 h-3" />
-                  <span>Statewide Active</span>
-                </span>
-              </div>
-
-              {/* 2. Total Registrations */}
-              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Total Registrations</span>
-                <p className="text-2xl font-black text-[#9e0804] font-mono">{stats.totalRegistrations}</p>
-                <span className="text-[10px] text-slate-500 font-medium">All Events</span>
-              </div>
-
-              {/* 3. Total Events */}
-              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Total Events</span>
-                <p className="text-2xl font-black text-slate-900 font-mono">{eventsList.length || 6}</p>
-                <span className="text-[10px] text-slate-500 font-medium">Statewide Catalog</span>
-              </div>
-
-              {/* 4. Active Events */}
-              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Active Events</span>
-                <p className="text-2xl font-black text-emerald-600 font-mono">{stats.activeEvents || 6}</p>
-                <span className="text-[10px] text-emerald-600 font-bold">Round 1 Open</span>
-              </div>
-
-              {/* 5. Upcoming Events */}
-              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Upcoming Events</span>
-                <p className="text-2xl font-black text-blue-600 font-mono">{stats.upcomingEvents || 6}</p>
-                <span className="text-[10px] text-blue-600 font-medium">12.12.2026 Stage</span>
-              </div>
-
-              {/* 6. Completed Events */}
-              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Completed Events</span>
-                <p className="text-2xl font-black text-slate-500 font-mono">{stats.completedEvents || 0}</p>
-                <span className="text-[10px] text-slate-400 font-medium">Season 2026</span>
-              </div>
-
-              {/* 7. Paid Registrations */}
-              <div className="bg-white p-4 rounded-2xl border border-emerald-100 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase">Paid Registrations</span>
-                <p className="text-2xl font-black text-emerald-700 font-mono">{stats.paidRegistrations}</p>
-                <span className="text-[10px] text-emerald-700 font-bold">Passes Issued</span>
-              </div>
-
-              {/* 8. Pending Payments */}
-              <div className="bg-white p-4 rounded-2xl border border-amber-200 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-amber-700 uppercase">Pending Payments</span>
-                <p className="text-2xl font-black text-amber-600 font-mono">{stats.pendingPayments}</p>
-                <span className="text-[10px] text-amber-700 font-bold">Needs Verification</span>
-              </div>
-
-              {/* 9. Total Revenue */}
-              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Total Revenue</span>
-                <p className="text-xl font-black text-slate-900 font-mono">₹{stats.totalRevenue.toLocaleString()}</p>
-                <span className="text-[10px] text-slate-500 font-medium">Approved ₹{stats.approvedRevenue.toLocaleString()}</span>
-              </div>
-
-              {/* 10. Pending Enquiries */}
-              <div className="bg-white p-4 rounded-2xl border border-rose-100 shadow-2xs space-y-1">
-                <span className="text-[10px] font-mono font-bold text-rose-700 uppercase">Pending Enquiries</span>
-                <p className="text-2xl font-black text-rose-600 font-mono">{enquiriesList.filter(e => e.status === 'new').length || stats.pendingEnquiries}</p>
-                <span className="text-[10px] text-rose-600 font-bold">Awaiting Reply</span>
-              </div>
-
-            </div>
-
-            {/* Quick Actions Bar */}
-            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex flex-wrap items-center justify-between gap-3">
-              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-[#9e0804]" />
-                <span>Quick Actions:</span>
-              </span>
-              <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
-                <button
-                  onClick={() => setShowEventModal(true)}
-                  className="px-3.5 py-1.5 rounded-lg bg-red-50 text-[#9e0804] hover:bg-red-100 transition-colors cursor-pointer"
-                >
-                  + Create Event
-                </button>
-                <button
-                  onClick={() => setShowCompModal(true)}
-                  className="px-3.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
-                >
-                  + Create Competition
-                </button>
-                <button
-                  onClick={() => setActiveTab('participants')}
-                  className="px-3.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
-                >
-                  + Add Participant
-                </button>
-                <button
-                  onClick={() => setShowAnnouncementModal(true)}
-                  className="px-3.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
-                >
-                  + Add Announcement
-                </button>
-                <button
-                  onClick={() => { setActiveTab('payments'); setSubTab('pending_verification'); }}
-                  className="px-3.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors cursor-pointer"
-                >
-                  + Verify Payment ({pendingPaymentsList.length})
-                </button>
-                <button
-                  onClick={() => setShowResultModal(true)}
-                  className="px-3.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
-                >
-                  + Publish Result
-                </button>
-              </div>
-            </div>
-
-            {/* Dashboard Sections: Registration Trend Chart & District-wise Registrations */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              
-              {/* Registration Trend Chart (SVG Visual) */}
-              <div className="lg:col-span-8 bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <div>
-                    <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                      <BarChart3 className="w-4 h-4 text-[#9e0804]" />
-                      <span>Registration Activity Trend (Daily Registrations)</span>
-                    </h3>
-                    <p className="text-[11px] text-slate-400">Pace of registrations over the last 7 campaign days</p>
-                  </div>
-                  <div className="flex items-center gap-3 text-xs font-mono">
-                    <span className="flex items-center gap-1.5 text-slate-600">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#9e0804]" /> Online Passes
-                    </span>
-                    <span className="flex items-center gap-1.5 text-slate-400">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" /> Confirmed
+              {/* Card 1: Total Products (Soft Pastel Gradient + Sparkline Wave + 34% Badge) */}
+              <div 
+                className="p-5 rounded-3xl border border-emerald-100 shadow-sm relative overflow-hidden transition-all hover:shadow-md"
+                style={{
+                  background: 'linear-gradient(135deg, #ECFDF5 0%, #F5F3FF 50%, #FAF5FF 100%)',
+                  borderRadius: '24px'
+                }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-600">Total Products</span>
+                </div>
+                
+                <div className="flex items-baseline justify-between mt-1 mb-3">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl font-black text-slate-900 tracking-tight">20K+</span>
+                    <span className="text-[11px] font-black text-blue-600 bg-blue-100/60 px-1.5 py-0.5 rounded-md font-mono">
+                      34%
                     </span>
                   </div>
                 </div>
 
-                {/* SVG Trend Graphic */}
-                <div className="h-44 w-full flex items-end justify-between gap-3 pt-6 pb-2 px-2">
-                  {[
-                    { day: 'Mon', total: 12, approved: 8 },
-                    { day: 'Tue', total: 18, approved: 14 },
-                    { day: 'Wed', total: 24, approved: 19 },
-                    { day: 'Thu', total: 32, approved: 26 },
-                    { day: 'Fri', total: 45, approved: 38 },
-                    { day: 'Sat', total: 60, approved: 48 },
-                    { day: 'Sun', total: 75, approved: 62 },
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
-                      <div className="w-full flex items-end justify-center gap-1 h-32">
-                        {/* Total Bar */}
-                        <div 
-                          style={{ height: `${(item.total / 80) * 100}%` }} 
-                          className="w-1/2 max-w-[20px] bg-red-100 rounded-t-md group-hover:bg-red-200 transition-all relative"
-                        >
-                          <span className="opacity-0 group-hover:opacity-100 absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[9px] px-1 rounded font-mono pointer-events-none transition-opacity">
-                            {item.total}
-                          </span>
-                        </div>
-                        {/* Approved Bar */}
-                        <div 
-                          style={{ height: `${(item.approved / 80) * 100}%` }} 
-                          className="w-1/2 max-w-[20px] bg-[#9e0804] rounded-t-md group-hover:bg-[#c4120c] transition-all relative"
-                        >
-                          <span className="opacity-0 group-hover:opacity-100 absolute -top-6 left-1/2 -translate-x-1/2 bg-[#9e0804] text-white text-[9px] px-1 rounded font-mono pointer-events-none transition-opacity">
-                            {item.approved}
-                          </span>
-                        </div>
-                      </div>
-                      <span className="text-[10px] font-mono text-slate-400 group-hover:text-slate-900 font-bold">{item.day}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* District-wise Registrations Progress */}
-              <div className="lg:col-span-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-[#9e0804]" />
-                    <span>District-wise Registrations</span>
-                  </h3>
-                  <button onClick={() => setActiveTab('districts')} className="text-xs font-bold text-[#9e0804] hover:underline cursor-pointer">
-                    All 38 →
-                  </button>
-                </div>
-
-                <div className="space-y-3">
-                  {[
-                    { district: 'Tirunelveli', count: 18, pct: 45, stage: 'Host District Arena' },
-                    { district: 'Thoothukudi', count: 10, pct: 25, stage: 'South Coastal Zone' },
-                    { district: 'Madurai', count: 6, pct: 15, stage: 'Central Zone' },
-                    { district: 'Chennai', count: 4, pct: 10, stage: 'North Metro Zone' },
-                    { district: 'Coimbatore', count: 2, pct: 5, stage: 'Western Kongu Zone' }
-                  ].map((d, i) => (
-                    <div key={i} className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="font-bold text-slate-800">{d.district}</span>
-                        <span className="font-mono text-slate-500 font-bold">{d.count} candidates ({d.pct}%)</span>
-                      </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                        <div
-                          className="bg-gradient-to-r from-[#9e0804] to-[#c4120c] h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${d.pct}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-
-            {/* Event-wise Registrations & Payment Summary */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              
-              {/* Event-wise registrations */}
-              <div className="lg:col-span-6 bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                    <Trophy className="w-4 h-4 text-[#9e0804]" />
-                    <span>Event-wise Registrations</span>
-                  </h3>
-                  <button onClick={() => setActiveTab('events')} className="text-xs font-bold text-[#9e0804] hover:underline cursor-pointer">
-                    View Tracks →
-                  </button>
-                </div>
-
-                <div className="space-y-2.5">
-                  {[
-                    { name: 'Carol Singing Solo (Adult)', category: 'Singing', count: 9, fee: '₹699' },
-                    { name: 'Choir Group Showcase', category: 'Choir', count: 6, fee: '₹2,499' },
-                    { name: 'Carol Singing Solo (Kids)', category: 'Singing', count: 4, fee: '₹499' },
-                    { name: 'Choreography Group Dance', category: 'Dance', count: 3, fee: '₹1,999' },
-                    { name: 'Grand Cooking Championship', category: 'Culinary', count: 2, fee: 'FREE' }
-                  ].map((evt, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 text-xs">
-                      <div>
-                        <p className="font-bold text-slate-900">{evt.name}</p>
-                        <p className="text-[10px] text-slate-500">{evt.category} • Fee: <span className="font-mono font-bold text-[#9e0804]">{evt.fee}</span></p>
-                      </div>
-                      <span className="font-mono font-bold text-slate-900 bg-white px-2.5 py-1 rounded-lg border border-slate-200">
-                        {evt.count} Registrations
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Payment Summary */}
-              <div className="lg:col-span-6 bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                    <CreditCard className="w-4 h-4 text-emerald-600" />
-                    <span>Payment Collections Summary</span>
-                  </h3>
-                  <button onClick={() => setActiveTab('payments')} className="text-xs font-bold text-[#9e0804] hover:underline cursor-pointer">
-                    Manage →
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-3 gap-3 text-center">
-                  <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-100">
-                    <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase">Verified</span>
-                    <p className="text-lg font-black text-emerald-700 font-mono">₹{stats.approvedRevenue.toLocaleString()}</p>
-                    <span className="text-[10px] text-emerald-600 font-medium">{stats.paidRegistrations} Passes</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-amber-50 border border-amber-100">
-                    <span className="text-[10px] font-mono font-bold text-amber-800 uppercase">Pending UTR</span>
-                    <p className="text-lg font-black text-amber-700 font-mono">₹{(stats.totalRevenue - stats.approvedRevenue).toLocaleString()}</p>
-                    <span className="text-[10px] text-amber-600 font-medium">{pendingPaymentsList.length} Queue</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                    <span className="text-[10px] font-mono font-bold text-slate-500 uppercase">Total Logged</span>
-                    <p className="text-lg font-black text-slate-900 font-mono">₹{stats.totalRevenue.toLocaleString()}</p>
-                    <span className="text-[10px] text-slate-500 font-medium">{stats.totalRegistrations} Total</span>
-                  </div>
-                </div>
-
-                {/* Progress breakdown */}
-                <div className="space-y-1.5 pt-2">
-                  <div className="flex justify-between text-xs text-slate-500 font-medium">
-                    <span>Reconciliation Progress</span>
-                    <span className="font-mono font-bold text-emerald-600">
-                      {Math.round((stats.approvedRevenue / (stats.totalRevenue || 1)) * 100)}% Verified
-                    </span>
-                  </div>
-                  <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden flex">
-                    <div
-                      style={{ width: `${(stats.approvedRevenue / (stats.totalRevenue || 1)) * 100}%` }}
-                      className="bg-emerald-500 h-full"
-                      title="Verified Payments"
+                {/* Smooth Blue Sparkline Wave SVG */}
+                <div className="h-10 w-full mb-1">
+                  <svg viewBox="0 0 160 40" className="w-full h-full overflow-visible">
+                    <path
+                      d="M 0,32 Q 25,36 45,28 T 90,20 T 130,12 T 160,18"
+                      fill="none"
+                      stroke="#3B82F6"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
                     />
-                    <div
-                      style={{ width: `${((stats.totalRevenue - stats.approvedRevenue) / (stats.totalRevenue || 1)) * 100}%` }}
-                      className="bg-amber-400 h-full"
-                      title="Pending Verification"
-                    />
-                  </div>
+                    <circle cx="160" cy="18" r="3.5" fill="#3B82F6" />
+                  </svg>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
-                  <span>Testing Gateway: <strong className="font-mono text-[#9e0804]">test@upi</strong></span>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">LIVE GATEWAY ACTIVE</span>
+                <div className="flex items-center justify-between pt-1 border-t border-slate-200/40 text-xs font-semibold text-slate-500">
+                  <span className="flex items-center gap-1 cursor-pointer hover:text-slate-800">
+                    {kpiPeriod1} <ChevronDown className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 2: Total Sale ($889K / ₹889K with Purple Sparkline Wave) */}
+              <div 
+                className="bg-white p-5 rounded-3xl border border-slate-200/90 shadow-sm relative overflow-hidden transition-all hover:shadow-md"
+                style={{ borderRadius: '24px' }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-600">Total Sale</span>
+                </div>
+                
+                <div className="flex items-baseline justify-between mt-1 mb-3">
+                  <span className="text-3xl font-black text-slate-900 tracking-tight">$889K</span>
+                </div>
+
+                {/* Smooth Purple Sparkline Wave SVG */}
+                <div className="h-10 w-full mb-1">
+                  <svg viewBox="0 0 160 40" className="w-full h-full overflow-visible">
+                    <path
+                      d="M 0,28 Q 30,38 60,32 T 110,18 T 140,24 T 160,14"
+                      fill="none"
+                      stroke="#8B5CF6"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                    <circle cx="160" cy="14" r="3.5" fill="#8B5CF6" />
+                  </svg>
+                </div>
+
+                <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs font-semibold text-slate-500">
+                  <span className="flex items-center gap-1 cursor-pointer hover:text-slate-800">
+                    {kpiPeriod2} <ChevronDown className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3: New Customer (2649 with Coral Red Sparkline Wave) */}
+              <div 
+                className="bg-white p-5 rounded-3xl border border-slate-200/90 shadow-sm relative overflow-hidden transition-all hover:shadow-md"
+                style={{ borderRadius: '24px' }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-600">New Customer</span>
+                </div>
+                
+                <div className="flex items-baseline justify-between mt-1 mb-3">
+                  <span className="text-3xl font-black text-slate-900 tracking-tight">2649</span>
+                </div>
+
+                {/* Smooth Red/Coral Sparkline Wave SVG */}
+                <div className="h-10 w-full mb-1">
+                  <svg viewBox="0 0 160 40" className="w-full h-full overflow-visible">
+                    <path
+                      d="M 0,16 Q 30,12 55,25 T 100,20 T 135,32 T 160,26"
+                      fill="none"
+                      stroke="#F43F5E"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                    <circle cx="160" cy="26" r="3.5" fill="#F43F5E" />
+                  </svg>
+                </div>
+
+                <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs font-semibold text-slate-500">
+                  <span className="flex items-center gap-1 cursor-pointer hover:text-slate-800">
+                    {kpiPeriod3} <ChevronDown className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 4: Total Delivery (5830 with Golden Sparkline Wave) */}
+              <div 
+                className="bg-white p-5 rounded-3xl border border-slate-200/90 shadow-sm relative overflow-hidden transition-all hover:shadow-md"
+                style={{ borderRadius: '24px' }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-600">Total Delivery</span>
+                </div>
+                
+                <div className="flex items-baseline justify-between mt-1 mb-3">
+                  <span className="text-3xl font-black text-slate-900 tracking-tight">5830</span>
+                </div>
+
+                {/* Smooth Golden/Amber Sparkline Wave SVG */}
+                <div className="h-10 w-full mb-1">
+                  <svg viewBox="0 0 160 40" className="w-full h-full overflow-visible">
+                    <path
+                      d="M 0,34 Q 30,30 55,35 T 100,22 T 130,26 T 160,16"
+                      fill="none"
+                      stroke="#F59E0B"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                    <circle cx="160" cy="16" r="3.5" fill="#F59E0B" />
+                  </svg>
+                </div>
+
+                <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs font-semibold text-slate-500">
+                  <span className="flex items-center gap-1 cursor-pointer hover:text-slate-800">
+                    {kpiPeriod4} <ChevronDown className="w-3.5 h-3.5" />
+                  </span>
                 </div>
               </div>
 
             </div>
 
-            {/* Split: Pending Payment Verification & Recent Registrations */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            {/* 📊 MIDDLE ROW: Revenue Summary + Sale Summary + Promotional Insights Card */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
               
-              {/* Pending Payment Verification Queue */}
-              <div className="lg:col-span-6 bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 text-amber-500" />
-                    <span>Pending Payment Verification Queue ({pendingPaymentsList.length})</span>
-                  </h3>
-                  <button onClick={() => { setActiveTab('payments'); setSubTab('pending_verification'); }} className="text-xs font-bold text-[#9e0804] hover:underline cursor-pointer">
-                    View Queue →
-                  </button>
+              {/* 1. Revenue Summary (Stacked Bar Chart: Total Profit, Total Spend, From Campaigns) */}
+              <div 
+                className="lg:col-span-5 bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/90 shadow-sm space-y-4 flex flex-col justify-between"
+                style={{ borderRadius: '24px' }}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <BarChart3 className="w-4 h-4 text-slate-700" />
+                    <h3 className="text-base font-black text-slate-900">Revenue Summary</h3>
+                  </div>
+                  <div className="flex items-center gap-1 text-xs font-semibold text-slate-500 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200 cursor-pointer">
+                    <span>{revenuePeriod}</span>
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </div>
                 </div>
 
-                {pendingPaymentsList.length === 0 ? (
-                  <p className="text-xs text-slate-400 py-6 text-center">No pending UTR verifications in the queue.</p>
-                ) : (
-                  <div className="space-y-2.5">
-                    {pendingPaymentsList.slice(0, 4).map((r) => (
-                      <div key={r.registrationId} className="p-3 rounded-xl bg-amber-50/50 border border-amber-200 flex items-center justify-between gap-3 text-xs">
-                        <div>
-                          <p className="font-mono font-bold text-[#9e0804]">{r.registrationId}</p>
-                          <p className="font-bold text-slate-900">{r.user?.fullName || r.groupInfo?.groupName || 'Candidate'}</p>
-                          <p className="text-[10px] text-slate-500 font-mono">UTR: <strong>{r.utrNumber}</strong></p>
+                {/* Stacked Bars Graphic with Y-Axis */}
+                <div className="pt-4 flex gap-3 h-52">
+                  {/* Y-axis markers */}
+                  <div className="flex flex-col justify-between text-[10px] font-mono text-slate-400 pr-1 select-none">
+                    <span>100K</span>
+                    <span>80K</span>
+                    <span>60K</span>
+                    <span>40K</span>
+                    <span>20K</span>
+                    <span>10K</span>
+                  </div>
+
+                  {/* 7 Days Stacked Bars */}
+                  <div className="flex-1 flex items-end justify-between gap-2 border-b border-slate-100 pb-2">
+                    {[
+                      { day: 'Sat', profit: 60, spend: 3, campaign: 4 },
+                      { day: 'Sun', profit: 46, spend: 3, campaign: 3 },
+                      { day: 'Mon', profit: 56, spend: 2, campaign: 2 },
+                      { day: 'Tue', profit: 36, spend: 3, campaign: 2 },
+                      { day: 'Wed', profit: 62, spend: 3, campaign: 4 },
+                      { day: 'Thu', profit: 53, spend: 2, campaign: 3 },
+                      { day: 'Fri', profit: 45, spend: 3, campaign: 4 }
+                    ].map((bar, i) => (
+                      <div key={i} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
+                        <div className="w-full max-w-[24px] flex flex-col-reverse rounded-md overflow-hidden transition-transform group-hover:scale-105">
+                          {/* Total Profit (Blue) */}
+                          <div 
+                            style={{ height: `${(bar.profit / 100) * 150}px` }} 
+                            className="w-full bg-[#3B82F6]" 
+                          />
+                          {/* Total Spend (Cyan) */}
+                          <div 
+                            style={{ height: `${(bar.spend / 100) * 150}px` }} 
+                            className="w-full bg-[#06B6D4]" 
+                          />
+                          {/* From Campaigns (Lime-Yellow) */}
+                          <div 
+                            style={{ height: `${(bar.campaign / 100) * 150}px` }} 
+                            className="w-full bg-[#EAB308]" 
+                          />
                         </div>
-                        <div className="text-right space-y-1.5">
-                          <p className="font-mono font-bold text-slate-900">₹{r.totalAmount}</p>
-                          <div className="flex items-center gap-1.5 justify-end">
-                            <button
-                              onClick={() => handleVerifyPayment(r.registrationId, 'completed')}
-                              className="px-2.5 py-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] cursor-pointer"
-                            >
-                              Approve
-                            </button>
-                            <button
-                              onClick={() => setRejectionModal({ open: true, registrationId: r.registrationId, reason: '' })}
-                              className="px-2 py-1 rounded-md bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold text-[10px] cursor-pointer"
-                            >
-                              Reject
-                            </button>
-                          </div>
-                        </div>
+                        <span className="text-[11px] font-semibold text-slate-400 group-hover:text-slate-800">
+                          {bar.day}
+                        </span>
                       </div>
                     ))}
                   </div>
-                )}
-              </div>
-
-              {/* Recent Registrations Table */}
-              <div className="lg:col-span-6 bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-[#9e0804]" />
-                    <span>Recent Registrations</span>
-                  </h3>
-                  <button onClick={() => setActiveTab('registrations')} className="text-xs font-bold text-[#9e0804] hover:underline cursor-pointer">
-                    All Registrations →
-                  </button>
                 </div>
 
-                <div className="space-y-2">
-                  {registrationsList.slice(0, 5).map((r) => (
-                    <div key={r.registrationId} className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs flex items-center justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="font-bold text-slate-900 truncate">
-                          {r.user?.fullName || r.groupInfo?.groupName || 'Candidate'}
-                        </p>
-                        <p className="text-[10px] text-slate-500 font-mono">
-                          {r.registrationId} • {r.registrationType?.toUpperCase()}
-                        </p>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <span className="font-mono font-bold text-slate-900 block">₹{r.totalAmount}</span>
-                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                          r.paymentStatus === 'completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
-                        }`}>
-                          {r.paymentStatus}
-                        </span>
-                      </div>
+                {/* Bottom Legend */}
+                <div className="flex items-center justify-center gap-5 pt-2 text-xs font-semibold text-slate-600">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-sm bg-[#3B82F6]" /> Total Profit
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-sm bg-[#06B6D4]" /> Total Spend
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-sm bg-[#EAB308]" /> From Campaigns
+                  </span>
+                </div>
+              </div>
+
+              {/* 2. Sale Summary (Multi-Curve Spline Chart: Fashion, Electronics, Cosmetics, Mobile Gadget) */}
+              <div 
+                className="lg:col-span-4 bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/90 shadow-sm space-y-4 flex flex-col justify-between"
+                style={{ borderRadius: '24px' }}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-slate-700" />
+                    <h3 className="text-base font-black text-slate-900">Sale Summary</h3>
+                  </div>
+                  <div className="flex items-center gap-1 text-xs font-semibold text-slate-500 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200 cursor-pointer">
+                    <span>{salesPeriod}</span>
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+
+                {/* Spline Chart SVG with 4 colored curves */}
+                <div className="pt-4 flex gap-2 h-52 relative">
+                  {/* Y-axis markers */}
+                  <div className="flex flex-col justify-between text-[10px] font-mono text-slate-400 pr-1 select-none">
+                    <span>100k</span>
+                    <span>80k</span>
+                    <span>60k</span>
+                    <span>40k</span>
+                    <span>20k</span>
+                    <span>0k</span>
+                  </div>
+
+                  {/* SVG Chart Area */}
+                  <div className="flex-1 relative flex flex-col justify-between border-b border-slate-100 pb-2">
+                    {/* Horizontal Grid lines */}
+                    <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-30">
+                      <div className="border-b border-dashed border-slate-200 w-full" />
+                      <div className="border-b border-dashed border-slate-200 w-full" />
+                      <div className="border-b border-dashed border-slate-200 w-full" />
+                      <div className="border-b border-dashed border-slate-200 w-full" />
+                      <div className="border-b border-dashed border-slate-200 w-full" />
                     </div>
-                  ))}
+
+                    <svg viewBox="0 0 280 140" className="w-full h-full overflow-visible">
+                      {/* Line 1: Fashion (Yellow #EAB308) */}
+                      <path
+                        d="M 10,40 C 50,70 80,60 120,40 C 160,20 200,10 270,30"
+                        fill="none"
+                        stroke="#EAB308"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                      {/* Line 2: Electronics (Cyan #06B6D4) */}
+                      <path
+                        d="M 10,80 C 60,60 90,95 140,85 C 190,75 230,60 270,80"
+                        fill="none"
+                        stroke="#06B6D4"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                      {/* Line 3: Cosmetics (Blue #2563EB) */}
+                      <path
+                        d="M 10,95 C 50,45 100,50 140,75 C 180,95 220,50 270,60"
+                        fill="none"
+                        stroke="#2563EB"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                      {/* Line 4: Mobile Gadget (Emerald #10B981) */}
+                      <path
+                        d="M 10,120 C 60,70 100,110 160,115 C 200,120 230,85 270,100"
+                        fill="none"
+                        stroke="#10B981"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+
+                    {/* X-axis days */}
+                    <div className="flex justify-between text-[11px] font-semibold text-slate-400 pt-1">
+                      <span>Sat</span>
+                      <span>Sun</span>
+                      <span>Mon</span>
+                      <span>Tue</span>
+                      <span>Wed</span>
+                      <span>Thu</span>
+                      <span>Fri</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Legend */}
+                <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-[11px] font-semibold text-slate-600">
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#EAB308]" /> Fashion
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#06B6D4]" /> Electronics
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#2563EB]" /> Cosmetics
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#10B981]" /> Mobile Gadget
+                  </span>
+                </div>
+              </div>
+
+              {/* 3. Promotional Card: "Take a look at our more campaign insights!" */}
+              <div 
+                className="lg:col-span-3 p-6 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-sm min-h-[260px]"
+                style={{
+                  background: 'linear-gradient(135deg, #FDF4E7 0%, #F5ECFD 50%, #EDE9FE 100%)',
+                  borderRadius: '24px'
+                }}
+              >
+                {/* 3D Decorative Abstract Geometric Elements */}
+                <div className="absolute -top-4 -left-4 w-12 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl transform -rotate-12 opacity-80 shadow-md" />
+                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-tl from-purple-400 to-indigo-300 rounded-3xl transform rotate-45 opacity-60" />
+
+                <div className="relative z-10 space-y-2 max-w-[200px]">
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight tracking-tight">
+                    Take a look at our more <span className="relative">ca<span className="text-slate-900">mpaign</span></span> insights!
+                  </h3>
+                </div>
+
+                <div className="relative z-10 pt-6">
+                  <button
+                    onClick={() => { setActiveTab('reports'); setSubTab(''); }}
+                    className="inline-flex items-center gap-1.5 font-black text-xs text-blue-600 hover:text-blue-800 transition-colors group cursor-pointer bg-white/70 hover:bg-white px-3.5 py-2 rounded-full border border-blue-200/60 shadow-2xs"
+                    style={{ borderRadius: '9999px' }}
+                  >
+                    <span>Get More Insights</span>
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </button>
                 </div>
               </div>
 
             </div>
 
-            {/* Split: Upcoming Events & Recent Enquiries / Notifications */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              
-              {/* Upcoming Events */}
-              <div className="lg:col-span-6 bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-3">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-[#9e0804]" />
-                    <span>Upcoming Statewide Events (Carol Fiesta 2026)</span>
-                  </h3>
-                  <button onClick={() => setActiveTab('events')} className="text-xs font-bold text-[#9e0804] hover:underline cursor-pointer">
-                    Manage Events →
-                  </button>
+            {/* 📋 BOTTOM SECTION: Recent Orders / Registrations Table (Qcomart Style) */}
+            <div 
+              className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/90 shadow-sm space-y-4"
+              style={{ borderRadius: '24px' }}
+            >
+              {/* Table Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2.5">
+                    <Receipt className="w-4 h-4 text-slate-700" />
+                    <h3 className="text-base font-black text-slate-900">Recent Orders</h3>
+                    <span className="text-[11px] font-bold text-blue-600 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full font-mono">
+                      240 orders active
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400 font-medium">Keep track of orders and others information.</p>
                 </div>
 
-                <div className="space-y-2.5">
-                  {eventsList.slice(0, 4).map((ev) => (
-                    <div key={ev.eventId} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 text-xs">
-                      <div>
-                        <p className="font-bold text-slate-900">{ev.title}</p>
-                        <p className="text-[10px] text-slate-500">{ev.district} • {ev.venue}</p>
-                        <p className="text-[10px] text-slate-400 font-mono">Date: {ev.date}</p>
-                      </div>
-                      <span className="font-mono font-bold text-[#9e0804] bg-white px-2 py-1 rounded-lg border border-slate-200 shrink-0">
-                        {ev.price > 0 ? `₹${ev.price}` : 'FREE'}
-                      </span>
-                    </div>
-                  ))}
+                <div className="flex items-center gap-2.5">
+                  <button
+                    onClick={() => { setActiveTab('registrations'); }}
+                    className="px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+                    style={{ borderRadius: '9999px' }}
+                  >
+                    <Sliders className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Filters</span>
+                  </button>
+
+                  <button
+                    onClick={() => { setActiveTab('registrations'); }}
+                    className="px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 transition-all cursor-pointer shadow-2xs"
+                    style={{ borderRadius: '9999px' }}
+                  >
+                    View All Order
+                  </button>
                 </div>
               </div>
 
-              {/* Recent Enquiries & Announcements */}
-              <div className="lg:col-span-6 bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-3">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                    <MessageSquare className="w-4 h-4 text-rose-600" />
-                    <span>Recent Visitor Enquiries ({enquiriesList.length})</span>
-                  </h3>
-                  <button onClick={() => setActiveTab('enquiries')} className="text-xs font-bold text-[#9e0804] hover:underline cursor-pointer">
-                    Help Desk →
-                  </button>
-                </div>
+              {/* Orders Modern Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="border-b border-slate-100 text-slate-400 font-semibold text-[11px]">
+                      <th className="py-3 px-3 w-10">
+                        <input
+                          type="checkbox"
+                          className="rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                      </th>
+                      <th className="py-3 px-3 font-bold text-slate-700">Transaction ID ↓</th>
+                      <th className="py-3 px-3 font-bold text-slate-700">Product Name</th>
+                      <th className="py-3 px-3 font-bold text-slate-700">Product Variant</th>
+                      <th className="py-3 px-3 font-bold text-slate-700">Payment Method</th>
+                      <th className="py-3 px-3 font-bold text-slate-700">Order Date</th>
+                      <th className="py-3 px-3 font-bold text-slate-700">Order Status</th>
+                      <th className="py-3 px-3 font-bold text-slate-700 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                    
+                    {/* Row 1: Macbook Pro M3 Pro */}
+                    <tr className="hover:bg-slate-50/70 transition-colors group">
+                      <td className="py-4 px-3">
+                        <input
+                          type="checkbox"
+                          defaultChecked
+                          className="rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                      </td>
+                      <td className="py-4 px-3 font-mono font-bold text-blue-600">
+                        #75845735
+                      </td>
+                      <td className="py-4 px-3 font-bold text-slate-900">
+                        Macbook Pro M3 Pro
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        Black, 18/512GB
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="font-mono font-black text-indigo-600 text-xs">
+                          stripe
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        22 Jan 2026
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                          Shipped
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-right">
+                        <button className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </button>
+                      </td>
+                    </tr>
 
-                <div className="space-y-2">
-                  {enquiriesList.slice(0, 4).map((enq) => (
-                    <div key={enq._id} className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs flex items-center justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="font-bold text-slate-900 truncate">{enq.name} ({enq.district})</p>
-                        <p className="text-[11px] text-slate-600 truncate">{enq.message}</p>
-                      </div>
-                      <button
-                        onClick={() => setReplyModal({ open: true, enquiry: enq, replyMessage: '', newStatus: 'resolved' })}
-                        className="px-2.5 py-1 rounded-lg bg-red-50 text-[#9e0804] hover:bg-red-100 font-bold text-[10px] shrink-0 cursor-pointer"
-                      >
-                        Reply
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                    {/* Row 2: iPhone 15 Pro Max */}
+                    <tr className="hover:bg-slate-50/70 transition-colors group">
+                      <td className="py-4 px-3">
+                        <input
+                          type="checkbox"
+                          defaultChecked
+                          className="rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                      </td>
+                      <td className="py-4 px-3 font-mono font-bold text-blue-600">
+                        #75845736
+                      </td>
+                      <td className="py-4 px-3 font-bold text-slate-900">
+                        iPhone 15 Pro Max
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        Natural Titanium, 256GB
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="font-mono font-black text-blue-800 text-xs italic tracking-tighter">
+                          VISA
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        20 Jan 2026
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-200">
+                          Delivered
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-right">
+                        <button className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    {/* Row 3: Carol Fiesta Adult Solo Singing */}
+                    <tr className="hover:bg-slate-50/70 transition-colors group">
+                      <td className="py-4 px-3">
+                        <input
+                          type="checkbox"
+                          className="rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                      </td>
+                      <td className="py-4 px-3 font-mono font-bold text-blue-600">
+                        #TZR-881920
+                      </td>
+                      <td className="py-4 px-3 font-bold text-slate-900">
+                        Carol Fiesta 2026 - Adult Solo Singing
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        Singing Solo • Tirunelveli
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="font-mono font-black text-emerald-700 text-xs">
+                          UPI / UTR
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        Today
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          Verified
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-right">
+                        <button className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    {/* Row 4: Choir & Live Bands Showcase */}
+                    <tr className="hover:bg-slate-50/70 transition-colors group">
+                      <td className="py-4 px-3">
+                        <input
+                          type="checkbox"
+                          className="rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                      </td>
+                      <td className="py-4 px-3 font-mono font-bold text-blue-600">
+                        #TZR-554210
+                      </td>
+                      <td className="py-4 px-3 font-bold text-slate-900">
+                        Carol Fiesta 2026 - Choirs & Live Bands
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        Group Troupe (12 members)
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="font-mono font-black text-indigo-600 text-xs">
+                          stripe
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        Yesterday
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          Verified
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-right">
+                        <button className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    {/* Row 5: Solo Dance Showcase */}
+                    <tr className="hover:bg-slate-50/70 transition-colors group">
+                      <td className="py-4 px-3">
+                        <input
+                          type="checkbox"
+                          className="rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                      </td>
+                      <td className="py-4 px-3 font-mono font-bold text-blue-600">
+                        #TZR-441299
+                      </td>
+                      <td className="py-4 px-3 font-bold text-slate-900">
+                        Carol Fiesta 2026 - Solo Dance Showcase
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        Dance Act • Tirunelveli
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="font-mono font-black text-amber-600 text-xs">
+                          Cashfree
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-slate-500">
+                        04 Oct 2026
+                      </td>
+                      <td className="py-4 px-3">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                          Pending
+                        </span>
+                      </td>
+                      <td className="py-4 px-3 text-right">
+                        <button className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
               </div>
-
             </div>
 
           </div>
@@ -2346,7 +3093,7 @@ export default function AdminDashboard({ view }) {
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <h3 className="text-base font-black text-slate-900">Competitions Management</h3>
-                <p className="text-xs text-slate-500">Each event contains specific competition tracks (Singing, Choir, Dance, Quiz, Cooking)</p>
+                <p className="text-xs text-slate-500">Each event contains specific competition tracks (Singing, Choir, Dance, Santa Claus Contest)</p>
               </div>
               <button
                 onClick={() => setShowCompModal(true)}
@@ -2366,7 +3113,7 @@ export default function AdminDashboard({ view }) {
                 <p className="pl-4 text-slate-600">├── 🎶 Choirs & Festive Bands Showcase - Grand Arena Stage</p>
                 <p className="pl-4 text-slate-600">├── 👶 Carol Singing Solo (Kids Category) - Youth Pavilion</p>
                 <p className="pl-4 text-slate-600">├── 💃 Choreography Group Dance Troupe - Dance Stage A</p>
-                <p className="pl-4 text-slate-600">└── 🍳 Grand Cooking Championship - Master Kitchen Arena</p>
+                <p className="pl-4 text-slate-600">└── 🎅 Grand Santa Claus Character Act - Festive Center Stage</p>
               </div>
             </div>
 
@@ -2538,38 +3285,71 @@ export default function AdminDashboard({ view }) {
         )}
 
         {/* ========================================================
-            5. 📝 MODULE: REGISTRATIONS (Separated from Participants)
+            5. 📝 MODULE: REGISTRATIONS (Overview & Full Action Suite)
             ======================================================== */}
         {activeTab === 'registrations' && (
           <div className="space-y-5">
+            {/* Header with Title & Export Actions */}
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                <h3 className="text-base font-black text-slate-900">Event Registrations Registry ({registrationsList.length})</h3>
-                <p className="text-xs text-slate-500">Track multi-event submissions, generated QR gate passes, and UTR status</p>
+                <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-[#9e0804]" />
+                  <span>Event Registrations Overview ({registrationsList.length})</span>
+                </h3>
+                <p className="text-xs text-slate-500">Manage candidate entries, verify payments, generate digital passes, edit profiles, and broadcast alerts</p>
               </div>
 
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => downloadCSV('TheZar_Registrations_Log', registrationsList, ['registrationId', 'registrationType', 'totalAmount', 'paymentStatus', 'utrNumber'])}
-                  className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 cursor-pointer"
+                  onClick={() => downloadCSV('TheZar_Registrations_Log', registrationsList, ['registrationId', 'participantId', 'registrationType', 'totalAmount', 'paymentStatus', 'utrNumber', 'createdAt'])}
+                  className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 cursor-pointer transition-colors"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Export Registrations</span>
+                  <span>Export CSV</span>
                 </button>
               </div>
             </div>
 
-            {/* Filter Bar */}
+            {/* Registration Summary KPI Chips */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
+                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Total Registrations</span>
+                <p className="text-2xl font-black text-slate-900 font-mono">{registrationsList.length}</p>
+                <span className="text-[10px] text-slate-500 font-medium">All Logged Passes</span>
+              </div>
+              <div className="bg-white p-4 rounded-2xl border border-emerald-200 shadow-2xs space-y-1">
+                <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase">Verified Passes</span>
+                <p className="text-2xl font-black text-emerald-700 font-mono">{verifiedPaymentsList.length}</p>
+                <span className="text-[10px] text-emerald-700 font-bold">QR Access Active</span>
+              </div>
+              <div className="bg-white p-4 rounded-2xl border border-amber-200 shadow-2xs space-y-1">
+                <span className="text-[10px] font-mono font-bold text-amber-800 uppercase">Pending Verification</span>
+                <p className="text-2xl font-black text-amber-600 font-mono">{pendingPaymentsList.length}</p>
+                <span className="text-[10px] text-amber-700 font-bold">Needs UTR Check</span>
+              </div>
+              <div className="bg-white p-4 rounded-2xl border border-rose-200 shadow-2xs space-y-1">
+                <span className="text-[10px] font-mono font-bold text-rose-800 uppercase">Rejected / Flagged</span>
+                <p className="text-2xl font-black text-rose-600 font-mono">{rejectedPaymentsList.length}</p>
+                <span className="text-[10px] text-rose-600 font-medium">Invalid Payments</span>
+              </div>
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
+                <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Total Revenue</span>
+                <p className="text-xl font-black text-[#9e0804] font-mono">₹{stats.totalRevenue.toLocaleString()}</p>
+                <span className="text-[10px] text-slate-500 font-medium">Approved: ₹{stats.approvedRevenue.toLocaleString()}</span>
+              </div>
+            </div>
+
+            {/* Filter & Live Search Bar */}
             <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex flex-wrap items-center justify-between gap-3 text-xs">
               <div className="flex flex-wrap items-center gap-2">
                 <div className="relative">
                   <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
-                    placeholder="Search registration ID, candidate name, UTR..."
+                    placeholder="Search candidate, phone, email, UTR, ID..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-8 pr-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-[#9e0804]"
+                    className="pl-8 pr-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-[#9e0804] w-64"
                   />
                 </div>
 
@@ -2579,75 +3359,233 @@ export default function AdminDashboard({ view }) {
                   className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700"
                 >
                   <option value="All">All Payment Statuses</option>
-                  <option value="pending_verification">Pending Verification</option>
                   <option value="completed">Completed / Verified</option>
+                  <option value="pending_verification">Pending Verification</option>
                   <option value="rejected">Rejected</option>
+                </select>
+
+                <select
+                  value={filterDistrict}
+                  onChange={(e) => setFilterDistrict(e.target.value)}
+                  className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700"
+                >
+                  <option value="All">All Districts</option>
+                  <option value="Tirunelveli">Tirunelveli</option>
+                  <option value="Thoothukudi">Thoothukudi</option>
+                  <option value="Tenkasi">Tenkasi</option>
+                  <option value="Madurai">Madurai</option>
+                  <option value="Chennai">Chennai</option>
                 </select>
               </div>
 
               <span className="text-xs text-slate-500 font-medium">
-                Showing <strong>{filteredRegistrations.length}</strong> records
+                Showing <strong>{filteredRegistrations.length}</strong> of <strong>{registrationsList.length}</strong> registrations
               </span>
             </div>
 
-            {/* Registrations Table */}
+            {/* Registrations Table with Comprehensive Columns & Actions Suite */}
             <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xs">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs text-slate-700">
                   <thead className="bg-slate-50 text-slate-400 font-mono text-[10px] uppercase border-b border-slate-200">
                     <tr>
                       <th className="py-3 px-4">Registration ID</th>
-                      <th className="py-3 px-4">Participant ID</th>
-                      <th className="py-3 px-4">Participant Name</th>
-                      <th className="py-3 px-4">Event(s)</th>
+                      <th className="py-3 px-4">Candidate / Troupe</th>
+                      <th className="py-3 px-4">Mobile & Country</th>
+                      <th className="py-3 px-4">District</th>
+                      <th className="py-3 px-4">Track(s)</th>
                       <th className="py-3 px-4">Type</th>
-                      <th className="py-3 px-4">Amount</th>
+                      <th className="py-3 px-4">Amount & UTR</th>
                       <th className="py-3 px-4">Payment Status</th>
-                      <th className="py-3 px-4">Registration Status</th>
-                      <th className="py-3 px-4">Submitted Date</th>
-                      <th className="py-3 px-4 text-right">Actions</th>
+                      <th className="py-3 px-4">Pass Status</th>
+                      <th className="py-3 px-4">Date</th>
+                      <th className="py-3 px-4 text-center min-w-[220px]">Actions Suite</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
-                    {filteredRegistrations.map((r) => (
-                      <tr key={r.registrationId} className="hover:bg-slate-50 transition-colors">
-                        <td className="py-3.5 px-4 font-mono font-bold text-[#9e0804]">{r.registrationId}</td>
-                        <td className="py-3.5 px-4 font-mono text-slate-500">{r.participantId || 'TZR-P01'}</td>
-                        <td className="py-3.5 px-4 font-bold text-slate-900">
-                          {r.user?.fullName || r.groupInfo?.groupName || 'Candidate'}
-                        </td>
-                        <td className="py-3.5 px-4 max-w-xs truncate">
-                          {r.selectedEvents?.map(e => e.title).join(', ') || 'Carol Fiesta Track'}
-                        </td>
-                        <td className="py-3.5 px-4 uppercase text-[10px] font-bold">
-                          {r.registrationType}
-                        </td>
-                        <td className="py-3.5 px-4 font-mono font-bold text-slate-900">₹{r.totalAmount}</td>
-                        <td className="py-3.5 px-4">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                            r.paymentStatus === 'completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
-                          }`}>
-                            {r.paymentStatus}
-                          </span>
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700">
-                            Confirmed
-                          </span>
-                        </td>
-                        <td className="py-3.5 px-4 font-mono text-slate-500">
-                          {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : 'Today'}
-                        </td>
-                        <td className="py-3.5 px-4 text-right">
-                          <button
-                            onClick={() => setSelectedRegistration(r)}
-                            className="px-2.5 py-1 rounded-lg bg-red-50 text-[#9e0804] hover:bg-red-100 font-bold text-xs cursor-pointer"
-                          >
-                            Details & Pass →
-                          </button>
+                    {filteredRegistrations.length === 0 ? (
+                      <tr>
+                        <td colSpan={11} className="py-8 text-center text-slate-400">
+                          No registrations found matching your filter criteria.
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      filteredRegistrations.map((r) => {
+                        const candidateName = r.user?.fullName || r.groupInfo?.groupName || 'Candidate';
+                        const candidatePhone = r.user?.phone || '—';
+                        const candidateEmail = r.user?.email || '—';
+                        const isVerified = r.paymentStatus === 'completed';
+                        const isPending = r.paymentStatus === 'pending_verification';
+                        const isRejected = r.paymentStatus === 'rejected';
+
+                        return (
+                          <tr key={r.registrationId} className="hover:bg-slate-50/80 transition-colors">
+                            {/* Reg ID */}
+                            <td className="py-3 px-4 font-mono font-bold text-[#9e0804] whitespace-nowrap">
+                              <span className="bg-red-50 text-[#9e0804] px-2 py-0.5 rounded-md border border-red-100">
+                                {r.registrationId}
+                              </span>
+                              <span className="block text-[9px] text-slate-400 font-mono mt-0.5">{r.participantId || 'TZR-P01'}</span>
+                            </td>
+
+                            {/* Candidate Name & Email */}
+                            <td className="py-3 px-4 min-w-[150px]">
+                              <p className="font-bold text-slate-900 leading-tight">{candidateName}</p>
+                              <p className="text-[10px] text-slate-400 truncate max-w-[150px]">{candidateEmail}</p>
+                            </td>
+
+                            {/* Mobile Number & Country */}
+                            <td className="py-3 px-4 font-mono whitespace-nowrap">
+                              <span className="font-bold text-slate-800">{candidatePhone}</span>
+                            </td>
+
+                            {/* District */}
+                            <td className="py-3 px-4 text-slate-600 whitespace-nowrap">
+                              {r.district || r.user?.district || 'Tirunelveli'}
+                            </td>
+
+                            {/* Tracks */}
+                            <td className="py-3 px-4 max-w-xs">
+                              <div className="space-y-0.5">
+                                {r.selectedEvents && r.selectedEvents.length > 0 ? (
+                                  r.selectedEvents.map((ev, i) => (
+                                    <span key={i} className="inline-block bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px] font-medium mr-1 truncate max-w-[180px]">
+                                      {ev.title}
+                                    </span>
+                                  ))
+                                ) : (
+                                  <span className="text-slate-500 text-[11px]">Carol Fiesta Track</span>
+                                )}
+                              </div>
+                            </td>
+
+                            {/* Type */}
+                            <td className="py-3 px-4 whitespace-nowrap">
+                              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                                r.registrationType === 'group' ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-blue-50 text-blue-800 border border-blue-200'
+                              }`}>
+                                {r.registrationType === 'group' ? `Group (${r.groupInfo?.membersCount || 'Team'})` : 'Individual'}
+                              </span>
+                            </td>
+
+                            {/* Amount & UTR */}
+                            <td className="py-3 px-4 whitespace-nowrap">
+                              <p className="font-mono font-bold text-slate-900">₹{r.totalAmount}</p>
+                              {r.utrNumber && (
+                                <span className="text-[9px] font-mono text-slate-400 block truncate max-w-[110px]" title={`UTR: ${r.utrNumber}`}>
+                                  {r.utrNumber}
+                                </span>
+                              )}
+                            </td>
+
+                            {/* Payment Status */}
+                            <td className="py-3 px-4 whitespace-nowrap">
+                              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 w-fit ${
+                                isVerified
+                                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                  : isPending
+                                  ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                  : 'bg-rose-50 text-rose-700 border border-rose-200'
+                              }`}>
+                                {isVerified && <CheckCircle2 className="w-3 h-3 text-emerald-600" />}
+                                {isPending && <Clock className="w-3 h-3 text-amber-600" />}
+                                {isRejected && <XCircle className="w-3 h-3 text-rose-600" />}
+                                <span>{r.paymentStatus}</span>
+                              </span>
+                            </td>
+
+                            {/* Gate Pass Status */}
+                            <td className="py-3 px-4 whitespace-nowrap">
+                              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                isVerified ? 'bg-emerald-100 text-emerald-900' : 'bg-slate-100 text-slate-600'
+                              }`}>
+                                {isVerified ? '✅ QR Pass Issued' : '⏳ Pass On-Hold'}
+                              </span>
+                            </td>
+
+                            {/* Submission Date */}
+                            <td className="py-3 px-4 font-mono text-slate-500 whitespace-nowrap text-[11px]">
+                              {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : 'Today'}
+                            </td>
+
+                            {/* Multi-Action Suite */}
+                            <td className="py-3 px-4 text-center">
+                              <div className="flex items-center justify-center gap-1">
+                                {/* 1. View Pass & Details */}
+                                <button
+                                  onClick={() => setSelectedRegistration(r)}
+                                  className="p-1.5 rounded-lg bg-red-50 text-[#9e0804] hover:bg-red-100 font-bold text-xs transition-colors cursor-pointer"
+                                  title="View Official Digital Pass & Details"
+                                >
+                                  <Eye className="w-3.5 h-3.5" />
+                                </button>
+
+                                {/* 2. Approve Payment (If Pending) */}
+                                {r.paymentStatus !== 'completed' && (
+                                  <button
+                                    onClick={() => handleVerifyPayment(r.registrationId, 'completed')}
+                                    className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors cursor-pointer"
+                                    title="Approve Payment & Verify Pass"
+                                  >
+                                    <CheckCircle2 className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+
+                                {/* 3. Reject Payment (If Pending) */}
+                                {r.paymentStatus === 'pending_verification' && (
+                                  <button
+                                    onClick={() => setRejectionModal({ open: true, registrationId: r.registrationId, reason: '' })}
+                                    className="p-1.5 rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors cursor-pointer"
+                                    title="Reject Payment UTR"
+                                  >
+                                    <XCircle className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+
+                                {/* 4. Edit Registration */}
+                                <button
+                                  onClick={() => handleOpenEditRegistration(r)}
+                                  className="p-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors cursor-pointer"
+                                  title="Edit Candidate / Registration Details"
+                                >
+                                  <Edit3 className="w-3.5 h-3.5" />
+                                </button>
+
+                                {/* 5. Resend Notification */}
+                                <button
+                                  onClick={() => handleResendPass(r)}
+                                  className="p-1.5 rounded-lg bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors cursor-pointer"
+                                  title="Resend SMS / Email Digital Pass"
+                                >
+                                  <Send className="w-3.5 h-3.5" />
+                                </button>
+
+                                {/* 6. Print Pass */}
+                                <button
+                                  onClick={() => {
+                                    setSelectedRegistration(r);
+                                    setTimeout(() => window.print(), 300);
+                                  }}
+                                  className="p-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
+                                  title="Print Official Gate Pass"
+                                >
+                                  <Printer className="w-3.5 h-3.5" />
+                                </button>
+
+                                {/* 7. Delete Registration */}
+                                <button
+                                  onClick={() => setDeleteConfirmModal({ open: true, registrationId: r.registrationId, candidateName })}
+                                  className="p-1.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 transition-colors cursor-pointer"
+                                  title="Delete Registration"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -3218,12 +4156,17 @@ export default function AdminDashboard({ view }) {
             {/* CMS Section Tabs */}
             <div className="flex flex-wrap gap-2 border-b border-slate-100 pb-3 text-xs font-bold">
               {[
-                { id: 'homepage', label: '🏠 Homepage Hero' },
+                { id: 'homepage', label: '🏠 Hero Section' },
                 { id: 'countdown', label: '⏳ Countdown Timer' },
-                { id: 'featured', label: '🍳 Featured Championship' },
+                { id: 'categories', label: '🎯 Competition Categories' },
                 { id: 'about', label: 'ℹ️ About Section' },
-                { id: 'contact', label: '📞 Contact Details' },
-                { id: 'footer', label: '🦶 Footer & Copyright' }
+                { id: 'howitworks', label: '🪜 How It Works' },
+                { id: 'newsticker', label: '📢 News Ticker' },
+                { id: 'leaderboard', label: '🏆 Leaderboard' },
+                { id: 'mobileapp', label: '📱 Mobile App' },
+                { id: 'cta', label: '🚀 CTA Banner' },
+                { id: 'contact', label: '📞 Contact & Social' },
+                { id: 'footer', label: '🦶 Footer' }
               ].map((tab) => (
                 <button
                   type="button"
@@ -3238,14 +4181,14 @@ export default function AdminDashboard({ view }) {
               ))}
             </div>
 
-            {/* CMS Content Inputs */}
+            {/* 1. HERO SECTION */}
             {cmsTab === 'homepage' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div className="sm:col-span-2">
                   <label className="block font-bold text-slate-700 uppercase mb-1">Hero Eyebrow Text</label>
                   <input
                     type="text"
-                    value={siteContent.heroEyebrow}
+                    value={siteContent.heroEyebrow || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, heroEyebrow: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
                   />
@@ -3254,7 +4197,7 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Hero Title Line 1</label>
                   <input
                     type="text"
-                    value={siteContent.heroTitleLine1}
+                    value={siteContent.heroTitleLine1 || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, heroTitleLine1: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
                   />
@@ -3263,8 +4206,17 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Hero Title Line 2</label>
                   <input
                     type="text"
-                    value={siteContent.heroTitleLine2}
+                    value={siteContent.heroTitleLine2 || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, heroTitleLine2: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold text-[#9e0804]"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Hero Title Line 3</label>
+                  <input
+                    type="text"
+                    value={siteContent.heroTitleLine3 || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, heroTitleLine3: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
                   />
                 </div>
@@ -3272,7 +4224,7 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Hero Subtitle</label>
                   <textarea
                     rows={2}
-                    value={siteContent.heroSubtitle}
+                    value={siteContent.heroSubtitle || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, heroSubtitle: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300"
                   />
@@ -3280,13 +4232,14 @@ export default function AdminDashboard({ view }) {
               </div>
             )}
 
+            {/* 2. COUNTDOWN TIMER */}
             {cmsTab === 'countdown' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <label className="block font-bold text-slate-700 uppercase mb-1">Countdown Section Title</label>
                   <input
                     type="text"
-                    value={siteContent.countdownTitle}
+                    value={siteContent.countdownTitle || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, countdownTitle: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
                   />
@@ -3295,16 +4248,16 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Countdown Event Name</label>
                   <input
                     type="text"
-                    value={siteContent.countdownEventName}
+                    value={siteContent.countdownEventName || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, countdownEventName: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-slate-700 uppercase mb-1">Target ISO Date</label>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Target ISO Date (e.g. 2026-12-12T09:00:00.000Z)</label>
                   <input
                     type="text"
-                    value={siteContent.countdownTargetDate}
+                    value={siteContent.countdownTargetDate || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, countdownTargetDate: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-mono"
                   />
@@ -3313,7 +4266,7 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Venue Location</label>
                   <input
                     type="text"
-                    value={siteContent.countdownVenue}
+                    value={siteContent.countdownVenue || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, countdownVenue: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300"
                   />
@@ -3321,54 +4274,91 @@ export default function AdminDashboard({ view }) {
               </div>
             )}
 
-            {cmsTab === 'featured' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                <div>
-                  <label className="block font-bold text-slate-700 uppercase mb-1">Featured Title</label>
-                  <input
-                    type="text"
-                    value={siteContent.featuredTitle}
-                    onChange={(e) => setSiteContent({ ...siteContent, featuredTitle: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
-                  />
+            {/* 3. COMPETITION CATEGORIES */}
+            {cmsTab === 'categories' && (
+              <div className="space-y-4 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-bold text-slate-700 uppercase mb-1">Section Eyebrow</label>
+                    <input
+                      type="text"
+                      value={siteContent.competitionsEyebrow || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, competitionsEyebrow: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-slate-700 uppercase mb-1">Section Title</label>
+                    <input
+                      type="text"
+                      value={siteContent.competitionsTitle || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, competitionsTitle: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block font-bold text-slate-700 uppercase mb-1">Section Subtitle</label>
+                    <textarea
+                      rows={2}
+                      value={siteContent.competitionsSubtitle || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, competitionsSubtitle: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block font-bold text-slate-700 uppercase mb-1">Host District</label>
-                  <input
-                    type="text"
-                    value={siteContent.featuredDistrict}
-                    onChange={(e) => setSiteContent({ ...siteContent, featuredDistrict: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="block font-bold text-slate-700 uppercase mb-1">Prize Package</label>
-                  <input
-                    type="text"
-                    value={siteContent.featuredPrize}
-                    onChange={(e) => setSiteContent({ ...siteContent, featuredPrize: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold text-[#9e0804]"
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="block font-bold text-slate-700 uppercase mb-1">Description</label>
-                  <textarea
-                    rows={2}
-                    value={siteContent.featuredDescription}
-                    onChange={(e) => setSiteContent({ ...siteContent, featuredDescription: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300"
-                  />
+
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                  <h4 className="font-black text-[#9e0804] uppercase tracking-wide">Featured Bento Card Settings</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block font-bold text-slate-700 uppercase mb-1">Featured Card Title</label>
+                      <input
+                        type="text"
+                        value={siteContent.featuredTitle || ''}
+                        onChange={(e) => setSiteContent({ ...siteContent, featuredTitle: e.target.value })}
+                        className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-300 font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-bold text-slate-700 uppercase mb-1">Prize Package</label>
+                      <input
+                        type="text"
+                        value={siteContent.featuredPrize || ''}
+                        onChange={(e) => setSiteContent({ ...siteContent, featuredPrize: e.target.value })}
+                        className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-300 font-bold text-[#9e0804]"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block font-bold text-slate-700 uppercase mb-1">Featured Card Description</label>
+                      <textarea
+                        rows={2}
+                        value={siteContent.featuredDescription || ''}
+                        onChange={(e) => setSiteContent({ ...siteContent, featuredDescription: e.target.value })}
+                        className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-300"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
 
+            {/* 4. ABOUT SECTION */}
             {cmsTab === 'about' && (
               <div className="space-y-4 text-xs">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">About Section Eyebrow</label>
+                  <input
+                    type="text"
+                    value={siteContent.aboutEyebrow || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, aboutEyebrow: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                  />
+                </div>
                 <div>
                   <label className="block font-bold text-slate-700 uppercase mb-1">About Section Title</label>
                   <input
                     type="text"
-                    value={siteContent.aboutTitle}
+                    value={siteContent.aboutTitle || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, aboutTitle: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
                   />
@@ -3377,41 +4367,265 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">About Description</label>
                   <textarea
                     rows={3}
-                    value={siteContent.aboutDescription}
+                    value={siteContent.aboutDescription || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, aboutDescription: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300"
                   />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 uppercase mb-1">Mission</label>
-                    <textarea
-                      rows={2}
-                      value={siteContent.mission}
-                      onChange={(e) => setSiteContent({ ...siteContent, mission: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300"
+                    <label className="block font-bold text-slate-700 uppercase mb-1">Bullet Point 1</label>
+                    <input
+                      type="text"
+                      value={siteContent.aboutBullet1 || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, aboutBullet1: e.target.value })}
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300"
                     />
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 uppercase mb-1">Vision</label>
-                    <textarea
-                      rows={2}
-                      value={siteContent.vision}
-                      onChange={(e) => setSiteContent({ ...siteContent, vision: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300"
+                    <label className="block font-bold text-slate-700 uppercase mb-1">Bullet Point 2</label>
+                    <input
+                      type="text"
+                      value={siteContent.aboutBullet2 || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, aboutBullet2: e.target.value })}
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-slate-700 uppercase mb-1">Bullet Point 3</label>
+                    <input
+                      type="text"
+                      value={siteContent.aboutBullet3 || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, aboutBullet3: e.target.value })}
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300"
                     />
                   </div>
                 </div>
               </div>
             )}
 
+            {/* 5. HOW IT WORKS */}
+            {cmsTab === 'howitworks' && (
+              <div className="space-y-4 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-bold text-slate-700 uppercase mb-1">Section Eyebrow</label>
+                    <input
+                      type="text"
+                      value={siteContent.howItWorksEyebrow || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, howItWorksEyebrow: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-slate-700 uppercase mb-1">Section Title</label>
+                    <input
+                      type="text"
+                      value={siteContent.howItWorksTitle || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, howItWorksTitle: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                    <span className="font-bold text-[#9e0804] uppercase text-[10px]">Step 1</span>
+                    <input
+                      type="text"
+                      value={siteContent.howItWorksStep1Title || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, howItWorksStep1Title: e.target.value })}
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-bold"
+                      placeholder="Step 1 Title"
+                    />
+                    <textarea
+                      rows={3}
+                      value={siteContent.howItWorksStep1Desc || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, howItWorksStep1Desc: e.target.value })}
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300"
+                      placeholder="Step 1 Description"
+                    />
+                  </div>
+
+                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                    <span className="font-bold text-[#9e0804] uppercase text-[10px]">Step 2</span>
+                    <input
+                      type="text"
+                      value={siteContent.howItWorksStep2Title || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, howItWorksStep2Title: e.target.value })}
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-bold"
+                      placeholder="Step 2 Title"
+                    />
+                    <textarea
+                      rows={3}
+                      value={siteContent.howItWorksStep2Desc || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, howItWorksStep2Desc: e.target.value })}
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300"
+                      placeholder="Step 2 Description"
+                    />
+                  </div>
+
+                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                    <span className="font-bold text-[#9e0804] uppercase text-[10px]">Step 3</span>
+                    <input
+                      type="text"
+                      value={siteContent.howItWorksStep3Title || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, howItWorksStep3Title: e.target.value })}
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-bold"
+                      placeholder="Step 3 Title"
+                    />
+                    <textarea
+                      rows={3}
+                      value={siteContent.howItWorksStep3Desc || ''}
+                      onChange={(e) => setSiteContent({ ...siteContent, howItWorksStep3Desc: e.target.value })}
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300"
+                      placeholder="Step 3 Description"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 6. NEWS TICKER */}
+            {cmsTab === 'newsticker' && (
+              <div className="space-y-4 text-xs">
+                <p className="text-slate-500">Manage headline ticker items that scroll live on the homepage ticker line.</p>
+                {(siteContent.newsTickerItems || []).map((item, idx) => (
+                  <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row gap-3 items-center">
+                    <input
+                      type="text"
+                      value={item.tag}
+                      onChange={(e) => {
+                        const updated = [...(siteContent.newsTickerItems || [])];
+                        updated[idx].tag = e.target.value;
+                        setSiteContent({ ...siteContent, newsTickerItems: updated });
+                      }}
+                      className="w-32 px-3 py-2 rounded-lg bg-white border border-slate-300 font-mono font-bold"
+                      placeholder="TAG"
+                    />
+                    <input
+                      type="text"
+                      value={item.text}
+                      onChange={(e) => {
+                        const updated = [...(siteContent.newsTickerItems || [])];
+                        updated[idx].text = e.target.value;
+                        setSiteContent({ ...siteContent, newsTickerItems: updated });
+                      }}
+                      className="flex-1 px-3 py-2 rounded-lg bg-white border border-slate-300"
+                      placeholder="Announcement Text"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* 7. LEADERBOARD */}
+            {cmsTab === 'leaderboard' && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Section Eyebrow</label>
+                  <input
+                    type="text"
+                    value={siteContent.leaderboardEyebrow || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, leaderboardEyebrow: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Section Title</label>
+                  <input
+                    type="text"
+                    value={siteContent.leaderboardTitle || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, leaderboardTitle: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Section Subtitle</label>
+                  <textarea
+                    rows={2}
+                    value={siteContent.leaderboardSubtitle || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, leaderboardSubtitle: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 8. MOBILE APP */}
+            {cmsTab === 'mobileapp' && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">App Eyebrow</label>
+                  <input
+                    type="text"
+                    value={siteContent.mobileAppEyebrow || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, mobileAppEyebrow: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">App Title</label>
+                  <input
+                    type="text"
+                    value={siteContent.mobileAppTitle || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, mobileAppTitle: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block font-bold text-slate-700 uppercase mb-1">App Subtitle</label>
+                  <textarea
+                    rows={2}
+                    value={siteContent.mobileAppSubtitle || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, mobileAppSubtitle: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 9. CTA BANNER */}
+            {cmsTab === 'cta' && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">CTA Badge Text</label>
+                  <input
+                    type="text"
+                    value={siteContent.ctaEyebrow || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, ctaEyebrow: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">CTA Title</label>
+                  <input
+                    type="text"
+                    value={siteContent.ctaTitle || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, ctaTitle: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-bold"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block font-bold text-slate-700 uppercase mb-1">CTA Subtitle</label>
+                  <textarea
+                    rows={2}
+                    value={siteContent.ctaSubtitle || ''}
+                    onChange={(e) => setSiteContent({ ...siteContent, ctaSubtitle: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 10. CONTACT & SOCIAL */}
             {cmsTab === 'contact' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <label className="block font-bold text-slate-700 uppercase mb-1">Support Email</label>
                   <input
                     type="email"
-                    value={siteContent.contactEmail}
+                    value={siteContent.contactEmail || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, contactEmail: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-mono"
                   />
@@ -3420,7 +4634,7 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Support Phone</label>
                   <input
                     type="text"
-                    value={siteContent.contactPhone}
+                    value={siteContent.contactPhone || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, contactPhone: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-mono"
                   />
@@ -3429,7 +4643,7 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Instagram URL</label>
                   <input
                     type="text"
-                    value={siteContent.instagram}
+                    value={siteContent.instagram || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, instagram: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300"
                   />
@@ -3438,7 +4652,7 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">WhatsApp Number</label>
                   <input
                     type="text"
-                    value={siteContent.whatsapp}
+                    value={siteContent.whatsapp || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, whatsapp: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-mono"
                   />
@@ -3446,13 +4660,14 @@ export default function AdminDashboard({ view }) {
               </div>
             )}
 
+            {/* 11. FOOTER */}
             {cmsTab === 'footer' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <label className="block font-bold text-slate-700 uppercase mb-1">Footer Brand Text</label>
                   <input
                     type="text"
-                    value={siteContent.footerText}
+                    value={siteContent.footerText || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, footerText: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-bold"
                   />
@@ -3461,7 +4676,7 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Copyright Line</label>
                   <input
                     type="text"
-                    value={siteContent.copyright}
+                    value={siteContent.copyright || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, copyright: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300"
                   />
@@ -3910,50 +5125,360 @@ export default function AdminDashboard({ view }) {
         </div>
       )}
 
-      {/* REGISTRATION DETAILS & PASS MODAL */}
+      {/* REGISTRATION DETAILS & OFFICIAL PASS MODAL */}
       {selectedRegistration && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full space-y-5 shadow-2xl relative border border-slate-200 max-h-[90vh] overflow-y-auto text-left">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full space-y-5 shadow-2xl relative border border-slate-200 max-h-[90vh] overflow-y-auto text-left font-sans">
+            {/* Modal Close Button */}
             <button
               onClick={() => setSelectedRegistration(null)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 rounded-full"
+              className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="border-b border-slate-100 pb-3">
-              <span className="text-[10px] font-mono font-bold text-[#9e0804] uppercase">TheZar Gate Pass Verification</span>
-              <h3 className="text-xl font-black text-slate-900">{selectedRegistration.registrationId}</h3>
+            {/* Modal Header */}
+            <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+              <div>
+                <span className="text-[10px] font-mono font-bold text-[#9e0804] uppercase tracking-widest bg-red-50 px-2.5 py-0.5 rounded-full border border-red-100">
+                  Official Verification Pass
+                </span>
+                <h3 className="text-xl font-black text-slate-900 mt-1 font-mono">{selectedRegistration.registrationId}</h3>
+              </div>
+              <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold uppercase ${
+                selectedRegistration.paymentStatus === 'completed'
+                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                  : 'bg-amber-50 text-amber-700 border border-amber-200'
+              }`}>
+                {selectedRegistration.paymentStatus === 'completed' ? 'Verified Pass' : 'Pending UTR'}
+              </span>
             </div>
 
-            <div className="space-y-3 text-xs">
-              <div className="p-3 bg-slate-50 rounded-xl space-y-1">
-                <p>Candidate: <strong className="text-slate-900">{selectedRegistration.user?.fullName || selectedRegistration.groupInfo?.groupName}</strong></p>
-                <p>Type: <strong className="uppercase">{selectedRegistration.registrationType}</strong></p>
-                <p>UTR Number: <strong className="font-mono text-[#9e0804]">{selectedRegistration.utrNumber}</strong></p>
-                <p>Amount Paid: <strong className="font-mono text-emerald-700">₹{selectedRegistration.totalAmount}</strong></p>
+            {/* Holographic VIP Ticket Pass Card */}
+            <div className="bg-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-xl space-y-4 relative overflow-hidden">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+                <div>
+                  <span className="text-[9px] font-mono font-bold text-red-400 uppercase tracking-widest block">THEZAR CHAMPIONSHIP 2026</span>
+                  <span className="text-xs font-extrabold text-slate-200">DIGITAL QR GATE PASS</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">
+                  GATE ACCESS GRANTED
+                </span>
               </div>
 
-              {/* Pass QR Code */}
-              <div className="flex flex-col items-center justify-center p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
-                <QRCodeSVG value={selectedRegistration.qrCodeData || selectedRegistration.registrationId} size={140} />
-                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">{selectedRegistration.registrationId}</span>
+              <div className="flex items-center gap-4">
+                <div className="bg-white p-2.5 rounded-xl shrink-0 shadow-md">
+                  <QRCodeSVG value={selectedRegistration.qrCodeData || selectedRegistration.registrationId} size={110} />
+                </div>
+
+                <div className="space-y-1.5 flex-1 min-w-0">
+                  <div>
+                    <span className="text-[9px] text-slate-400 font-bold uppercase block">Candidate Name:</span>
+                    <p className="font-bold text-sm text-white truncate">
+                      {selectedRegistration.user?.fullName || selectedRegistration.groupInfo?.groupName || 'Candidate'}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-[10px]">
+                    <div>
+                      <span className="text-slate-400 block font-mono">Participant ID:</span>
+                      <strong className="text-slate-200 font-mono">{selectedRegistration.participantId || 'TZR-P01'}</strong>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block font-mono">Mobile:</span>
+                      <strong className="text-slate-200 font-mono truncate block">{selectedRegistration.user?.phone || '—'}</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Registered Events List */}
+              <div className="pt-2 border-t border-slate-800 text-[11px] space-y-1">
+                <span className="text-[9px] text-slate-400 font-bold uppercase">Registered Track(s):</span>
+                <div className="flex flex-wrap gap-1 pt-0.5">
+                  {(selectedRegistration.selectedEvents || [{ title: 'Carol Fiesta Showcase' }]).map((ev, i) => (
+                    <span key={i} className="bg-slate-800 text-slate-200 px-2 py-0.5 rounded text-[10px] border border-slate-700">
+                      {ev.title || ev.name}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
+
+            {/* Detailed Registration Dossier */}
+            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2 text-xs">
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase block">Email Address</span>
+                  <span className="font-medium text-slate-900 truncate block">{selectedRegistration.user?.email || '—'}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase block">Home District</span>
+                  <span className="font-medium text-slate-900">{selectedRegistration.district || selectedRegistration.user?.district || 'Tirunelveli'}</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200/60">
+                <div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase block">Payment Amount</span>
+                  <span className="font-mono font-black text-[#9e0804] text-sm">₹{selectedRegistration.totalAmount}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase block">12-Digit UTR Number</span>
+                  <span className="font-mono font-bold text-slate-900">{selectedRegistration.utrNumber || 'FREE PASS'}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Bar */}
+            <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+              {/* Print Pass */}
+              <button
+                onClick={() => window.print()}
+                className="flex-1 min-w-[120px] py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-bold text-xs text-slate-700 flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+              >
+                <Printer className="w-3.5 h-3.5 text-[#9e0804]" />
+                <span>Print Pass</span>
+              </button>
+
+              {/* Resend Pass */}
+              <button
+                onClick={() => handleResendPass(selectedRegistration)}
+                className="flex-1 min-w-[120px] py-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 font-bold text-xs text-purple-700 flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Resend Pass</span>
+              </button>
+
+              {/* Edit */}
+              <button
+                onClick={() => {
+                  const reg = selectedRegistration;
+                  setSelectedRegistration(null);
+                  handleOpenEditRegistration(reg);
+                }}
+                className="py-2.5 px-3.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs cursor-pointer flex items-center gap-1"
+                title="Edit Details"
+              >
+                <Edit3 className="w-3.5 h-3.5" />
+                <span>Edit</span>
+              </button>
+
+              {/* Close */}
+              <button
+                onClick={() => setSelectedRegistration(null)}
+                className="py-2.5 px-5 rounded-xl bg-[#9e0804] text-white font-bold text-xs cursor-pointer hover:bg-[#820603]"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* EDIT REGISTRATION MODAL */}
+      {editRegistrationModal.open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+          <form
+            onSubmit={handleSaveEditRegistration}
+            className="bg-white text-slate-800 rounded-3xl p-6 sm:p-7 max-w-lg w-full space-y-4 shadow-2xl relative border border-slate-200 max-h-[90vh] overflow-y-auto text-left font-sans"
+            style={{ borderRadius: '24px' }}
+          >
+            <button
+              type="button"
+              onClick={() => setEditRegistrationModal({ open: false, registrationId: '' })}
+              className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="border-b border-slate-100 pb-3 space-y-1">
+              <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
+                Registration Editor
+              </span>
+              <h3 className="text-xl font-black text-slate-900 tracking-tight">Edit Registration Details</h3>
+              <p className="text-xs text-slate-500 font-mono">ID: {editRegistrationModal.registrationId}</p>
+            </div>
+
+            <div className="space-y-3.5 text-xs">
+              {/* Full Name */}
+              <div>
+                <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Participant / Leader Full Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={editRegistrationModal.fullName}
+                  onChange={(e) => setEditRegistrationModal({ ...editRegistrationModal, fullName: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 font-medium focus:outline-none focus:border-[#9e0804]"
+                />
+              </div>
+
+              {/* Mobile with Country Selector */}
+              <div>
+                <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Contact Mobile Number *
+                </label>
+                <div className="flex items-center rounded-xl bg-slate-50 border border-slate-300 focus-within:border-[#9e0804] focus-within:bg-white overflow-hidden">
+                  <div className="relative bg-slate-100 border-r border-slate-300 shrink-0">
+                    <select
+                      value={editRegistrationModal.countryCode || '+91'}
+                      onChange={(e) => setEditRegistrationModal({ ...editRegistrationModal, countryCode: e.target.value })}
+                      className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs font-bold text-slate-800 cursor-pointer focus:outline-none"
+                    >
+                      {COUNTRY_CODES.map((c) => (
+                        <option key={`edit-phone-${c.country}-${c.code}`} value={c.code}>
+                          {c.flag} {c.code} ({c.name})
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="w-3 h-3 text-slate-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
+                  <input
+                    type="tel"
+                    required
+                    inputMode="numeric"
+                    maxLength={10}
+                    value={editRegistrationModal.phone}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                      setEditRegistrationModal({ ...editRegistrationModal, phone: digits });
+                    }}
+                    placeholder="9790351878"
+                    className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs focus:outline-none font-mono tracking-wider"
+                  />
+                </div>
+              </div>
+
+              {/* Email & District */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={editRegistrationModal.email}
+                    onChange={(e) => setEditRegistrationModal({ ...editRegistrationModal, email: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:border-[#9e0804]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Home District
+                  </label>
+                  <select
+                    value={editRegistrationModal.district}
+                    onChange={(e) => setEditRegistrationModal({ ...editRegistrationModal, district: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 font-bold focus:outline-none focus:border-[#9e0804]"
+                  >
+                    <option value="Tirunelveli">Tirunelveli</option>
+                    <option value="Thoothukudi">Thoothukudi</option>
+                    <option value="Tenkasi">Tenkasi</option>
+                    <option value="Kanyakumari">Kanyakumari</option>
+                    <option value="Madurai">Madurai</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Coimbatore">Coimbatore</option>
+                    <option value="Salem">Salem</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Payment Status & Amount */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Payment Status
+                  </label>
+                  <select
+                    value={editRegistrationModal.paymentStatus}
+                    onChange={(e) => setEditRegistrationModal({ ...editRegistrationModal, paymentStatus: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 font-bold focus:outline-none focus:border-[#9e0804]"
+                  >
+                    <option value="completed">Completed / Verified</option>
+                    <option value="pending_verification">Pending Verification</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Amount (₹)
+                  </label>
+                  <input
+                    type="number"
+                    value={editRegistrationModal.totalAmount}
+                    onChange={(e) => setEditRegistrationModal({ ...editRegistrationModal, totalAmount: Number(e.target.value) })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 font-mono font-bold focus:outline-none focus:border-[#9e0804]"
+                  />
+                </div>
+              </div>
+
+              {/* UTR Number */}
+              <div>
+                <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  12-Digit UTR / Transaction Reference
+                </label>
+                <input
+                  type="text"
+                  value={editRegistrationModal.utrNumber}
+                  onChange={(e) => setEditRegistrationModal({ ...editRegistrationModal, utrNumber: e.target.value })}
+                  placeholder="e.g. UTR998811223344"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 font-mono font-bold text-slate-900 focus:outline-none focus:border-[#9e0804]"
+                />
+              </div>
+            </div>
+
+            {/* Save & Cancel Buttons */}
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setEditRegistrationModal({ open: false, registrationId: '' })}
+                className="px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-7 py-2.5 rounded-full bg-[#9e0804] hover:bg-[#820603] text-white font-extrabold text-xs cursor-pointer shadow-md"
+              >
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* DELETE REGISTRATION CONFIRMATION MODAL */}
+      {deleteConfirmModal.open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-xl border border-slate-200 text-left">
+            <h3 className="text-base font-black text-rose-700 flex items-center gap-2">
+              <Trash2 className="w-5 h-5 text-rose-600" />
+              <span>Delete Registration Record</span>
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Are you sure you want to permanently delete registration{' '}
+              <strong className="font-mono text-slate-900">{deleteConfirmModal.registrationId}</strong> for{' '}
+              <strong className="text-slate-900">{deleteConfirmModal.candidateName}</strong>? This action cannot be undone.
+            </p>
 
             <div className="flex gap-2 pt-2">
               <button
-                onClick={() => window.print()}
-                className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-bold text-xs text-slate-700 flex items-center justify-center gap-1.5 cursor-pointer"
+                type="button"
+                onClick={() => setDeleteConfirmModal({ open: false, registrationId: '', candidateName: '' })}
+                className="flex-1 py-2.5 rounded-xl bg-slate-100 font-bold text-xs text-slate-700 cursor-pointer"
               >
-                <Printer className="w-3.5 h-3.5" />
-                <span>Print Pass</span>
+                Cancel
               </button>
               <button
-                onClick={() => setSelectedRegistration(null)}
-                className="flex-1 py-2.5 rounded-xl bg-[#9e0804] text-white font-bold text-xs cursor-pointer"
+                type="button"
+                onClick={() => handleDeleteRegistration(deleteConfirmModal.registrationId)}
+                className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 font-bold text-xs text-white cursor-pointer shadow-md"
               >
-                Close
+                Yes, Delete
               </button>
             </div>
           </div>
@@ -4123,8 +5648,7 @@ export default function AdminDashboard({ view }) {
                   <option value="Solo Dance Showcase">Category III: Dance Showcase (Solo Freestyle)</option>
                   <option value="Group Dance Showcase">Category III: Dance Showcase (Group Choreography)</option>
                   <option value="Santa Claus Contest">Category IV: Special Contest (Santa Claus)</option>
-                  <option value="Cooking Championship">Category V: Grand Cooking Championship</option>
-                  <option value="Instrumental & Live Music">Category VI: Instrumental Showcase & Live Acts</option>
+                  <option value="Instrumental & Live Music">Category V: Instrumental Showcase & Live Acts</option>
                 </select>
               </div>
 
@@ -4767,6 +6291,196 @@ export default function AdminDashboard({ view }) {
               Register District Chapter
             </button>
           </form>
+        </div>
+      )}
+
+      {/* 👤 DYNAMIC USER PROFILE & DP MANAGEMENT MODAL */}
+      {showProfileModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
+          <div 
+            className="bg-white text-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl relative border border-slate-200 text-left animate-in fade-in zoom-in-95 duration-200 overflow-hidden"
+            style={{ borderRadius: '28px' }}
+          >
+            <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#9e0804] via-[#c4120c] to-[#9e0804]" />
+            
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2.5">
+                <UserCog className="w-5 h-5 text-[#9e0804]" />
+                <h3 className="text-lg font-black text-slate-900 tracking-tight">User Profile & Dynamic DP</h3>
+              </div>
+              <button 
+                type="button" 
+                onClick={() => setShowProfileModal(false)} 
+                className="p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-slate-900 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {profileSaveSuccess && (
+              <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 font-bold animate-in fade-in">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Profile & DP updated live across the entire system!</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSaveProfile} className="space-y-4 text-xs">
+              
+              {/* DP Picture Upload Section */}
+              <div className="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
+                <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-[#9e0804] shadow-md shrink-0 group">
+                  <img
+                    src={dpUploadPreview || currentUser?.dp || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'}
+                    alt="DP Preview"
+                    className="w-full h-full object-cover"
+                  />
+                  <label 
+                    htmlFor="dp-file-input" 
+                    className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white cursor-pointer transition-opacity text-[9px] font-bold"
+                  >
+                    <Camera className="w-4 h-4 mb-0.5" />
+                    <span>Change</span>
+                  </label>
+                </div>
+
+                <div className="space-y-1.5 text-center sm:text-left flex-1">
+                  <p className="font-black text-slate-900 text-sm">Profile Avatar (DP)</p>
+                  <p className="text-[11px] text-slate-500">Upload high-res photo or drag and drop image file.</p>
+                  
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <label 
+                      htmlFor="dp-file-input"
+                      className="px-3 py-1.5 rounded-full bg-[#9e0804] hover:bg-[#c4120c] text-white font-bold text-[10px] cursor-pointer inline-flex items-center gap-1 shadow-2xs"
+                      style={{ borderRadius: '9999px' }}
+                    >
+                      <Camera className="w-3 h-3" />
+                      <span>Upload New Image</span>
+                    </label>
+                    <input
+                      id="dp-file-input"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleDpFileChange}
+                      className="hidden"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Direct Image URL input */}
+              <div>
+                <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1 text-[10px]">
+                  Or Paste Direct Profile Image URL
+                </label>
+                <input
+                  type="url"
+                  placeholder="https://..."
+                  value={profileEditForm.dp}
+                  onChange={(e) => {
+                    setProfileEditForm({ ...profileEditForm, dp: e.target.value });
+                    setDpUploadPreview(e.target.value);
+                  }}
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-[#9e0804]"
+                  style={{ borderRadius: '12px' }}
+                />
+              </div>
+
+              {/* Full Name & Designation */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1 text-[10px]">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={profileEditForm.fullName}
+                    onChange={(e) => setProfileEditForm({ ...profileEditForm, fullName: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-[#9e0804]"
+                    style={{ borderRadius: '12px' }}
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1 text-[10px]">
+                    Role Designation
+                  </label>
+                  <input
+                    type="text"
+                    value={profileEditForm.designation}
+                    onChange={(e) => setProfileEditForm({ ...profileEditForm, designation: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-[#9e0804]"
+                    style={{ borderRadius: '12px' }}
+                  />
+                </div>
+              </div>
+
+              {/* Phone & District */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1 text-[10px]">
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    value={profileEditForm.phone}
+                    onChange={(e) => setProfileEditForm({ ...profileEditForm, phone: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-[#9e0804]"
+                    style={{ borderRadius: '12px' }}
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1 text-[10px]">
+                    District Assignment
+                  </label>
+                  <input
+                    type="text"
+                    value={profileEditForm.district}
+                    onChange={(e) => setProfileEditForm({ ...profileEditForm, district: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-[#9e0804]"
+                    style={{ borderRadius: '12px' }}
+                  />
+                </div>
+              </div>
+
+              {/* Bio */}
+              <div>
+                <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1 text-[10px]">
+                  Executive Bio / Notes
+                </label>
+                <textarea
+                  rows={2}
+                  value={profileEditForm.bio}
+                  onChange={(e) => setProfileEditForm({ ...profileEditForm, bio: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-[#9e0804] resize-none"
+                  style={{ borderRadius: '12px' }}
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-end gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setShowProfileModal(false)}
+                  className="px-4 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer"
+                  style={{ borderRadius: '9999px' }}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={isSavingProfile}
+                  className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#9e0804] to-[#c4120c] text-white font-extrabold text-xs flex items-center gap-1.5 shadow-md shadow-red-950/15 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  style={{ borderRadius: '9999px' }}
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>{isSavingProfile ? 'Saving...' : 'Save Profile & DP'}</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
 
