@@ -3,8 +3,9 @@ import { ChevronRight, ArrowRight } from 'lucide-react';
 import reindeerImg from '../../assets/xmas_reindeer.jpg';
 import treeImg from '../../assets/xmas_tree.jpg';
 import sleighImg from '../../assets/xmas_sleigh.jpg';
+import { useSiteContent } from '../../hooks/useSiteContent';
 
-const experiences = [
+const defaultExperiences = [
   {
     step: '01',
     title: 'Santa\'s Midnight Sleigh Flight',
@@ -41,7 +42,16 @@ const experiences = [
 
 export default function ChristmasExperienceSection({ onOpenRegister }) {
   const [active, setActive] = useState(0);
-  const exp = experiences[active];
+  const { content } = useSiteContent();
+
+  const experiences = (content?.experienceZones && content.experienceZones.length > 0)
+    ? content.experienceZones.map((e, idx) => ({
+        ...e,
+        image: e.image || defaultExperiences[idx % defaultExperiences.length].image
+      }))
+    : defaultExperiences;
+
+  const exp = experiences[active] || experiences[0];
 
   return (
     <section
@@ -58,22 +68,30 @@ export default function ChristmasExperienceSection({ onOpenRegister }) {
         <div style={{ maxWidth: '560px', marginBottom: '3rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
             <span style={{ width: '40px', height: '1px', background: '#6B1A1A' }} />
-            <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B1A1A' }}>
-              Immersive Journey
+            <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B1A1A', fontFamily: 'monospace' }}>
+              FESTIVAL ZONES
             </span>
           </div>
           <h2 style={{
             fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: 'clamp(2rem, 4vw, 3rem)',
+            fontSize: 'clamp(2rem, 4vw, 3.25rem)',
             fontWeight: 700,
+            lineHeight: 1.1,
             color: '#2C1810',
-            lineHeight: 1.15,
-            margin: '0 0 0.75rem',
+            margin: '0 0 1rem',
+            letterSpacing: '-0.02em',
           }}>
-            The Winter <span style={{ color: '#6B1A1A' }}>Experience</span>
+            {content?.experienceTitle ? (
+              content.experienceTitle
+            ) : (
+              <>
+                The Winter Festival <br />
+                <em style={{ color: '#6B1A1A', fontStyle: 'italic' }}>Experience</em>
+              </>
+            )}
           </h2>
-          <p style={{ fontSize: '1rem', color: '#5C3D2E', lineHeight: 1.7 }}>
-            Walk through a living winter story — from Santa's sleigh run to the illuminated tree plaza.
+          <p style={{ fontSize: '0.95rem', color: '#5C3D2E', lineHeight: 1.6, margin: 0 }}>
+            {content?.experienceSubtitle || 'Four immersive zones crafted to deliver joy, holiday wonder, and unforgettable festival memories.'}
           </p>
         </div>
 

@@ -3,9 +3,12 @@ import { Calendar, MapPin, Trophy, ArrowRight } from 'lucide-react';
 import choirImg from '../../assets/christmas_choir.jpg';
 import cakeImg from '../../assets/christmas_cake.jpg';
 import giftsImg from '../../assets/christmas_gifts.jpg';
+import { useSiteContent } from '../../hooks/useSiteContent';
 
 export default function ChristmasEventsHero({ onOpenRegister }) {
-  const featuredChristmasEvents = [
+  const { content } = useSiteContent();
+
+  const defaultEvents = [
     {
       id: 'xmas-1',
       title: 'Statewide Christmas Choral Symphony',
@@ -41,6 +44,14 @@ export default function ChristmasEventsHero({ onOpenRegister }) {
     },
   ];
 
+  const featuredChristmasEvents = (content?.eventsList && content.eventsList.length > 0)
+    ? content.eventsList.map(e => ({
+        ...e,
+        image: e.image || choirImg,
+        time: e.time || '10:00 AM - 06:00 PM'
+      }))
+    : defaultEvents;
+
   return (
     <div className="relative w-full overflow-hidden bg-white text-slate-900">
       {/* 3. FEATURED CHRISTMAS EVENTS CARDS ROW */}
@@ -53,7 +64,7 @@ export default function ChristmasEventsHero({ onOpenRegister }) {
                 HOLIDAY HEADLINERS
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
-                Top Christmas Championship Competitions
+                {content?.eventsSectionTitle || 'Top Christmas Championship Competitions'}
               </h3>
             </div>
             <button

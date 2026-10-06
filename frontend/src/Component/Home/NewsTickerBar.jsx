@@ -1,5 +1,8 @@
+import { useSiteContent } from '../../hooks/useSiteContent';
+
 export default function NewsTickerBar() {
-  const items = [
+  const { content: siteData } = useSiteContent();
+  const items = siteData?.bannerItems?.length ? siteData.bannerItems : [
     'THEZAR 2026',
     '38 DISTRICTS',
     'ONE TABLE',
@@ -9,6 +12,10 @@ export default function NewsTickerBar() {
     'TIRUNELVELI STAGE',
     'REGISTER NOW',
   ];
+
+  if (siteData && siteData.bannerEnabled === false) {
+    return null;
+  }
 
   const separator = (
     <span style={{ margin: '0 1.5rem', color: 'rgba(242,196,160,0.6)', fontSize: '0.8rem' }}>✦</span>

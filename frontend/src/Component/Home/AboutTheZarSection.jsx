@@ -1,9 +1,17 @@
 import { useState } from 'react';
 import aboutAudienceImg from '../../assets/about_audience.jpg';
 import { Play, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useSiteContent } from '../../hooks/useSiteContent';
 
 export default function AboutTheZarSection({ onOpenRegister }) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const { content } = useSiteContent();
+
+  const highlights = content?.aboutHighlights?.length ? content.aboutHighlights : [
+    '38 District preliminary stages leading to Chennai Mega Finals',
+    'Grand House Prize + Mega Cash Prize Pool for winners',
+    'Direct mentorship and networking with state industry leaders',
+  ];
 
   return (
     <section
@@ -39,7 +47,7 @@ export default function AboutTheZarSection({ onOpenRegister }) {
             {/* Eyebrow */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
               <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B1A1A', fontFamily: 'monospace' }}>
-                ABOUT THEZAR
+                {content?.aboutEyebrow || 'ABOUT THEZAR'}
               </span>
               <span style={{ width: '40px', height: '1.5px', background: '#6B1A1A', display: 'inline-block' }} />
             </div>
@@ -54,23 +62,25 @@ export default function AboutTheZarSection({ onOpenRegister }) {
               margin: '0 0 1.5rem',
               letterSpacing: '-0.02em',
             }}>
-              WHERE TALENT <br />
-              <em style={{ color: '#6B1A1A', fontStyle: 'italic' }}>meets</em>{' '}
-              OPPORTUNITY
+              {content?.aboutTitle ? (
+                content.aboutTitle
+              ) : (
+                <>
+                  WHERE TALENT <br />
+                  <em style={{ color: '#6B1A1A', fontStyle: 'italic' }}>meets</em>{' '}
+                  OPPORTUNITY
+                </>
+              )}
             </h2>
 
             {/* Description */}
             <p style={{ fontSize: '1rem', color: '#5C3D2E', lineHeight: 1.75, marginBottom: '2rem', maxWidth: '480px' }}>
-              TheZar brings participants together across Tamil Nadu through district-level competitions, innovation, creativity and achievement. From competitions to cultural spectacles, this is the definitive stage for state champions.
+              {content?.aboutDescription || 'TheZar brings participants together across Tamil Nadu through district-level competitions, innovation, creativity and achievement. From competitions to cultural spectacles, this is the definitive stage for state champions.'}
             </p>
 
             {/* Bullets */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem', marginBottom: '2.5rem' }}>
-              {[
-                '38 District preliminary stages leading to Chennai Mega Finals',
-                'Grand House Prize + Mega Cash Prize Pool for winners',
-                'Direct mentorship and networking with state industry leaders',
-              ].map((text, i) => (
+              {highlights.map((text, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
                   <CheckCircle2 style={{ width: '16px', height: '16px', color: '#6B1A1A', flexShrink: 0, marginTop: '2px' }} />
                   <span style={{ fontSize: '0.9rem', color: '#4A2820', lineHeight: 1.6 }}>{text}</span>

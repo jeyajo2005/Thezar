@@ -1,11 +1,15 @@
 import heroSpeakerImg from '../../assets/Young_woman.png';
 import { Calendar, MapPin, ArrowRight, PlayCircle, Sparkles } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useSiteContent } from '../../hooks/useSiteContent';
 
 export default function Hero({ onOpenRegister, onReplayIntro, isRevealed = true }) {
-  // Countdown timer to event start (Oct 10, 2026 10:00 AM)
+  const { content } = useSiteContent();
+
+  // Countdown timer to event start
   const calculateTimeLeft = () => {
-    const target = new Date('2026-10-10T10:00:00+05:30');
+    const targetDateStr = content?.heroCountdownDate || content?.countdownTargetDate || '2026-10-10T10:00:00+05:30';
+    const target = new Date(targetDateStr);
     const now = new Date();
     const diff = target - now;
     if (diff <= 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
@@ -101,7 +105,7 @@ export default function Hero({ onOpenRegister, onReplayIntro, isRevealed = true 
           }}>
             <Sparkles style={{ width: '14px', height: '14px', color: '#6B1A1A' }} />
             <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B1A1A' }}>
-              Tamil Nadu's Grandest Stage
+              {content?.heroEyebrow || "Tamil Nadu's Grandest Stage"}
             </span>
           </div>
 
@@ -115,9 +119,9 @@ export default function Hero({ onOpenRegister, onReplayIntro, isRevealed = true 
             margin: '0 0 1.25rem',
             letterSpacing: '-0.02em',
           }}>
-            The Taste<br />
-            <span style={{ fontStyle: 'italic', color: '#6B1A1A', fontWeight: 700 }}>of Tamil</span><br />
-            Nadu.
+            {content?.heroTitleLine1 || "The Taste"}<br />
+            <span style={{ fontStyle: 'italic', color: '#6B1A1A', fontWeight: 700 }}>{content?.heroTitleLine2 || "of Tamil"}</span><br />
+            {content?.heroTitleLine3 || "Nadu."}
           </h1>
 
           {/* Subtitle */}
@@ -129,7 +133,7 @@ export default function Hero({ onOpenRegister, onReplayIntro, isRevealed = true 
             maxWidth: '520px',
             fontWeight: 400,
           }}>
-            Statewide Culinary Championship — 38 Districts, One Grand Stage. Unleashing extraordinary cooking talent across the cultural heart of India.
+            {content?.heroSubtitle || "Statewide Culinary Championship — 38 Districts, One Grand Stage. Unleashing extraordinary cooking talent across the cultural heart of India."}
           </p>
 
           {/* Premium Countdown */}
