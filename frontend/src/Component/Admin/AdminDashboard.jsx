@@ -1117,18 +1117,30 @@ export default function AdminDashboard({ view }) {
   const handleDeleteDesktopBannerSlot = async (slot) => {
     if (!window.confirm(`Delete Desktop Banner Slot ${slot}?`)) return;
     try {
-      await fetch('/api/admin/site-content/banner-slot', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'desktop', slot, action: 'delete' })
+      const res = await fetch(`/api/admin/site-content/banner-slot/desktop/${slot}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
       });
-    } catch {}
+      if (!res.ok) {
+        await fetch('/api/admin/site-content/banner-slot', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'desktop', slot, action: 'delete' })
+        });
+      }
+    } catch (err) {
+      console.warn('Network issue during desktop slot delete:', err);
+    }
     setSiteContent((prev) => {
-      const list = (prev.desktopBanners || []).filter((b) => b.slot !== slot);
-      localStorage.setItem('tzr_site_content', JSON.stringify({ ...prev, desktopBanners: list }));
+      const filtered = (prev.desktopBanners || []).filter((b) => Number(b.slot) !== Number(slot));
+      const reindexed = filtered.map((b, i) => ({ ...b, slot: i + 1 }));
+      const updated = { ...prev, desktopBanners: reindexed };
+      localStorage.setItem('tzr_site_content', JSON.stringify(updated));
       window.dispatchEvent(new Event('tzr_content_updated'));
-      return { ...prev, desktopBanners: list };
+      return updated;
     });
+    setBannerToast(`Desktop Banner Slot ${slot} deleted successfully!`);
+    setTimeout(() => setBannerToast(null), 3000);
   };
 
   // 🖼️ Add New Mobile Banner Slot
@@ -1154,18 +1166,30 @@ export default function AdminDashboard({ view }) {
   const handleDeleteMobileBannerSlot = async (slot) => {
     if (!window.confirm(`Delete Mobile Banner Slot ${slot}?`)) return;
     try {
-      await fetch('/api/admin/site-content/banner-slot', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'mobile', slot, action: 'delete' })
+      const res = await fetch(`/api/admin/site-content/banner-slot/mobile/${slot}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
       });
-    } catch {}
+      if (!res.ok) {
+        await fetch('/api/admin/site-content/banner-slot', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'mobile', slot, action: 'delete' })
+        });
+      }
+    } catch (err) {
+      console.warn('Network issue during mobile slot delete:', err);
+    }
     setSiteContent((prev) => {
-      const list = (prev.mobileBanners || []).filter((b) => b.slot !== slot);
-      localStorage.setItem('tzr_site_content', JSON.stringify({ ...prev, mobileBanners: list }));
+      const filtered = (prev.mobileBanners || []).filter((b) => Number(b.slot) !== Number(slot));
+      const reindexed = filtered.map((b, i) => ({ ...b, slot: i + 1 }));
+      const updated = { ...prev, mobileBanners: reindexed };
+      localStorage.setItem('tzr_site_content', JSON.stringify(updated));
       window.dispatchEvent(new Event('tzr_content_updated'));
-      return { ...prev, mobileBanners: list };
+      return updated;
     });
+    setBannerToast(`Mobile Banner Slot ${slot} deleted successfully!`);
+    setTimeout(() => setBannerToast(null), 3000);
   };
 
   // 🖼️ Save Single Banner Slot (Save Slot 1, Save Slot 2, Save Mobile 1, etc.)
@@ -2846,7 +2870,7 @@ export default function AdminDashboard({ view }) {
                             )}
                           </button>
 
-                          {slot > 1 && (
+                          {(siteContent.desktopBanners || []).length > 1 && (
                             <button
                               type="button"
                               onClick={() => handleDeleteDesktopBannerSlot(slot)}
@@ -2953,7 +2977,7 @@ export default function AdminDashboard({ view }) {
                             )}
                           </button>
 
-                          {slot > 1 && (
+                          {(siteContent.mobileBanners || []).length > 1 && (
                             <button
                               type="button"
                               onClick={() => handleDeleteMobileBannerSlot(slot)}

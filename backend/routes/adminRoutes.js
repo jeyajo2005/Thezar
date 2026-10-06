@@ -26,6 +26,7 @@ const {
   getSiteContent,
   updateSiteContent,
   updateBannerSlot,
+  deleteBannerSlot,
   getAllEnquiries,
   updateEnquiryStatus
 } = require('../controllers/siteContentController');
@@ -68,6 +69,8 @@ router.post('/announcements', createAnnouncement);
 router.get('/site-content', getSiteContent);
 router.put('/site-content', updateSiteContent);
 router.put('/site-content/banner-slot', updateBannerSlot);
+router.delete('/site-content/banner-slot/:type/:slot', deleteBannerSlot);
+router.delete('/site-content/banner-slot', deleteBannerSlot);
 
 // 10. Enquiries / Help Desk
 router.get('/enquiries', getAllEnquiries);

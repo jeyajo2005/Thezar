@@ -39,10 +39,11 @@ const updateSiteContent = async (req, res) => {
   }
 };
 
-// PUT /api/admin/site-content/banner-slot (Save or delete single slot)
-const updateBannerSlot = async (req, res) => {
+// DELETE /api/admin/site-content/banner-slot/:type/:slot or PUT with action: 'delete'
+const deleteBannerSlot = async (req, res) => {
   try {
-    const { type, slot, title, image, link, action } = req.body;
+    const type = req.params.type || req.body.type || 'desktop';
+    const slot = Number(req.params.slot || req.body.slot);
     let content = await SiteContent.findOne();
     if (!content) {
       content = new SiteContent();
@@ -50,19 +51,45 @@ const updateBannerSlot = async (req, res) => {
     const targetKey = type === 'mobile' ? 'mobileBanners' : 'desktopBanners';
     let bannerList = content[targetKey] ? [...content[targetKey]] : [];
 
+    // Filter out the requested slot
+    bannerList = bannerList.filter((b) => Number(b.slot) !== slot);
+
+    // Contiguously re-index remaining slots: 1, 2, 3...
+    bannerList = bannerList.map((b, idx) => ({
+      ...b,
+      slot: idx + 1
+    }));
+
+    content[targetKey] = bannerList;
+    content.markModified(targetKey);
+    await content.save();
+
+    res.json({
+      success: true,
+      message: `${type === 'mobile' ? 'Mobile' : 'Desktop'} Banner Slot ${slot} deleted successfully!`,
+      content
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// PUT /api/admin/site-content/banner-slot (Save or delete single slot)
+const updateBannerSlot = async (req, res) => {
+  try {
+    const { type, slot, title, image, link, action } = req.body;
     if (action === 'delete') {
-      bannerList = bannerList.filter((b) => b.slot !== Number(slot));
-      content[targetKey] = bannerList;
-      content.markModified(targetKey);
-      await content.save();
-      return res.json({
-        success: true,
-        message: `${type === 'mobile' ? 'Mobile' : 'Desktop'} Banner Slot ${slot} deleted successfully!`,
-        content
-      });
+      return deleteBannerSlot(req, res);
     }
 
-    const index = bannerList.findIndex((b) => b.slot === Number(slot));
+    let content = await SiteContent.findOne();
+    if (!content) {
+      content = new SiteContent();
+    }
+    const targetKey = type === 'mobile' ? 'mobileBanners' : 'desktopBanners';
+    let bannerList = content[targetKey] ? [...content[targetKey]] : [];
+
+    const index = bannerList.findIndex((b) => Number(b.slot) === Number(slot));
     const updatedBanner = {
       slot: Number(slot),
       title: title !== undefined ? title : (index !== -1 ? bannerList[index].title : ''),
@@ -140,6 +167,7 @@ module.exports = {
   getSiteContent,
   updateSiteContent,
   updateBannerSlot,
+  deleteBannerSlot,
   createEnquiry,
   getAllEnquiries,
   updateEnquiryStatus
