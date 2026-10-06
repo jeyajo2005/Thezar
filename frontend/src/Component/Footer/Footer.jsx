@@ -78,20 +78,15 @@ export default function Footer({ onOpenRegister }) {
         fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}
     >
-      {/* Background Luxury Ribbon Art Layer matching reference */}
+      {/* Background Luxury Ribbon Art Layer with deep, rich burgundy corner accents */}
       <div 
-        className="absolute inset-0 pointer-events-none bg-cover bg-center bg-no-repeat opacity-95 transition-opacity duration-300"
+        className="absolute inset-0 pointer-events-none bg-cover bg-center bg-no-repeat transition-opacity duration-300"
         style={{
           backgroundImage: `url(${footerLuxuryBg})`,
           backgroundPosition: 'center bottom',
           backgroundSize: 'cover',
+          filter: 'contrast(1.15) saturate(1.2) brightness(0.95)',
         }}
-        aria-hidden="true"
-      />
-
-      {/* Subtle Warm Gradient Overlay for Pristine Readability */}
-      <div 
-        className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/70 via-white/50 to-white/75"
         aria-hidden="true"
       />
 
