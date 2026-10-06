@@ -10,8 +10,31 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
+
+// Content-Security-Policy & DevTools Header Middleware
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src * 'unsafe-inline' ws: wss:;"
+  );
+  next();
+});
+
+// Chrome DevTools probe endpoint to prevent 404 & CSP console error
+app.get('/.well-known/appspecific/com.chrome.devtools.json', (req, res) => {
+  res.status(200).json({});
+});
+
+// Favicon handler to prevent 404 console error
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end();
+});
 
 // Connect Database
 connectDB();
