@@ -1,8 +1,13 @@
 import React from 'react';
 import { Calendar, MapPin, Trophy, ArrowRight } from 'lucide-react';
-import choirImg from '../../assets/christmas_choir.jpg';
-import cakeImg from '../../assets/christmas_cake.jpg';
-import giftsImg from '../../assets/christmas_gifts.jpg';
+import card1 from '../../assets/cards1.png';
+import card2 from '../../assets/cards2.png';
+import card3 from '../../assets/cards3.png';
+import card4 from '../../assets/cards4.png';
+import card5 from '../../assets/cards5.png';
+import card6 from '../../assets/cards6.png';
+import card7 from '../../assets/cards7.png';
+import card8 from '../../assets/cards8.png';
 import { useSiteContent } from '../../hooks/useSiteContent';
 
 export default function ChristmasEventsHero({ onOpenRegister }) {
@@ -11,43 +16,98 @@ export default function ChristmasEventsHero({ onOpenRegister }) {
   const defaultEvents = [
     {
       id: 'xmas-1',
-      title: 'Statewide Christmas Choral Symphony',
-      date: '22 Dec 2026',
-      time: '05:00 PM - 09:30 PM',
-      venue: 'Santhome Cathedral Auditorium, Chennai',
-      prize: '₹2,50,000 Cash + Rolling Trophy',
-      category: 'Choir & Vocal Harmony',
-      badge: 'Statewide Gala',
-      image: choirImg,
+      title: 'TheZar Official Passes & Team Badges',
+      date: 'Season 2026',
+      time: 'All-Day Entry Access',
+      venue: 'Tirunelveli District Arena',
+      prize: 'VIP Access & Stage Passes',
+      category: 'Official Badges',
+      badge: 'Official Passes',
+      image: card1,
     },
     {
       id: 'xmas-2',
-      title: 'Traditional Plum Cake & Baking Championship',
-      date: '23 Dec 2026',
-      time: '10:00 AM - 04:00 PM',
-      venue: 'Heritage Hall, Madurai',
-      prize: '₹1,50,000 + Golden Whisk Award',
-      category: 'Culinary Contest',
-      badge: 'Chef Judged',
-      image: cakeImg,
+      title: 'Mega Group Dance Championship',
+      date: '12 Dec 2026',
+      time: '04:00 PM - 09:00 PM',
+      venue: 'Tirunelveli District Arena',
+      prize: '₹1,50,000 Cash + Natya Trophy',
+      category: 'Dance Showcase',
+      badge: 'Championship Trophy',
+      image: card2,
     },
     {
       id: 'xmas-3',
-      title: 'TheZar Winter Carnival & Gift Expo',
-      date: '24-25 Dec 2026',
-      time: '11:00 AM - 10:00 PM',
-      venue: 'VOC Grounds, Coimbatore',
-      prize: 'Mega Holiday Shopping & Stalls',
-      category: 'Carnival & Fun',
-      badge: 'All Ages Welcome',
-      image: giftsImg,
+      title: 'Solo Freestyle & Hip-Hop Dance Battle',
+      date: '12 Dec 2026',
+      time: '01:00 PM - 04:00 PM',
+      venue: 'Tirunelveli District Arena',
+      prize: '₹75,000 Cash + Gold Medal',
+      category: 'Dance Showcase',
+      badge: 'Solo Battle',
+      image: card3,
+    },
+    {
+      id: 'xmas-4',
+      title: 'Statewide Solo Singing & Vocal Contest',
+      date: '12 Dec 2026',
+      time: '10:00 AM - 02:00 PM',
+      venue: 'Tirunelveli District Arena',
+      prize: '₹75,000 Cash + Golden Mic',
+      category: 'Singing Solo',
+      badge: 'Live Vocals',
+      image: card4,
+    },
+    {
+      id: 'xmas-5',
+      title: 'Grand Carol Choirs & Music Band Symphony',
+      date: '12 Dec 2026',
+      time: '05:30 PM - 10:00 PM',
+      venue: 'Tirunelveli District Arena',
+      prize: '₹1,00,000 Cash + Choir Trophy',
+      category: 'Choir & Bands',
+      badge: 'Choir & Bands',
+      image: card5,
+    },
+    {
+      id: 'xmas-6',
+      title: 'Santa Claus Family Stage & Winter Carnival',
+      date: '12 Dec 2026',
+      time: '11:00 AM - 06:00 PM',
+      venue: 'Tirunelveli District Arena',
+      prize: 'Mega Holiday Shopping & Gifts',
+      category: 'Special Contest',
+      badge: 'Kids & Family',
+      image: card6,
+    },
+    {
+      id: 'xmas-7',
+      title: 'Junior Carol Fiesta & Kids Singing Contest',
+      date: '12 Dec 2026',
+      time: '09:00 AM - 01:00 PM',
+      venue: 'Tirunelveli District Arena',
+      prize: '₹50,000 Cash + Junior Trophy',
+      category: 'Kids Singing',
+      badge: 'Junior Category',
+      image: card7,
+    },
+    {
+      id: 'xmas-8',
+      title: 'Kids Solo Singing Vocal Prodigy',
+      date: '12 Dec 2026',
+      time: '02:00 PM - 05:00 PM',
+      venue: 'Tirunelveli District Arena',
+      prize: '₹50,000 Cash + Prodigy Cup',
+      category: 'Kids Solo',
+      badge: 'Solo Prodigy',
+      image: card8,
     },
   ];
 
   const featuredChristmasEvents = (content?.eventsList && content.eventsList.length > 0)
     ? content.eventsList.map(e => ({
         ...e,
-        image: e.image || choirImg,
+        image: e.image || card2,
         time: e.time || '10:00 AM - 06:00 PM'
       }))
     : defaultEvents;
@@ -76,7 +136,7 @@ export default function ChristmasEventsHero({ onOpenRegister }) {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {featuredChristmasEvents.map((evt) => (
               <div
                 key={evt.id}

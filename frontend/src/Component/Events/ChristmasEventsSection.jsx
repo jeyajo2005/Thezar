@@ -1,7 +1,12 @@
 import { useRef, useState, useEffect, useMemo } from 'react';
-import christmasCakeImg from '../../assets/christmas_cake.jpg';
-import christmasDecorImg from '../../assets/christmas_decor.jpg';
-import christmasGiftsImg from '../../assets/christmas_gifts.jpg';
+import card1 from '../../assets/cards1.png';
+import card2 from '../../assets/cards2.png';
+import card3 from '../../assets/cards3.png';
+import card4 from '../../assets/cards4.png';
+import card5 from '../../assets/cards5.png';
+import card6 from '../../assets/cards6.png';
+import card7 from '../../assets/cards7.png';
+import card8 from '../../assets/cards8.png';
 import './christmas-events.css';
 
 // generateSnowflakes utility — deterministic snowflake config generator
@@ -24,40 +29,100 @@ export function generateSnowflakes(count) {
 
 const CHRISTMAS_EVENTS = [
   {
-    id: 'xmas-cooking-celebration',
-    title: 'Christmas Cooking Celebration',
-    subtitle: 'A festive cooking experience filled with seasonal flavors',
-    date: '22 Dec 2026',
-    time: '10:00 AM – 04:00 PM',
-    image: christmasCakeImg,
-    badge: 'Festive Experience',
-    ctaLabel: 'Explore Event',
-    ctaAction: 'scroll',
+    id: 'xmas-official-passes',
+    title: 'TheZar Official VIP & Team Access Passes',
+    subtitle: 'Event Organizer, Media Team, Decor, Stage & Support Team passes',
+    date: 'Season 2026',
+    time: 'All-Day Entry Access',
+    image: card1,
+    badge: 'Official Passes',
+    ctaLabel: 'Register Pass',
+    ctaAction: 'register',
     accentColor: '#9e0804',
   },
   {
-    id: 'xmas-cooking-challenge',
-    title: 'Christmas Special Cooking Challenge',
-    subtitle: 'Compete in the ultimate festive cooking competition',
-    date: '23 Dec 2026',
-    time: '09:00 AM – 05:00 PM',
-    image: christmasDecorImg,
-    badge: 'Competition',
-    ctaLabel: 'Register Now',
+    id: 'xmas-group-dance',
+    title: 'Statewide Mega Group Dance Championship',
+    subtitle: 'High-octane group dance performance on the golden concert stage',
+    date: '12 Dec 2026',
+    time: '04:00 PM – 09:00 PM',
+    image: card2,
+    badge: 'Championship Trophy',
+    ctaLabel: 'Register Troupe',
     ctaAction: 'register',
-    accentColor: '#166534',
+    accentColor: '#dc2626',
   },
   {
-    id: 'xmas-family-food-festival',
-    title: 'Christmas Family Food Festival',
-    subtitle: 'Family-friendly festive celebration of food and community',
-    date: '24–25 Dec 2026',
-    time: '11:00 AM – 10:00 PM',
-    image: christmasGiftsImg,
-    badge: 'All Ages Welcome',
-    ctaLabel: 'View Details',
-    ctaAction: 'scroll',
-    accentColor: '#854d0e',
+    id: 'xmas-solo-dance',
+    title: 'Solo Freestyle & Hip-Hop Dance Battle',
+    subtitle: 'Tamil Nadu’s finest solo dancers battling for statewide championship',
+    date: '12 Dec 2026',
+    time: '01:00 PM – 04:00 PM',
+    image: card3,
+    badge: 'Solo Battle',
+    ctaLabel: 'Register Solo',
+    ctaAction: 'register',
+    accentColor: '#ea580c',
+  },
+  {
+    id: 'xmas-solo-singing',
+    title: 'Statewide Solo Singing & Vocal Contest',
+    subtitle: 'Mesmerizing solo vocal showcase with live acoustic orchestra',
+    date: '12 Dec 2026',
+    time: '10:00 AM – 02:00 PM',
+    image: card4,
+    badge: 'Golden Mic',
+    ctaLabel: 'Register Singer',
+    ctaAction: 'register',
+    accentColor: '#16a34a',
+  },
+  {
+    id: 'xmas-choirs-bands',
+    title: 'Grand Carol Choirs & Music Band Symphony',
+    subtitle: 'Festive choral groups and musical bands performing across 38 districts',
+    date: '12 Dec 2026',
+    time: '05:30 PM – 10:00 PM',
+    image: card5,
+    badge: 'Choir & Bands',
+    ctaLabel: 'Register Choir',
+    ctaAction: 'register',
+    accentColor: '#7c3aed',
+  },
+  {
+    id: 'xmas-santa-contest',
+    title: 'Santa Claus Family Stage & Winter Carnival',
+    subtitle: 'Family festive contest with winter gifts, photo souvenirs, and prizes',
+    date: '12 Dec 2026',
+    time: '11:00 AM – 06:00 PM',
+    image: card6,
+    badge: 'Kids & Family',
+    ctaLabel: 'Join Contest',
+    ctaAction: 'register',
+    accentColor: '#b91c1c',
+  },
+  {
+    id: 'xmas-kids-singing',
+    title: 'Junior Carol Fiesta & Kids Singing Contest',
+    subtitle: 'Young rising prodigies and junior choirs singing festive melodies',
+    date: '12 Dec 2026',
+    time: '09:00 AM – 01:00 PM',
+    image: card7,
+    badge: 'Junior Category',
+    ctaLabel: 'Register Kids',
+    ctaAction: 'register',
+    accentColor: '#0284c7',
+  },
+  {
+    id: 'xmas-kids-solo',
+    title: 'Kids Solo Singing Vocal Prodigy',
+    subtitle: 'Young solo prodigy competition on the grand TheZar arena stage',
+    date: '12 Dec 2026',
+    time: '02:00 PM – 05:00 PM',
+    image: card8,
+    badge: 'Solo Prodigy',
+    ctaLabel: 'Register Solo',
+    ctaAction: 'register',
+    accentColor: '#d97706',
   },
 ];
 

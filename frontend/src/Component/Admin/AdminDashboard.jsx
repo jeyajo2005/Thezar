@@ -101,7 +101,7 @@ export default function AdminDashboard({ view }) {
       maxParticipants: 100,
       currentParticipants: 18,
       status: 'Registration Open',
-      bannerUrl: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80'
+      bannerUrl: '/assets/cards8.png'
     },
     {
       eventId: 'evt-carol-adult-solo',
@@ -114,7 +114,7 @@ export default function AdminDashboard({ view }) {
       maxParticipants: 150,
       currentParticipants: 42,
       status: 'Registration Open',
-      bannerUrl: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=800&q=80'
+      bannerUrl: '/assets/cards4.png'
     },
     {
       eventId: 'evt-carol-choirs-bands',
@@ -127,7 +127,7 @@ export default function AdminDashboard({ view }) {
       maxParticipants: 80,
       currentParticipants: 24,
       status: 'Registration Open',
-      bannerUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80'
+      bannerUrl: '/assets/cards5.png'
     },
     {
       eventId: 'evt-carol-solo-dance',
@@ -140,7 +140,7 @@ export default function AdminDashboard({ view }) {
       maxParticipants: 120,
       currentParticipants: 35,
       status: 'Registration Open',
-      bannerUrl: 'https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=800&q=80'
+      bannerUrl: '/assets/cards3.png'
     },
     {
       eventId: 'evt-carol-group-dance',
@@ -153,7 +153,7 @@ export default function AdminDashboard({ view }) {
       maxParticipants: 60,
       currentParticipants: 19,
       status: 'Registration Open',
-      bannerUrl: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=800&q=80'
+      bannerUrl: '/assets/cards2.png'
     },
     {
       eventId: 'evt-carol-santa',
@@ -166,7 +166,7 @@ export default function AdminDashboard({ view }) {
       maxParticipants: 50,
       currentParticipants: 15,
       status: 'Registration Open',
-      bannerUrl: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=800&q=80'
+      bannerUrl: '/assets/cards6.png'
     },
     {
       eventId: 'evt-grand-cooking',
@@ -291,47 +291,80 @@ export default function AdminDashboard({ view }) {
     eventsList: [
       {
         id: '1',
-        title: 'Grand Cooking Championship',
-        category: 'Culinary Arts',
-        prize: '₹1,00,000 Cash Prize + Golden Chef Trophy',
-        date: 'Oct 10-12, 2026',
-        venue: 'VOC Ground Arena, Tirunelveli',
-        badge: 'Headline Championship',
-        description: 'Statewide culinary battle showcasing authentic Tamil Nadu festive recipes and master chef judging.',
-        image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80'
+        title: 'TheZar Championship Official Access & Delegate Pass',
+        category: 'All Categories',
+        prize: 'Official Credentials + VIP Access',
+        date: 'Dec 12, 2026',
+        venue: 'Tirunelveli District Arena',
+        badge: 'Official Passes',
+        description: 'Official credential passes for Event Organizers, Media Teams, Decor, Stage, and Support Crew with VIP backstage access.',
+        image: '/assets/cards1.png'
       },
       {
         id: '2',
-        title: 'Statewide Carol Symphony',
-        category: 'Choir & Vocal Harmony',
-        prize: '₹50,000 Cash Prize + Trophy',
+        title: 'Statewide Mega Group Dance Championship',
+        category: 'Dance Troupe',
+        prize: '₹1,50,000 Cash + Natya Trophy',
         date: 'Dec 12, 2026',
-        venue: 'Tirunelveli District Arena',
-        badge: 'Featured Stage',
-        description: 'Grand choral and acoustic musical groups performing traditional and contemporary festive melodies.',
-        image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'
+        venue: 'Main Grand Stage, VOC Ground',
+        badge: 'Championship Trophy',
+        description: 'High-octane group dance championship with state-of-the-art concert lighting, fireworks, and celebrity choreographers.',
+        image: '/assets/cards2.png'
       },
       {
         id: '3',
-        title: 'Traditional Folk & Classical Dance',
-        category: 'Dance Showcase',
-        prize: '₹75,000 Cash Prize + Natya Award',
-        date: 'Oct 15, 2026',
-        venue: 'Centenary Hall, Tirunelveli',
-        badge: 'High Impact',
-        description: 'Celebrating classical Bharatanatyam, Karakattam, and contemporary choreography from 38 districts.',
-        image: 'https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=800&q=80'
+        title: 'Solo Freestyle & Hip-Hop Dance Battle',
+        category: 'Solo Dance',
+        prize: '₹75,000 Cash + Gold Medal',
+        date: 'Dec 12, 2026',
+        venue: 'Amphitheatre Stage, VOC Ground',
+        badge: 'Solo Battle',
+        description: 'Electrifying solo dance battle showcasing Tamil Nadu’s finest solo dancers battling for statewide championship honors.',
+        image: '/assets/cards3.png'
       },
       {
         id: '4',
-        title: 'TheZar Winter Carnival & Gift Expo',
-        category: 'Carnival & Fun',
-        prize: 'Mega Holiday Shopping & Stalls',
-        date: 'Dec 20-25, 2026',
-        venue: 'Exhibition Grounds, Tirunelveli',
-        badge: 'All Ages Welcome',
-        description: 'Family holiday extravaganza featuring artisan stalls, food pavilions, gifts, and carnival rides.',
-        image: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=800&q=80'
+        title: 'Statewide Solo Singing & Vocal Contest',
+        category: 'Singing Solo',
+        prize: '₹75,000 Cash + Golden Mic',
+        date: 'Dec 12, 2026',
+        venue: 'Acoustic Concert Hall, Tirunelveli',
+        badge: 'Golden Mic',
+        description: 'Mesmerizing solo vocal performances with live acoustic orchestration on the golden TheZar concert stage.',
+        image: '/assets/cards4.png'
+      },
+      {
+        id: '5',
+        title: 'Grand Carol Choirs & Music Band Symphony',
+        category: 'Choir & Bands',
+        prize: '₹1,00,000 Cash + Choir Trophy',
+        date: 'Dec 12, 2026',
+        venue: 'Cathedral Grand Arena, Chennai',
+        badge: 'Choir Trophy',
+        description: 'Magnificent festive choral groups and musical bands performing timeless carols and cultural melodies across Tamil Nadu.',
+        image: '/assets/cards5.png'
+      },
+      {
+        id: '6',
+        title: 'Santa Claus Family Stage & Winter Carnival',
+        category: 'Special Contest',
+        prize: 'Mega Holiday Shopping & Gifts',
+        date: 'Dec 12, 2026',
+        venue: 'North Pole Pavilion, Coimbatore',
+        badge: 'Kids & Family',
+        description: 'Step into Santa’s magical winter stage featuring giant Christmas trees, snowman displays, and gift distributions.',
+        image: '/assets/cards6.png'
+      },
+      {
+        id: '7',
+        title: 'Junior Carol Fiesta & Kids Singing Contest',
+        category: 'Kids Category',
+        prize: '₹50,000 Cash + Junior Trophy',
+        date: 'Dec 12, 2026',
+        venue: 'Junior Arena Stage, VOC Ground',
+        badge: 'Junior Category',
+        description: 'Young rising prodigies and junior choirs singing festive melodies in traditional attire before an audience of thousands.',
+        image: '/assets/cards7.png'
       }
     ],
     // 6. Experience Zones

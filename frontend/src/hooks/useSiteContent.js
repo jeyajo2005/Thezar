@@ -58,52 +58,85 @@ export const defaultSiteContent = {
   ],
 
   // 4. Events / Competitions Section
-  eventsSectionTitle: 'State Championship Categories',
-  eventsSectionSubtitle: 'Top Christmas & Statewide Championship Competitions across all 38 districts',
+  eventsSectionTitle: 'State Championship Categories & Events',
+  eventsSectionSubtitle: 'Official Carol Fiesta & Statewide Championship Competitions across all 38 districts',
   eventsList: [
     {
       id: '1',
-      title: 'Grand Cooking Championship',
-      category: 'Culinary Arts',
-      prize: '₹1,00,000 Cash Prize + Golden Chef Trophy',
-      date: 'Oct 10-12, 2026',
-      venue: 'VOC Ground Arena, Tirunelveli',
-      badge: 'Headline Championship',
-      description: 'Statewide culinary battle showcasing authentic Tamil Nadu festive recipes and master chef judging.',
-      image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80'
+      title: 'TheZar Official Passes & Team Badges',
+      category: 'Official Passes',
+      prize: 'VIP Entry & Stage Pass',
+      date: 'Season 2026',
+      venue: 'Tirunelveli District Arena',
+      badge: 'Official Passes',
+      description: 'Official credential passes for Event Organizers, Media Teams, Decor, Stage, and Support Crew with VIP backstage access.',
+      image: '/assets/cards1.png'
     },
     {
       id: '2',
-      title: 'Statewide Carol Symphony',
-      category: 'Choir & Music Bands',
-      prize: '₹50,000 Cash Prize + Trophy',
+      title: 'Statewide Mega Group Dance Championship',
+      category: 'Dance Troupe',
+      prize: '₹1,50,000 Cash + Natya Trophy',
       date: 'Dec 12, 2026',
-      venue: 'Tirunelveli District Arena',
-      badge: 'Featured Stage',
-      description: 'Grand choral and acoustic musical groups performing traditional and contemporary festive melodies.',
-      image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'
+      venue: 'Main Grand Stage, VOC Ground',
+      badge: 'Championship Trophy',
+      description: 'High-octane group dance championship with state-of-the-art concert lighting, fireworks, and celebrity choreographers.',
+      image: '/assets/cards2.png'
     },
     {
       id: '3',
-      title: 'Traditional Folk & Classical Dance',
-      category: 'Dance Showcase',
-      prize: '₹75,000 Cash Prize + Natya Award',
-      date: 'Oct 15, 2026',
-      venue: 'Centenary Hall, Tirunelveli',
-      badge: 'High Impact',
-      description: 'Celebrating classical Bharatanatyam, Karakattam, and contemporary choreography from 38 districts.',
-      image: 'https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=800&q=80'
+      title: 'Solo Freestyle & Hip-Hop Dance Battle',
+      category: 'Solo Dance',
+      prize: '₹75,000 Cash + Gold Medal',
+      date: 'Dec 12, 2026',
+      venue: 'Amphitheatre Stage, VOC Ground',
+      badge: 'Solo Battle',
+      description: 'Electrifying solo dance battle showcasing Tamil Nadu’s finest solo dancers battling for statewide championship honors.',
+      image: '/assets/cards3.png'
     },
     {
       id: '4',
-      title: 'Christmas Holiday Carnival & Stalls',
-      category: 'Carnival & Fun',
-      prize: 'Mega Holiday Shopping & Stalls',
-      date: 'Dec 20-25, 2026',
-      venue: 'Exhibition Grounds, Tirunelveli',
-      badge: 'All Ages Welcome',
-      description: 'Family holiday extravaganza featuring artisan stalls, food pavilions, gifts, and carnival rides.',
-      image: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=800&q=80'
+      title: 'Statewide Solo Singing & Vocal Contest',
+      category: 'Singing Solo',
+      prize: '₹75,000 Cash + Golden Mic',
+      date: 'Dec 12, 2026',
+      venue: 'Acoustic Concert Hall, Tirunelveli',
+      badge: 'Golden Mic',
+      description: 'Mesmerizing solo vocal performances with live acoustic orchestration on the golden TheZar concert stage.',
+      image: '/assets/cards4.png'
+    },
+    {
+      id: '5',
+      title: 'Grand Carol Choirs & Music Band Symphony',
+      category: 'Choir & Bands',
+      prize: '₹1,00,000 Cash + Choir Trophy',
+      date: 'Dec 12, 2026',
+      venue: 'Cathedral Grand Arena, Chennai',
+      badge: 'Choir Trophy',
+      description: 'Magnificent festive choral groups and musical bands performing timeless carols and cultural melodies across Tamil Nadu.',
+      image: '/assets/cards5.png'
+    },
+    {
+      id: '6',
+      title: 'Santa Claus Family Stage & Winter Carnival',
+      category: 'Special Contest',
+      prize: 'Mega Holiday Shopping & Gifts',
+      date: 'Dec 12, 2026',
+      venue: 'North Pole Pavilion, Coimbatore',
+      badge: 'Kids & Family',
+      description: 'Step into Santa’s magical winter stage featuring giant Christmas trees, snowman displays, and gift distributions.',
+      image: '/assets/cards6.png'
+    },
+    {
+      id: '7',
+      title: 'Junior Carol Fiesta & Kids Singing Contest',
+      category: 'Kids Category',
+      prize: '₹50,000 Cash + Junior Trophy',
+      date: 'Dec 12, 2026',
+      venue: 'Junior Arena Stage, VOC Ground',
+      badge: 'Junior Category',
+      description: 'Young rising prodigies and junior choirs singing festive melodies in traditional attire before an audience of thousands.',
+      image: '/assets/cards7.png'
     }
   ],
 

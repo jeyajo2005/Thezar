@@ -43,101 +43,152 @@ export const DISTRICTS_DATA = [
 export const EVENTS_LIST = [
   {
     id: "evt-1",
-    title: "Tirunelveli District Round 2",
+    title: "TheZar Official VIP & Team Access Passes",
     district: "Tirunelveli",
     districtCode: "TVL",
-    category: "Hybrid Competition",
-    date: "10 October 2026",
-    time: "10:00 AM - 5:00 PM",
-    venue: "ABC College of Engineering, Tirunelveli",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80",
-    badge: "Live District Event",
+    category: "Innovation",
+    date: "12 December 2026",
+    time: "All-Day Entry Access",
+    venue: "VOC Ground Arena, Tirunelveli",
+    image: "/assets/cards1.png",
+    badge: "Official Passes",
     status: "Live",
-    description: "The Tirunelveli district round brings together the brightest minds to compete in technical, cultural, quiz, and innovation contests.",
+    description: "Official credential passes for Event Organizers, Media Teams, Decor Teams, Stage, and Support Crew with VIP backstage access.",
     competitions: [
-      { name: "Technical Hackathon", type: "Technical", icon: "Code", duration: "3 Hours", prizes: "₹25,000" },
-      { name: "Cultural Dance Fest", type: "Cultural", icon: "Music", duration: "2 Hours", prizes: "₹20,000" },
-      { name: "Grand TN Quiz", type: "Quiz", icon: "HelpCircle", duration: "1.5 Hours", prizes: "₹15,000" },
-      { name: "AI & IoT Innovation Expo", type: "Innovation", icon: "Zap", duration: "4 Hours", prizes: "₹30,000" }
+      { name: "Event Organizer Badge", type: "Innovation", icon: "Shield", duration: "Full Access", prizes: "Accredited" },
+      { name: "Media & Press Access", type: "Innovation", icon: "Camera", duration: "Full Day", prizes: "Press Pass" }
     ],
     schedule: [
-      { time: "10:00 AM", task: "Participant Check-in & ID Verification", room: "Main Auditorium" },
-      { time: "10:30 AM", task: "Grand Opening Ceremony & Keynote", room: "Main Auditorium" },
-      { time: "11:00 AM", task: "Round 1: Technical & Quiz Elimination", room: "Lab Block A & B" },
-      { time: "01:00 PM", task: "Networking Lunch & Poster Presentation", room: "Dining Hall" },
-      { time: "02:00 PM", task: "Round 2: Cultural Showcase & AI Demos", room: "Open Amphitheatre" },
-      { time: "04:00 PM", task: "Valedictory & District Winner Announcement", room: "Main Auditorium" }
+      { time: "08:00 AM", task: "VIP & Crew Badge Distribution", room: "Accreditation Desk" },
+      { time: "09:00 AM", task: "Arena Inspection & Security Briefing", room: "Main Arena" }
     ]
   },
   {
     id: "evt-2",
-    title: "Madurai District Round 1",
-    district: "Madurai",
-    districtCode: "MDU",
-    category: "Cultural & Tech",
-    date: "15 October 2026",
-    time: "09:30 AM - 04:30 PM",
-    venue: "Madura Arts & Science College, Madurai",
-    image: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=80",
-    badge: "Upcoming Round",
-    status: "Upcoming",
-    description: "Celebrate Southern heritage and digital skills with Madurai's finest youth competing for national recognition.",
+    title: "Statewide Mega Group Dance Championship",
+    district: "Tirunelveli",
+    districtCode: "TVL",
+    category: "Cultural",
+    date: "12 December 2026",
+    time: "04:00 PM - 09:00 PM",
+    venue: "Main Grand Stage, VOC Ground",
+    image: "/assets/cards2.png",
+    badge: "State Championship",
+    status: "Live",
+    description: "High-octane group dance championship with state-of-the-art concert lighting, fireworks, and celebrity choreographers.",
     competitions: [
-      { name: "WebDev Showdown", type: "Technical", icon: "Code", duration: "2.5 Hours", prizes: "₹20,000" },
-      { name: "Classical & Folk Fusion", type: "Cultural", icon: "Music", duration: "3 Hours", prizes: "₹25,000" },
-      { name: "Science & Heritage Quiz", type: "Quiz", icon: "HelpCircle", duration: "1 Hour", prizes: "₹10,000" }
+      { name: "Mega Group Dance Battle", type: "Cultural", icon: "Music", duration: "4 Hours", prizes: "₹1,50,000" },
+      { name: "Classical Fusion Troupe", type: "Cultural", icon: "Award", duration: "3 Hours", prizes: "₹75,000" }
     ],
     schedule: [
-      { time: "09:30 AM", task: "Reporting & Kit Distribution", room: "Seminar Hall" },
-      { time: "10:15 AM", task: "Inaugural Address by Guest Speaker", room: "Main Hall" },
-      { time: "11:00 AM", task: "Simultaneous Stage Performances & Hack", room: "Stage 1 & Labs" },
-      { time: "03:30 PM", task: "Award Ceremony", room: "Main Hall" }
+      { time: "04:00 PM", task: "Stage Rehearsals & Lighting Sync", room: "Main Stage" },
+      { time: "05:30 PM", task: "Group Dance Prelims & Battles", room: "Main Stage" },
+      { time: "08:30 PM", task: "Grand Finale & Winner Trophy", room: "Main Stage" }
     ]
   },
   {
     id: "evt-3",
-    title: "Chennai District Cultural Fest",
-    district: "Chennai",
-    districtCode: "CHN",
-    category: "State Mega Qualifier",
-    date: "20 October 2026",
-    time: "09:00 AM - 06:00 PM",
-    venue: "Anna University Campus, Guindy, Chennai",
-    image: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1000&q=80",
-    badge: "Registration Closing Soon",
-    status: "Upcoming",
-    description: "The capital city clash! Over 800+ participants battle across 18 specialized competitions.",
+    title: "Solo Freestyle & Hip-Hop Dance Battle",
+    district: "Tirunelveli",
+    districtCode: "TVL",
+    category: "Cultural",
+    date: "12 December 2026",
+    time: "01:00 PM - 04:00 PM",
+    venue: "Amphitheatre Stage, VOC Ground",
+    image: "/assets/cards3.png",
+    badge: "Solo Battle",
+    status: "Live",
+    description: "Electrifying solo dance battle showcasing Tamil Nadu’s finest solo dancers battling for statewide championship honors.",
     competitions: [
-      { name: "Full-Stack Code Sprint", type: "Technical", icon: "Code", duration: "4 Hours", prizes: "₹50,000" },
-      { name: "Battle of the Bands", type: "Cultural", icon: "Music", duration: "3 Hours", prizes: "₹40,000" },
-      { name: "AI Innovation Challenge", type: "Innovation", icon: "Zap", duration: "4 Hours", prizes: "₹50,000" }
+      { name: "Solo Hip-Hop & Freestyle", type: "Cultural", icon: "Zap", duration: "3 Hours", prizes: "₹75,000" }
     ],
     schedule: [
-      { time: "09:00 AM", task: "Grand Registration Gate Open", room: "Entrance Plaza" },
-      { time: "10:00 AM", task: "Prelims & Code Evaluation", room: "CS Block" },
-      { time: "02:00 PM", task: "Main Stage Finals", room: "Open Air Theatre" }
+      { time: "01:00 PM", task: "Solo Cipher & Qualifying Rounds", room: "Amphitheatre" },
+      { time: "03:00 PM", task: "Top 8 Head-to-Head Battles", room: "Amphitheatre" }
     ]
   },
   {
     id: "evt-4",
-    title: "Coimbatore Innovation Summit",
-    district: "Coimbatore",
-    districtCode: "CBE",
-    category: "Tech & Innovation",
-    date: "25 October 2026",
-    time: "10:00 AM - 05:00 PM",
-    venue: "PSG College of Technology, Coimbatore",
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80",
-    badge: "Featured Event",
+    title: "Statewide Solo Singing & Vocal Contest",
+    district: "Madurai",
+    districtCode: "MDU",
+    category: "Cultural",
+    date: "12 December 2026",
+    time: "10:00 AM - 02:00 PM",
+    venue: "Acoustic Concert Hall, Tirunelveli",
+    image: "/assets/cards4.png",
+    badge: "Golden Mic",
     status: "Upcoming",
-    description: "Empowering western district engineering & arts talent with industry mentors & venture prizes.",
+    description: "Mesmerizing solo vocal performances with live acoustic orchestration on the golden TheZar concert stage.",
     competitions: [
-      { name: "Robotics & Drone Racing", type: "Innovation", icon: "Zap", duration: "4 Hours", prizes: "₹45,000" },
-      { name: "Cybersecurity Capture The Flag", type: "Technical", icon: "Shield", duration: "3 Hours", prizes: "₹35,000" }
+      { name: "Solo Singing Championship", type: "Cultural", icon: "Mic", duration: "4 Hours", prizes: "₹75,000" }
     ],
     schedule: [
-      { time: "10:00 AM", task: "Opening Address", room: "Auditorium 2" },
-      { time: "11:00 AM", task: "Challenge Rounds", room: "Robotics Bay" }
+      { time: "10:00 AM", task: "Vocal Prelims & Acoustic Balance", room: "Concert Hall" },
+      { time: "12:30 PM", task: "Finalist Stage Performances", room: "Concert Hall" }
+    ]
+  },
+  {
+    id: "evt-5",
+    title: "Grand Carol Choirs & Music Band Symphony",
+    district: "Chennai",
+    districtCode: "CHN",
+    category: "Cultural",
+    date: "12 December 2026",
+    time: "05:30 PM - 10:00 PM",
+    venue: "Cathedral Grand Arena, Chennai",
+    image: "/assets/cards5.png",
+    badge: "Choir Trophy",
+    status: "Upcoming",
+    description: "Magnificent festive choral groups and musical bands performing timeless carols and cultural melodies across Tamil Nadu.",
+    competitions: [
+      { name: "Statewide Choir Symphony", type: "Cultural", icon: "Music", duration: "4 Hours", prizes: "₹1,00,000" }
+    ],
+    schedule: [
+      { time: "05:30 PM", task: "Choral Showcase Round 1", room: "Grand Arena" },
+      { time: "08:00 PM", task: "Symphony Band Battle & Awards", room: "Grand Arena" }
+    ]
+  },
+  {
+    id: "evt-6",
+    title: "Santa Claus Family Stage & Winter Carnival",
+    district: "Coimbatore",
+    districtCode: "CBE",
+    category: "Quiz",
+    date: "12 December 2026",
+    time: "11:00 AM - 06:00 PM",
+    venue: "North Pole Pavilion, Coimbatore",
+    image: "/assets/cards6.png",
+    badge: "Kids & Family",
+    status: "Upcoming",
+    description: "Step into Santa’s magical winter stage featuring giant Christmas trees, snowman displays, and gift distributions.",
+    competitions: [
+      { name: "Santa Claus Costume & Family Contest", type: "Quiz", icon: "Gift", duration: "5 Hours", prizes: "₹50,000" }
+    ],
+    schedule: [
+      { time: "11:00 AM", task: "Santa Arrival Parade & Gifts", room: "Pavilion" },
+      { time: "03:00 PM", task: "Costume Contest & Family Photos", room: "Pavilion" }
+    ]
+  },
+  {
+    id: "evt-7",
+    title: "Junior Carol Fiesta & Kids Singing Contest",
+    district: "Tirunelveli",
+    districtCode: "TVL",
+    category: "Technical",
+    date: "12 December 2026",
+    time: "09:00 AM - 01:00 PM",
+    venue: "Junior Arena Stage, VOC Ground",
+    image: "/assets/cards7.png",
+    badge: "Junior Trophy",
+    status: "Upcoming",
+    description: "Young rising prodigies and junior choirs singing festive melodies in traditional attire before an audience of thousands.",
+    competitions: [
+      { name: "Kids Singing Contest", type: "Technical", icon: "Star", duration: "4 Hours", prizes: "₹50,000" }
+    ],
+    schedule: [
+      { time: "09:00 AM", task: "Junior Reporting & Sound Check", room: "Junior Stage" },
+      { time: "10:00 AM", task: "Junior Choirs & Solo Contest", room: "Junior Stage" }
     ]
   }
 ];

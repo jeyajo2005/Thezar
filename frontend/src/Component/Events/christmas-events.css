@@ -160,12 +160,12 @@
 /* ── Cards grid ──────────────────────────────────────────── */
 .xmas-cards-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.75rem;
   position: relative;
   z-index: 2;
   padding: 0 1rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
