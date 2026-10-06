@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/config';
 import { router } from 'expo-router';
+import { ThezarLogo } from '@/components/ThezarLogo';
 
 export default function LoginScreen() {
   const [participantId, setParticipantId] = useState('TRZ-2026-TVL-00124');
@@ -27,7 +28,7 @@ export default function LoginScreen() {
         style={styles.inner}
       >
         <View style={styles.header}>
-          <Text style={styles.logoText}>THEZAR</Text>
+          <ThezarLogo size="lg" showGlow style={styles.logo} />
           <Text style={styles.subtitle}>Candidate Access Portal</Text>
         </View>
 
@@ -83,18 +84,17 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 24,
   },
-  logoText: {
-    fontSize: 36,
-    fontWeight: '900',
-    color: Colors.pink,
-    letterSpacing: 3,
+  logo: {
+    marginBottom: 8,
   },
   subtitle: {
     color: Colors.textMuted,
     fontSize: 14,
     marginTop: 4,
+    fontWeight: '500',
+    letterSpacing: 0.5,
   },
   card: {
     backgroundColor: Colors.cardDark,

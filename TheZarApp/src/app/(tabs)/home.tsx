@@ -11,6 +11,7 @@ import { Colors } from '@/constants/config';
 import { mockUser, mockEvent, mockAnnouncements } from '@/services/mockData';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { ThezarLogo } from '@/components/ThezarLogo';
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -26,12 +27,22 @@ export default function HomeScreen() {
       >
         {/* Top Header */}
         <View style={styles.header}>
-          <View>
-            <Text style={styles.greeting}>Good Morning, {mockUser.name} 👋</Text>
-            <Text style={styles.participantId}>{mockUser.participantId}</Text>
+          <View style={styles.headerLeft}>
+            <View style={styles.logoBadge}>
+              <ThezarLogo size="xs" />
+            </View>
+            <View style={styles.greetingContainer}>
+              <Text style={styles.greeting} numberOfLines={1}>Good Morning, {mockUser.name} 👋</Text>
+              <Text style={styles.participantId}>{mockUser.participantId}</Text>
+            </View>
           </View>
-          <TouchableOpacity style={styles.notificationBtn} onPress={() => router.push('/notifications' as any)}>
-            <Ionicons name="notifications-outline" size={24} color={Colors.pink} />
+          <TouchableOpacity
+            style={styles.notificationBtn}
+            onPress={() => router.push('/notifications' as any)}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="notifications-outline" size={22} color={Colors.pink} />
+            <View style={styles.notificationDot} />
           </TouchableOpacity>
         </View>
 
@@ -115,25 +126,73 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 20,
-    marginTop: 10,
+    marginTop: 6,
+    width: '100%',
+  },
+  headerLeft: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  logoBadge: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: Colors.cardBorder,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
+  },
+  greetingContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
   greeting: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: '800',
     color: Colors.textLight,
   },
   participantId: {
-    fontSize: 13,
+    fontSize: 12,
     color: Colors.pink,
     marginTop: 2,
     fontWeight: '600',
   },
   notificationBtn: {
-    padding: 10,
+    width: 44,
+    height: 44,
     backgroundColor: Colors.cardDark,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Colors.cardBorder,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    flexShrink: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
+  },
+  notificationDot: {
+    position: 'absolute',
+    top: 9,
+    right: 9,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: Colors.primary,
+    borderWidth: 1.5,
+    borderColor: '#FFFFFF',
   },
   sectionHeader: {
     fontSize: 12,
