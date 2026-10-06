@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { Sparkles, Heart, Mail, CheckCircle2, Star } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, ArrowRight, ShieldCheck, CheckCircle2, Send, Sparkles, Heart } from 'lucide-react';
+import thezarLogo from '../../assets/thezar_logo.png';
+import footerLuxuryBg from '../../assets/footer_luxury_bg.png';
 
+// Social Media Icons
 const FacebookIcon = (props) => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" {...props}>
     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -27,138 +30,245 @@ const TwitterIcon = (props) => (
   </svg>
 );
 
+const WhatsAppIcon = (props) => (
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" {...props}>
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+  </svg>
+);
+
 export default function ChristmasFooter({ onOpenRegister }) {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    if (!newsletterEmail) return;
+    if (!newsletterEmail.trim()) return;
     setSubscribed(true);
+    setNewsletterEmail('');
+    setTimeout(() => setSubscribed(false), 5000);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToSection = (e, targetId) => {
+    if (e) e.preventDefault();
+    const element = document.getElementById(targetId);
+    if (element) {
+      const offset = 70;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    } else {
+      window.location.hash = '#' + targetId;
+    }
   };
 
   return (
-    <footer className="bg-[#120102] text-white pt-16 pb-12 border-t-2 border-[#ffd700]/30 relative overflow-hidden">
-      
-      {/* Background Subtle Star Particles */}
-      <div className="absolute inset-0 pointer-events-none opacity-40">
-        <div className="absolute top-8 left-12"><Star className="w-3.5 h-3.5 text-[#ffd700] fill-[#ffd700] animate-twinkle" /></div>
-        <div className="absolute top-16 right-20"><Star className="w-4 h-4 text-amber-300 fill-amber-300 animate-pulse" /></div>
-        <div className="absolute bottom-12 left-1/3"><Star className="w-3 h-3 text-[#ffd700] fill-[#ffd700] animate-twinkle delay-200" /></div>
-        <div className="absolute bottom-8 right-1/4"><Star className="w-2.5 h-2.5 text-amber-200 fill-amber-200 animate-pulse delay-500" /></div>
-      </div>
+    <footer 
+      className="w-full relative overflow-hidden bg-[#FAF7F2] text-[#2C1810]"
+      style={{
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+      }}
+    >
+      {/* Background Luxury Ribbon Art Layer matching reference */}
+      <div 
+        className="absolute inset-0 pointer-events-none bg-cover bg-center bg-no-repeat opacity-95 transition-opacity duration-300"
+        style={{
+          backgroundImage: `url(${footerLuxuryBg})`,
+          backgroundPosition: 'center bottom',
+          backgroundSize: 'cover',
+        }}
+        aria-hidden="true"
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
+      {/* Subtle Warm Gradient Overlay for Pristine Readability */}
+      <div 
+        className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/70 via-white/50 to-white/75"
+        aria-hidden="true"
+      />
+
+      {/* Decorative Gold Top Edge Accent */}
+      <div className="relative w-full h-[3px] bg-gradient-to-r from-[#D4AF37]/30 via-[#6B1414] to-[#D4AF37]/40" />
+
+      {/* Main Content Area */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-16 md:pt-20 pb-12">
         
-        {/* Top 4-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 text-left">
+        {/* Top Grid: 4 Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-12 text-left">
           
-          {/* Col 1: Brand & Bio (4 cols) */}
-          <div className="lg:col-span-4 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#ffd700] to-[#b45309] p-0.5 shadow-md flex items-center justify-center">
-                <div className="w-full h-full rounded-full bg-[#380407] flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-[#ffd700]" />
-                </div>
+          {/* Column 1: Brand & Identity (4 Columns) */}
+          <div className="lg:col-span-4 space-y-5">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-2xl bg-white p-2 shadow-md border border-[#D4AF37]/40 flex items-center justify-center transition-transform hover:scale-105">
+                <img 
+                  src={thezarLogo} 
+                  alt="THEZAR Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div>
-                <span className="font-cinzel text-xl font-bold tracking-wider gold-gradient-text">
+                <span className="font-serif text-2xl font-black tracking-wider bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#4A0A0A] bg-clip-text text-transparent block">
                   THEZAR 2026
                 </span>
-                <p className="font-christmas text-sm text-amber-200 -mt-1">
-                  Christmas Winter Carnival
-                </p>
+                <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#D4AF37] block -mt-0.5">
+                  Tamil Nadu Winter Carnival
+                </span>
               </div>
             </div>
 
-            <p className="text-xs sm:text-sm text-rose-100/80 leading-relaxed font-light">
-              Tamil Nadu’s premier collegiate, cultural, and holiday winter festival. Bringing together the magic of Christmas across all 38 districts.
+            <p className="text-sm text-[#4A3B3E] leading-relaxed font-normal max-w-sm">
+              Tamil Nadu’s premier youth talent championship and cultural celebration platform. Bringing together visionary talent and the spirit of celebration across all 38 districts.
             </p>
 
-            {/* Social Icons */}
-            <div className="flex items-center gap-3 pt-2">
-              {[
-                { icon: InstagramIcon, href: '#' },
-                { icon: FacebookIcon, href: '#' },
-                { icon: YoutubeIcon, href: '#' },
-                { icon: TwitterIcon, href: '#' },
-              ].map((s, idx) => {
-                const Icon = s.icon;
-                return (
-                  <a
-                    key={idx}
-                    href={s.href}
-                    className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-[#ffd700]/30 text-[#ffd700] hover:scale-110 flex items-center justify-center transition-all shadow-sm"
-                  >
-                    <Icon />
-                  </a>
-                );
-              })}
+            {/* Social Icons Bar */}
+            <div className="pt-2">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-[#6B1414] mb-3 flex items-center gap-2">
+                <span>Follow Our Journey</span>
+                <span className="w-8 h-[1px] bg-[#D4AF37]" />
+              </p>
+              <div className="flex items-center gap-2.5">
+                {[
+                  { icon: InstagramIcon, href: 'https://instagram.com', label: 'Instagram', bg: '#6B1414' },
+                  { icon: FacebookIcon, href: 'https://facebook.com', label: 'Facebook', bg: '#6B1414' },
+                  { icon: YoutubeIcon, href: 'https://youtube.com', label: 'YouTube', bg: '#6B1414' },
+                  { icon: TwitterIcon, href: 'https://twitter.com', label: 'Twitter', bg: '#6B1414' },
+                  { icon: WhatsAppIcon, href: 'https://wa.me/919790351878', label: 'WhatsApp', bg: '#6B1414' },
+                ].map((s, idx) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={idx}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      className="w-9 h-9 rounded-full bg-white hover:bg-[#6B1414] text-[#6B1414] hover:text-[#FAF7F2] border border-[#D4AF37]/50 shadow-sm flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#D4AF37]"
+                    >
+                      <Icon />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          {/* Col 2: Quick Links (2 cols) */}
-          <div className="lg:col-span-2 space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#ffd700] font-mono">
-              Quick Links
-            </p>
-            <ul className="space-y-2 text-sm text-rose-100/80 list-none p-0">
-              <li><a href="#hero" className="hover:text-[#ffd700] transition-colors">Home</a></li>
-              <li><a href="#about" className="hover:text-[#ffd700] transition-colors">About Festival</a></li>
-              <li><a href="#events" className="hover:text-[#ffd700] transition-colors">Winter Events</a></li>
-              <li><a href="#experience" className="hover:text-[#ffd700] transition-colors">Experience Zones</a></li>
-              <li><a href="#register" className="hover:text-[#ffd700] transition-colors">Book Passes</a></li>
-              <li><a href="#contact" className="hover:text-[#ffd700] transition-colors">Contact Santa</a></li>
+          {/* Column 2: Quick Links (2.5 Columns) */}
+          <div className="lg:col-span-2 space-y-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#6B1414] font-sans">
+                Quick Links
+              </p>
+              <div className="w-8 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#B38728] mt-1.5" />
+            </div>
+            <ul className="space-y-2.5 text-sm text-[#4A3B3E] list-none p-0 m-0">
+              {[
+                { label: 'Home', id: 'hero' },
+                { label: 'About Festival', id: 'about' },
+                { label: 'Winter Events', id: 'events' },
+                { label: 'Experience Zones', id: 'experience' },
+                { label: 'Book Passes', action: onOpenRegister },
+                { label: 'Contact Us', id: 'contact' },
+              ].map((link, idx) => (
+                <li key={idx}>
+                  <button
+                    onClick={(e) => link.action ? link.action() : scrollToSection(e, link.id)}
+                    className="group flex items-center gap-2 text-left text-[#4A3B3E] hover:text-[#6B1414] transition-colors font-medium bg-transparent border-none p-0 cursor-pointer"
+                  >
+                    <span className="text-[#D4AF37] text-xs transition-transform group-hover:translate-x-1 font-bold">›</span>
+                    <span>{link.label}</span>
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Col 3: Festive Events (2 cols) */}
-          <div className="lg:col-span-2 space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#ffd700] font-mono">
-              Winter Events
-            </p>
-            <ul className="space-y-2 text-xs text-rose-100/80 list-none p-0">
-              <li>Christmas Eve Gala</li>
-              <li>Santa Meet & Greet</li>
-              <li>Winter Wonderland</li>
-              <li>Christmas Market</li>
-              <li>New Year Fireworks</li>
-              <li>Youth Carol Choirs</li>
-            </ul>
+          {/* Column 3: Contact & Helpdesk (3 Columns) */}
+          <div className="lg:col-span-3 space-y-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#6B1414] font-sans">
+                Contact &amp; Desk
+              </p>
+              <div className="w-8 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#B38728] mt-1.5" />
+            </div>
+            <div className="space-y-3.5 text-sm text-[#4A3B3E]">
+              <a 
+                href="mailto:thezarevents@gmail.com" 
+                className="flex items-center gap-3 text-[#4A3B3E] hover:text-[#6B1414] transition-colors group no-underline"
+                style={{ color: '#4A3B3E', textDecoration: 'none' }}
+              >
+                <div className="w-8 h-8 rounded-full bg-white border border-[#D4AF37]/50 flex items-center justify-center shrink-0 shadow-sm group-hover:border-[#6B1414] group-hover:bg-[#6B1414]/5 transition-all">
+                  <Mail className="w-3.5 h-3.5 text-[#6B1414]" />
+                </div>
+                <span className="text-xs sm:text-sm font-medium">thezarevents@gmail.com</span>
+              </a>
+
+              <a 
+                href="tel:+919790351878" 
+                className="flex items-center gap-3 text-[#4A3B3E] hover:text-[#6B1414] transition-colors group no-underline"
+                style={{ color: '#4A3B3E', textDecoration: 'none' }}
+              >
+                <div className="w-8 h-8 rounded-full bg-white border border-[#D4AF37]/50 flex items-center justify-center shrink-0 shadow-sm group-hover:border-[#6B1414] group-hover:bg-[#6B1414]/5 transition-all">
+                  <Phone className="w-3.5 h-3.5 text-[#6B1414]" />
+                </div>
+                <span className="text-xs sm:text-sm font-medium font-mono">97903 51878</span>
+              </a>
+
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-white border border-[#D4AF37]/50 flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#6B1414]" />
+                </div>
+                <div className="text-xs leading-relaxed">
+                  <strong className="block text-[#6B1414] font-semibold">Central Secretariat:</strong>
+                  Tirunelveli 627001, Tamil Nadu
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Col 4: Newsletter Subscription (4 cols) */}
-          <div className="lg:col-span-4 space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#ffd700] font-mono">
-              Santa's Newsletter
-            </p>
-            <p className="text-xs text-rose-100/80 leading-relaxed font-light">
+          {/* Column 4: Newsletter & Updates (3.5 Columns) */}
+          <div className="lg:col-span-3 space-y-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#6B1414] font-sans">
+                Official Newsletter
+              </p>
+              <div className="w-8 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#B38728] mt-1.5" />
+            </div>
+            
+            <p className="text-xs text-[#4A3B3E] leading-relaxed">
               Subscribe to get holiday updates, secret Santa gift drops, and ticket discount alerts.
             </p>
 
             {subscribed ? (
-              <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-400 text-xs text-emerald-200 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
-                <span>You’re on Santa’s VIP Holiday List!</span>
+              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-800 flex items-center gap-2.5 shadow-sm">
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+                <span className="font-medium">You’re subscribed to THEZAR updates!</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="space-y-2">
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-rose-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Mail className="w-4 h-4 text-[#8C7A7C] absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="email"
                     required
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-full bg-black/40 border border-[#ffd700]/30 focus:border-[#ffd700] text-xs text-white placeholder-rose-200/40 focus:outline-none transition-colors shadow-sm"
+                    placeholder="Enter your email address..."
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/90 border border-[#D4AF37]/50 focus:border-[#6B1414] text-xs text-[#2C1810] placeholder-[#8C7A7C] focus:outline-none transition-all shadow-sm focus:ring-2 focus:ring-[#6B1414]/15"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-[#240306] gold-shimmer-btn shadow-md hover:scale-101 cursor-pointer transition-all"
+                  className="w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#6B1414] hover:from-[#540F0F] hover:to-[#781717] shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 border border-[#D4AF37]/40"
                 >
-                  Join Festive Newsletter
+                  <span>Subscribe Now</span>
+                  <Send className="w-3.5 h-3.5 text-[#D4AF37]" />
                 </button>
               </form>
             )}
@@ -166,18 +276,47 @@ export default function ChristmasFooter({ onOpenRegister }) {
 
         </div>
 
-        {/* Bottom Bar: Copyright & Greetings */}
-        <div className="pt-8 border-t border-[#ffd700]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-rose-200/70 font-light">
-          <p>© 2026 THEZAR. All Rights Reserved. Wishing you a season of peace, joy and love.</p>
-          <div className="flex items-center gap-1.5 font-mono text-[11px] text-[#ffd700]">
-            <span>Crafted with</span>
-            <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 inline" />
-            <span>for Christmas 2026</span>
+        {/* Divider with Gold Flare */}
+        <div className="mt-14 pt-6 border-t border-[#D4AF37]/35 relative">
+          <div className="absolute left-1/2 -top-[5px] -translate-x-1/2 w-12 h-[3px] bg-[#D4AF37] rounded-full" />
+        </div>
+
+        {/* Bottom Bar: Trust Badge, Districts, Legal, and Back to Top */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-2 text-xs text-[#5D4A4D]">
+          
+          {/* Trust Badge */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 border border-[#D4AF37]/50 shadow-sm">
+              <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+              <span className="font-bold text-[11px] tracking-wider uppercase text-[#6B1414]">
+                Official State Portal
+              </span>
+            </div>
+            <span className="hidden sm:inline text-[#8C7A7C]">•</span>
+            <span className="text-[11px] font-semibold text-[#6B1414]">
+              38 Districts Championship
+            </span>
           </div>
+
+          {/* Copyright */}
+          <div className="text-center font-normal">
+            © 2026 <strong className="text-[#6B1414] font-semibold">THEZAR</strong>. All Rights Reserved.
+          </div>
+
+          {/* Back to top */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={scrollToTop}
+              className="px-4 py-1.5 rounded-full bg-white hover:bg-[#6B1414] text-[#6B1414] hover:text-[#FAF7F2] border border-[#D4AF37]/60 shadow-sm hover:shadow text-xs font-semibold flex items-center gap-1.5 transition-all duration-300 cursor-pointer"
+            >
+              <span>Back to Top</span>
+              <ArrowUp className="w-3.5 h-3.5 text-[#D4AF37]" />
+            </button>
+          </div>
+
         </div>
 
       </div>
-
     </footer>
   );
 }

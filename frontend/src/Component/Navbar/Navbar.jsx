@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, User, ArrowRight, Sparkles } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
+import thezarLogo from '../../assets/thezar_logo.png';
 
 export default function Navbar({ onOpenRegister }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -8,10 +9,10 @@ export default function Navbar({ onOpenRegister }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 15);
 
-      const sections = ['home', 'about-thezar', 'events', 'contact'];
-      const scrollPosition = window.scrollY + 120;
+      const sections = ['home', 'events', 'districts', 'about-thezar', 'contact'];
+      const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
@@ -22,9 +23,19 @@ export default function Navbar({ onOpenRegister }) {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run once on mount to set initial state correctly
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const navLinks = [
+    { name: 'Home', targetId: 'home' },
+    { name: 'Events', targetId: 'events' },
+    { name: 'Districts', targetId: 'districts' },
+    { name: 'About Us', targetId: 'about-thezar' },
+    { name: 'Contact', targetId: 'contact' },
+  ];
 
   const scrollToSection = (e, targetId) => {
     if (e) e.preventDefault();
@@ -48,254 +59,338 @@ export default function Navbar({ onOpenRegister }) {
 
   return (
     <header
-      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'shadow-[0_6px_25px_rgba(0,0,0,0.85)]' : 'shadow-[0_4px_20px_rgba(0,0,0,0.6)]'
-      }`}
       style={{
-        background: 'linear-gradient(90deg, #050102 0%, #0c0205 28%, #160309 60%, #2c050f 100%)',
-        borderBottom: '1.5px solid rgba(212, 160, 23, 0.45)',
-        fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+        position: 'sticky',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        // Always visible, elegant background
+        backgroundColor: '#FFFFFF',
+        // Subtle shadow appears only when scrolled, but border is always there
+        borderBottom: '1px solid rgba(107, 26, 26, 0.08)',
+        boxShadow: scrolled ? '0 4px 20px rgba(107, 26, 26, 0.05)' : 'none',
+        transition: 'box-shadow 0.3s ease',
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}
     >
-      <div className="w-full px-4 sm:px-8">
-        <div className="flex items-center justify-between md:justify-center md:gap-9 lg:gap-12 h-[58px] md:h-[64px]">
-          
-          {/* ================= 1. LEFT NAVIGATION (HOME, ABOUT) ================= */}
-          <nav className="hidden md:flex items-center gap-8 lg:gap-11">
-            {/* Home Link */}
-            <a
-              href="#home"
-              onClick={(e) => scrollToSection(e, 'home')}
-              className="group flex flex-col items-center justify-center text-[15px] lg:text-[16px] font-medium transition-colors cursor-pointer select-none no-underline hover:no-underline"
-              style={{ textDecoration: 'none' }}
-            >
-              <span
-                className={`transition-colors duration-200 ${
-                  activeSection === 'home'
-                    ? 'text-[#fef08a] font-bold'
-                    : 'text-white/90 group-hover:text-amber-200'
-                }`}
-              >
-                Home
-              </span>
-              <span
-                className={`h-[2px] rounded-full transition-all duration-300 mt-1 ${
-                  activeSection === 'home'
-                    ? 'w-full bg-gradient-to-r from-amber-400 to-yellow-300 shadow-[0_0_8px_#f59e0b]'
-                    : 'w-0 bg-transparent group-hover:w-full group-hover:bg-amber-400/70'
-                }`}
-              />
-            </a>
-
-            {/* About Link */}
-            <a
-              href="#about-thezar"
-              onClick={(e) => scrollToSection(e, 'about-thezar')}
-              className="group flex flex-col items-center justify-center text-[15px] lg:text-[16px] font-medium transition-colors cursor-pointer select-none no-underline hover:no-underline"
-              style={{ textDecoration: 'none' }}
-            >
-              <span
-                className={`transition-colors duration-200 ${
-                  activeSection === 'about-thezar'
-                    ? 'text-[#fef08a] font-bold'
-                    : 'text-white/90 group-hover:text-amber-200'
-                }`}
-              >
-                About
-              </span>
-              <span
-                className={`h-[2px] rounded-full transition-all duration-300 mt-1 ${
-                  activeSection === 'about-thezar'
-                    ? 'w-full bg-gradient-to-r from-amber-400 to-yellow-300 shadow-[0_0_8px_#f59e0b]'
-                    : 'w-0 bg-transparent group-hover:w-full group-hover:bg-amber-400/70'
-                }`}
-              />
-            </a>
-          </nav>
-
-          {/* ================= 2. CENTER IDENTITY (THEZAR EVENTS) ================= */}
+      <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '76px',
+          }}
+        >
+          {/* 1. Logo & Brand Text */}
           <a
             href="#home"
             onClick={(e) => scrollToSection(e, 'home')}
-            className="flex flex-col items-center justify-center group cursor-pointer select-none no-underline hover:no-underline py-1"
-            style={{ textDecoration: 'none' }}
-            aria-label="THEZAR EVENTS - Home"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.6rem',
+              flexShrink: 0,
+              textDecoration: 'none',
+            }}
           >
-            <div className="relative flex items-center justify-center">
-              {/* Sparkle Glint on the Title */}
-              <Sparkles className="w-3.5 h-3.5 text-amber-200/90 absolute -top-1 left-2 animate-pulse pointer-events-none" />
-
-              <span
-                className="text-[24px] sm:text-[28px] md:text-[32px] font-black uppercase tracking-[0.16em] leading-none"
-                style={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  background: 'linear-gradient(180deg, #fff7d6 0%, #f6ce6d 38%, #d49c28 72%, #a67215 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  filter: 'drop-shadow(0 2px 8px rgba(212,160,23,0.35))',
-                }}
-              >
-                THEZAR
-              </span>
-            </div>
-
-            {/* Sub-label: — EVENTS — */}
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="w-4 sm:w-6 h-[1px] bg-gradient-to-r from-transparent to-amber-400/80" />
-              <span
-                className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.32em]"
-                style={{
-                  color: '#e7c276',
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                }}
-              >
-                EVENTS
-              </span>
-              <span className="w-4 sm:w-6 h-[1px] bg-gradient-to-l from-transparent to-amber-400/80" />
-            </div>
-          </a>
-
-          {/* ================= 3. RIGHT NAVIGATION (EVENTS, CONTACT) + CTA BUTTON ================= */}
-          <div className="hidden md:flex items-center gap-8 lg:gap-10">
-            {/* Events Link */}
-            <a
-              href="#events"
-              onClick={(e) => scrollToSection(e, 'events')}
-              className="group flex flex-col items-center justify-center text-[15px] lg:text-[16px] font-medium transition-colors cursor-pointer select-none no-underline hover:no-underline"
-              style={{ textDecoration: 'none' }}
-            >
-              <span
-                className={`transition-colors duration-200 ${
-                  activeSection === 'events'
-                    ? 'text-[#fef08a] font-bold'
-                    : 'text-white/90 group-hover:text-amber-200'
-                }`}
-              >
-                Events
-              </span>
-              <span
-                className={`h-[2px] rounded-full transition-all duration-300 mt-1 ${
-                  activeSection === 'events'
-                    ? 'w-full bg-gradient-to-r from-amber-400 to-yellow-300 shadow-[0_0_8px_#f59e0b]'
-                    : 'w-0 bg-transparent group-hover:w-full group-hover:bg-amber-400/70'
-                }`}
-              />
-            </a>
-
-            {/* Contact Link */}
-            <a
-              href="#contact"
-              onClick={(e) => scrollToSection(e, 'contact')}
-              className="group flex flex-col items-center justify-center text-[15px] lg:text-[16px] font-medium transition-colors cursor-pointer select-none no-underline hover:no-underline"
-              style={{ textDecoration: 'none' }}
-            >
-              <span
-                className={`transition-colors duration-200 ${
-                  activeSection === 'contact'
-                    ? 'text-[#fef08a] font-bold'
-                    : 'text-white/90 group-hover:text-amber-200'
-                }`}
-              >
-                Contact
-              </span>
-              <span
-                className={`h-[2px] rounded-full transition-all duration-300 mt-1 ${
-                  activeSection === 'contact'
-                    ? 'w-full bg-gradient-to-r from-amber-400 to-yellow-300 shadow-[0_0_8px_#f59e0b]'
-                    : 'w-0 bg-transparent group-hover:w-full group-hover:bg-amber-400/70'
-                }`}
-              />
-            </a>
-
-            {/* Register Now Luxury Pill CTA Button */}
-            <button
-              onClick={onOpenRegister}
-              className="group h-[42px] px-6 rounded-full text-[14px] font-semibold text-white tracking-wide flex items-center justify-center gap-2.5 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-[0_0_16px_rgba(212,160,23,0.30)] hover:shadow-[0_0_24px_rgba(212,160,23,0.55)]"
+            <img
+              src={thezarLogo}
+              alt="TheZar Logo"
               style={{
-                background: 'linear-gradient(135deg, #7e0c18 0%, #9e0804 50%, #5a050f 100%)',
-                border: '1.5px solid #d4a017',
+                height: '2.5rem',
+                width: 'auto',
+                objectFit: 'contain',
+              }}
+            />
+            <span
+              style={{
+                fontWeight: 800,
+                fontSize: '1rem',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: '#2C1810',
               }}
             >
-              <User className="w-4 h-4 text-white" />
+              THEZAR <span style={{ color: '#6B1A1A' }}>2026</span>
+            </span>
+          </a>
+
+          {/* 2. Desktop Navigation */}
+          <nav
+            style={{
+              display: 'none',
+              alignItems: 'center',
+              gap: '2rem',
+            }}
+            className="md-nav"
+          >
+            {navLinks.map((link) => {
+              const isCurrent = activeSection === link.targetId;
+              return (
+                <a
+                  key={link.name}
+                  href={`#${link.targetId}`}
+                  onClick={(e) => scrollToSection(e, link.targetId)}
+                  className="nav-link-clean"
+                  style={{
+                    textDecoration: 'none',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.05em',
+                    color: isCurrent ? '#6B1A1A' : '#4A4A4A',
+                    position: 'relative',
+                    transition: 'color 0.2s ease',
+                    display: 'inline-block',
+                    padding: '0.5rem 0',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isCurrent) e.currentTarget.style.color = '#6B1A1A';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isCurrent) e.currentTarget.style.color = '#4A4A4A';
+                  }}
+                >
+                  {link.name}
+                  {/* Subtle Gold/Burgundy Active/Hover Indicator */}
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      width: isCurrent ? '100%' : '0%',
+                      height: '2px',
+                      borderRadius: '9999px',
+                      backgroundColor: '#6B1A1A',
+                      transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    }}
+                    className={isCurrent ? '' : 'nav-underline'}
+                  />
+                </a>
+              );
+            })}
+          </nav>
+
+          {/* 3. Desktop Actions */}
+          <div
+            style={{ display: 'none', alignItems: 'center', gap: '1rem', flexShrink: 0 }}
+            className="md-actions"
+          >
+            {/* Register button */}
+            <button
+              onClick={onOpenRegister}
+              style={{
+                borderRadius: '9999px',
+                padding: '0 1.5rem',
+                height: '42px',
+                background: '#6B1A1A',
+                color: '#FAF7F2',
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 700,
+                fontSize: '0.75rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                transition: 'background 0.2s, transform 0.2s, box-shadow 0.2s',
+                boxShadow: '0 4px 12px rgba(107, 26, 26, 0.15)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#4A0F0F';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(107, 26, 26, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#6B1A1A';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(107, 26, 26, 0.15)';
+              }}
+            >
               <span>Register Now</span>
-              <ArrowRight className="w-4 h-4 text-amber-300 transition-transform duration-200 group-hover:translate-x-1" />
+              <ArrowRight style={{ width: '14px', height: '14px' }} />
             </button>
           </div>
 
-          {/* ================= MOBILE CONTROLS ================= */}
-          <div className="flex md:hidden items-center gap-2.5">
-            {/* Compact Mobile Register Button */}
+          {/* Mobile Actions: compact register + hamburger */}
+          <div
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+            className="mobile-actions"
+          >
             <button
               onClick={onOpenRegister}
-              className="h-[36px] px-4 rounded-full text-[12px] font-bold text-white tracking-wider flex items-center gap-1.5 cursor-pointer shadow-md"
               style={{
-                background: 'linear-gradient(135deg, #7e0c18 0%, #9e0804 50%, #5a050f 100%)',
-                border: '1.5px solid #d4a017',
+                height: '36px',
+                padding: '0 1rem',
+                borderRadius: '9999px',
+                background: '#6B1A1A',
+                color: '#FAF7F2',
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 700,
+                fontSize: '0.7rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                border: 'none',
+                cursor: 'pointer',
+                boxShadow: '0 2px 8px rgba(107, 26, 26, 0.15)',
               }}
             >
-              <User className="w-3.5 h-3.5 text-white" />
-              <span>Register</span>
+              Register
             </button>
-
-            {/* Hamburger Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="w-10 h-10 rounded-full text-amber-300 bg-white/5 hover:bg-white/10 border border-amber-400/40 flex items-center justify-center transition-colors cursor-pointer"
-              aria-label="Toggle Navigation Menu"
+              aria-label="Toggle Menu"
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                background: 'rgba(107, 26, 26, 0.04)',
+                border: '1px solid rgba(107, 26, 26, 0.1)',
+                color: '#6B1A1A',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'background 0.2s',
+              }}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5 text-amber-300" /> : <Menu className="w-5 h-5 text-amber-300" />}
+              {mobileMenuOpen
+                ? <X style={{ width: '20px', height: '20px' }} />
+                : <Menu style={{ width: '20px', height: '20px' }} />
+              }
             </button>
           </div>
         </div>
+      </div>
 
-        {/* ================= MOBILE DROPDOWN DRAWER ================= */}
-        {mobileMenuOpen && (
+      {/* Mobile full-screen overlay */}
+      {mobileMenuOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 200,
+            background: '#FFFFFF',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '2rem',
+          }}
+        >
+          {/* Header row */}
           <div
-            className="md:hidden pb-5 pt-3 border-t border-amber-400/20 space-y-1.5 animate-in fade-in slide-in-from-top-2 duration-200 text-center"
             style={{
-              background: 'linear-gradient(180deg, rgba(12,2,5,0.98) 0%, rgba(5,1,2,0.98) 100%)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '3rem',
             }}
           >
-            {[
-              { name: 'Home', targetId: 'home' },
-              { name: 'About', targetId: 'about-thezar' },
-              { name: 'Events', targetId: 'events' },
-              { name: 'Contact', targetId: 'contact' },
-            ].map((link) => (
-              <a
-                key={link.name}
-                href={`#${link.targetId}`}
-                onClick={(e) => scrollToSection(e, link.targetId)}
-                className={`block py-2.5 px-4 rounded-xl text-[15px] font-medium transition-colors no-underline cursor-pointer ${
-                  activeSection === link.targetId
-                    ? 'text-amber-300 bg-white/10 font-bold'
-                    : 'text-white/90 hover:text-amber-200 hover:bg-white/5'
-                }`}
-              >
-                {link.name}
-              </a>
-            ))}
-
-            <div className="pt-2 px-2">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenRegister();
-                }}
-                className="w-full h-11 rounded-full font-bold text-white flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-lg"
-                style={{
-                  background: 'linear-gradient(135deg, #7e0c18 0%, #9e0804 50%, #5a050f 100%)',
-                  border: '1.5px solid #d4a017',
-                }}
-              >
-                <User className="w-4 h-4 text-white" />
-                <span>REGISTER CANDIDATE PASS</span>
-                <ArrowRight className="w-4 h-4 text-amber-300" />
-              </button>
-            </div>
+            <span
+              style={{
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 800,
+                fontSize: '1rem',
+                color: '#2C1810',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+              }}
+            >
+              THEZAR <span style={{ color: '#6B1A1A' }}>2026</span>
+            </span>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                background: 'rgba(107, 26, 26, 0.04)',
+                border: '1px solid rgba(107, 26, 26, 0.1)',
+                color: '#6B1A1A',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+              }}
+              aria-label="Close menu"
+            >
+              <X style={{ width: '20px', height: '20px' }} />
+            </button>
           </div>
-        )}
-      </div>
+
+          {/* Large nav links */}
+          <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {navLinks.map((link) => {
+              const isCurrent = activeSection === link.targetId;
+              return (
+                <a
+                  key={link.name}
+                  href={`#${link.targetId}`}
+                  onClick={(e) => scrollToSection(e, link.targetId)}
+                  style={{
+                    display: 'block',
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontSize: '2.5rem',
+                    fontWeight: 700,
+                    color: isCurrent ? '#6B1A1A' : '#2C1810',
+                    textDecoration: 'none',
+                    padding: '0.5rem 0',
+                    borderBottom: '1px solid rgba(107, 26, 26, 0.08)',
+                    transition: 'color 0.2s',
+                  }}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
+          </nav>
+
+          {/* Register button */}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenRegister();
+            }}
+            style={{
+              marginTop: '2rem',
+              width: '100%',
+              padding: '1.2rem',
+              borderRadius: '9999px',
+              background: '#6B1A1A',
+              color: '#FAF7F2',
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              border: 'none',
+              cursor: 'pointer',
+              boxShadow: '0 8px 20px rgba(107, 26, 26, 0.2)',
+            }}
+          >
+            Register Now
+          </button>
+        </div>
+      )}
+
+      {/* Inline styles for responsive desktop/mobile visibility */}
+      <style>{`
+        @media (min-width: 992px) {
+          .md-nav { display: flex !important; }
+          .md-actions { display: flex !important; }
+          .mobile-actions { display: none !important; }
+        }
+        @media (max-width: 991px) {
+          .md-nav { display: none !important; }
+          .md-actions { display: none !important; }
+          .mobile-actions { display: flex !important; }
+        }
+        .nav-link-clean:hover .nav-underline {
+          width: 100% !important;
+        }
+      `}</style>
     </header>
   );
 }

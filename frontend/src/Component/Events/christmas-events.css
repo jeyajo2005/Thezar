@@ -1,0 +1,359 @@
+/* ============================================================
+   christmas-events.css
+   Isolated styles for ChristmasEventsSection component.
+   All class names are prefixed `.xmas-` to avoid collisions.
+   Requirements: 2.3–2.5, 4.1–4.6, 5.5–5.6, 7.1–7.4, 11.1–11.2
+   ============================================================ */
+
+/* ============================================================
+   PART 1 — Keyframes & Base Section Styles  (Task 2.1)
+   ============================================================ */
+
+/* Snowflake falling animation — vertical drop with horizontal drift */
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10px) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) translateX(var(--drift, 0px));
+    opacity: 0.6;
+  }
+}
+
+/* Sparkle / decoration float animation — gentle up-down oscillation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* CTA button hover background sweep */
+@keyframes sweepBg {
+  0% {
+    background-position: left center;
+  }
+  100% {
+    background-position: right center;
+  }
+}
+
+/* Card entrance animation — fade in + slide up */
+@keyframes cardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Section base ─────────────────────────────────────────── */
+.xmas-section {
+  position: relative;
+  overflow: hidden;
+  background: #071426;
+  padding: 5rem 0;
+  z-index: 0;
+}
+
+/* ── Snowfall layer ──────────────────────────────────────── */
+.xmas-snow-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Individual snowflake element */
+.xmas-snowflake {
+  position: absolute;
+  top: -10px;
+  border-radius: 50%;
+  background: white;
+  will-change: transform;
+  animation: snowfall var(--duration, 10s) var(--delay, 0s) linear infinite;
+}
+
+/* ── Ambient glow background ─────────────────────────────── */
+.xmas-glow-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(234, 179, 8, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 60%, rgba(16, 185, 129, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 50% 80%, rgba(158, 8, 4, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   PART 2 — Header, Card Grid & Card Styles  (Task 2.2)
+   Requirements: 4.1–4.6, 5.5–5.6, 7.1–7.4, 11.1–11.2
+   ============================================================ */
+
+/* ── Section header ──────────────────────────────────────── */
+.xmas-header {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  padding-bottom: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Festive label pill — "✦ CHRISTMAS SPECIAL ✦" */
+.xmas-label {
+  display: inline-block;
+  background: #9e0804;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  margin-bottom: 1.25rem;
+}
+
+/* Main heading */
+.xmas-heading {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+/* Gradient accent word inside heading — red-to-gold */
+.xmas-heading-accent {
+  background: linear-gradient(135deg, #ffffff 0%, #fbbf24 50%, #9e0804 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtitle below heading */
+.xmas-subtitle {
+  color: #94a3b8;
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 0 auto 1.5rem;
+}
+
+/* Floating sparkle / SVG star decoration */
+.xmas-sparkle {
+  position: absolute;
+  pointer-events: none;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ── Cards grid ──────────────────────────────────────────── */
+.xmas-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  position: relative;
+  z-index: 2;
+  padding: 0 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Tablet — 2 columns */
+@media (max-width: 1023px) {
+  .xmas-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile — 1 column */
+@media (max-width: 767px) {
+  .xmas-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Card base ───────────────────────────────────────────── */
+.xmas-card {
+  background: #0d1f35;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  /* Pre-animation state — invisible and translated down */
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* Card hover — lift + deeper shadow */
+.xmas-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Visible state — applies entrance animation with stagger via --delay */
+.xmas-card--visible {
+  animation: cardReveal 0.6s ease forwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* ── Card image area ─────────────────────────────────────── */
+.xmas-card__img-wrap {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.xmas-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+/* Image zoom on card hover */
+.xmas-card:hover .xmas-card__img {
+  transform: scale(1.08);
+}
+
+/* Gradient overlay on image — dark at bottom, transparent at top */
+.xmas-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Badge pill — top-left of image */
+.xmas-card__badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 0.08em;
+  background: var(--badge-color, #9e0804);
+}
+
+/* ── Card body ───────────────────────────────────────────── */
+.xmas-card__body {
+  padding: 1.25rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.xmas-card__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.xmas-card__subtitle {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.xmas-card__meta {
+  font-size: 0.75rem;
+  color: #64748b;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* ── CTA button ──────────────────────────────────────────── */
+.xmas-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: white;
+  background: linear-gradient(90deg, #9e0804, #7f0603, #9e0804);
+  background-size: 200% auto;
+  background-position: left center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.75rem;
+}
+
+/* Button hover — background sweep + deeper shadow */
+.xmas-cta-btn:hover {
+  background-position: right center;
+  box-shadow: 0 4px 15px rgba(158, 8, 4, 0.4);
+}
+
+/* Arrow icon translate on button hover */
+.xmas-cta-btn:hover .xmas-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Arrow icon base transition */
+.xmas-cta-arrow {
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   ACCESSIBILITY — Reduced Motion
+   Requirements: 2.5, 10.1
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .xmas-snowflake {
+    animation: none;
+  }
+
+  .xmas-sparkle {
+    animation: none;
+  }
+
+  .xmas-card {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .xmas-card--visible {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .xmas-cta-btn {
+    transition: none;
+  }
+
+  .xmas-card__img {
+    transition: none;
+  }
+
+  .xmas-cta-arrow {
+    transition: none;
+  }
+}

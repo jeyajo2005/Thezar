@@ -4,6 +4,7 @@ import Hero from '../Component/Home/Hero';
 import CurtainIntro from '../Component/Home/CurtainIntro';
 import AboutTheZarSection from '../Component/Home/AboutTheZarSection';
 import CountdownSection from '../Component/Home/CountdownSection';
+import ChristmasEventsSection from '../Component/Events/ChristmasEventsSection';
 import EventsGrid from '../Component/Events/EventsGrid';
 import DistrictJourneySection from '../Component/Home/DistrictJourneySection';
 import CategoryGridSection from '../Component/Home/CategoryGridSection';
@@ -69,6 +70,9 @@ export default function Home() {
         <CountdownSection
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
+
+        {/* Christmas Events — placed ABOVE Upcoming Events */}
+        <ChristmasEventsSection onOpenRegister={() => setIsRegisterOpen(true)} />
 
         {/* 06. Upcoming Events */}
         <EventsGrid

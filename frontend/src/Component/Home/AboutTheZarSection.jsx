@@ -6,150 +6,164 @@ export default function AboutTheZarSection({ onOpenRegister }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section id="about-thezar" className="py-12 sm:py-16 bg-white text-slate-900 relative overflow-hidden">
-      {/* 1. Oversized Faint Background Watermark Text: "ABOUT" */}
-      <div
-        className="absolute top-6 left-6 sm:left-16 pointer-events-none select-none font-extrabold tracking-tighter uppercase z-0 leading-none"
-        style={{
-          fontSize: 'clamp(120px, 16vw, 180px)',
-          color: 'rgba(15, 23, 42, 0.035)',
-          fontFamily: "'Plus Jakarta Sans', sans-serif",
-        }}
-      >
-        ABOUT
-      </div>
+    <section
+      id="about-thezar"
+      style={{
+        background: '#FAF7F2',
+        padding: '6rem 0',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Oversized background watermark */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: '-2rem',
+        fontFamily: "'Playfair Display', Georgia, serif",
+        fontSize: 'clamp(8rem, 18vw, 16rem)',
+        fontWeight: 700,
+        color: 'rgba(107,26,26,0.04)',
+        lineHeight: 1,
+        pointerEvents: 'none',
+        userSelect: 'none',
+        letterSpacing: '-0.04em',
+      }}>ABOUT</div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
-          {/* Left Column: Editorial Heading & Content */}
-          <div className="lg:col-span-6 text-left space-y-5">
-            
-            {/* Editorial Eyebrow with Small Gold Line */}
-            <div className="flex items-center gap-3">
-              <span className="text-[12px] font-bold text-[#9e0804] tracking-[0.18em] uppercase">
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}
+          className="about-grid">
+
+          {/* LEFT: Text */}
+          <div style={{ textAlign: 'left' }}>
+            {/* Eyebrow */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B1A1A', fontFamily: 'monospace' }}>
                 ABOUT THEZAR
               </span>
-              <div
-                className="w-10 h-[2px] rounded-full"
-                style={{
-                  backgroundColor: '#3f0701',
-                  boxShadow: '0 0 8px rgba(63, 7, 1, 0.30)',
-                }}
-              />
+              <span style={{ width: '40px', height: '1.5px', background: '#6B1A1A', display: 'inline-block' }} />
             </div>
 
-            {/* Main Editorial Heading: 48-64px, weight 800, line-height 1.0 */}
-            <h2 className="text-[34px] sm:text-[46px] lg:text-[56px] font-extrabold text-[#3f0701] tracking-[-0.035em] leading-[1.0] uppercase">
+            {/* Heading */}
+            <h2 style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
+              fontWeight: 700,
+              lineHeight: 1.05,
+              color: '#2C1810',
+              margin: '0 0 1.5rem',
+              letterSpacing: '-0.02em',
+            }}>
               WHERE TALENT <br />
-              <span className="text-[#9e0804] font-serif italic lowercase tracking-normal">meets</span> <br />
+              <em style={{ color: '#6B1A1A', fontStyle: 'italic' }}>meets</em>{' '}
               OPPORTUNITY
             </h2>
 
-            {/* Editorial Description */}
-            <p className="text-[#64748B] text-sm sm:text-base lg:text-[17px] font-normal leading-[1.7] tracking-[-0.01em] max-w-xl">
+            {/* Description */}
+            <p style={{ fontSize: '1rem', color: '#5C3D2E', lineHeight: 1.75, marginBottom: '2rem', maxWidth: '480px' }}>
               TheZar brings participants together across Tamil Nadu through district-level competitions, innovation, creativity and achievement. From competitions to cultural spectacles, this is the definitive stage for state champions.
             </p>
 
-            {/* Feature Bullets */}
-            <div className="space-y-2.5 pt-1 text-sm text-[#334155] font-medium">
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-[#9e0804] shrink-0" />
-                <span>38 District preliminary stages leading to Chennai Mega Finals</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-[#9e0804] shrink-0" />
-                <span>Grand House Prize + Mega Cash Prize Pool for winners</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-[#9e0804] shrink-0" />
-                <span>Direct mentorship and networking with state industry leaders</span>
-              </div>
+            {/* Bullets */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem', marginBottom: '2.5rem' }}>
+              {[
+                '38 District preliminary stages leading to Chennai Mega Finals',
+                'Grand House Prize + Mega Cash Prize Pool for winners',
+                'Direct mentorship and networking with state industry leaders',
+              ].map((text, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                  <CheckCircle2 style={{ width: '16px', height: '16px', color: '#6B1A1A', flexShrink: 0, marginTop: '2px' }} />
+                  <span style={{ fontSize: '0.9rem', color: '#4A2820', lineHeight: 1.6 }}>{text}</span>
+                </div>
+              ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="pt-3 flex flex-wrap items-center gap-4">
+            {/* Stat row */}
+            <div style={{ display: 'flex', gap: '2rem', marginBottom: '2.5rem', padding: '1.25rem 1.5rem', background: 'white', borderRadius: '1rem', border: '1px solid rgba(107,26,26,0.1)', boxShadow: '0 4px 20px rgba(107,26,26,0.06)' }}>
+              {[
+                { num: '38', label: 'Districts' },
+                { num: '1', label: 'Grand Winner' },
+                { num: '3', label: 'Positions' },
+              ].map((stat, i) => (
+                <div key={i} style={{ textAlign: 'center', flex: 1 }}>
+                  <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '2rem', fontWeight: 700, color: '#6B1A1A', display: 'block', lineHeight: 1 }}>{stat.num}</span>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 600, color: '#9B6B4A', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{stat.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               <a
                 href="#events"
-                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full border-2 border-[#9e0804] font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-sm no-underline hover:no-underline group"
-                style={{
-                  color: '#9e0804',
-                  borderColor: '#9e0804',
-                  borderRadius: '9999px',
-                  textDecoration: 'none',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#9e0804';
-                  e.currentTarget.style.color = '#FFFFFF';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = '#9e0804';
-                }}
+                style={{ padding: '0.85rem 2rem', borderRadius: '9999px', background: 'transparent', color: '#6B1A1A', fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.1em', border: '1.5px solid rgba(107,26,26,0.4)', cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#6B1A1A'; e.currentTarget.style.color = '#FAF7F2'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#6B1A1A'; }}
               >
                 <span>KNOW MORE</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight style={{ width: '15px', height: '15px' }} />
               </a>
               {onOpenRegister && (
                 <button
                   type="button"
                   onClick={onOpenRegister}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md shadow-[#9e0804]/25 cursor-pointer"
-                  style={{
-                    borderRadius: '9999px',
-                    background: 'linear-gradient(135deg, #9e0804 0%, #730502 100%)',
-                    color: '#FFFFFF',
-                  }}
+                  style={{ padding: '0.85rem 2rem', borderRadius: '9999px', background: '#6B1A1A', color: '#FAF7F2', fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.1em', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.background = '#4A0F0F'}
+                  onMouseLeave={e => e.currentTarget.style.background = '#6B1A1A'}
                 >
-                  <span>REGISTER NOW</span>
+                  REGISTER NOW
                 </button>
               )}
             </div>
-
           </div>
 
-          {/* Right Column: Large Editorial Event Image with Concentric Rings & Play Button */}
-          <div className="lg:col-span-6 relative flex justify-center lg:justify-end">
-            
-            {/* Concentric Decorative Rings behind the Image (from reference design) */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] rounded-full border border-slate-200/80 pointer-events-none" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] sm:w-[560px] sm:h-[560px] rounded-full border border-slate-100 pointer-events-none" />
+          {/* RIGHT: Image */}
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+            {/* Decorative ring */}
+            <div style={{ position: 'absolute', width: '110%', height: '110%', borderRadius: '50%', border: '1px solid rgba(107,26,26,0.08)', pointerEvents: 'none' }} />
 
-            {/* Image Container */}
-            <div className="relative z-10 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl border border-slate-200/80 group">
+            {/* Editorial number */}
+            <span style={{ position: 'absolute', bottom: '-2rem', right: '-1rem', fontFamily: "'Playfair Display', Georgia, serif", fontSize: 'clamp(6rem, 12vw, 10rem)', fontWeight: 700, color: 'rgba(107,26,26,0.05)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none', zIndex: 0 }}>01</span>
+
+            <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '520px', borderRadius: '1.75rem', overflow: 'hidden', boxShadow: '0 30px 80px rgba(107,26,26,0.15)' }}
+              className="about-img-wrap">
               <img
                 src={aboutAudienceImg}
                 alt="TheZar Audience & Statewide Symposium"
-                className="w-full h-[360px] sm:h-[420px] lg:h-[460px] object-cover group-hover:scale-105 transition-transform duration-700"
+                style={{ width: '100%', height: '460px', objectFit: 'cover', display: 'block', transition: 'transform 0.7s ease' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
               />
+              {/* Gradient overlay */}
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(44,24,16,0.65) 0%, transparent 55%)', pointerEvents: 'none' }} />
 
-              {/* Subtle Gradient Over Bottom of Photo */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#3f0701]/70 via-transparent to-transparent opacity-60" />
-
-              {/* Photo Caption Badge */}
-              <div className="absolute bottom-4 left-4 right-4 z-20 text-left text-white">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-red-300 font-bold block">
-                  STATEWIDE SYMPOSIUM
-                </span>
-                <p className="text-xs sm:text-sm font-semibold text-slate-100">
-                  Annual Statewide Talent & Innovation Expo
-                </p>
+              {/* Caption */}
+              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', zIndex: 10 }}>
+                <span style={{ fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#F2C4A0', fontWeight: 700, display: 'block', marginBottom: '0.25rem' }}>STATEWIDE SYMPOSIUM</span>
+                <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'white', margin: 0 }}>Annual Statewide Talent & Innovation Expo</p>
               </div>
 
-              {/* Circular Play Button Overlapping the Image */}
+              {/* Play button */}
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-gradient-to-r from-[#9e0804] to-[#730502] hover:from-[#730502] hover:to-[#9e0804] text-white flex items-center justify-center shadow-xl shadow-[#9e0804]/40 hover:scale-110 transition-all duration-300 cursor-pointer"
+                style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 20, width: '64px', height: '64px', borderRadius: '50%', background: '#6B1A1A', border: '3px solid rgba(255,255,255,0.3)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.3s', boxShadow: '0 8px 30px rgba(107,26,26,0.4)' }}
                 aria-label="Play Introduction Video"
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translate(-50%,-50%) scale(1.1)'; e.currentTarget.style.background = '#4A0F0F'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translate(-50%,-50%) scale(1)'; e.currentTarget.style.background = '#6B1A1A'; }}
               >
-                <Play className="w-6 h-6 fill-current ml-0.5" />
+                <Play style={{ width: '22px', height: '22px', fill: 'white', marginLeft: '3px' }} />
               </button>
             </div>
-
           </div>
-
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 767px) {
+          .about-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+          .about-img-wrap img { height: 280px !important; }
+        }
+      `}</style>
     </section>
   );
 }

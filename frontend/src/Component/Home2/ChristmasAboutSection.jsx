@@ -1,188 +1,313 @@
-import { useState, useEffect } from 'react';
-import { Heart, Sparkles, Gift, Users, Trophy, Award, Building2, Star, ArrowRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Users, Trophy, Award, Building2, ArrowRight } from 'lucide-react';
 import santaGiftImg from '../../assets/xmas_santa_gift.jpg';
 
-export default function ChristmasAboutSection({ onOpenRegister }) {
-  const [guestCount, setGuestCount] = useState(0);
-  const [eventCount, setEventCount] = useState(0);
-  const [yearCount, setYearCount] = useState(0);
-  const [partnerCount, setPartnerCount] = useState(0);
+function AnimatedCounter({ target, suffix = '' }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
 
   useEffect(() => {
-    const duration = 1800;
-    const steps = 40;
-    const stepTime = duration / steps;
-    let step = 0;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const duration = 1600;
+          const steps = 40;
+          const stepTime = duration / steps;
+          let step = 0;
+          const timer = setInterval(() => {
+            step++;
+            setCount(Math.floor((step / steps) * target));
+            if (step >= steps) {
+              setCount(target);
+              clearInterval(timer);
+            }
+          }, stepTime);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target]);
 
-    const timer = setInterval(() => {
-      step++;
-      const progress = step / steps;
-      setGuestCount(Math.floor(progress * 1000));
-      setEventCount(Math.floor(progress * 25));
-      setYearCount(Math.floor(progress * 15));
-      setPartnerCount(Math.floor(progress * 50));
+  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
+}
 
-      if (step >= steps) {
-        setGuestCount(1000);
-        setEventCount(25);
-        setYearCount(15);
-        setPartnerCount(50);
-        clearInterval(timer);
-      }
-    }, stepTime);
+const pillars = [
+  { num: '01', title: 'Festival Heritage & Spirit', desc: 'Bringing together 38 districts in unity and holiday celebration.' },
+  { num: '02', title: 'The Joy of Giving', desc: 'Over 5,000 winter meals & gift boxes distributed to children.' },
+  { num: '03', title: 'Grand Winter Arenas', desc: 'Carols, symphony concerts, and Santa workshops.' },
+  { num: '04', title: 'Statewide Honours', desc: 'Champion awards & festive prizes across arts and innovation.' },
+];
 
-    return () => clearInterval(timer);
-  }, []);
+const stats = [
+  { label: 'Happy Guests', value: 1000, suffix: '+', icon: Users, sub: 'Across 38 Districts' },
+  { label: 'Festive Events', value: 25, suffix: '+', icon: Trophy, sub: 'Competitions' },
+  { label: 'Years Legacy', value: 15, suffix: '+', icon: Award, sub: 'Heritage of Joy' },
+  { label: 'Partners', value: 50, suffix: '+', icon: Building2, sub: 'Sponsors & Patrons' },
+];
 
-  const modules = [
-    { num: '01.', title: 'Festival Heritage & Spirit', desc: 'Bringing together 38 districts in unity and holiday celebration.' },
-    { num: '02.', title: 'The Joy of Giving & Charity', desc: 'Over 5,000 winter meals & gift boxes distributed to children.' },
-    { num: '03.', title: 'Grand Winter Arenas', desc: 'Carols, ice-skating, symphony concerts, and Santa workshops.' },
-    { num: '04.', title: 'Statewide Holiday Honours', desc: 'Champion awards & festive prizes across arts and innovation.' },
-  ];
-
-  const stats = [
-    { label: 'Happy Guests', value: `${guestCount.toLocaleString()}+`, icon: Users, sub: 'Across 38 Arenas' },
-    { label: 'Festive Events', value: `${eventCount}+`, icon: Trophy, sub: 'Winter Competitions' },
-    { label: 'Years Legacy', value: `${yearCount}+`, icon: Award, sub: 'Heritage of Joy' },
-    { label: 'Global Partners', value: `${partnerCount}+`, icon: Building2, sub: 'Sponsors & Patrons' },
-  ];
-
+export default function ChristmasAboutSection({ onOpenRegister }) {
   return (
-    <section id="about" className="py-20 lg:py-28 relative overflow-hidden text-white">
-      
-      {/* Background Soft Glows */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-[#c4120c]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#ffd700]/15 rounded-full blur-3xl pointer-events-none" />
+    <section
+      id="about"
+      style={{
+        padding: 'clamp(4rem, 8vw, 7rem) 0',
+        background: '#FAF7F2',
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+      }}
+    >
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#380407] border border-[#ffd700]/50 shadow-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#ffd700]" />
-            <span className="text-xs uppercase font-bold tracking-widest text-[#ffd700] font-mono">
-              ★ OUR FESTIVE HERITAGE ★
+        {/* Section header */}
+        <div style={{ maxWidth: '560px', marginBottom: '3.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+            <span style={{ width: '40px', height: '1px', background: '#6B1A1A' }} />
+            <span style={{
+              fontSize: '0.65rem',
+              fontWeight: 700,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: '#6B1A1A',
+            }}>
+              Our Heritage
             </span>
           </div>
-
-          <h2 className="font-cinzel text-3xl sm:text-4xl lg:text-5xl font-black text-white">
-            THE SPIRIT OF <span className="gold-gradient-text">CHRISTMAS</span>
+          <h2 style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontSize: 'clamp(2rem, 4vw, 3rem)',
+            fontWeight: 700,
+            color: '#2C1810',
+            lineHeight: 1.15,
+            margin: '0 0 0.75rem',
+          }}>
+            The Spirit of <span style={{ color: '#6B1A1A' }}>Christmas</span>
           </h2>
-
-          <p className="font-christmas text-4xl sm:text-5xl text-amber-200 pt-1 drop-shadow-md">
-            A Season of Wonder, Harmony & Giving
+          <p style={{
+            fontSize: '1rem',
+            color: '#5C3D2E',
+            lineHeight: 1.7,
+          }}>
+            TheZar Christmas brings collegiate excellence, warmth, and compassion under one majestic festive tent across Tamil Nadu.
           </p>
-
-          <div className="w-32 h-0.5 mx-auto bg-gradient-to-r from-transparent via-[#ffd700] to-transparent mt-2" />
         </div>
 
-        {/* Master Showcase Card - Matching Reference Deck "Contents & Concept" Style */}
-        <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-[#d4af37]/40 mb-16 relative bg-[#6b090f] text-white">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
-            
-            {/* Left: Deep Velvet Red with Numbered Modules (01, 02, 03, 04) */}
-            <div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 flex flex-col justify-between space-y-8 relative z-10">
-              
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-xs font-mono text-[#ffd700] uppercase tracking-wider font-bold">
-                  <Star className="w-4 h-4 fill-[#ffd700]" />
-                  <span>FESTIVE PILLARS & CHARTER</span>
-                </div>
-                <h3 className="font-cinzel text-3xl sm:text-4xl font-extrabold text-white">
-                  Contents & Core Values
-                </h3>
-                <p className="text-sm sm:text-base text-rose-100/90 font-light leading-relaxed">
-                  TheZar Christmas brings collegiate excellence, warmth, and compassion under one majestic festive tent.
-                </p>
-              </div>
+        {/* Two-column editorial layout */}
+        <div style={{ display: 'grid', gap: '2rem' }} className="about-grid">
 
-              {/* 4 Large Numbered Modules (01, 02, 03, 04) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
-                {modules.map((m, idx) => (
-                  <div
-                    key={idx}
-                    className="p-4 rounded-2xl bg-black/25 border border-white/10 hover:border-[#ffd700]/60 transition-all hover:bg-black/35 group"
-                  >
-                    <span className="font-cinzel text-2xl font-black text-[#ffd700] group-hover:scale-110 inline-block transition-transform">
-                      {m.num}
-                    </span>
-                    <h4 className="text-sm font-bold text-white mt-1">
-                      {m.title}
-                    </h4>
-                    <p className="text-xs text-rose-200/80 leading-relaxed mt-1 font-light">
-                      {m.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="pt-2">
-                <button
-                  onClick={onOpenRegister}
-                  className="px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-[#240306] gold-shimmer-btn shadow-lg hover:scale-105 transition-transform cursor-pointer inline-flex items-center gap-2"
-                >
-                  <Sparkles className="w-4 h-4 text-[#240306]" />
-                  <span>Join the Statewide Celebration</span>
-                </button>
-              </div>
-
+          {/* Left: Image with editorial overlay */}
+          <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', minHeight: '420px' }}>
+            <img
+              src={santaGiftImg}
+              alt="The Spirit of Christmas at THEZAR"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                position: 'absolute',
+                inset: 0,
+              }}
+            />
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(180deg, transparent 40%, rgba(44,24,16,0.85) 100%)',
+            }} />
+            <div style={{
+              position: 'absolute',
+              bottom: '2rem',
+              left: '2rem',
+              right: '2rem',
+              zIndex: 10,
+            }}>
+              <span style={{
+                fontSize: '0.6rem',
+                fontWeight: 700,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.7)',
+              }}>
+                The Gift of Magic & Cheer
+              </span>
+              <p style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: '1.2rem',
+                fontWeight: 600,
+                color: '#FFFFFF',
+                lineHeight: 1.4,
+                marginTop: '0.35rem',
+              }}>
+                Spreading warmth across every home and campus in Tamil Nadu.
+              </p>
             </div>
-
-            {/* Right: 3D Santa Opening Magical Glowing Gift Box on Snow */}
-            <div className="lg:col-span-5 relative min-h-[380px] lg:min-h-full overflow-hidden flex items-center justify-center bg-black">
-              <img
-                src={santaGiftImg}
-                alt="Santa Opening Magical Glowing Gift"
-                className="w-full h-full object-cover object-center filter brightness-105 contrast-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              
-              {/* Floating Badge */}
-              <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-black/70 backdrop-blur-md border border-[#ffd700]/50 text-left">
-                <p className="text-xs font-mono font-bold text-[#ffd700] uppercase tracking-wider flex items-center gap-1.5">
-                  <Gift className="w-3.5 h-3.5 text-[#ffd700]" />
-                  <span>The Gift of Magic & Cheer</span>
-                </p>
-                <p className="text-sm font-semibold text-white mt-0.5">
-                  Spreading golden warmth across every home and collegiate campus in Tamil Nadu.
-                </p>
-              </div>
-            </div>
-
           </div>
 
+          {/* Right: Content pillars */}
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              {pillars.map((p) => (
+                <div
+                  key={p.num}
+                  style={{
+                    padding: '1.5rem',
+                    borderRadius: '12px',
+                    background: '#FFFFFF',
+                    border: '1px solid rgba(107,26,26,0.08)',
+                    transition: 'all 0.3s',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(107,26,26,0.2)';
+                    e.currentTarget.style.boxShadow = '0 8px 30px rgba(107,26,26,0.08)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(107,26,26,0.08)';
+                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <span style={{
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontSize: '1.6rem',
+                    fontWeight: 700,
+                    color: 'rgba(107,26,26,0.15)',
+                  }}>
+                    {p.num}
+                  </span>
+                  <h4 style={{
+                    fontSize: '0.9rem',
+                    fontWeight: 700,
+                    color: '#2C1810',
+                    margin: '0.5rem 0 0.3rem',
+                  }}>
+                    {p.title}
+                  </h4>
+                  <p style={{
+                    fontSize: '0.8rem',
+                    color: '#8B7355',
+                    lineHeight: 1.5,
+                  }}>
+                    {p.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={onOpenRegister}
+              style={{
+                marginTop: '1.5rem',
+                padding: '0.85rem 2rem',
+                borderRadius: '9999px',
+                background: '#6B1A1A',
+                color: '#FAF7F2',
+                fontWeight: 700,
+                fontSize: '0.78rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                alignSelf: 'flex-start',
+                transition: 'all 0.3s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#4A0F0F';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#6B1A1A';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              Join the Celebration
+              <ArrowRight style={{ width: '14px', height: '14px' }} />
+            </button>
+          </div>
         </div>
 
-        {/* 4 Animated Counter Cards styled as Luxury Gold Medals */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {stats.map((stat, idx) => {
+        {/* Stats row */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '1rem',
+            marginTop: '3.5rem',
+          }}
+          className="stats-grid"
+        >
+          {stats.map((stat) => {
             const Icon = stat.icon;
             return (
               <div
-                key={idx}
-                className="bg-gradient-to-b from-[#3a0508]/90 to-[#200204]/90 backdrop-blur-md rounded-2xl p-6 text-center border-2 border-[#ffd700]/30 hover:border-[#ffd700] transition-all hover:-translate-y-1.5 shadow-[0_15px_35px_rgba(0,0,0,0.6)] group"
+                key={stat.label}
+                style={{
+                  textAlign: 'center',
+                  padding: '2rem 1rem',
+                  borderRadius: '12px',
+                  background: '#FFFFFF',
+                  border: '1px solid rgba(107,26,26,0.08)',
+                  transition: 'all 0.3s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(107,26,26,0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
               >
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#ffd700]/20 to-[#c99738]/10 border border-[#ffd700]/40 mx-auto flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,215,0,0.3)]">
-                  <Icon className="w-7 h-7 text-[#ffd700]" />
+                <div style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '12px',
+                  background: 'rgba(107,26,26,0.06)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 0.75rem',
+                }}>
+                  <Icon style={{ width: '22px', height: '22px', color: '#6B1A1A' }} />
                 </div>
-                <p className="font-cinzel text-3xl sm:text-4xl font-black gold-gradient-text tracking-tight">
-                  {stat.value}
+                <p style={{
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: '2rem',
+                  fontWeight: 700,
+                  color: '#6B1A1A',
+                  lineHeight: 1,
+                  margin: '0',
+                }}>
+                  <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="text-sm font-bold text-white mt-1 uppercase tracking-wider">
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#2C1810', marginTop: '0.35rem' }}>
                   {stat.label}
                 </p>
-                <p className="text-xs text-rose-200/70 font-mono mt-0.5">
+                <p style={{ fontSize: '0.7rem', color: '#8B7355', marginTop: '0.15rem' }}>
                   {stat.sub}
                 </p>
               </div>
             );
           })}
         </div>
-
       </div>
 
+      <style>{`
+        .about-grid { grid-template-columns: 1fr 1fr; }
+        .stats-grid { grid-template-columns: repeat(4, 1fr); }
+        @media (max-width: 1023px) {
+          .about-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 767px) {
+          .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
     </section>
   );
 }

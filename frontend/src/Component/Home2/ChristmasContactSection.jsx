@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Sparkles, CheckCircle2, MessageSquare, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
 
 export default function ChristmasContactSection() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [sent, setSent] = useState(false);
 
   const handleSubmit = (e) => {
@@ -16,206 +11,204 @@ export default function ChristmasContactSection() {
     setSent(true);
   };
 
-  return (
-    <section id="contact" className="py-20 lg:py-28 relative overflow-hidden text-white">
-      
-      {/* Ambient Lights */}
-      <div className="absolute top-1/3 left-0 w-96 h-96 bg-[#c4120c]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#ffd700]/12 rounded-full blur-3xl pointer-events-none" />
+  const inputStyle = {
+    width: '100%',
+    padding: '0.75rem 1rem',
+    borderRadius: '10px',
+    border: '1px solid rgba(107,26,26,0.12)',
+    fontSize: '0.85rem',
+    color: '#2C1810',
+    background: '#FFFFFF',
+    outline: 'none',
+    transition: 'border-color 0.2s',
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
+  };
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#380407] border border-[#ffd700]/50 shadow-md">
-            <Mail className="w-3.5 h-3.5 text-[#ffd700]" />
-            <span className="text-xs uppercase font-bold tracking-widest text-[#ffd700] font-mono">
-              ★ GET IN TOUCH ★
+  const labelStyle = {
+    display: 'block',
+    fontSize: '0.7rem',
+    fontWeight: 700,
+    letterSpacing: '0.12em',
+    textTransform: 'uppercase',
+    color: '#6B1A1A',
+    marginBottom: '0.4rem',
+  };
+
+  const contactItems = [
+    { icon: MapPin, label: 'Arena Location', value: 'Grand Winter Pavilion, Marina Esplanade, Chennai, TN' },
+    { icon: Phone, label: 'Helpline', value: '+91 98765 43210 / +91 44 2828 0000' },
+    { icon: Mail, label: 'Support Email', value: 'christmas@thezar.org' },
+    { icon: Clock, label: 'Operating Hours', value: 'Monday – Sunday: 09:00 AM – 10:00 PM' },
+  ];
+
+  return (
+    <section
+      id="contact"
+      style={{
+        padding: 'clamp(4rem, 8vw, 7rem) 0',
+        background: '#FAF7F2',
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+      }}
+    >
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
+
+        {/* Header */}
+        <div style={{ maxWidth: '560px', marginBottom: '3.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+            <span style={{ width: '40px', height: '1px', background: '#6B1A1A' }} />
+            <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B1A1A' }}>
+              Get In Touch
             </span>
           </div>
-
-          <h2 className="font-cinzel text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-wide">
-            CONNECT WITH <span className="gold-gradient-text">SANTA'S TEAM</span>
+          <h2 style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontSize: 'clamp(2rem, 4vw, 3rem)',
+            fontWeight: 700,
+            color: '#2C1810',
+            lineHeight: 1.15,
+            margin: '0 0 0.75rem',
+          }}>
+            Contact <span style={{ color: '#6B1A1A' }}>Our Team</span>
           </h2>
-
-          <p className="font-christmas text-4xl sm:text-5xl text-amber-200 pt-1 drop-shadow-md">
-            We’d Love to Hear From You
+          <p style={{ fontSize: '1rem', color: '#5C3D2E', lineHeight: 1.7 }}>
+            Have questions regarding bookings, performances, or festival schedules? We'd love to help.
           </p>
-
-          <p className="text-rose-100/90 text-sm sm:text-base max-w-xl mx-auto font-light leading-relaxed">
-            Have questions regarding group bookings, stage performances, food stall rentals, or festival schedules? Drop us a note!
-          </p>
-
-          <div className="w-32 h-0.5 mx-auto bg-gradient-to-r from-transparent via-[#ffd700] to-transparent mt-2" />
         </div>
 
-        {/* 2-Column Split: Contact Info Card + Message Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-5xl mx-auto items-stretch">
-          
-          {/* Left: Info Card (Festive Velvet Crimson Container from Reference Deck) */}
-          <div className="lg:col-span-5 flex flex-col justify-between bg-gradient-to-br from-[#4d070c] via-[#350408] to-[#1c0204] text-white rounded-3xl p-8 border-2 border-[#ffd700]/40 shadow-[0_25px_60px_rgba(0,0,0,0.7)] relative overflow-hidden">
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-cinzel text-2xl font-bold text-white mb-2">
-                  Festival Headquarters
+        <div style={{ display: 'grid', gap: '2rem', maxWidth: '1100px' }} className="contact-grid">
+
+          {/* Info card */}
+          <div
+            style={{
+              padding: '2.5rem',
+              borderRadius: '16px',
+              background: '#6B1A1A',
+              color: '#FAF7F2',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            <div>
+              <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.5rem', fontWeight: 700, margin: '0 0 0.5rem' }}>
+                Festival Headquarters
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: 'rgba(250,247,242,0.75)', lineHeight: 1.6, marginBottom: '2rem' }}>
+                Our concierge desk is open daily throughout December to assist guests statewide.
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                {contactItems.map(({ icon: Icon, label, value }) => (
+                  <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '10px',
+                      background: 'rgba(250,247,242,0.1)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}>
+                      <Icon style={{ width: '18px', height: '18px', color: '#F2C4A0' }} />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#F2C4A0', margin: '0 0 0.15rem' }}>{label}</p>
+                      <p style={{ fontSize: '0.85rem', color: '#FAF7F2', margin: 0, fontWeight: 500 }}>{value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ borderTop: '1px solid rgba(250,247,242,0.15)', paddingTop: '1.25rem', marginTop: '2rem' }}>
+              <p style={{ fontSize: '0.7rem', letterSpacing: '0.1em', color: 'rgba(250,247,242,0.5)', textTransform: 'uppercase', fontWeight: 600 }}>
+                Official THEZAR Festive Desk 2026
+              </p>
+            </div>
+          </div>
+
+          {/* Form */}
+          <div style={{ padding: '2.5rem', borderRadius: '16px', border: '1px solid rgba(107,26,26,0.08)', background: '#FFFFFF' }}>
+            {sent ? (
+              <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(26,107,61,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+                  <CheckCircle2 style={{ width: '28px', height: '28px', color: '#1A6B3D' }} />
+                </div>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.5rem', fontWeight: 700, color: '#2C1810', margin: '0 0 0.5rem' }}>
+                  Message Sent!
                 </h3>
-                <p className="text-xs sm:text-sm text-rose-100/90 leading-relaxed font-light">
-                  Our festive concierge desk is open daily throughout December to assist guests and participants statewide.
+                <p style={{ fontSize: '0.9rem', color: '#5C3D2E', lineHeight: 1.7, maxWidth: '320px', margin: '0 auto' }}>
+                  Thank you, <strong style={{ color: '#6B1A1A' }}>{formData.name}</strong>. We'll reply within 2–4 hours.
                 </p>
+                <button
+                  onClick={() => { setSent(false); setFormData({ name: '', email: '', phone: '', message: '' }); }}
+                  style={{ marginTop: '1rem', padding: '0.6rem 1.5rem', borderRadius: '9999px', background: 'transparent', border: '1px solid rgba(107,26,26,0.2)', color: '#6B1A1A', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer' }}
+                >
+                  Send Another
+                </button>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div>
+                  <label style={labelStyle}>Your Name *</label>
+                  <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Rachel Adams" style={inputStyle} onFocus={(e) => e.currentTarget.style.borderColor = '#6B1A1A'} onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(107,26,26,0.12)'} />
+                </div>
 
-              {/* Info Items */}
-              <div className="space-y-4 pt-2">
-                <div className="flex items-start gap-3.5 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-[#ffd700]/30 flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-[#ffd700]" />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }} className="contact-form-cols">
+                  <div>
+                    <label style={labelStyle}>Email *</label>
+                    <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="rachel@example.com" style={inputStyle} onFocus={(e) => e.currentTarget.style.borderColor = '#6B1A1A'} onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(107,26,26,0.12)'} />
                   </div>
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-[#ffd700] font-mono">Arena Location</p>
-                    <p className="text-sm text-white font-medium">Grand Winter Pavilion, Marina Esplanade, Chennai, TN</p>
+                    <label style={labelStyle}>Phone</label>
+                    <input type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+91 98765 43210" style={inputStyle} onFocus={(e) => e.currentTarget.style.borderColor = '#6B1A1A'} onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(107,26,26,0.12)'} />
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3.5 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-[#ffd700]/30 flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5 text-[#ffd700]" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-[#ffd700] font-mono">Winter Helpline</p>
-                    <p className="text-sm text-white font-medium">+91 98765 43210 / +91 44 2828 0000</p>
-                  </div>
+                <div>
+                  <label style={labelStyle}>Message *</label>
+                  <textarea rows={4} required value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder="Tell us how we can help..." style={{ ...inputStyle, resize: 'none' }} onFocus={(e) => e.currentTarget.style.borderColor = '#6B1A1A'} onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(107,26,26,0.12)'} />
                 </div>
 
-                <div className="flex items-start gap-3.5 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-[#ffd700]/30 flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5 text-[#ffd700]" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-[#ffd700] font-mono">Festive Support Email</p>
-                    <p className="text-sm text-white font-medium">christmas@thezar.org</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-[#ffd700]/30 flex items-center justify-center shrink-0">
-                    <Clock className="w-5 h-5 text-[#ffd700]" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-[#ffd700] font-mono">Operating Hours</p>
-                    <p className="text-sm text-white font-medium">Monday – Sunday: 09:00 AM – 10:00 PM</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Festive Seal */}
-            <div className="pt-6 border-t border-[#ffd700]/20 mt-6 flex items-center gap-2 text-xs font-mono text-amber-200">
-              <Sparkles className="w-4 h-4 text-[#ffd700]" />
-              <span>★ Official THEZAR Festive Desk 2026 ★</span>
-            </div>
+                <button
+                  type="submit"
+                  style={{
+                    padding: '0.85rem',
+                    borderRadius: '9999px',
+                    background: '#6B1A1A',
+                    color: '#FAF7F2',
+                    fontWeight: 700,
+                    fontSize: '0.78rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    transition: 'background 0.2s',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = '#4A0F0F'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = '#6B1A1A'}
+                >
+                  <Send style={{ width: '14px', height: '14px' }} />
+                  Send Message
+                </button>
+              </form>
+            )}
           </div>
-
-          {/* Right: Message Form */}
-          <div className="lg:col-span-7">
-            <div className="bg-gradient-to-br from-[#3d0509]/95 via-[#290306]/95 to-[#160103]/95 backdrop-blur-md rounded-3xl p-6 sm:p-10 border-2 border-[#ffd700]/40 shadow-[0_25px_60px_rgba(0,0,0,0.7)] relative">
-              {sent ? (
-                <div className="py-14 text-center space-y-4 animate-in zoom-in-95 duration-300">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 mx-auto flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.4)]">
-                    <CheckCircle2 className="w-10 h-10 text-emerald-400" />
-                  </div>
-                  <h3 className="font-cinzel text-2xl font-bold text-white">
-                    Message Dispatched to Santa!
-                  </h3>
-                  <p className="text-sm text-rose-100 max-w-sm mx-auto leading-relaxed font-light">
-                    Thank you, <strong className="text-[#ffd700]">{formData.name}</strong>. Our holiday team will review your message and reply back within 2-4 hours.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setSent(false);
-                      setFormData({ name: '', email: '', phone: '', message: '' });
-                    }}
-                    className="mt-4 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-white bg-white/10 hover:bg-white/20 border border-[#ffd700]/40 transition-colors cursor-pointer"
-                  >
-                    Send Another Note
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4 text-left">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#ffd700] mb-1.5 font-mono">
-                      Your Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Rachel Adams"
-                      className="w-full px-4 py-3 rounded-xl bg-black/40 border border-[#ffd700]/30 focus:border-[#ffd700] focus:bg-black/60 text-sm text-white placeholder-rose-200/40 focus:outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#ffd700] mb-1.5 font-mono">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="rachel@example.com"
-                        className="w-full px-4 py-3 rounded-xl bg-black/40 border border-[#ffd700]/30 focus:border-[#ffd700] focus:bg-black/60 text-sm text-white placeholder-rose-200/40 focus:outline-none transition-colors"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#ffd700] mb-1.5 font-mono">
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+91 98765 43210"
-                        className="w-full px-4 py-3 rounded-xl bg-black/40 border border-[#ffd700]/30 focus:border-[#ffd700] focus:bg-black/60 text-sm text-white placeholder-rose-200/40 focus:outline-none transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#ffd700] mb-1.5 font-mono">
-                      Your Message / Inquiry *
-                    </label>
-                    <textarea
-                      rows={4}
-                      required
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Tell us how we can help you celebrate..."
-                      className="w-full px-4 py-3 rounded-xl bg-black/40 border border-[#ffd700]/30 focus:border-[#ffd700] focus:bg-black/60 text-sm text-white placeholder-rose-200/40 focus:outline-none transition-colors resize-none"
-                    />
-                  </div>
-
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      className="w-full py-4 rounded-full text-sm font-bold uppercase tracking-wider text-[#240306] gold-shimmer-btn shadow-lg hover:scale-101 active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-2"
-                    >
-                      <Send className="w-4 h-4 text-[#240306]" />
-                      <span>Send Message to Santa</span>
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
-          </div>
-
         </div>
-
       </div>
 
+      <style>{`
+        .contact-grid { grid-template-columns: 1fr 1.3fr; }
+        @media (max-width: 767px) {
+          .contact-grid { grid-template-columns: 1fr !important; }
+          .contact-form-cols { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }

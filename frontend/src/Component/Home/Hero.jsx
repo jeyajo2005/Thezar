@@ -1,92 +1,365 @@
-import { useEffect, useRef } from 'react';
-import heroStageImg from '../../assets/thezar_hero_stage.png';
-import { ArrowRight, Trophy, Sparkles, MapPin, Calendar } from 'lucide-react';
-import gsap from 'gsap';
+import heroSpeakerImg from '../../assets/Young_woman.png';
+import { Calendar, MapPin, ArrowRight, PlayCircle, Sparkles } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
-export default function Hero({ onOpenRegister, isRevealed = true, onReplayIntro }) {
-  const heroSectionRef = useRef(null);
-  const stageImgRef = useRef(null);
-  const hasAnimatedRef = useRef(false);
+export default function Hero({ onOpenRegister, onReplayIntro, isRevealed = true }) {
+  // Countdown timer to event start (Oct 10, 2026 10:00 AM)
+  const calculateTimeLeft = () => {
+    const target = new Date('2026-10-10T10:00:00+05:30');
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
+    return {
+      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+      mins: Math.floor((diff / (1000 * 60)) % 60),
+      secs: Math.floor((diff / 1000) % 60)
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    if (!isRevealed) {
-      hasAnimatedRef.current = false;
-      return;
-    }
-    if (hasAnimatedRef.current) return;
-    hasAnimatedRef.current = true;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-      // Stage Image slight cinematic settling
-      if (stageImgRef.current) {
-        tl.fromTo(
-          stageImgRef.current,
-          { scale: 1.05, opacity: 0.85 },
-          { scale: 1, opacity: 1, duration: 1.6, ease: 'power2.out' },
-          0
-        );
-      }
-    }, heroSectionRef);
-
-    return () => ctx.revert();
-  }, [isRevealed]);
-
-  const scrollToEvents = (e) => {
-    e.preventDefault();
-    const el = document.getElementById('events');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section
-      ref={heroSectionRef}
       id="home"
-      className="relative w-full overflow-hidden bg-[#0c0204]"
       style={{
-        fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+        background: '#FAF7F2',
+        minHeight: '100vh',
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}
     >
-      {/* 1. Main Stage Hero Visual Container - 100% Full Bleed Edge-to-Edge */}
-      <div className="relative w-full h-[520px] sm:h-[620px] md:h-[720px] lg:h-[820px] xl:h-[90vh] min-h-[500px] overflow-hidden">
-        
-        {/* The Exact User-Provided Thezar Stage Image - 100% Full Width & Height with Zero Side Gaps */}
-        <img
-          ref={stageImgRef}
-          src={heroStageImg}
-          alt="THEZAR Events - Tirunelveli Talent Showcase Championship"
-          className="w-full h-full object-cover object-center block will-change-transform select-none"
-        />
+      {/* Decorative ambient gradients */}
+      <div style={{
+        position: 'absolute',
+        top: '-15%',
+        right: '-5%',
+        width: '50vw',
+        height: '50vw',
+        maxWidth: '800px',
+        maxHeight: '800px',
+        background: 'radial-gradient(circle, rgba(107,26,26,0.06) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+        filter: 'blur(40px)',
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '-10%',
+        left: '-10%',
+        width: '40vw',
+        height: '40vw',
+        maxWidth: '600px',
+        maxHeight: '600px',
+        background: 'radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+        filter: 'blur(40px)',
+      }} />
 
-        {/* Subtle Ambient Vignette on bottom for mobile readability only */}
-        <div className="absolute inset-x-0 bottom-0 h-32 pointer-events-none bg-gradient-to-t from-[#0c0204]/90 to-transparent sm:hidden" />
+      <div
+        style={{
+          maxWidth: '1320px',
+          margin: '0 auto',
+          padding: '7rem 1.5rem 4rem',
+          width: '100%',
+          display: 'grid',
+          gridTemplateColumns: '1.1fr 0.9fr',
+          gap: '4rem',
+          alignItems: 'center',
+          position: 'relative',
+          zIndex: 10,
+          opacity: isRevealed ? 1 : 0,
+          transform: isRevealed ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'opacity 1s ease, transform 1s ease',
+        }}
+        className="hero-grid"
+      >
+        {/* LEFT: Text content */}
+        <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          
+          {/* Eyebrow label */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            marginBottom: '1.5rem',
+            padding: '0.4rem 1rem',
+            background: 'rgba(107,26,26,0.05)',
+            border: '1px solid rgba(107,26,26,0.1)',
+            borderRadius: '9999px',
+          }}>
+            <Sparkles style={{ width: '14px', height: '14px', color: '#6B1A1A' }} />
+            <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B1A1A' }}>
+              Tamil Nadu's Grandest Stage
+            </span>
+          </div>
 
-          {/* Invisible Clickable Hotspot directly over the artwork's ORDER NOW button */}
-          <button
-            onClick={onOpenRegister}
-            className="absolute left-[18%] sm:left-[27%] bottom-[12%] sm:bottom-[16%] w-[120px] sm:w-[155px] h-[36px] sm:h-[44px] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity duration-200 cursor-pointer z-30"
-            title="Register / Order Now"
-            aria-label="Register Now"
-          />
+          {/* Main heading */}
+          <h1 style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontSize: 'clamp(3.5rem, 6vw, 6rem)',
+            fontWeight: 800,
+            lineHeight: 1.05,
+            color: '#1A1A1A',
+            margin: '0 0 1.25rem',
+            letterSpacing: '-0.02em',
+          }}>
+            The Taste<br />
+            <span style={{ fontStyle: 'italic', color: '#6B1A1A', fontWeight: 700 }}>of Tamil</span><br />
+            Nadu.
+          </h1>
 
-          {/* Replay Intro Button (Top Right) */}
-          {onReplayIntro && (
+          {/* Subtitle */}
+          <p style={{
+            fontSize: 'clamp(1rem, 2vw, 1.15rem)',
+            color: '#4A4A4A',
+            lineHeight: 1.7,
+            margin: '0 0 2.5rem',
+            maxWidth: '520px',
+            fontWeight: 400,
+          }}>
+            Statewide Culinary Championship — 38 Districts, One Grand Stage. Unleashing extraordinary cooking talent across the cultural heart of India.
+          </p>
+
+          {/* Premium Countdown */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2rem',
+            background: '#FFFFFF',
+            padding: '1.25rem 2rem',
+            borderRadius: '16px',
+            border: '1px solid rgba(107,26,26,0.08)',
+            boxShadow: '0 10px 40px rgba(107,26,26,0.05)',
+            marginBottom: '2.5rem',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(107,26,26,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Calendar style={{ width: '20px', height: '20px', color: '#6B1A1A' }} />
+              </div>
+              <div>
+                <span style={{ display: 'block', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#8B7355', marginBottom: '0.2rem' }}>
+                  Countdown to Oct 10
+                </span>
+                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'baseline' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.2rem' }}>
+                    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', fontWeight: 700, color: '#2C1810' }}>{String(timeLeft.days).padStart(2, '0')}</span>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#6B1A1A' }}>d</span>
+                  </div>
+                  <span style={{ color: 'rgba(107,26,26,0.2)' }}>:</span>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.2rem' }}>
+                    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', fontWeight: 700, color: '#2C1810' }}>{String(timeLeft.hours).padStart(2, '0')}</span>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#6B1A1A' }}>h</span>
+                  </div>
+                  <span style={{ color: 'rgba(107,26,26,0.2)' }}>:</span>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.2rem' }}>
+                    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', fontWeight: 700, color: '#2C1810' }}>{String(timeLeft.mins).padStart(2, '0')}</span>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#6B1A1A' }}>m</span>
+                  </div>
+                  <span style={{ color: 'rgba(107,26,26,0.2)' }}>:</span>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.2rem' }}>
+                    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', fontWeight: 700, color: '#2C1810' }}>{String(timeLeft.secs).padStart(2, '0')}</span>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#6B1A1A' }}>s</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <button
-              onClick={onReplayIntro}
-              title="Replay Theater Intro"
-              className="absolute top-4 right-4 sm:top-6 sm:right-10 z-20 px-3.5 py-1.5 rounded-full bg-black/60 hover:bg-black/85 border border-white/20 hover:border-amber-400/70 backdrop-blur-md text-[11px] font-semibold text-white/90 uppercase tracking-wider flex items-center gap-1.5 transition-all duration-200 cursor-pointer shadow-xl hover:scale-105 active:scale-95"
+              onClick={onOpenRegister}
+              className="premium-btn"
+              style={{
+                padding: '1rem 2.5rem',
+                borderRadius: '9999px',
+                background: '#6B1A1A',
+                color: '#FAF7F2',
+                fontWeight: 700,
+                fontSize: '0.85rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 8px 25px rgba(107,26,26,0.25)',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#4A0F0F'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(107,26,26,0.35)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = '#6B1A1A'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(107,26,26,0.25)'; }}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span className="hidden sm:inline">Replay Intro</span>
+              <span>Register Now</span>
+              <ArrowRight style={{ width: '16px', height: '16px' }} />
             </button>
-          )}
+            
+            {onReplayIntro && (
+              <button
+                onClick={onReplayIntro}
+                style={{
+                  padding: '1rem 2rem',
+                  borderRadius: '9999px',
+                  background: 'transparent',
+                  color: '#6B1A1A',
+                  fontWeight: 700,
+                  fontSize: '0.85rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  border: '1px solid rgba(107,26,26,0.2)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'all 0.3s ease',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(107,26,26,0.04)'; e.currentTarget.style.borderColor = '#6B1A1A'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(107,26,26,0.2)'; }}
+              >
+                <PlayCircle style={{ width: '18px', height: '18px' }} />
+                <span>Replay Intro</span>
+              </button>
+            )}
+          </div>
         </div>
 
-      {/* 3. Smooth Bottom Divider Leading Gracefully into the Rest of the Page */}
-      <div className="w-full h-8 sm:h-12 bg-gradient-to-b from-[#0c0204] to-white pointer-events-none" />
+        {/* RIGHT: Editorial image frame */}
+        <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          
+          {/* Subtle Background Circle */}
+          <div style={{
+            position: 'absolute',
+            width: '80%',
+            aspectRatio: '1/1',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, rgba(107,26,26,0.08) 0%, transparent 100%)',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 0,
+          }} />
+
+          {/* Premium Image Container */}
+          <div style={{
+            width: '100%',
+            maxWidth: '480px',
+            aspectRatio: '3/4',
+            borderRadius: '24px',
+            overflow: 'hidden',
+            boxShadow: '0 30px 80px rgba(107,26,26,0.35), 0 0 40px rgba(107,26,26,0.2)',
+            position: 'relative',
+            zIndex: 1,
+            border: '4px solid #FFFFFF',
+            transform: 'rotate(-2deg)',
+            transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.transform = 'rotate(0deg) scale(1.03)';
+            e.currentTarget.style.boxShadow = '0 40px 100px rgba(107,26,26,0.45), 0 0 60px rgba(107,26,26,0.3)';
+            e.currentTarget.style.borderColor = '#FAF7F2';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.transform = 'rotate(-2deg) scale(1)';
+            e.currentTarget.style.boxShadow = '0 30px 80px rgba(107,26,26,0.35), 0 0 40px rgba(107,26,26,0.2)';
+            e.currentTarget.style.borderColor = '#FFFFFF';
+          }}
+          >
+            <img
+              src={heroSpeakerImg}
+              alt="TheZar Cooking Championship"
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover', 
+                objectPosition: 'center 20%',
+                filter: 'brightness(0.75) contrast(1.15) saturate(1.1)',
+                transition: 'filter 0.5s ease'
+              }}
+            />
+            {/* Elegant vignette and overlay gradient */}
+            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at center, transparent 40%, rgba(26,10,10,0.5) 100%)', mixBlendMode: 'multiply' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(44,24,16,0.85) 100%)' }} />
+          </div>
+
+          {/* Floating Badges */}
+          <div style={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '-5%',
+            zIndex: 10,
+            background: '#FFFFFF',
+            borderRadius: '16px',
+            padding: '1rem 1.5rem',
+            boxShadow: '0 12px 40px rgba(107,26,26,0.12)',
+            border: '1px solid rgba(107,26,26,0.05)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            animation: 'floatBadge 6s ease-in-out infinite',
+          }}>
+            <div style={{ width: '3px', height: '32px', background: '#6B1A1A', borderRadius: '4px' }} />
+            <div>
+              <span style={{ fontSize: '1.5rem', fontWeight: 800, color: '#2C1810', fontFamily: "'Playfair Display', Georgia, serif", display: 'block', lineHeight: 1 }}>38</span>
+              <span style={{ fontSize: '0.65rem', color: '#8B7355', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Districts</span>
+            </div>
+          </div>
+          
+          <div style={{
+            position: 'absolute',
+            top: '15%',
+            right: '-5%',
+            zIndex: 10,
+            background: '#6B1A1A',
+            borderRadius: '9999px',
+            padding: '0.6rem 1.25rem',
+            boxShadow: '0 12px 30px rgba(107,26,26,0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            animation: 'floatBadge 5s ease-in-out infinite 1s',
+          }}>
+            <MapPin style={{ width: '14px', height: '14px', color: '#F2C4A0' }} />
+            <span style={{ fontSize: '0.65rem', color: '#FAF7F2', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Tirunelveli Hub</span>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes floatBadge {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+          100% { transform: translateY(0px); }
+        }
+        @media (max-width: 991px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            text-align: center !important;
+            gap: 3rem !important;
+          }
+          .hero-grid > div:first-child {
+            align-items: center !important;
+          }
+          .hero-grid > div:first-child p {
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .hero-grid > div:first-child .premium-btn {
+            margin: 0 auto;
+          }
+        }
+      `}</style>
     </section>
   );
 }

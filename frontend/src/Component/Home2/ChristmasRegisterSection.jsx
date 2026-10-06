@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Gift, Sparkles, CheckCircle2, User, Mail, Phone, Users, Calendar, ArrowRight } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { User, Mail, Phone, Users, Calendar, ArrowRight, CheckCircle2 } from 'lucide-react';
 import treeImg from '../../assets/xmas_tree.jpg';
 
 export default function ChristmasRegisterSection() {
@@ -16,243 +15,295 @@ export default function ChristmasRegisterSection() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.fullName || !formData.email) return;
-
-    try {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#ffd700', '#c4120c', '#10b981', '#ffffff'],
-      });
-    } catch {
-      // ignore
-    }
-
     setSubmitted(true);
   };
 
+  const inputStyle = {
+    width: '100%',
+    padding: '0.75rem 1rem 0.75rem 2.75rem',
+    borderRadius: '10px',
+    border: '1px solid rgba(107,26,26,0.12)',
+    fontSize: '0.85rem',
+    color: '#2C1810',
+    background: '#FFFFFF',
+    outline: 'none',
+    transition: 'border-color 0.2s',
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
+  };
+
+  const labelStyle = {
+    display: 'block',
+    fontSize: '0.7rem',
+    fontWeight: 700,
+    letterSpacing: '0.12em',
+    textTransform: 'uppercase',
+    color: '#6B1A1A',
+    marginBottom: '0.4rem',
+  };
+
+  const iconStyle = {
+    width: '16px',
+    height: '16px',
+    color: '#8B7355',
+    position: 'absolute',
+    left: '0.85rem',
+    top: '50%',
+    transform: 'translateY(-50%)',
+  };
+
   return (
-    <section id="register" className="py-20 lg:py-28 relative overflow-hidden text-white">
-      
-      {/* Background Atmosphere */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#c4120c]/12 rounded-full blur-3xl pointer-events-none" />
+    <section
+      id="register"
+      style={{
+        padding: 'clamp(4rem, 8vw, 7rem) 0',
+        background: '#FFFFFF',
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+      }}
+    >
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#380407] border border-[#ffd700]/50 shadow-md">
-            <Gift className="w-3.5 h-3.5 text-[#ffd700]" />
-            <span className="text-xs uppercase font-bold tracking-widest text-[#ffd700] font-mono">
-              ★ SECURE YOUR INVITATION ★
+        {/* Header */}
+        <div style={{ textAlign: 'center', maxWidth: '560px', margin: '0 auto 3.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+            <span style={{ width: '40px', height: '1px', background: '#6B1A1A' }} />
+            <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B1A1A' }}>
+              Secure Your Spot
             </span>
+            <span style={{ width: '40px', height: '1px', background: '#6B1A1A' }} />
           </div>
-
-          <h2 className="font-cinzel text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-wide">
-            CHRISTMAS PASS <span className="gold-gradient-text">REGISTRATION</span>
+          <h2 style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontSize: 'clamp(2rem, 4vw, 3rem)',
+            fontWeight: 700,
+            color: '#2C1810',
+            lineHeight: 1.15,
+            margin: '0 0 0.75rem',
+          }}>
+            Christmas Pass <span style={{ color: '#6B1A1A' }}>Registration</span>
           </h2>
-
-          <p className="font-christmas text-4xl sm:text-5xl text-amber-200 pt-1 drop-shadow-md">
-            A Season of Magic Awaits You
+          <p style={{ fontSize: '1rem', color: '#5C3D2E', lineHeight: 1.7 }}>
+            Reserve your entry passes for our signature celebrations. Limited passes per session.
           </p>
-
-          <p className="text-rose-100/90 text-sm sm:text-base max-w-xl mx-auto font-light leading-relaxed">
-            Reserve your entry passes for our signature Christmas celebrations, concerts, and winter markets. Limited passes per session.
-          </p>
-
-          <div className="w-32 h-0.5 mx-auto bg-gradient-to-r from-transparent via-[#ffd700] to-transparent mt-2" />
         </div>
 
-        {/* 2-Column Container: Form + 3D Gift Showcase */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center max-w-5xl mx-auto">
-          
-          {/* LEFT: Registration Form */}
-          <div className="lg:col-span-7">
-            <div className="bg-gradient-to-br from-[#3d0509]/95 via-[#290306]/95 to-[#160103]/95 backdrop-blur-md rounded-3xl p-6 sm:p-10 border-2 border-[#ffd700]/40 shadow-[0_25px_60px_rgba(0,0,0,0.7)] relative">
-              
-              {submitted ? (
-                <div className="py-12 text-center space-y-4 animate-in zoom-in-95 duration-300">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 mx-auto flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.4)]">
-                    <CheckCircle2 className="w-10 h-10 text-emerald-400" />
-                  </div>
-                  <h3 className="font-cinzel text-2xl font-bold text-white">
-                    Pass Reserved Successfully!
-                  </h3>
-                  <p className="text-sm text-rose-100 max-w-md mx-auto leading-relaxed font-light">
-                    Thank you, <strong className="text-[#ffd700]">{formData.fullName}</strong>! Your Christmas pass for <strong className="text-white">{formData.event}</strong> has been registered. An official entry confirmation and QR ticket has been sent to {formData.email}.
-                  </p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="mt-4 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-white bg-white/10 hover:bg-white/20 border border-[#ffd700]/40 transition-colors cursor-pointer"
-                  >
-                    Register Another Guest
-                  </button>
+        <div style={{ display: 'grid', gap: '2.5rem', maxWidth: '1000px', margin: '0 auto' }} className="register-grid">
+
+          {/* Form */}
+          <div
+            style={{
+              padding: '2.5rem',
+              borderRadius: '16px',
+              border: '1px solid rgba(107,26,26,0.08)',
+              background: '#FAF7F2',
+            }}
+          >
+            {submitted ? (
+              <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+                <div style={{
+                  width: '56px',
+                  height: '56px',
+                  borderRadius: '50%',
+                  background: 'rgba(26,107,61,0.08)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem',
+                }}>
+                  <CheckCircle2 style={{ width: '28px', height: '28px', color: '#1A6B3D' }} />
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4 text-left">
-                  
-                  {/* Full Name */}
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.5rem', fontWeight: 700, color: '#2C1810', margin: '0 0 0.5rem' }}>
+                  Pass Reserved!
+                </h3>
+                <p style={{ fontSize: '0.9rem', color: '#5C3D2E', lineHeight: 1.7, maxWidth: '360px', margin: '0 auto' }}>
+                  Thank you, <strong style={{ color: '#6B1A1A' }}>{formData.fullName}</strong>. A confirmation has been sent to {formData.email}.
+                </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  style={{
+                    marginTop: '1.25rem',
+                    padding: '0.6rem 1.5rem',
+                    borderRadius: '9999px',
+                    background: 'transparent',
+                    border: '1px solid rgba(107,26,26,0.2)',
+                    color: '#6B1A1A',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Register Another
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div>
+                  <label style={labelStyle}>Full Name *</label>
+                  <div style={{ position: 'relative' }}>
+                    <User style={iconStyle} />
+                    <input
+                      type="text"
+                      required
+                      value={formData.fullName}
+                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      placeholder="Enter your name"
+                      style={inputStyle}
+                      onFocus={(e) => e.currentTarget.style.borderColor = '#6B1A1A'}
+                      onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(107,26,26,0.12)'}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }} className="form-two-col">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#ffd700] mb-1.5 font-mono">
-                      Full Name *
-                    </label>
-                    <div className="relative">
-                      <User className="w-4 h-4 text-rose-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <label style={labelStyle}>Email *</label>
+                    <div style={{ position: 'relative' }}>
+                      <Mail style={iconStyle} />
                       <input
-                        type="text"
+                        type="email"
                         required
-                        value={formData.fullName}
-                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                        placeholder="Enter your name"
-                        className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/40 border border-[#ffd700]/30 focus:border-[#ffd700] focus:bg-black/60 text-sm text-white placeholder-rose-200/40 focus:outline-none transition-colors"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="name@example.com"
+                        style={inputStyle}
+                        onFocus={(e) => e.currentTarget.style.borderColor = '#6B1A1A'}
+                        onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(107,26,26,0.12)'}
                       />
                     </div>
                   </div>
-
-                  {/* Email & Phone Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#ffd700] mb-1.5 font-mono">
-                        Email Address *
-                      </label>
-                      <div className="relative">
-                        <Mail className="w-4 h-4 text-rose-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="name@example.com"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/40 border border-[#ffd700]/30 focus:border-[#ffd700] focus:bg-black/60 text-sm text-white placeholder-rose-200/40 focus:outline-none transition-colors"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#ffd700] mb-1.5 font-mono">
-                        Phone Number *
-                      </label>
-                      <div className="relative">
-                        <Phone className="w-4 h-4 text-rose-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                        <input
-                          type="tel"
-                          required
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="+91 98765 43210"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/40 border border-[#ffd700]/30 focus:border-[#ffd700] focus:bg-black/60 text-sm text-white placeholder-rose-200/40 focus:outline-none transition-colors"
-                        />
-                      </div>
+                  <div>
+                    <label style={labelStyle}>Phone *</label>
+                    <div style={{ position: 'relative' }}>
+                      <Phone style={iconStyle} />
+                      <input
+                        type="tel"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="+91 98765 43210"
+                        style={inputStyle}
+                        onFocus={(e) => e.currentTarget.style.borderColor = '#6B1A1A'}
+                        onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(107,26,26,0.12)'}
+                      />
                     </div>
                   </div>
-
-                  {/* Number of Guests & Event Selection */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#ffd700] mb-1.5 font-mono">
-                        Number of Guests
-                      </label>
-                      <div className="relative">
-                        <Users className="w-4 h-4 text-rose-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                        <select
-                          value={formData.guests}
-                          onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#290306] border border-[#ffd700]/30 focus:border-[#ffd700] text-sm text-white focus:outline-none transition-colors cursor-pointer appearance-none"
-                        >
-                          <option value="1">1 Person (Single)</option>
-                          <option value="2">2 Persons (Couple)</option>
-                          <option value="3">3 - 4 Persons (Family)</option>
-                          <option value="5+">5+ Persons (Group)</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#ffd700] mb-1.5 font-mono">
-                        Choose Event *
-                      </label>
-                      <div className="relative">
-                        <Calendar className="w-4 h-4 text-rose-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                        <select
-                          value={formData.event}
-                          onChange={(e) => setFormData({ ...formData, event: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#290306] border border-[#ffd700]/30 focus:border-[#ffd700] text-sm text-white focus:outline-none transition-colors cursor-pointer appearance-none truncate"
-                        >
-                          <option value="Christmas Eve Celebration (Dec 24)">Christmas Eve Celebration (Dec 24)</option>
-                          <option value="Santa Meet & Greet (Dec 25)">Santa Meet & Greet (Dec 25)</option>
-                          <option value="Winter Wonderland (Dec 26)">Winter Wonderland (Dec 26)</option>
-                          <option value="Christmas Market (Dec 27-29)">Christmas Market (Dec 27-29)</option>
-                          <option value="New Year Grand Celebration (Dec 31)">New Year Grand Celebration (Dec 31)</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Submit Button */}
-                  <div className="pt-3">
-                    <button
-                      type="submit"
-                      className="w-full py-4 rounded-full text-sm font-bold uppercase tracking-wider text-[#240306] gold-shimmer-btn shadow-lg hover:scale-101 active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-2 group"
-                    >
-                      <Gift className="w-4 h-4 text-[#240306] group-hover:rotate-12 transition-transform" />
-                      <span>Confirm Christmas Pass</span>
-                      <ArrowRight className="w-4 h-4 text-[#240306] group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-
-                </form>
-              )}
-
-            </div>
-          </div>
-
-          {/* RIGHT: 3D Tree & Gift Pile Showcase Display */}
-          <div className="lg:col-span-5 text-center space-y-6">
-            <div className="bg-gradient-to-br from-[#3d0509]/95 via-[#290306]/95 to-[#160103]/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 border-2 border-[#ffd700]/40 shadow-[0_25px_60px_rgba(0,0,0,0.7)] relative overflow-hidden group hover:border-[#ffd700] transition-all">
-              
-              {/* Corner Ribbon Badge */}
-              <div className="absolute top-4 right-4 z-20 px-3.5 py-1 rounded-full bg-[#ffd700] text-[#240306] text-xs font-bold uppercase font-mono flex items-center gap-1.5 shadow-md">
-                <Sparkles className="w-3.5 h-3.5 text-[#240306]" />
-                VIP Hamper
-              </div>
-
-              {/* 3D Render Image of Luxury Christmas Tree with Mountains of Gifts */}
-              <div className="relative h-64 sm:h-72 rounded-2xl overflow-hidden mb-5 shadow-2xl border border-[#ffd700]/30">
-                <img
-                  src={treeImg}
-                  alt="Decorated Christmas Tree with Gift Boxes"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#160103] via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs text-[#ffd700] font-mono">
-                  <span>Grand Gift Collection</span>
-                  <span className="bg-black/75 px-2.5 py-0.5 rounded border border-[#ffd700]/40">
-                    Free with Pass
-                  </span>
                 </div>
-              </div>
 
-              <div className="space-y-2 mt-2">
-                <h4 className="font-cinzel text-xl font-bold text-white">
-                  Complimentary Welcome Hamper
-                </h4>
-                <p className="text-xs text-rose-100/80 leading-relaxed font-light">
-                  Every registered pass includes a handcrafted Christmas souvenir, holiday treat voucher, and priority access to Santa's Toy Workshop.
-                </p>
-              </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }} className="form-two-col">
+                  <div>
+                    <label style={labelStyle}>Guests</label>
+                    <div style={{ position: 'relative' }}>
+                      <Users style={iconStyle} />
+                      <select
+                        value={formData.guests}
+                        onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
+                        style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
+                      >
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Persons</option>
+                        <option value="3">3 – 4 Persons</option>
+                        <option value="5+">5+ Persons</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Event *</label>
+                    <div style={{ position: 'relative' }}>
+                      <Calendar style={iconStyle} />
+                      <select
+                        value={formData.event}
+                        onChange={(e) => setFormData({ ...formData, event: e.target.value })}
+                        style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
+                      >
+                        <option>Christmas Eve Celebration (Dec 24)</option>
+                        <option>Santa Meet & Greet (Dec 25)</option>
+                        <option>Winter Wonderland (Dec 26)</option>
+                        <option>Christmas Market (Dec 27-29)</option>
+                        <option>New Year Grand Celebration (Dec 31)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
 
-              <div className="pt-3 flex items-center justify-center gap-2 text-xs font-mono text-[#ffd700] font-bold">
-                <Sparkles className="w-3.5 h-3.5 text-[#ffd700]" />
-                <span>★ Limited Free Souvenirs Available ★</span>
-              </div>
-
-            </div>
+                <button
+                  type="submit"
+                  style={{
+                    marginTop: '0.5rem',
+                    padding: '0.85rem',
+                    borderRadius: '9999px',
+                    background: '#6B1A1A',
+                    color: '#FAF7F2',
+                    fontWeight: 700,
+                    fontSize: '0.78rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    transition: 'background 0.2s',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = '#4A0F0F'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = '#6B1A1A'}
+                >
+                  Confirm Pass
+                  <ArrowRight style={{ width: '14px', height: '14px' }} />
+                </button>
+              </form>
+            )}
           </div>
 
+          {/* Side card */}
+          <div style={{
+            borderRadius: '16px',
+            overflow: 'hidden',
+            border: '1px solid rgba(107,26,26,0.08)',
+            background: '#FFFFFF',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+              <img src={treeImg} alt="Christmas Tree" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(44,24,16,0.8) 100%)' }} />
+              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem' }}>
+                <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)' }}>Grand Gift Collection</span>
+                <p style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.1rem', fontWeight: 600, color: '#FFFFFF', marginTop: '0.15rem' }}>Free with Pass</p>
+              </div>
+            </div>
+            <div style={{ padding: '1.5rem', flex: 1 }}>
+              <h4 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.15rem', fontWeight: 700, color: '#2C1810', margin: '0 0 0.5rem' }}>
+                Welcome Hamper
+              </h4>
+              <p style={{ fontSize: '0.82rem', color: '#8B7355', lineHeight: 1.6 }}>
+                Every registered pass includes a handcrafted Christmas souvenir, holiday treat voucher, and priority access to Santa's Toy Workshop.
+              </p>
+              <div style={{
+                marginTop: '1rem',
+                padding: '0.75rem 1rem',
+                borderRadius: '10px',
+                background: 'rgba(107,26,26,0.04)',
+                fontSize: '0.7rem',
+                fontWeight: 600,
+                color: '#6B1A1A',
+                textAlign: 'center',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+              }}>
+                Limited Souvenirs Available
+              </div>
+            </div>
+          </div>
         </div>
-
       </div>
 
+      <style>{`
+        .register-grid { grid-template-columns: 1.3fr 1fr; }
+        @media (max-width: 767px) {
+          .register-grid { grid-template-columns: 1fr !important; }
+          .form-two-col { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }

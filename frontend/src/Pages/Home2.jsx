@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import ChristmasSnowCanvas from '../Component/Home2/ChristmasSnowCanvas';
 import ChristmasNavbar from '../Component/Home2/ChristmasNavbar';
 import ChristmasHero from '../Component/Home2/ChristmasHero';
 import ChristmasAboutSection from '../Component/Home2/ChristmasAboutSection';
@@ -14,18 +13,7 @@ export default function Home2() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#400508] via-[#2d0305] to-[#180103] text-white flex flex-col font-sans selection:bg-[#ffd700] selection:text-[#380407] relative overflow-x-hidden">
-      
-      {/* 00. Continuous Falling Snow Particle Canvas */}
-      <ChristmasSnowCanvas />
-
-      {/* Ambient Bokeh and Warm Glow Lights in Background */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[700px] h-[700px] bg-[#a8141b]/15 rounded-full blur-[140px]" />
-        <div className="absolute top-1/3 right-10 w-[600px] h-[600px] bg-[#ffd700]/10 rounded-full blur-[160px]" />
-        <div className="absolute top-2/3 left-10 w-[650px] h-[650px] bg-[#c4120c]/12 rounded-full blur-[150px]" />
-        <div className="absolute bottom-10 right-1/4 w-[600px] h-[600px] bg-[#ffd700]/8 rounded-full blur-[140px]" />
-      </div>
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#c4120c] selection:text-white relative overflow-x-hidden">
 
       {/* 01. Glassmorphic Christmas Sticky Navbar */}
       <ChristmasNavbar onOpenRegister={() => setIsRegisterOpen(true)} />

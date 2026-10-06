@@ -1,166 +1,265 @@
 import { useState, useEffect } from 'react';
-import { Sparkles, Menu, X, Gift, Volume2, VolumeX, Snowflake } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
+
+const navLinks = [
+  { name: 'Home', href: '#hero' },
+  { name: 'About', href: '#about' },
+  { name: 'Events', href: '#events' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Register', href: '#register' },
+  { name: 'Contact', href: '#contact' },
+];
 
 export default function ChristmasNavbar({ onOpenRegister }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Simple Synthesizer / Audio Chime for Festive Feel
-  const toggleFestiveChimes = () => {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-      const ctx = new AudioContext();
-
-      // Play soft celestial Christmas chime notes (Jingle bell frequencies: E5, G5, C6)
-      const notes = [659.25, 783.99, 1046.5];
-      notes.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.15);
-        gain.gain.setValueAtTime(0.08, ctx.currentTime + idx * 0.15);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.15 + 0.6);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(ctx.currentTime + idx * 0.15);
-        osc.stop(ctx.currentTime + idx * 0.15 + 0.6);
-      });
-      setIsAudioPlaying(!isAudioPlaying);
-    } catch {
-      setIsAudioPlaying(!isAudioPlaying);
-    }
-  };
-
-  const navLinks = [
-    { name: 'Home', href: '#hero' },
-    { name: 'The Spirit', href: '#about' },
-    { name: 'Festive Events', href: '#events' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Register', href: '#register' },
-    { name: 'Contact', href: '#contact' },
-  ];
-
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-[#1e0204]/95 backdrop-blur-xl py-3 shadow-[0_6px_35px_rgba(0,0,0,0.7)] border-b border-[#ffd700]/30'
-          : 'bg-[#2a0305]/80 backdrop-blur-md py-4 border-b border-[#ffd700]/20'
-      }`}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        transition: 'all 0.35s cubic-bezier(.4,0,.2,1)',
+        backgroundColor: scrolled ? 'rgba(255,255,255,0.97)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(107,26,26,0.08)' : 'none',
+        boxShadow: scrolled ? '0 1px 24px rgba(107,26,26,0.06)' : 'none',
+      }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        
-        {/* Brand Logo with Christmas Theme */}
-        <a href="#hero" className="flex items-center gap-3 group text-decoration-none">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#ffd700] via-[#c99738] to-[#8a641a] p-0.5 shadow-md shadow-amber-900/40 group-hover:scale-105 transition-transform flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#380407] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-[#ffd700] animate-pulse" />
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-cinzel text-lg sm:text-xl font-bold tracking-wider gold-gradient-text">
-                THEZAR
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#ffd700] px-1.5 py-0.5 rounded bg-red-950/80 border border-[#ffd700]/40 font-mono">
-                XMAS 2026
-              </span>
-            </div>
-            <p className="text-[11px] font-christmas text-amber-200 tracking-wider -mt-1 hidden sm:block">
-              Winter Wonderland Carnival
-            </p>
-          </div>
-        </a>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-7">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-semibold text-rose-100 hover:text-[#ffd700] transition-colors relative py-1 text-decoration-none group"
+          {/* Brand */}
+          <a href="#hero" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontWeight: 800,
+              fontSize: '1.35rem',
+              letterSpacing: '0.12em',
+              color: '#6B1A1A',
+            }}>
+              THEZAR
+            </span>
+            <span style={{
+              fontSize: '0.6rem',
+              fontWeight: 700,
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              color: '#6B1A1A',
+              border: '1.5px solid rgba(107,26,26,0.3)',
+              padding: '0.2rem 0.5rem',
+              borderRadius: '4px',
+            }}>
+              2026
+            </span>
+          </a>
+
+          {/* Desktop Nav */}
+          <nav style={{ display: 'none', alignItems: 'center', gap: '2rem' }} className="thezar-desktop-nav">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                style={{
+                  textDecoration: 'none',
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                  color: '#2C1810',
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  position: 'relative',
+                  paddingBottom: '0.25rem',
+                  transition: 'color 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#6B1A1A';
+                  e.currentTarget.querySelector('.nav-line').style.width = '100%';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#2C1810';
+                  e.currentTarget.querySelector('.nav-line').style.width = '0';
+                }}
+              >
+                {link.name}
+                <span
+                  className="nav-line"
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: '0',
+                    height: '1.5px',
+                    backgroundColor: '#6B1A1A',
+                    transition: 'width 0.25s ease',
+                    borderRadius: '999px',
+                  }}
+                />
+              </a>
+            ))}
+          </nav>
+
+          {/* Desktop CTA */}
+          <div style={{ display: 'none', alignItems: 'center', gap: '0.75rem' }} className="thezar-desktop-cta">
+            <button
+              onClick={onOpenRegister}
+              style={{
+                padding: '0.6rem 1.6rem',
+                borderRadius: '9999px',
+                background: '#6B1A1A',
+                color: '#FAF7F2',
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 700,
+                fontSize: '0.75rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                transition: 'all 0.25s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#4A0F0F';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(107,26,26,0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#6B1A1A';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
             >
-              <span>{link.name}</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#ffd700] to-[#f59e0b] group-hover:w-full transition-all duration-300 rounded-full" />
-            </a>
-          ))}
-        </nav>
+              <span>Register Now</span>
+              <ArrowRight style={{ width: '14px', height: '14px' }} />
+            </button>
+          </div>
 
-        {/* Right CTA Actions */}
-        <div className="flex items-center gap-3">
-          
-          {/* Festive Audio Bell Button */}
-          <button
-            onClick={toggleFestiveChimes}
-            title="Play Festive Jingle Chime"
-            className="p-2.5 rounded-full bg-red-950/80 hover:bg-red-900 border border-[#ffd700]/30 text-[#ffd700] transition-all cursor-pointer shadow-sm hover:scale-105"
-          >
-            {isAudioPlaying ? (
-              <Volume2 className="w-4 h-4 text-[#ffd700] animate-bounce" />
-            ) : (
-              <VolumeX className="w-4 h-4 text-amber-200/60" />
-            )}
-          </button>
-
-          {/* Glowing Register CTA */}
-          <button
-            onClick={onOpenRegister}
-            className="hidden sm:inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-[#2a0407] transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.6)] hover:shadow-[0_0_35px_rgba(212,175,55,0.9)] hover:scale-105 active:scale-95 cursor-pointer gold-shimmer-btn"
-          >
-            <Gift className="w-4 h-4 text-[#2a0407]" />
-            <span>Register Now</span>
-          </button>
-
-          {/* Mobile Menu Hamburger */}
+          {/* Mobile hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl bg-white/10 text-white hover:bg-white/20 transition-colors"
+            className="thezar-mobile-btn"
+            style={{
+              display: 'none',
+              width: '42px',
+              height: '42px',
+              borderRadius: '12px',
+              background: 'rgba(107,26,26,0.06)',
+              border: '1px solid rgba(107,26,26,0.12)',
+              color: '#6B1A1A',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+            aria-label="Toggle Menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen
+              ? <X style={{ width: '20px', height: '20px' }} />
+              : <Menu style={{ width: '20px', height: '20px' }} />
+            }
           </button>
         </div>
-
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#240305]/98 backdrop-blur-xl border-b border-[#ffd700]/30 px-6 py-6 space-y-4 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-200">
-          <div className="flex flex-col space-y-3">
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 200,
+            background: '#FAF7F2',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '2rem',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+            <span style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontWeight: 800,
+              fontSize: '1.2rem',
+              color: '#6B1A1A',
+              letterSpacing: '0.12em',
+            }}>
+              THEZAR
+            </span>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.5rem' }}
+              aria-label="Close menu"
+            >
+              <X style={{ width: '28px', height: '28px', color: '#2C1810' }} />
+            </button>
+          </div>
+
+          <nav style={{ flex: 1 }}>
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-base font-semibold text-rose-100 hover:text-[#ffd700] py-2 border-b border-red-950 flex items-center justify-between text-decoration-none"
+                style={{
+                  display: 'block',
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
+                  fontWeight: 700,
+                  color: '#2C1810',
+                  textDecoration: 'none',
+                  padding: '0.6rem 0',
+                  borderBottom: '1px solid rgba(107,26,26,0.1)',
+                  transition: 'color 0.2s',
+                }}
               >
-                <span>{link.name}</span>
-                <Snowflake className="w-3.5 h-3.5 text-[#ffd700]/60" />
+                {link.name}
               </a>
             ))}
-          </div>
+          </nav>
 
           <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenRegister();
+            onClick={() => { setMobileMenuOpen(false); onOpenRegister(); }}
+            style={{
+              marginTop: '2rem',
+              width: '100%',
+              padding: '1rem',
+              borderRadius: '9999px',
+              background: '#6B1A1A',
+              color: '#FAF7F2',
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              border: 'none',
+              cursor: 'pointer',
             }}
-            className="w-full mt-4 py-3 rounded-full text-center text-sm font-bold uppercase tracking-wider text-[#2a0407] shadow-lg gold-shimmer-btn flex items-center justify-center gap-2"
           >
-            <Gift className="w-4 h-4 text-[#2a0407]" />
-            <span>Register for Christmas Event</span>
+            Register Now
           </button>
         </div>
       )}
+
+      <style>{`
+        @media (min-width: 768px) {
+          .thezar-desktop-nav { display: flex !important; }
+          .thezar-desktop-cta { display: flex !important; }
+          .thezar-mobile-btn { display: none !important; }
+        }
+        @media (max-width: 767px) {
+          .thezar-desktop-nav { display: none !important; }
+          .thezar-desktop-cta { display: none !important; }
+          .thezar-mobile-btn { display: flex !important; }
+        }
+      `}</style>
     </header>
   );
 }

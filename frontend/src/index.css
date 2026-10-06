@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -10,6 +11,19 @@
   --color-light-maroon: #f87171;
   --color-white: #FFFFFF;
   --color-muted: #64748B;
+
+  /* ── Editorial Redesign Palette ── */
+  --color-cream: #F5F0E8;
+  --color-cream-light: #FAF7F2;
+  --color-cream-dark: #EDE5D8;
+  --color-burgundy: #6B1A1A;
+  --color-burgundy-dark: #4A0F0F;
+  --color-chocolate: #2C1810;
+  --color-peach: #F2C4A0;
+  --color-pink-muted: #E8B4B8;
+  --color-green-accent: #1A3D2B;
+  --color-gold: #B8963E;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
 @layer base {
@@ -22,8 +36,8 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: #071426;
-    color: #ffffff;
+    background-color: var(--color-cream-light);
+    color: var(--color-chocolate);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -32,22 +46,17 @@
     font-family: var(--font-primary);
   }
 
-  /* Prevent browser or Bootstrap default underlines on navbar and action buttons */
-  .nav-link-clean,
-  .btn-no-underline,
-  .btn-no-underline *,
-  .btn-no-underline:hover,
-  .btn-no-underline:focus {
+  /* Prevent browser or Bootstrap default underlines on navbar */
+  .nav-link-clean {
+    text-decoration: none !important;
+  }
+  .nav-link-clean:hover {
     text-decoration: none !important;
   }
 
   /* Reset Bootstrap link color to allow Tailwind utilities to work */
   a {
     color: inherit;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: none;
   }
 }
 
@@ -154,94 +163,103 @@
   color: #000000;
 }
 
-/* ========================================================
-   LUXURY CHRISTMAS THEME DESIGN SYSTEM (HOME 2)
-   ======================================================== */
-.font-christmas {
-  font-family: 'Alex Brush', cursive;
-}
+/* ============================================================
+   EDITORIAL REDESIGN — Animation & Utility System
+   ============================================================ */
 
-.font-cinzel {
-  font-family: 'Cinzel Decorative', serif;
-}
-
-.christmas-glass-card {
-  background: linear-gradient(135deg, rgba(74, 4, 4, 0.72) 0%, rgba(35, 3, 3, 0.85) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-}
-
-.christmas-glass-card-light {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-}
-
-.christmas-gold-glow {
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.45), 0 0 50px rgba(212, 175, 55, 0.2);
-}
-
-.christmas-red-glow {
-  box-shadow: 0 0 30px rgba(158, 8, 4, 0.6), 0 0 60px rgba(115, 5, 2, 0.3);
-}
-
-.gold-gradient-text {
-  background: linear-gradient(135deg, #FFF7D6 0%, #FFDF73 30%, #D4AF37 70%, #996515 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.snow-gradient-text {
-  background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-@keyframes gentleBob {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+/* Fade-up scroll reveal animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
   }
-  50% {
-    transform: translateY(-10px) rotate(1.5deg);
-  }
-}
-
-@keyframes twinkleLight {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(0.9);
-  }
-  50% {
+  to {
     opacity: 1;
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 8px #FFD700);
+    transform: translateY(0);
   }
 }
 
-@keyframes goldShimmer {
-  0% {
-    background-position: -200% 0;
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.65s ease forwards;
+}
+
+.fade-up-delay-1 { animation-delay: 0.1s; }
+.fade-up-delay-2 { animation-delay: 0.2s; }
+.fade-up-delay-3 { animation-delay: 0.35s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .fade-up-delay-1,
+  .fade-up-delay-2,
+  .fade-up-delay-3 {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
-  100% {
-    background-position: 200% 0;
-  }
 }
 
-.animate-gentle-bob {
-  animation: gentleBob 4.5s ease-in-out infinite;
+/* Editorial oversized muted number (background accent) */
+.editorial-number {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 10vw, 9rem);
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(107, 26, 26, 0.07);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.03em;
 }
 
-.animate-twinkle {
-  animation: twinkleLight 2.5s ease-in-out infinite;
+/* Editorial marquee — used in redesigned NewsTickerBar */
+@keyframes editorialMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-.gold-shimmer-btn {
-  background: linear-gradient(90deg, #D4AF37 0%, #FFF3B0 40%, #D4AF37 80%);
-  background-size: 200% 100%;
-  animation: goldShimmer 3.5s linear infinite;
+.editorial-marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: editorialMarquee 32s linear infinite;
 }
 
+.editorial-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Section background variants */
+.bg-editorial-cream { background-color: var(--color-cream-light); }
+.bg-editorial-warm  { background-color: var(--color-cream); }
+.bg-editorial-burg  { background-color: var(--color-burgundy); }
+.bg-editorial-dark  { background-color: var(--color-chocolate); }
+
+/* Editorial pill button — burgundy */
+.btn-editorial-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  background-color: var(--color-burgundy);
+  color: var(--color-cream-light);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.btn-editorial-pill:hover {
+  background-color: var(--color-burgundy-dark);
+  transform: translateY(-2px);
+}
+
+/* Thin burgundy decorative line */
+.editorial-line {
+  width: 60px;
+  height: 1.5px;
+  background-color: var(--color-burgundy);
+  border-radius: 9999px;
+}
