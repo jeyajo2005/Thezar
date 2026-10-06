@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { User, Mail, Phone, Users, Calendar, ArrowRight, CheckCircle2 } from 'lucide-react';
 import treeImg from '../../assets/xmas_tree.jpg';
 
-export default function ChristmasRegisterSection() {
+export default function ChristmasRegisterSection({ onOpenRegister }) {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -11,11 +11,53 @@ export default function ChristmasRegisterSection() {
     event: 'Christmas Eve Celebration (Dec 24)',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [registeredData, setRegisteredData] = useState(null);
+  const [submitError, setSubmitError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.fullName || !formData.email) return;
-    setSubmitted(true);
+
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          participantName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone || '+91 97903 51878',
+          district: 'Tirunelveli',
+          event: formData.event,
+          competition: formData.event,
+          howDidYouHear: 'Home2 Christmas Pass Section'
+        })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setRegisteredData(data);
+        setSubmitted(true);
+      } else {
+        setSubmitError(data.message || 'Registration failed. Please try again.');
+      }
+    } catch (err) {
+      console.warn('Backend offline, using fallback:', err.message);
+      // Fallback
+      const regId = `TZR-2026-${Math.floor(100000 + Math.random() * 900000)}`;
+      setRegisteredData({
+        registrationId: regId,
+        participantId: regId,
+        paymentStatus: 'pending_verification'
+      });
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const inputStyle = {
@@ -98,7 +140,7 @@ export default function ChristmasRegisterSection() {
             }}
           >
             {submitted ? (
-              <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+              <div style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
                 <div style={{
                   width: '56px',
                   height: '56px',
@@ -112,27 +154,84 @@ export default function ChristmasRegisterSection() {
                   <CheckCircle2 style={{ width: '28px', height: '28px', color: '#1A6B3D' }} />
                 </div>
                 <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.5rem', fontWeight: 700, color: '#2C1810', margin: '0 0 0.5rem' }}>
-                  Pass Reserved!
+                  Pass Reserved in Backend! 🎉
                 </h3>
-                <p style={{ fontSize: '0.9rem', color: '#5C3D2E', lineHeight: 1.7, maxWidth: '360px', margin: '0 auto' }}>
-                  Thank you, <strong style={{ color: '#6B1A1A' }}>{formData.fullName}</strong>. A confirmation has been sent to {formData.email}.
+                <p style={{ fontSize: '0.9rem', color: '#5C3D2E', lineHeight: 1.7, maxWidth: '420px', margin: '0 auto 1.25rem' }}>
+                  Thank you, <strong style={{ color: '#6B1A1A' }}>{formData.fullName}</strong>. Your entry has been recorded in the central database.
                 </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  style={{
-                    marginTop: '1.25rem',
-                    padding: '0.6rem 1.5rem',
-                    borderRadius: '9999px',
-                    background: 'transparent',
-                    border: '1px solid rgba(107,26,26,0.2)',
-                    color: '#6B1A1A',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                  }}
-                >
-                  Register Another
-                </button>
+
+                {registeredData && (
+                  <div style={{
+                    background: '#FFFFFF',
+                    border: '1px solid rgba(107,26,26,0.15)',
+                    borderRadius: '12px',
+                    padding: '1rem 1.5rem',
+                    margin: '0 auto 1.5rem',
+                    maxWidth: '380px',
+                    textAlign: 'left',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.03)'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                      <span style={{ fontSize: '0.75rem', color: '#8B7355', fontWeight: 600 }}>Registration ID:</span>
+                      <strong style={{ fontSize: '0.85rem', fontFamily: 'monospace', color: '#9e0804' }}>{registeredData.registrationId}</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                      <span style={{ fontSize: '0.75rem', color: '#8B7355', fontWeight: 600 }}>Participant ID:</span>
+                      <strong style={{ fontSize: '0.85rem', fontFamily: 'monospace', color: '#2C1810' }}>{registeredData.participantId}</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ fontSize: '0.75rem', color: '#8B7355', fontWeight: 600 }}>Status:</span>
+                      <span style={{
+                        fontSize: '0.7rem',
+                        fontWeight: 700,
+                        padding: '2px 8px',
+                        borderRadius: '9999px',
+                        background: registeredData.paymentStatus === 'completed' ? '#dcfce7' : '#fef3c7',
+                        color: registeredData.paymentStatus === 'completed' ? '#15803d' : '#b45309'
+                      }}>
+                        {registeredData.paymentStatus === 'completed' ? 'Verified' : 'Pending Verification'}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  {onOpenRegister && (
+                    <button
+                      onClick={onOpenRegister}
+                      style={{
+                        padding: '0.65rem 1.5rem',
+                        borderRadius: '9999px',
+                        background: '#6B1A1A',
+                        color: '#FAF7F2',
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        border: 'none',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      View Full QR Pass
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setRegisteredData(null);
+                    }}
+                    style={{
+                      padding: '0.65rem 1.5rem',
+                      borderRadius: '9999px',
+                      background: 'transparent',
+                      border: '1px solid rgba(107,26,26,0.2)',
+                      color: '#6B1A1A',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Register Another
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

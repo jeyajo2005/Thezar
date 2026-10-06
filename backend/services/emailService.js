@@ -10,7 +10,9 @@ const sendConfirmationEmail = async ({
   amount,
   paymentStatus
 }) => {
-  const eventTitles = selectedEvents.map((e) => e.title || e.name || e).join(', ');
+  const eventTitles = Array.isArray(selectedEvents)
+    ? selectedEvents.map((e) => (typeof e === 'object' ? (e.title || e.name || e.eventId) : e)).join(', ')
+    : (selectedEvents || 'TheZar 2026 Pass');
 
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; background-color: #f8fafc; padding: 20px; color: #1e293b;">

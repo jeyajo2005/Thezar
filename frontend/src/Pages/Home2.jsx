@@ -33,7 +33,7 @@ export default function Home2() {
         <ChristmasExperienceSection onOpenRegister={() => setIsRegisterOpen(true)} />
 
         {/* 06. Christmas Pass Registration with 3D Gift Box Visual */}
-        <ChristmasRegisterSection />
+        <ChristmasRegisterSection onOpenRegister={() => setIsRegisterOpen(true)} />
 
         {/* 07. Premium Christmas Contact & Arena Details */}
         <ChristmasContactSection />

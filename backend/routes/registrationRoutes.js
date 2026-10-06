@@ -107,17 +107,26 @@ router.post('/register', async (req, res) => {
       utrNumber
     } = req.body;
 
-    const primaryEmail = registrationType === 'group' ? groupLeaderEmail : email;
-    const primaryName = registrationType === 'group' ? groupLeaderName : participantName;
-    const primaryPhone = registrationType === 'group' ? groupLeaderPhone : phone;
-    const primaryAddress = registrationType === 'group' ? groupAddress : address;
-    const primaryDistrict = district || 'Tirunelveli';
+    const primaryEmail = (registrationType === 'group' ? groupLeaderEmail : email) || req.body.email || `candidate_${Date.now()}@thezarevents.com`;
+    const primaryName = (registrationType === 'group' ? groupLeaderName : participantName) || req.body.fullName || req.body.name || 'Candidate';
+    const primaryPhone = (registrationType === 'group' ? groupLeaderPhone : phone) || req.body.mobile || '+91 97903 51878';
+    const primaryDistrict = district || req.body.district || 'Tirunelveli';
+    const primaryAddress = (registrationType === 'group' ? groupAddress : address) || req.body.collegeName || `${primaryDistrict}, Tamil Nadu`;
+    const collegeOrOrg = req.body.collegeName || req.body.department || '';
 
-    // 1. Calculate Total Amount
-    let totalAmount = 0;
-    if (Array.isArray(selectedEvents) && selectedEvents.length > 0) {
-      totalAmount = selectedEvents.reduce((acc, ev) => acc + (Number(ev.price) || 0), 0);
+    // 1. Normalize Events List & Calculate Total Amount
+    let eventsList = Array.isArray(selectedEvents) && selectedEvents.length > 0 ? selectedEvents : null;
+    if (!eventsList) {
+      const trackName = req.body.competition || req.body.event || 'Carol Fiesta 2026';
+      const trackPrice = req.body.price !== undefined ? Number(req.body.price) : 699;
+      eventsList = [{
+        eventId: `evt-${trackName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+        title: trackName,
+        price: trackPrice
+      }];
     }
+
+    let totalAmount = eventsList.reduce((acc, ev) => acc + (Number(ev.price) || 0), 0);
 
     // 2. Generate Unique Registration ID & Participant ID
     const count = (await Registration.countDocuments()) + 1;
@@ -139,6 +148,11 @@ router.post('/register', async (req, res) => {
         district: primaryDistrict,
         password: generatedPassword
       });
+      await user.save();
+    } else {
+      // Update phone or district if provided
+      if (primaryPhone) user.phone = primaryPhone;
+      if (primaryDistrict) user.district = primaryDistrict;
       await user.save();
     }
 
@@ -176,9 +190,9 @@ router.post('/register', async (req, res) => {
       registrationId,
       participantId: user.participantId,
       userId: user._id,
-      registrationType,
-      selectedEventIds: selectedEvents.map((e) => e.eventId || e.id),
-      selectedEvents,
+      registrationType: registrationType || 'individual',
+      selectedEventIds: eventsList.map((e) => e.eventId || e.id || 'evt-general'),
+      selectedEvents: eventsList,
       howDidYouHear: howDidYouHear || 'Website',
       totalAmount,
       paymentStatus,
@@ -188,16 +202,20 @@ router.post('/register', async (req, res) => {
     await registration.save();
 
     // 7. Send Email Confirmation
-    await sendConfirmationEmail({
-      email: primaryEmail,
-      fullName: primaryName,
-      registrationId,
-      participantId: user.participantId,
-      password: user.password || generatedPassword,
-      selectedEvents,
-      amount: totalAmount,
-      paymentStatus
-    });
+    try {
+      await sendConfirmationEmail({
+        email: primaryEmail,
+        fullName: primaryName,
+        registrationId,
+        participantId: user.participantId,
+        password: user.password || generatedPassword,
+        selectedEvents: eventsList,
+        amount: totalAmount,
+        paymentStatus
+      });
+    } catch (e) {
+      console.warn('[Email Warning]:', e.message);
+    }
 
     res.json({
       success: true,
@@ -207,12 +225,73 @@ router.post('/register', async (req, res) => {
       paymentStatus,
       amount: totalAmount,
       utrNumber: testUtr,
-      selectedEvents,
+      selectedEvents: eventsList,
       qrCodeData: registrationId,
+      user: {
+        fullName: primaryName,
+        email: primaryEmail,
+        phone: primaryPhone,
+        district: primaryDistrict,
+        collegeName: collegeOrOrg
+      },
       message: 'Registration Submitted Successfully 🎉'
     });
   } catch (err) {
     console.error('[Registration Error]:', err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// GET /api/registration/:identifier (Lookup candidate pass by Registration ID, Participant ID, Phone, or Email)
+router.get('/registration/:identifier', async (req, res) => {
+  try {
+    const { identifier } = req.params;
+    let registration = await Registration.findOne({
+      $or: [
+        { registrationId: identifier },
+        { participantId: identifier },
+        { utrNumber: identifier }
+      ]
+    }).populate('userId');
+
+    if (!registration) {
+      const user = await User.findOne({
+        $or: [{ email: identifier }, { phone: identifier }]
+      });
+      if (user) {
+        registration = await Registration.findOne({ userId: user._id })
+          .populate('userId')
+          .sort({ createdAt: -1 });
+      }
+    }
+
+    if (!registration) {
+      return res.status(404).json({ success: false, message: 'Registration not found' });
+    }
+
+    const groupInfo = await GroupRegistration.findOne({ registrationId: registration.registrationId });
+
+    res.json({
+      success: true,
+      registration: {
+        registrationId: registration.registrationId,
+        participantId: registration.participantId,
+        fullName: registration.userId?.fullName || groupInfo?.groupName || 'Candidate',
+        email: registration.userId?.email || groupInfo?.leaderEmail,
+        phone: registration.userId?.phone || groupInfo?.leaderPhone,
+        district: registration.userId?.district || 'Tirunelveli',
+        address: registration.userId?.address,
+        registrationType: registration.registrationType,
+        selectedEvents: registration.selectedEvents,
+        totalAmount: registration.totalAmount,
+        paymentStatus: registration.paymentStatus,
+        utrNumber: registration.utrNumber,
+        qrCodeData: registration.qrCodeData || registration.registrationId,
+        createdAt: registration.createdAt,
+        groupInfo
+      }
+    });
+  } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
