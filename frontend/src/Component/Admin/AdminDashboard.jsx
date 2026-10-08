@@ -105,10 +105,27 @@ export default function AdminDashboard({ view }) {
     };
   });
 
-  // Auth State
-  const [loginForm, setLoginForm] = useState({ username: 'admin', password: 'admin123' });
+  // Auth & Setup State
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [loginError, setLoginError] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  
+  // Single SuperAdmin Setup & Registration States
+  const [hasSuperAdmin, setHasSuperAdmin] = useState(null);
+  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register' | 'otp_login'
+  const [regForm, setRegForm] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+    otp: ''
+  });
+  const [regStep, setRegStep] = useState(1); // 1 = details, 2 = verify otp
+  const [otpCountdown, setOtpCountdown] = useState(0);
+  const [isOtpLoading, setIsOtpLoading] = useState(false);
+  const [otpLoginForm, setOtpLoginForm] = useState({ email: '', otp: '', step: 1 });
 
   // Dynamic Profile & DP Modal State
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -811,23 +828,156 @@ export default function AdminDashboard({ view }) {
     fetchUserProfile();
   }, [token]);
 
-  // Auth Handlers with Backend JWT + Local Fallback
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setIsLoggingIn(true);
+  // 1. Check SuperAdmin Setup Status on Mount
+  const checkSetupStatus = async () => {
+    try {
+      const res = await fetch('/api/auth/setup-status');
+      if (res.ok) {
+        const data = await res.json();
+        setHasSuperAdmin(data.hasSuperAdmin);
+        if (!data.hasSuperAdmin) {
+          setAuthMode('register');
+        } else {
+          setAuthMode('login');
+        }
+      }
+    } catch (err) {
+      console.warn('Could not check setup status:', err);
+    }
+  };
+
+  useEffect(() => {
+    checkSetupStatus();
+  }, []);
+
+  // OTP Countdown Timer
+  useEffect(() => {
+    let timer;
+    if (otpCountdown > 0) {
+      timer = setInterval(() => {
+        setOtpCountdown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [otpCountdown]);
+
+  // 2. Send Registration OTP (Only when no SuperAdmin exists)
+  const handleSendRegistrationOtp = async (e) => {
+    if (e) e.preventDefault();
+    if (!regForm.fullName.trim() || !regForm.email.trim() || !regForm.password.trim()) {
+      setLoginError('Please provide your Full Name, Official Email, and Password.');
+      return;
+    }
+    if (regForm.password.length < 6) {
+      setLoginError('Password must be at least 6 characters long.');
+      return;
+    }
+    if (regForm.password !== regForm.confirmPassword) {
+      setLoginError('Passwords do not match. Please verify.');
+      return;
+    }
+
+    setIsOtpLoading(true);
     setLoginError('');
+    setLoginSuccess('');
 
     try {
-      // 1. Primary Auth Endpoint
+      const res = await fetch('/api/auth/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: regForm.email.trim(),
+          fullName: regForm.fullName.trim()
+        })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setRegStep(2);
+        setLoginSuccess(`Verification code sent to ${regForm.email}`);
+        setOtpCountdown(60);
+      } else {
+        setLoginError(data.message || 'Failed to send OTP email.');
+      }
+    } catch (err) {
+      setLoginError('Network connection error. Please try again.');
+    } finally {
+      setIsOtpLoading(false);
+    }
+  };
+
+  // 3. Verify OTP & Finalize SuperAdmin Registration
+  const handleVerifyAndRegisterSuperAdmin = async (e) => {
+    e.preventDefault();
+    if (!regForm.otp || regForm.otp.trim().length < 6) {
+      setLoginError('Please enter the full 6-digit verification code.');
+      return;
+    }
+
+    setIsLoggingIn(true);
+    setLoginError('');
+    setLoginSuccess('');
+
+    try {
+      const res = await fetch('/api/auth/register-superadmin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: regForm.fullName.trim(),
+          email: regForm.email.trim(),
+          phone: regForm.phone.trim(),
+          password: regForm.password,
+          otp: regForm.otp.trim()
+        })
+      });
+
+      const data = await res.json();
+      if (data.success && data.token) {
+        localStorage.setItem('tzr_admin_token', data.token);
+        if (data.user) {
+          localStorage.setItem('tzr_user_data', JSON.stringify(data.user));
+          setCurrentUser(data.user);
+          if (data.user.dp) {
+            setSiteContent(prev => ({ ...prev, adminAvatar: data.user.dp, adminName: data.user.fullName }));
+          }
+        }
+        setHasSuperAdmin(true);
+        setToken(data.token);
+        setActiveTab('dashboard');
+        loadSystemData();
+        navigate('/admin/portal/dashboard');
+      } else {
+        setLoginError(data.message || 'OTP Verification failed.');
+      }
+    } catch (err) {
+      setLoginError('Network error during registration verification.');
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
+  // 4. Secure JWT Password Login
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!loginForm.username.trim() || !loginForm.password.trim()) {
+      setLoginError('Please enter your email and password.');
+      return;
+    }
+
+    setIsLoggingIn(true);
+    setLoginError('');
+    setLoginSuccess('');
+
+    try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: loginForm.username,
-          email: loginForm.username,
+          email: loginForm.username.trim(),
           password: loginForm.password
         })
       });
+
       const data = await res.json();
       if (data.success && data.token) {
         localStorage.setItem('tzr_admin_token', data.token);
@@ -842,99 +992,97 @@ export default function AdminDashboard({ view }) {
         setActiveTab('dashboard');
         loadSystemData();
         navigate('/admin/portal/dashboard');
-        return;
       } else {
-        setLoginError(data.message || 'Invalid credentials');
+        setLoginError(data.message || 'Access Denied: Invalid credentials.');
       }
-    } catch {
-      // Fallback to legacy admin route or mock token
-      try {
-        const legacyRes = await fetch('/api/admin/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(loginForm)
-        });
-        const legacyData = await legacyRes.json();
-        if (legacyData.success) {
-          localStorage.setItem('tzr_admin_token', legacyData.token);
-          setToken(legacyData.token);
-          setActiveTab('dashboard');
-          loadSystemData();
-          navigate('/admin/portal/dashboard');
-          return;
-        }
-      } catch (e2) {}
-
-      if (loginForm.username === 'admin' && loginForm.password === 'admin123') {
-        const fakeToken = 'tzr_mock_token_' + Date.now();
-        const fakeUser = {
-          fullName: 'Suman / TheZar Administrator',
-          email: 'admin@thezarevents.com',
-          phone: '+91 97903 51878',
-          role: 'super_admin',
-          designation: 'Super Administrator',
-          district: 'Tirunelveli',
-          dp: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
-        };
-        localStorage.setItem('tzr_admin_token', fakeToken);
-        localStorage.setItem('tzr_user_data', JSON.stringify(fakeUser));
-        setCurrentUser(fakeUser);
-        setToken(fakeToken);
-        setActiveTab('dashboard');
-        navigate('/admin/portal/dashboard');
-      } else {
-        setLoginError('Authentication failed. Please check credentials.');
-      }
+    } catch (err) {
+      setLoginError('Unable to connect to authentication server.');
     } finally {
       setIsLoggingIn(false);
     }
   };
 
-  // Google OAuth Login Action
-  const handleGoogleLogin = async () => {
-    setIsLoggingIn(true);
-    setLoginError('');
-    try {
-      const mockGoogleProfile = {
-        email: 'suman.executive@thezarevents.com',
-        fullName: 'Suman Kumar (Google Verified)',
-        googleId: 'google_oauth_' + Date.now(),
-        dp: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
-      };
+  // 5. Send Login OTP
+  const handleSendLoginOtp = async (e) => {
+    e.preventDefault();
+    if (!otpLoginForm.email.trim()) {
+      setLoginError('Please enter your administrator email.');
+      return;
+    }
 
-      const res = await fetch('/api/auth/google', {
+    setIsOtpLoading(true);
+    setLoginError('');
+    setLoginSuccess('');
+
+    try {
+      const res = await fetch('/api/auth/send-login-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(mockGoogleProfile)
+        body: JSON.stringify({ email: otpLoginForm.email.trim() })
       });
+
+      const data = await res.json();
+      if (data.success) {
+        setOtpLoginForm(prev => ({ ...prev, step: 2 }));
+        setLoginSuccess(`Login OTP code sent to ${otpLoginForm.email}`);
+        setOtpCountdown(60);
+      } else {
+        setLoginError(data.message || 'Failed to send login code.');
+      }
+    } catch (err) {
+      setLoginError('Connection error sending login code.');
+    } finally {
+      setIsOtpLoading(false);
+    }
+  };
+
+  // 6. Verify Login OTP
+  const handleVerifyLoginOtp = async (e) => {
+    e.preventDefault();
+    if (!otpLoginForm.otp.trim() || otpLoginForm.otp.trim().length < 6) {
+      setLoginError('Please enter the 6-digit login verification code.');
+      return;
+    }
+
+    setIsLoggingIn(true);
+    setLoginError('');
+    setLoginSuccess('');
+
+    try {
+      const res = await fetch('/api/auth/login-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: otpLoginForm.email.trim(),
+          otp: otpLoginForm.otp.trim()
+        })
+      });
+
       const data = await res.json();
       if (data.success && data.token) {
         localStorage.setItem('tzr_admin_token', data.token);
         if (data.user) {
           localStorage.setItem('tzr_user_data', JSON.stringify(data.user));
           setCurrentUser(data.user);
+          if (data.user.dp) {
+            setSiteContent(prev => ({ ...prev, adminAvatar: data.user.dp, adminName: data.user.fullName }));
+          }
         }
         setToken(data.token);
         setActiveTab('dashboard');
+        loadSystemData();
         navigate('/admin/portal/dashboard');
       } else {
-        // Fallback simulate login
-        const fakeToken = 'tzr_google_token_' + Date.now();
-        localStorage.setItem('tzr_admin_token', fakeToken);
-        localStorage.setItem('tzr_user_data', JSON.stringify(mockGoogleProfile));
-        setCurrentUser({ ...mockGoogleProfile, role: 'super_admin', designation: 'Executive Director' });
-        setToken(fakeToken);
-        setActiveTab('dashboard');
-        navigate('/admin/portal/dashboard');
+        setLoginError(data.message || 'Invalid login code.');
       }
     } catch (err) {
-      console.error(err);
-      setLoginError('Google Sign-In simulation completed.');
+      setLoginError('Error verifying login code.');
     } finally {
       setIsLoggingIn(false);
     }
   };
 
+  // 7. Secure Logout Action
   const handleLogout = () => {
     localStorage.removeItem('tzr_admin_token');
     localStorage.removeItem('tzr_user_data');
@@ -1625,14 +1773,14 @@ export default function AdminDashboard({ view }) {
     });
   }, [registrationsList, searchQuery, filterStatus]);
 
-  // 1. AUTH SCREEN (Clean, modern, secure /admin/portal/login with Google Auth)
+  // 1. AUTH SCREEN (Clean, modern, secure /admin/portal/login with One-Time SuperAdmin Registration & OTP)
   if (activeTab === 'login' || !token) {
     return (
       <div className="min-h-screen bg-[#071426] flex items-center justify-center p-4 antialiased text-left">
         <div className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-slate-200 relative overflow-hidden" style={{ borderRadius: '28px' }}>
-          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#9e0804] via-[#c4120c] to-[#9e0804]" />
+          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#6B1414]" />
           
-          <div className="text-center space-y-2 mb-8">
+          <div className="text-center space-y-2 mb-6">
             <div className="w-16 h-16 mx-auto rounded-full bg-[#3a0604] border-2 border-[#D4AF37] flex items-center justify-center shadow-lg overflow-hidden shrink-0">
               <img
                 src={thezarLogo}
@@ -1642,88 +1790,371 @@ export default function AdminDashboard({ view }) {
             </div>
             <h2 className="text-2xl font-black text-slate-900 tracking-tight">TheZar Executive Portal</h2>
             <p className="text-xs text-slate-500 font-medium">
-              Role-Based Access Control • <span className="text-[#9e0804] font-mono font-bold">/admin/portal/login</span>
+              Role-Based Access Control • <span className="text-[#6B1414] font-mono font-bold">/admin/portal/login</span>
             </p>
           </div>
 
+          {/* Setup / Mode Notice */}
+          {hasSuperAdmin === false && (
+            <div className="mb-5 p-3 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center justify-between font-medium">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
+                <span>SuperAdmin initial setup required</span>
+              </div>
+              <span className="px-2 py-0.5 rounded-full bg-amber-200/80 text-[10px] font-bold uppercase tracking-wider text-amber-800">
+                Setup Mode
+              </span>
+            </div>
+          )}
+
           {loginError && (
-            <div className="p-3.5 mb-5 rounded-2xl bg-red-50 border border-red-200 text-[#9e0804] text-xs flex items-center gap-2 font-medium">
-              <AlertCircle className="w-4 h-4 shrink-0 text-[#9e0804]" />
+            <div className="p-3.5 mb-5 rounded-2xl bg-red-50 border border-red-200 text-[#6B1414] text-xs flex items-center gap-2 font-medium">
+              <AlertCircle className="w-4 h-4 shrink-0 text-[#6B1414]" />
               <span>{loginError}</span>
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Admin Email / Username
-              </label>
-              <input
-                type="text"
-                required
-                value={loginForm.username}
-                onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
-                className="w-full px-4 py-3 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
-                placeholder="admin or admin@thezarevents.com"
-                style={{ borderRadius: '9999px' }}
-              />
+          {loginSuccess && (
+            <div className="p-3.5 mb-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 font-medium">
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+              <span>{loginSuccess}</span>
             </div>
+          )}
 
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                required
-                value={loginForm.password}
-                onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                className="w-full px-4 py-3 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#9e0804] transition-colors"
-                placeholder="••••••••"
-                style={{ borderRadius: '9999px' }}
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isLoggingIn}
-              className="w-full py-3.5 rounded-full bg-[#9e0804] hover:bg-[#c4120c] font-black text-white text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01]"
-              style={{ borderRadius: '9999px' }}
-            >
-              <span>{isLoggingIn ? 'Authenticating...' : 'Sign In to Portal'}</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
-
-            {/* Google OAuth Login Button */}
-            <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-200" />
+          {/* VIEW 1: ONE-TIME SUPERADMIN REGISTRATION WITH EMAIL OTP */}
+          {hasSuperAdmin === false ? (
+            <div className="space-y-4">
+              <div className="text-center pb-2">
+                <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">
+                  {regStep === 1 ? 'SuperAdmin Account Setup' : 'Verify Email Address'}
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  {regStep === 1
+                    ? 'Create the primary executive account with OTP verification'
+                    : `Enter the 6-digit code sent to ${regForm.email}`}
+                </p>
               </div>
-              <div className="relative flex justify-center text-[10px] uppercase font-bold text-slate-400">
-                <span className="bg-white px-2">Or continue with Google</span>
+
+              {regStep === 1 ? (
+                <form onSubmit={handleSendRegistrationOtp} className="space-y-3.5">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={regForm.fullName}
+                      onChange={(e) => setRegForm({ ...regForm, fullName: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
+                      placeholder="e.g. Suman Kumar"
+                      style={{ borderRadius: '9999px' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                      SuperAdmin Official Email
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={regForm.email}
+                      onChange={(e) => setRegForm({ ...regForm, email: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
+                      placeholder="admin@thezarevents.com"
+                      style={{ borderRadius: '9999px' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                      Phone Number (Optional)
+                    </label>
+                    <input
+                      type="tel"
+                      value={regForm.phone}
+                      onChange={(e) => setRegForm({ ...regForm, phone: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
+                      placeholder="97903 51878"
+                      style={{ borderRadius: '9999px' }}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        required
+                        value={regForm.password}
+                        onChange={(e) => setRegForm({ ...regForm, password: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
+                        placeholder="••••••••"
+                        style={{ borderRadius: '9999px' }}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                        Confirm
+                      </label>
+                      <input
+                        type="password"
+                        required
+                        value={regForm.confirmPassword}
+                        onChange={(e) => setRegForm({ ...regForm, confirmPassword: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
+                        placeholder="••••••••"
+                        style={{ borderRadius: '9999px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isOtpLoading}
+                    className="w-full mt-2 py-3.5 rounded-full bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#6B1414] hover:from-[#540F0F] hover:to-[#781717] font-black text-white text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01]"
+                    style={{ borderRadius: '9999px' }}
+                  >
+                    <span>{isOtpLoading ? 'Sending Verification Code...' : 'Send Verification OTP'}</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </form>
+              ) : (
+                <form onSubmit={handleVerifyAndRegisterSuperAdmin} className="space-y-4">
+                  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+                    <p className="text-xs text-slate-600 mb-1 font-medium">
+                      Verification code sent to:
+                    </p>
+                    <p className="text-sm font-bold text-[#6B1414] font-mono break-all">
+                      {regForm.email}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setRegStep(1)}
+                      className="mt-2 text-xs text-[#6B1414] hover:underline font-semibold bg-transparent border-none cursor-pointer"
+                    >
+                      Change Email Address
+                    </button>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 text-center">
+                      Enter 6-Digit OTP Code
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={6}
+                      required
+                      value={regForm.otp}
+                      onChange={(e) => setRegForm({ ...regForm, otp: e.target.value.replace(/\D/g, '') })}
+                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-[#6B1414]/30 focus:border-[#6B1414] text-slate-900 text-2xl font-black text-center tracking-[12px] font-mono focus:outline-none transition-all shadow-inner"
+                      placeholder="••••••"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs text-slate-500 px-1">
+                    <span>Didn't receive code?</span>
+                    {otpCountdown > 0 ? (
+                      <span className="font-semibold text-slate-400">
+                        Resend in <strong className="text-[#6B1414] font-mono">{otpCountdown}s</strong>
+                      </span>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={handleSendRegistrationOtp}
+                        disabled={isOtpLoading}
+                        className="text-[#6B1414] font-bold hover:underline bg-transparent border-none cursor-pointer"
+                      >
+                        Resend OTP Code
+                      </button>
+                    )}
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isLoggingIn}
+                    className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#6B1414] hover:from-[#540F0F] hover:to-[#781717] font-black text-white text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01]"
+                    style={{ borderRadius: '9999px' }}
+                  >
+                    <span>{isLoggingIn ? 'Verifying & Registering...' : 'Verify OTP & Complete Setup'}</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </form>
+              )}
+            </div>
+          ) : (
+            /* VIEW 2: SECURE SUPERADMIN / ADMIN LOGIN (NO REGISTRATION BUTTON VISIBLE) */
+            <div className="space-y-4">
+              {/* Tab Selector: Password Login vs OTP Login */}
+              <div className="flex p-1 bg-slate-100 rounded-full border border-slate-200 mb-2">
+                <button
+                  type="button"
+                  onClick={() => setAuthMode('login')}
+                  className={`flex-1 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border-none ${
+                    authMode === 'login'
+                      ? 'bg-white text-[#6B1414] shadow-xs'
+                      : 'bg-transparent text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  Password Login
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAuthMode('otp_login')}
+                  className={`flex-1 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border-none ${
+                    authMode === 'otp_login'
+                      ? 'bg-white text-[#6B1414] shadow-xs'
+                      : 'bg-transparent text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  Email OTP Login
+                </button>
               </div>
-            </div>
 
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              disabled={isLoggingIn}
-              className="w-full py-3 px-4 rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-bold text-xs flex items-center justify-center gap-3 transition-all cursor-pointer shadow-xs hover:border-slate-400"
-              style={{ borderRadius: '9999px' }}
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
-              </svg>
-              <span>Sign in with Google OAuth</span>
-            </button>
+              {authMode === 'login' ? (
+                <form onSubmit={handleLogin} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                      Admin Email / ID
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={loginForm.username}
+                      onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
+                      className="w-full px-4 py-3 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
+                      placeholder="Enter administrator email..."
+                      style={{ borderRadius: '9999px' }}
+                    />
+                  </div>
 
-            <div className="pt-2 text-[11px] text-slate-500 text-center bg-slate-50 p-3 rounded-2xl border border-slate-200">
-              Master Credentials: Username: <strong className="text-slate-900">admin</strong> | Password: <strong className="text-slate-900">admin123</strong>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      required
+                      value={loginForm.password}
+                      onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                      className="w-full px-4 py-3 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
+                      placeholder="••••••••"
+                      style={{ borderRadius: '9999px' }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isLoggingIn}
+                    className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#6B1414] hover:from-[#540F0F] hover:to-[#781717] font-black text-white text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01]"
+                    style={{ borderRadius: '9999px' }}
+                  >
+                    <span>{isLoggingIn ? 'Authenticating...' : 'Sign In to Portal'}</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </form>
+              ) : (
+                /* OTP Passwordless Login */
+                <div>
+                  {otpLoginForm.step === 1 ? (
+                    <form onSubmit={handleSendLoginOtp} className="space-y-4">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                          Administrator Email
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={otpLoginForm.email}
+                          onChange={(e) => setOtpLoginForm({ ...otpLoginForm, email: e.target.value })}
+                          className="w-full px-4 py-3 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
+                          placeholder="Enter your registered email..."
+                          style={{ borderRadius: '9999px' }}
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={isOtpLoading}
+                        className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#6B1414] hover:from-[#540F0F] hover:to-[#781717] font-black text-white text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01]"
+                        style={{ borderRadius: '9999px' }}
+                      >
+                        <span>{isOtpLoading ? 'Sending OTP Code...' : 'Send Login OTP'}</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </form>
+                  ) : (
+                    <form onSubmit={handleVerifyLoginOtp} className="space-y-4">
+                      <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200 text-center">
+                        <p className="text-xs text-slate-600 mb-0.5 font-medium">Login code sent to:</p>
+                        <p className="text-xs font-bold text-[#6B1414] font-mono">{otpLoginForm.email}</p>
+                        <button
+                          type="button"
+                          onClick={() => setOtpLoginForm(prev => ({ ...prev, step: 1 }))}
+                          className="mt-1 text-[11px] text-[#6B1414] hover:underline font-semibold bg-transparent border-none cursor-pointer"
+                        >
+                          Change Email
+                        </button>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 text-center">
+                          6-Digit Login Code
+                        </label>
+                        <input
+                          type="text"
+                          maxLength={6}
+                          required
+                          value={otpLoginForm.otp}
+                          onChange={(e) => setOtpLoginForm({ ...otpLoginForm, otp: e.target.value.replace(/\D/g, '') })}
+                          className="w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-[#6B1414]/30 focus:border-[#6B1414] text-slate-900 text-2xl font-black text-center tracking-[12px] font-mono focus:outline-none transition-all"
+                          placeholder="••••••"
+                        />
+                      </div>
+
+                      <div className="flex items-center justify-between text-xs text-slate-500 px-1">
+                        <span>Didn't receive code?</span>
+                        {otpCountdown > 0 ? (
+                          <span className="font-semibold text-slate-400">
+                            Resend in <strong className="text-[#6B1414] font-mono">{otpCountdown}s</strong>
+                          </span>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={handleSendLoginOtp}
+                            disabled={isOtpLoading}
+                            className="text-[#6B1414] font-bold hover:underline bg-transparent border-none cursor-pointer"
+                          >
+                            Resend Login OTP
+                          </button>
+                        )}
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={isLoggingIn}
+                        className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#6B1414] via-[#8B1A1A] to-[#6B1414] hover:from-[#540F0F] hover:to-[#781717] font-black text-white text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01]"
+                        style={{ borderRadius: '9999px' }}
+                      >
+                        <span>{isLoggingIn ? 'Logging In...' : 'Verify Code & Sign In'}</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </form>
+                  )}
+                </div>
+              )}
             </div>
-          </form>
+          )}
+
+          <div className="mt-6 pt-4 border-t border-slate-100 text-center">
+            <span className="text-[11px] font-semibold text-slate-400 flex items-center justify-center gap-1.5">
+              <Lock className="w-3.5 h-3.5 text-[#6B1414]" />
+              <span>256-Bit Encrypted Executive Session</span>
+            </span>
+          </div>
         </div>
       </div>
     );

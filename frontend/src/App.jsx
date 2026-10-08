@@ -28,32 +28,33 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
         
-        {/* Public Admin Login Route */}
-        <Route
-          path="/admin/portal/login"
-          element={
-            <PublicAdminLoginRoute>
-              <Admin view="login" />
-            </PublicAdminLoginRoute>
-          }
-        />
+          {/* Public Admin Login / Setup Route */}
+          <Route
+            path="/admin/portal/login"
+            element={
+              <PublicAdminLoginRoute>
+                <Admin view="login" />
+              </PublicAdminLoginRoute>
+            }
+          />
 
-        {/* Protected Admin Dashboard Route */}
-        <Route
-          path="/admin/portal/dashboard"
-          element={
-            <ProtectedAdminRoute>
-              <Admin view="dashboard" />
-            </ProtectedAdminRoute>
-          }
-        />
+          {/* Protected Admin Dashboard Route (Access Denied without valid JWT) */}
+          <Route
+            path="/admin/portal/dashboard"
+            element={
+              <ProtectedAdminRoute>
+                <Admin view="dashboard" />
+              </ProtectedAdminRoute>
+            }
+          />
 
-        {/* Fallback & Legacy Redirects */}
-        <Route path="/admin/portal/*" element={<Navigate to="/admin/portal/login" replace />} />
-        <Route path="/admin/*" element={<Navigate to="/" replace />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
-    </Router>
+          {/* Any unauthenticated / unknown admin URL routes directly to Login */}
+          <Route path="/admin/portal/*" element={<Navigate to="/admin/portal/login" replace />} />
+          <Route path="/admin/*" element={<Navigate to="/admin/portal/login" replace />} />
+          <Route path="/admin" element={<Navigate to="/admin/portal/login" replace />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </Router>
     </SiteContentProvider>
   );
 }

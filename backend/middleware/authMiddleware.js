@@ -1,10 +1,9 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const Admin = require('../models/Admin');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'thezar_super_secure_jwt_secret_2026';
 
-// Middleware to verify JWT Token or Legacy Admin Token
+// Middleware to verify JWT Token strictly
 exports.verifyToken = async (req, res, next) => {
   try {
     let token = req.headers.authorization;
@@ -15,10 +14,12 @@ exports.verifyToken = async (req, res, next) => {
     }
 
     if (!token) {
-      return res.status(401).json({ success: false, message: 'Access Denied: No authentication token provided' });
+      return res.status(401).json({
+        success: false,
+        message: 'Access Denied: No authorization token provided'
+      });
     }
 
-    // Check JWT
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
       const user = await User.findById(decoded.id).select('-password');
@@ -26,23 +27,16 @@ exports.verifyToken = async (req, res, next) => {
         req.user = user;
         return next();
       }
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized: User does not exist'
+      });
     } catch (jwtErr) {
-      // If legacy hardcoded token for bootstrap
-      if (token === 'tzr_admin_super_secret_token_2026') {
-        req.user = {
-          _id: 'default_admin_id',
-          fullName: 'Suman (Super Administrator)',
-          email: 'admin@thezarevents.com',
-          role: 'super_admin',
-          dp: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-          permissions: ['*']
-        };
-        return next();
-      }
-      return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized: Token is invalid or expired. Please sign in again.'
+      });
     }
-
-    return res.status(401).json({ success: false, message: 'User not found for this token' });
   } catch (error) {
     console.error('[Auth Middleware Error]:', error);
     return res.status(500).json({ success: false, message: 'Internal Authentication Error' });
@@ -56,7 +50,7 @@ exports.authorizeRoles = (...roles) => {
       return res.status(401).json({ success: false, message: 'Unauthorized' });
     }
 
-    // Super Admin has access to all routes
+    // Super Admin has full master access
     if (req.user.role === 'super_admin' || req.user.role === 'superadmin') {
       return next();
     }
