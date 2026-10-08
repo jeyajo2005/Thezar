@@ -804,7 +804,7 @@ export default function RegistrationModal({ onClose }) {
                       <input
                         type="email"
                         required
-                        placeholder="yourname@gmail.com"
+                        placeholder="******@gmail.com"
                         value={individualData.email}
                         onChange={(e) => setIndividualData({ ...individualData, email: e.target.value })}
                         className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#9e0804]/20 focus:border-[#9e0804] transition-all"
@@ -849,7 +849,7 @@ export default function RegistrationModal({ onClose }) {
                         required
                         inputMode="numeric"
                         maxLength={10}
-                        placeholder="9790351878"
+                        placeholder="******1878"
                         value={individualData.phone}
                         onChange={(e) => {
                           const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
@@ -895,7 +895,7 @@ export default function RegistrationModal({ onClose }) {
                         type="tel"
                         inputMode="numeric"
                         maxLength={10}
-                        placeholder="9876543210"
+                        placeholder="******3210"
                         value={individualData.altPhone}
                         onChange={(e) => {
                           const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
@@ -992,7 +992,7 @@ export default function RegistrationModal({ onClose }) {
                         required
                         inputMode="numeric"
                         maxLength={10}
-                        placeholder="9790351878"
+                        placeholder="******1878"
                         value={groupData.groupLeaderPhone}
                         onChange={(e) => {
                           const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
@@ -1012,7 +1012,7 @@ export default function RegistrationModal({ onClose }) {
                       <input
                         type="email"
                         required
-                        placeholder="leader@choir.org"
+                        placeholder="******@choir.org"
                         value={groupData.email}
                         onChange={(e) => setGroupData({ ...groupData, email: e.target.value })}
                         className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#9e0804]/20 focus:border-[#9e0804] transition-all"

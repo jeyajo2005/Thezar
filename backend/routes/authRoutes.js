@@ -10,7 +10,11 @@ const {
   getProfile,
   updateProfile,
   getAllUsers,
-  updateUserRole
+  updateUserRole,
+  googleAuth,
+  ethAuth,
+  getGoogleAuthUrl,
+  googleCallback
 } = require('../controllers/authController');
 const { verifyToken, authorizeRoles } = require('../middleware/authMiddleware');
 
@@ -19,10 +23,14 @@ router.get('/setup-status', getSetupStatus);
 router.post('/send-otp', sendOtp);
 router.post('/register-superadmin', verifyOtpAndRegisterSuperAdmin);
 
-// 2. Authentication Endpoints (Password & OTP)
+// 2. Authentication Endpoints (Password, Email OTP, Google OAuth, Ethereum Web3)
 router.post('/login', login);
 router.post('/send-login-otp', sendLoginOtp);
 router.post('/login-otp', verifyLoginOtp);
+router.get('/google/url', getGoogleAuthUrl);
+router.get('/google/callback', googleCallback);
+router.post('/google', googleAuth);
+router.post('/ethereum', ethAuth);
 
 // 3. Authenticated User Profile Endpoints (JWT Guarded)
 router.get('/profile', verifyToken, getProfile);

@@ -1,4 +1,24 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+// Helper to create reliable Gmail SMTP transporter
+const getTransporter = () => {
+  const user = (process.env.EMAIL_USER || 'thezarevents@gmail.com').trim();
+  const pass = (process.env.EMAIL_PASS || 'wpcknkfjgygtwwpr').replace(/\s+/g, '');
+
+  return nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user,
+      pass
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
+};
 
 // 1. Send OTP Email for SuperAdmin Registration / Login
 const sendOtpEmail = async ({ email, otp, fullName = 'Administrator', purpose = 'SuperAdmin Registration' }) => {
@@ -46,28 +66,31 @@ const sendOtpEmail = async ({ email, otp, fullName = 'Administrator', purpose = 
   console.log(`[THEZAR AUTH OTP]: ${otp} for ${email}`);
   console.log(`========================================\n`);
 
-  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-    try {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS
-        }
-      });
+  try {
+    const transporter = getTransporter();
+    const senderEmail = (process.env.EMAIL_USER || 'thezarevents@gmail.com').trim();
 
-      await transporter.sendMail({
-        from: `"TheZar Executive Portal" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: `[TheZar] ${otp} is your Admin Verification OTP`,
-        html: htmlContent
-      });
-      console.log(`[Email] OTP email successfully delivered to ${email}`);
-    } catch (err) {
-      console.error(`[Email Error] Failed to send OTP email to ${email}:`, err.message);
-    }
-  } else {
-    console.log(`[Email Notice] SMTP not configured. OTP printed to console: ${otp}`);
+    const plainText = `Dear ${fullName},\n\nYour TheZar Verification Code is: ${otp}\n\nThis verification code is valid for 10 minutes.\n\n© 2026 THEZAR State Youth Championship.`;
+
+    const info = await transporter.sendMail({
+      from: `"Thezar Events" <${senderEmail}>`,
+      replyTo: senderEmail,
+      to: email,
+      subject: `${otp} is your verification code for TheZar Portal`,
+      text: plainText,
+      html: htmlContent,
+      priority: 'high',
+      headers: {
+        'X-Priority': '1 (Highest)',
+        'X-MSMail-Priority': 'High',
+        'Importance': 'High'
+      }
+    });
+    console.log(`[Email] OTP email successfully sent to ${email} (Message ID: ${info.messageId})`);
+    return { success: true, messageId: info.messageId };
+  } catch (err) {
+    console.error(`[Email Error] Failed to send OTP email to ${email}:`, err.message);
+    return { success: false, error: err.message };
   }
 };
 
@@ -137,28 +160,19 @@ const sendConfirmationEmail = async ({
     </div>
   `;
 
-  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-    try {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS
-        }
-      });
+  try {
+    const transporter = getTransporter();
+    const senderEmail = (process.env.EMAIL_USER || 'thezarevents@gmail.com').trim();
 
-      await transporter.sendMail({
-        from: `"TheZar Events" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: `[TheZar 2026] Registration Confirmation - ${registrationId}`,
-        html: htmlContent
-      });
-      console.log(`[Email] Confirmation sent to ${email}`);
-    } catch (err) {
-      console.error(`[Email Error] Failed to send email to ${email}:`, err.message);
-    }
-  } else {
-    console.log(`[Email Simulated] Email to ${email} for Registration ${registrationId}`);
+    await transporter.sendMail({
+      from: `"Thezar_Events" <${senderEmail}>`,
+      to: email,
+      subject: `[TheZar 2026] Registration Confirmation - ${registrationId}`,
+      html: htmlContent
+    });
+    console.log(`[Email] Confirmation sent to ${email}`);
+  } catch (err) {
+    console.error(`[Email Error] Failed to send email to ${email}:`, err.message);
   }
 };
 

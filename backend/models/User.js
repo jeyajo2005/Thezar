@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
     bio: { type: String, default: '' },
     designation: { type: String, default: 'Executive Member' },
     googleId: { type: String, default: null },
+    ethAddress: { type: String, default: null },
     status: { type: String, enum: ['active', 'suspended', 'pending'], default: 'active' },
     permissions: [{ type: String }],
     lastLogin: { type: Date, default: Date.now }

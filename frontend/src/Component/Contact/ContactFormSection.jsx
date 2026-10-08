@@ -117,7 +117,7 @@ export default function ContactFormSection() {
                       const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
                       setFormData({ ...formData, phone: digits });
                     }}
-                    placeholder="9790351878"
+                    placeholder="******1878"
                     className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs focus:outline-none font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal placeholder:text-slate-400"
                   />
                 </div>
@@ -135,7 +135,7 @@ export default function ContactFormSection() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="thezarevents@gmail.com"
+                  placeholder="******@thezarevents.com"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 text-xs placeholder:text-slate-400 focus:outline-none focus:border-[#9e0804] focus:ring-1 focus:ring-[#9e0804] focus:bg-white shadow-2xs transition-all"
                 />
               </div>

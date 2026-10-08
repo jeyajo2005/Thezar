@@ -19,14 +19,23 @@ import Footer from '../Component/Footer/Footer';
 
 import RegistrationModal from '../Component/Modals/RegistrationModal';
 import EventDetailsModal from '../Component/Modals/EventDetailsModal';
+import RibbonCuttingSplash from '../Component/SplashScreen/RibbonCuttingSplash';
 
 export default function Home() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
+  const [showRibbonSplash, setShowRibbonSplash] = useState(true);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#9e0804] selection:text-white">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#9e0804] selection:text-white relative">
       
+      {/* 00. Grand Ribbon Cutting Ceremony Splash Screen */}
+      {showRibbonSplash && (
+        <RibbonCuttingSplash
+          onComplete={() => setShowRibbonSplash(false)}
+        />
+      )}
+
       {/* 01. Navbar */}
       <Navbar onOpenRegister={() => setIsRegisterOpen(true)} />
 

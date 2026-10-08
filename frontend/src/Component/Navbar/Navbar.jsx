@@ -125,7 +125,7 @@ export default function Navbar({ onOpenRegister }) {
           {/* 3. Actions: Circular Search, Circular Wishlist, Divider, and Rounded Pill Register */}
           <div className="hidden md:flex items-center gap-3 shrink-0">
             {/* Search Circular Button */}
-            <button
+            {/* <button
               onClick={(e) => scrollToSection(e, 'events')}
               className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#334155] hover:bg-[#9e080410] hover:border-[#9e080430] hover:text-[#9e0804] hover:-translate-y-px transition-all duration-200 cursor-pointer"
               aria-label="Search"
@@ -136,7 +136,7 @@ export default function Navbar({ onOpenRegister }) {
               }}
             >
               <Search className="w-4 h-4" />
-            </button>
+            </button> */}
 
             {/* Wishlist / Heart Circular Button */}
             {/* <button
