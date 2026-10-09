@@ -92,16 +92,16 @@ export default function ContactFormSection() {
                   </span>
                 </div>
                 <div className="flex items-center rounded-xl bg-slate-50/80 border border-slate-200 focus-within:border-[#9e0804] focus-within:ring-1 focus-within:ring-[#9e0804] focus-within:bg-white shadow-2xs transition-all overflow-hidden">
-                  <div className="relative bg-slate-100/80 border-r border-slate-200 shrink-0">
+                  <div className="relative bg-slate-100/80 border-r border-slate-200 shrink-0 w-20 sm:w-24">
                     <select
                       value={formData.countryCode || '+91'}
                       onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
-                      className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs font-bold text-slate-800 cursor-pointer focus:outline-none"
+                      className="w-full appearance-none bg-transparent py-2.5 pl-2 sm:pl-2.5 pr-5 text-xs font-bold text-slate-800 cursor-pointer focus:outline-none"
                       title="Select Country Code"
                     >
                       {COUNTRY_CODES.map((c) => (
                         <option key={`contact-phone-${c.country}-${c.code}`} value={c.code}>
-                          {c.flag} {c.code} ({c.name})
+                          {c.flag} {c.code}
                         </option>
                       ))}
                     </select>
@@ -117,8 +117,8 @@ export default function ContactFormSection() {
                       const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
                       setFormData({ ...formData, phone: digits });
                     }}
-                    placeholder="******1878"
-                    className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs focus:outline-none font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal placeholder:text-slate-400"
+                    placeholder="98765 43210"
+                    className="flex-1 min-w-0 w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs focus:outline-none font-medium placeholder:text-slate-400"
                   />
                 </div>
               </div>
@@ -135,7 +135,7 @@ export default function ContactFormSection() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="******@thezarevents.com"
+                  placeholder="e.g. yourname@example.com"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-slate-900 text-xs placeholder:text-slate-400 focus:outline-none focus:border-[#9e0804] focus:ring-1 focus:ring-[#9e0804] focus:bg-white shadow-2xs transition-all"
                 />
               </div>

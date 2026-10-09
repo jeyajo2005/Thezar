@@ -2103,7 +2103,7 @@ export default function AdminDashboard({ view }) {
                       value={regForm.email}
                       onChange={(e) => setRegForm({ ...regForm, email: e.target.value })}
                       className="w-full px-4 py-2.5 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
-                      placeholder="******@thezarevents.com"
+                      placeholder="e.g. user@thezarevents.com"
                       style={{ borderRadius: '9999px' }}
                     />
                   </div>
@@ -2117,7 +2117,7 @@ export default function AdminDashboard({ view }) {
                       value={regForm.phone}
                       onChange={(e) => setRegForm({ ...regForm, phone: e.target.value })}
                       className="w-full px-4 py-2.5 rounded-full bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#6B1414] transition-colors"
-                      placeholder="******1878"
+                      placeholder="e.g. 98765 43210"
                       style={{ borderRadius: '9999px' }}
                     />
                   </div>
@@ -5443,7 +5443,7 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Support Email</label>
                   <input
                     type="email"
-                    placeholder="******@thezarevents.com"
+                    placeholder="e.g. support@thezarevents.com"
                     value={siteContent.contactEmail || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, contactEmail: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-mono"
@@ -5453,7 +5453,7 @@ export default function AdminDashboard({ view }) {
                   <label className="block font-bold text-slate-700 uppercase mb-1">Support Phone</label>
                   <input
                     type="text"
-                    placeholder="******1878"
+                    placeholder="e.g. +91 97903 51878"
                     value={siteContent.contactPhone || ''}
                     onChange={(e) => setSiteContent({ ...siteContent, contactPhone: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 font-mono"
@@ -6140,15 +6140,15 @@ export default function AdminDashboard({ view }) {
                   Contact Mobile Number *
                 </label>
                 <div className="flex items-center rounded-xl bg-slate-50 border border-slate-300 focus-within:border-[#9e0804] focus-within:bg-white overflow-hidden">
-                  <div className="relative bg-slate-100 border-r border-slate-300 shrink-0">
+                  <div className="relative bg-slate-100 border-r border-slate-300 shrink-0 w-20 sm:w-24">
                     <select
                       value={editRegistrationModal.countryCode || '+91'}
                       onChange={(e) => setEditRegistrationModal({ ...editRegistrationModal, countryCode: e.target.value })}
-                      className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs font-bold text-slate-800 cursor-pointer focus:outline-none"
+                      className="w-full appearance-none bg-transparent py-2.5 pl-2 sm:pl-2.5 pr-5 text-xs font-bold text-slate-800 cursor-pointer focus:outline-none"
                     >
                       {COUNTRY_CODES.map((c) => (
                         <option key={`edit-phone-${c.country}-${c.code}`} value={c.code}>
-                          {c.flag} {c.code} ({c.name})
+                          {c.flag} {c.code}
                         </option>
                       ))}
                     </select>
@@ -6164,8 +6164,8 @@ export default function AdminDashboard({ view }) {
                       const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
                       setEditRegistrationModal({ ...editRegistrationModal, phone: digits });
                     }}
-                    placeholder="******1878"
-                    className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs focus:outline-none font-mono tracking-wider"
+                    placeholder="98765 43210"
+                    className="flex-1 min-w-0 w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs focus:outline-none font-medium placeholder:text-slate-400"
                   />
                 </div>
               </div>
@@ -6179,7 +6179,7 @@ export default function AdminDashboard({ view }) {
                   <input
                     type="email"
                     required
-                    placeholder="******@thezarevents.com"
+                    placeholder="e.g. participant@example.com"
                     value={editRegistrationModal.email}
                     onChange={(e) => setEditRegistrationModal({ ...editRegistrationModal, email: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:border-[#9e0804]"
@@ -6995,7 +6995,7 @@ export default function AdminDashboard({ view }) {
                 <input
                   type="email"
                   required
-                  placeholder="******@thezarevents.com"
+                  placeholder="e.g. staff@thezarevents.com"
                   value={newStaff.email}
                   onChange={(e) => setNewStaff({ ...newStaff, email: e.target.value })}
                   className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300"
@@ -7245,7 +7245,7 @@ export default function AdminDashboard({ view }) {
                   </label>
                   <input
                     type="text"
-                    placeholder="******1878"
+                    placeholder="e.g. +91 97903 51878"
                     value={profileEditForm.phone}
                     onChange={(e) => setProfileEditForm({ ...profileEditForm, phone: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-[#9e0804]"

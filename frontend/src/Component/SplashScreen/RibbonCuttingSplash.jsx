@@ -9,6 +9,7 @@ import eventMusic from '../../assets/event_music.jpg';
 import aboutAudience from '../../assets/about_audience.jpg';
 import christmasWoodTable from '../../assets/christmas_wood_table.jpg';
 import vintageChristmasBotanical from '../../assets/vintage_christmas_botanical.jpg';
+import satinRibbonBow from '../../assets/satin_ribbon_bow.png';
 
 // Happiest Captured Moments Data (Revealed inside letter only)
 const CAPTURED_MOMENTS = [
@@ -62,11 +63,10 @@ export default function RibbonCuttingSplash({ onComplete }) {
   const [stage, setStage] = useState('initial');
   const [snowflakes, setSnowflakes] = useState([]);
   const [goldConfetti, setGoldConfetti] = useState([]);
-  const [mousePos, setMousePos] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   const [isHoveringRibbon, setIsHoveringRibbon] = useState(false);
   const letterScrollRef = useRef(null);
 
-  // Initialize realistic snowflakes & golden confetti
+  // Initialize realistic snowflakes & golden rainfall confetti
   useEffect(() => {
     const flakes = Array.from({ length: 60 }, (_, i) => ({
       id: i,
@@ -79,34 +79,35 @@ export default function RibbonCuttingSplash({ onComplete }) {
     }));
     setSnowflakes(flakes);
 
-    const confettiList = Array.from({ length: 40 }, (_, i) => ({
+    const confettiList = Array.from({ length: 55 }, (_, i) => ({
       id: i,
       left: Math.random() * 100,
-      top: Math.random() * 100,
-      size: Math.random() * 8 + 6,
+      size: Math.random() * 7 + 4,
       rotate: Math.random() * 360,
-      opacity: Math.random() * 0.6 + 0.4
+      opacity: Math.random() * 0.6 + 0.4,
+      duration: Math.random() * 6 + 5,
+      delay: Math.random() * -12
     }));
     setGoldConfetti(confettiList);
   }, []);
 
-  // Step 1: User Cuts Ribbon -> Left & Right Half Screens Slide Apart (Curtain Split)
+  // Step 1: User Cuts Ribbon -> Left & Right Curtains Slide Apart at Slow Cinematic Speed (2.5s)
   const triggerRibbonCut = () => {
     if (stage !== 'initial') return;
     setStage('ribbon_cut');
 
-    // Step 2: Open Envelope Wax Seal & Flap in slow motion (1.1s delay)
+    // Step 2: Open Envelope Wax Seal & Slide Paper Out Halfway (2.6s delay for smooth slow reveal)
     setTimeout(() => {
       setStage('envelope_opening');
-    }, 1100);
+    }, 2600);
 
-    // Step 3: Letter slides out and expands smoothly (2.2s delay)
+    // Step 3: Expand and reveal full letter smoothly (5.2s delay for slow majestic sequence)
     setTimeout(() => {
       setStage('letter_reveal');
-    }, 2200);
+    }, 5200);
   };
 
-  // Automated Slow Smooth Scrolling & Automatic Site Reveal
+  // Automated Very Slow Smooth Scrolling & Automatic Site Reveal
   useEffect(() => {
     if (stage !== 'letter_reveal') return;
 
@@ -114,13 +115,14 @@ export default function RibbonCuttingSplash({ onComplete }) {
     let startScrollTimer;
     let autoRevealTimer;
 
-    // Give 1.2s for letter unfolding animation to settle, then begin smooth slow scroll
+    // Give 2.0s for letter unfolding animation to settle, then begin very slow smooth scroll
     startScrollTimer = setTimeout(() => {
       const container = letterScrollRef.current;
       if (!container) return;
 
       let lastTime = performance.now();
-      const scrollSpeed = 80;
+      // Very slow, gentle, readable scroll speed (28px per second)
+      const scrollSpeed = 28;
 
       const performScroll = (currentTime) => {
         const deltaTime = (currentTime - lastTime) / 1000;
@@ -132,16 +134,16 @@ export default function RibbonCuttingSplash({ onComplete }) {
             container.scrollTop += scrollSpeed * deltaTime;
             animationFrameId = requestAnimationFrame(performScroll);
           } else {
-            // Reached the bottom of letter: pause for 2.2s then automatically reveal the website!
+            // Reached the bottom of letter: pause for 3.5s so user can read everything, then automatically reveal the website!
             autoRevealTimer = setTimeout(() => {
               handleEnterSite();
-            }, 2200);
+            }, 3500);
           }
         }
       };
 
       animationFrameId = requestAnimationFrame(performScroll);
-    }, 1200);
+    }, 2000);
 
     return () => {
       clearTimeout(startScrollTimer);
@@ -159,15 +161,6 @@ export default function RibbonCuttingSplash({ onComplete }) {
     }, 800);
   };
 
-  // Track mouse for golden scissors cursor
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   if (!isVisible) return null;
 
   // Reusable Grand Opening Card Content (Without mentioning "TheZar")
@@ -178,21 +171,25 @@ export default function RibbonCuttingSplash({ onComplete }) {
         background: 'linear-gradient(180deg, #FAF7F2 0%, #F5EFE6 50%, #EFE8DC 100%)'
       }}
     >
-      {/* Floating Golden Confetti in Background */}
+      {/* Floating Golden Rainfall Confetti in Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {goldConfetti.map((c) => (
           <div
             key={c.id}
-            className="absolute rounded-sm"
+            className="absolute rounded-sm animate-confetti-rain"
             style={{
               left: `${c.left}%`,
-              top: `${c.top}%`,
+              top: '-30px',
               width: `${c.size}px`,
               height: `${c.size * 1.6}px`,
               background: 'linear-gradient(135deg, #FFE57F, #FFC107, #B78103)',
               transform: `rotate(${c.rotate}deg)`,
               opacity: c.opacity,
-              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.12))',
+              animationDuration: `${c.duration}s`,
+              animationDelay: `${c.delay}s`,
+              animationTimingFunction: 'linear',
+              animationIterationCount: 'infinite'
             }}
           />
         ))}
@@ -214,254 +211,124 @@ export default function RibbonCuttingSplash({ onComplete }) {
         </div>
       </div>
 
-      {/* Top Header: Neutral luxury crest (No TheZar mentioned) */}
-      <div className="text-center z-10 max-w-xl mx-auto">
-        <div className="inline-flex items-center gap-2 mb-2">
-          <div className="text-[#6B1414]/60">
-            <svg width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M 0 4 Q 4 0 8 4 T 16 4 T 24 4" />
-              <path d="M 0 10 Q 4 6 8 10 T 16 10 T 24 10" />
+      {/* Top Header & Typography Layer (Perfect Center Alignment for Mobile & Desktop) */}
+      <div className="text-center z-10 max-w-5xl mx-auto flex flex-col items-center justify-center pt-2 sm:pt-4 w-full">
+        {/* Main "GRAND Opening" Signature Typography Layer */}
+        <div className="w-full relative flex flex-col items-center justify-center px-2 sm:px-6 mt-1 text-center">
+          {/* GRAND Title (72px) */}
+          <div className="w-full flex justify-center items-center text-center">
+            <h2
+              className="text-[44px] sm:text-[72px] font-serif font-black text-[#38050C] uppercase tracking-[12px] sm:tracking-[22px] text-center leading-none"
+              style={{
+                fontFamily: "'Cinzel', 'Playfair Display', serif",
+                fontSize: '72px',
+                textShadow: '0 4px 16px rgba(56, 5, 12, 0.18)'
+              }}
+            >
+              GRAND
+            </h2>
+          </div>
+
+          {/* Opening Calligraphy (67px) with Flowing Flourishes */}
+          <div className="relative w-full flex items-center justify-center -mt-1 sm:-mt-3">
+            {/* Left Extended Flowing Calligraphy Flourish Ribbon Line */}
+            <svg
+              className="w-16 sm:w-28 md:w-36 h-8 sm:h-10 text-[#38050C]/75 shrink-0 pointer-events-none -mr-2 sm:-mr-3"
+              viewBox="0 0 240 70"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <path
+                d="M 0 52 C 60 20, 130 68, 195 32 C 215 22, 230 25, 240 25"
+                strokeLinecap="round"
+              />
+            </svg>
+
+            {/* "Opening" Script */}
+            <h1
+              className="text-[40px] sm:text-[67px] text-[#200307] select-none leading-[0.85] px-1 sm:px-3"
+              style={{
+                fontFamily: "'Great Vibes', 'Alex Brush', cursive",
+                fontWeight: 400,
+                fontSize: '67px',
+                textShadow: '0 6px 20px rgba(56, 5, 12, 0.2)'
+              }}
+            >
+              Opening
+            </h1>
+
+            {/* Right Extended Flowing Calligraphy Flourish Ribbon Line */}
+            <svg
+              className="w-16 sm:w-28 md:w-36 h-8 sm:h-10 text-[#38050C]/75 shrink-0 pointer-events-none -ml-2 sm:-ml-3"
+              viewBox="0 0 240 70"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <path
+                d="M 0 28 C 30 28, 80 18, 130 48 C 180 75, 215 35, 240 45"
+                strokeLinecap="round"
+              />
             </svg>
           </div>
-          <span className="text-xs sm:text-sm font-sans tracking-[3px] text-slate-500 font-medium">
-            @grandopening
+        </div>
+
+        {/* Date: DECEMBER 2026 */}
+        <div className="flex items-center justify-center gap-3 sm:gap-4 mt-2 sm:mt-3 text-[#38050C]">
+          <div className="h-[1.5px] w-6 sm:w-16 bg-[#38050C]/40" />
+          <span className="text-xs sm:text-base md:text-lg font-serif font-black uppercase tracking-[5px] sm:tracking-[8px] text-[#4A0A10]">
+            DECEMBER 2026
           </span>
+          <div className="h-[1.5px] w-6 sm:w-16 bg-[#38050C]/40" />
         </div>
 
-        {/* Main "Grand Opening" Typography (Matching User Reference Image) */}
-        <div className="mt-1 sm:mt-2">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#4A0A10] uppercase tracking-[6px] sm:tracking-[8px]">
-            Grand
-          </h2>
-          <h1
-            className="text-6xl sm:text-8xl md:text-9xl text-[#1C0D0E] select-none leading-tight -mt-3 sm:-mt-5 md:-mt-7"
-            style={{
-              fontFamily: "'Playfair Display', 'Brush Script MT', 'Great Vibes', 'Allura', cursive, serif",
-              fontStyle: 'italic',
-              fontWeight: 600,
-              textShadow: '0 4px 18px rgba(74, 10, 16, 0.12)'
-            }}
-          >
-            Opening
-          </h1>
-        </div>
-
-        {/* Subtitle Message (Neutral & Mysterious) */}
-        <div className="max-w-md mx-auto mt-2 sm:mt-4 px-4 text-center">
-          <p className="text-xs sm:text-sm md:text-base font-serif font-bold text-[#2A040A] leading-relaxed">
-            Welcome to a new era.
+        {/* Luxury Invitation Message (Above the Ribbon) */}
+        <div className="text-center z-10 max-w-2xl mx-auto px-4 mt-2 sm:mt-3">
+          <p className="text-[#38050C] text-xs sm:text-sm font-serif tracking-[3px] sm:tracking-[5px] uppercase font-black leading-relaxed">
+            YOU ARE CORDIALLY INVITED TO INAUGURATE THE CELEBRATION
           </p>
-          <p className="text-[11px] sm:text-xs md:text-sm font-serif text-slate-600 leading-relaxed mt-1">
-            A grand celebration where extraordinary talents, music, and passion unite for an unforgettable journey.
+          <p className="text-slate-500 text-[10px] sm:text-xs font-serif tracking-wider mt-0.5">
+            Click anywhere to begin the grand opening ceremony
           </p>
         </div>
       </div>
 
       {/* 
         ====================================================================
-        EDGE-TO-EDGE 3D MAROON VELVET RIBBON & LUXURY BOW
+        EDGE-TO-EDGE SATIN RIBBON & BOW (USER'S HIGH-RES SATIN BOW)
         ====================================================================
       */}
-      <div className="relative w-full my-auto py-6 sm:py-8 flex items-center justify-center">
-        {/* Left Ribbon Band */}
+      <div className="relative w-full my-auto py-2 sm:py-4 flex items-center justify-center">
+        {/* Full continuous background ribbon band with zero gap */}
         <div
-          className="h-14 sm:h-20 md:h-24 flex-1 relative origin-right shadow-xl"
+          className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-10 sm:h-14 md:h-16 shadow-xl z-10"
           style={{
-            background: 'linear-gradient(180deg, #250308 0%, #4D0A14 18%, #851624 45%, #580B15 75%, #250308 100%)',
-            boxShadow: '0 12px 30px rgba(45, 6, 12, 0.45), inset 0 2.5px 6px rgba(255, 255, 255, 0.3)'
+            background: 'linear-gradient(180deg, #2b030a 0%, #5c0b1a 20%, #871328 50%, #5c0b1a 80%, #2b030a 100%)',
+            boxShadow: '0 10px 25px rgba(35, 4, 10, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.25)'
           }}
         >
-          <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-white/35 to-transparent -translate-y-1/2" />
+          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-y-1/2" />
         </div>
 
-        {/* Central 3D Vector Velvet Bow */}
-        <div className="relative z-20 flex items-center justify-center shrink-0 -mx-1 sm:-mx-2">
-          <div className="relative w-72 sm:w-96 md:w-[440px] max-w-[88vw] flex items-center justify-center">
-            <svg
-              viewBox="0 0 440 320"
-              className="w-full h-auto overflow-visible filter drop-shadow-[0_20px_35px_rgba(40,4,8,0.55)]"
-            >
-              <defs>
-                <linearGradient id="vLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#9B1C2E" />
-                  <stop offset="25%" stopColor="#C43D52" />
-                  <stop offset="50%" stopColor="#6E121E" />
-                  <stop offset="80%" stopColor="#450810" />
-                  <stop offset="100%" stopColor="#250308" />
-                </linearGradient>
-
-                <linearGradient id="vRight" x1="100%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#9B1C2E" />
-                  <stop offset="25%" stopColor="#C43D52" />
-                  <stop offset="50%" stopColor="#6E121E" />
-                  <stop offset="80%" stopColor="#450810" />
-                  <stop offset="100%" stopColor="#250308" />
-                </linearGradient>
-
-                <radialGradient id="vKnot" cx="45%" cy="40%" r="65%">
-                  <stop offset="0%" stopColor="#A82338" />
-                  <stop offset="40%" stopColor="#6E101D" />
-                  <stop offset="85%" stopColor="#3A050B" />
-                  <stop offset="100%" stopColor="#1E0205" />
-                </radialGradient>
-
-                <linearGradient id="tLeft" x1="20%" y1="0%" x2="80%" y2="100%">
-                  <stop offset="0%" stopColor="#6E121E" />
-                  <stop offset="45%" stopColor="#9B1C2E" />
-                  <stop offset="75%" stopColor="#500A13" />
-                  <stop offset="100%" stopColor="#2A0307" />
-                </linearGradient>
-
-                <linearGradient id="tRight" x1="80%" y1="0%" x2="20%" y2="100%">
-                  <stop offset="0%" stopColor="#6E121E" />
-                  <stop offset="45%" stopColor="#9B1C2E" />
-                  <stop offset="75%" stopColor="#500A13" />
-                  <stop offset="100%" stopColor="#2A0307" />
-                </linearGradient>
-              </defs>
-
-              {/* Left Flowing Ribbon Tail */}
-              <path
-                d="M 190 150 C 160 210 130 270 50 310 L 95 240 L 125 305 C 165 240 185 190 205 155 Z"
-                fill="url(#tLeft)"
-                stroke="#2A0307"
-                strokeWidth="1.2"
-              />
-              <path
-                d="M 180 160 C 150 215 125 255 75 290"
-                fill="none"
-                stroke="rgba(255,255,255,0.28)"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-              />
-
-              {/* Right Flowing Ribbon Tail */}
-              <path
-                d="M 250 150 C 280 210 310 270 390 310 L 345 240 L 315 305 C 275 240 255 190 235 155 Z"
-                fill="url(#tRight)"
-                stroke="#2A0307"
-                strokeWidth="1.2"
-              />
-              <path
-                d="M 260 160 C 290 215 315 255 365 290"
-                fill="none"
-                stroke="rgba(255,255,255,0.28)"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-              />
-
-              {/* Left Bow Loop */}
-              <path
-                d="M 195 125 C 90 25 20 50 25 125 C 30 195 105 200 195 145 Z"
-                fill="url(#vLeft)"
-                stroke="#250308"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M 195 125 C 130 75 80 90 60 130 C 50 150 85 175 195 145 Z"
-                fill="#3A050B"
-                opacity="0.65"
-              />
-              <path
-                d="M 60 80 C 110 50 160 70 190 120"
-                fill="none"
-                stroke="rgba(255,255,255,0.4)"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-
-              {/* Right Bow Loop */}
-              <path
-                d="M 245 125 C 350 25 420 50 415 125 C 410 195 335 200 245 145 Z"
-                fill="url(#vRight)"
-                stroke="#250308"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M 245 125 C 310 75 360 90 380 130 C 390 150 355 175 245 145 Z"
-                fill="#3A050B"
-                opacity="0.65"
-              />
-              <path
-                d="M 380 80 C 330 50 280 70 250 120"
-                fill="none"
-                stroke="rgba(255,255,255,0.4)"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-
-              {/* Central Velvet Knot Wrap */}
-              <ellipse
-                cx="220"
-                cy="135"
-                rx="26"
-                ry="34"
-                fill="url(#vKnot)"
-                stroke="#250308"
-                strokeWidth="1.8"
-              />
-              <path
-                d="M 212 110 C 210 135 210 150 214 160"
-                fill="none"
-                stroke="#1E0205"
-                strokeWidth="2.5"
-                opacity="0.7"
-              />
-              <path
-                d="M 226 110 C 228 135 228 150 224 160"
-                fill="none"
-                stroke="#1E0205"
-                strokeWidth="2.5"
-                opacity="0.7"
-              />
-              <ellipse
-                cx="215"
-                cy="125"
-                rx="7"
-                ry="18"
-                fill="rgba(255,255,255,0.3)"
-                transform="rotate(-15 215 125)"
-              />
-            </svg>
-
-            {/* Floating "TAP TO CUT" Pill Badge */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-30">
-              <div className="px-4 py-1.5 rounded-full bg-[#3A070E]/95 border border-white/50 text-white text-[10px] sm:text-xs font-bold tracking-wider uppercase font-mono shadow-2xl flex items-center gap-1.5 animate-pulse whitespace-nowrap">
-                <Scissors className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FFE57F]" />
-                <span>TAP TO CUT RIBBON</span>
-              </div>
-            </div>
-          </div>
+        {/* Central Realistic Satin Bow (Transparent PNG) - Knot centered directly over ribbon bar */}
+        <div className="relative z-20 flex items-center justify-center shrink-0 w-64 sm:w-80 md:w-96 lg:w-[440px] px-2 translate-y-8 sm:translate-y-10 md:translate-y-14">
+          <img
+            src={satinRibbonBow}
+            alt="Luxury Satin Ribbon Bow"
+            className="w-full h-auto object-contain select-none pointer-events-none filter drop-shadow-[0_15px_30px_rgba(35,4,10,0.55)]"
+          />
         </div>
-
-        {/* Right Ribbon Band */}
-        <div
-          className="h-14 sm:h-20 md:h-24 flex-1 relative origin-left shadow-xl"
-          style={{
-            background: 'linear-gradient(180deg, #250308 0%, #4D0A14 18%, #851624 45%, #580B15 75%, #250308 100%)',
-            boxShadow: '0 12px 30px rgba(45, 6, 12, 0.45), inset 0 2.5px 6px rgba(255, 255, 255, 0.3)'
-          }}
-        >
-          <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-white/35 to-transparent -translate-y-1/2" />
-        </div>
-      </div>
-
-      {/* Bottom Minimalist Footer (Neutral) */}
-      <div className="text-center z-10">
-        <p className="text-[#6B1414] text-[10px] sm:text-xs font-serif tracking-[2px] sm:tracking-[3px] uppercase font-bold">
-          Grand Opening Ceremony • Tap Ribbon to Inaugurate
-        </p>
       </div>
     </div>
   );
 
   return (
     <div
-      className={`fixed inset-0 z-[999999] overflow-hidden select-none transition-opacity duration-1000 ${
-        stage === 'completed' ? 'opacity-0 pointer-events-none' : 'opacity-100'
-      }`}
+      className={`fixed inset-0 z-[999999] overflow-hidden select-none transition-opacity duration-1000 ${stage === 'completed' ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
       style={{
-        cursor: stage === 'initial' ? 'none' : 'default'
+        cursor: stage === 'initial' ? 'pointer' : 'default'
       }}
     >
       {/* Top Controls: Skip Button */}
@@ -479,16 +346,14 @@ export default function RibbonCuttingSplash({ onComplete }) {
 
       {/* 
         ====================================================================
-        STAGE 1: DUAL PARTING SCREEN DOORS (CLIP-PATH SPLIT SCREEN)
-        100% Seamless before cut. When cut: Left half slides left, Right half slides right!
-        NO mention of "TheZar" before ribbon cut!
+        STAGE 1: DUAL PARTING SCREEN DOORS (SLOW CINEMATIC SPEED: 2500ms)
         ====================================================================
       */}
       {stage !== 'completed' && (
         <div className="fixed inset-0 z-40 pointer-events-none">
-          {/* ==================== LEFT HALF SCREEN PANEL ==================== */}
+          {/* ==================== LEFT HALF SCREEN PANEL (Slow Speed) ==================== */}
           <div
-            className={`fixed inset-0 z-40 transition-transform duration-1000 ease-[cubic-bezier(0.75,0,0.25,1)] pointer-events-auto shadow-[20px_0_50px_rgba(0,0,0,0.4)] ${
+            className={`fixed inset-0 z-40 transition-transform duration-[2500ms] ease-[cubic-bezier(0.65,0,0.35,1)] pointer-events-auto shadow-[20px_0_50px_rgba(0,0,0,0.4)] ${
               stage !== 'initial' ? '-translate-x-full' : 'translate-x-0'
             }`}
             style={{
@@ -501,9 +366,9 @@ export default function RibbonCuttingSplash({ onComplete }) {
             {renderGrandOpeningCardContent()}
           </div>
 
-          {/* ==================== RIGHT HALF SCREEN PANEL ==================== */}
+          {/* ==================== RIGHT HALF SCREEN PANEL (Slow Speed) ==================== */}
           <div
-            className={`fixed inset-0 z-40 transition-transform duration-1000 ease-[cubic-bezier(0.75,0,0.25,1)] pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.4)] ${
+            className={`fixed inset-0 z-40 transition-transform duration-[2500ms] ease-[cubic-bezier(0.65,0,0.35,1)] pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.4)] ${
               stage !== 'initial' ? 'translate-x-full' : 'translate-x-0'
             }`}
             style={{
@@ -521,8 +386,6 @@ export default function RibbonCuttingSplash({ onComplete }) {
       {/* 
         ====================================================================
         STAGE 2 & 3: CHRISTMAS WOODEN TABLE, KRAFT ENVELOPE & LETTER SEQUENCE
-        Revealed only after the ribbon is cut and curtains part!
-        Opens automatically and scrolls down slowly, then auto-reveals site
         ====================================================================
       */}
       {/* Background: Cinematic Christmas Wooden Table */}
@@ -560,82 +423,110 @@ export default function RibbonCuttingSplash({ onComplete }) {
 
       {/* Envelope & Letter Container */}
       {stage !== 'initial' && (
-        <div className="absolute inset-0 z-30 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
-          {/* A. Vintage Kraft Parchment Envelope */}
-          <div
-            className={`relative transition-all duration-1000 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-              stage === 'letter_reveal'
-                ? 'scale-125 translate-y-[450px] opacity-10 pointer-events-none'
-                : 'scale-100 translate-y-0 opacity-100'
-            }`}
-            style={{ perspective: '1200px' }}
-          >
+        <div className="absolute inset-0 z-30 flex items-center justify-center p-2.5 sm:p-6 overflow-hidden">
+          {/* A. Vintage Kraft Parchment Envelope Container (Unmounts on letter_reveal so it doesn't occupy horizontal flex space) */}
+          {stage !== 'letter_reveal' && (
             <div
-              className="relative w-[320px] sm:w-[480px] h-[220px] sm:h-[310px] rounded-2xl shadow-[0_30px_70px_rgba(0,0,0,0.85)] border-2 border-[#8C6B46]/60 overflow-hidden"
-              style={{
-                background: 'linear-gradient(145deg, #C29B68 0%, #A97E4A 50%, #8C6230 100%)',
-                boxShadow: '0 25px 60px rgba(0,0,0,0.7), inset 0 2px 6px rgba(255,255,255,0.3)'
-              }}
+              className="relative transition-all duration-1000 ease-[cubic-bezier(0.34,1.56,0.64,1)] scale-100 translate-y-0 opacity-100 mx-auto"
+              style={{ perspective: '1200px' }}
             >
-              {/* Inner Envelope Lining */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#7A5426] via-[#946A36] to-[#6A471E] opacity-95" />
-
-              {/* Letter Paper Preview inside */}
+              {/* Envelope Base Body */}
               <div
-                className={`absolute left-4 sm:left-6 right-4 sm:right-6 top-4 sm:top-6 bottom-3 sm:bottom-4 rounded-xl bg-[#FAF6EE] shadow-md transition-transform duration-1000 ease-out border border-[#D4AF37]/30 flex flex-col items-center justify-center p-4 ${
-                  stage === 'envelope_opening' ? '-translate-y-16 scale-105' : 'translate-y-0 scale-100'
-                }`}
-              >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full p-0.5 bg-gradient-to-tr from-[#996515] to-[#FFD700] mb-1">
-                  <img src={thezarLogo} alt="TheZar Logo" className="w-full h-full object-contain rounded-full bg-[#4A0A0A]" />
-                </div>
-                <span className="font-serif font-black text-[#5C101B] text-[11px] sm:text-xs tracking-widest uppercase">TheZar 2026</span>
-              </div>
-
-              {/* Folded Triangular Flaps */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 480 310">
-                <polygon points="0,0 240,155 0,310" fill="#996E3B" opacity="0.95" />
-                <polygon points="480,0 240,155 480,310" fill="#8E6332" opacity="0.95" />
-                <polygon points="0,310 240,155 480,310" fill="#A87A44" />
-              </svg>
-
-              {/* Top Envelope Flap (3D Slow-Motion Flip Open) */}
-              <div
-                className={`absolute top-0 left-0 right-0 h-1/2 origin-top transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] z-20 ${
-                  stage === 'envelope_opening' || stage === 'letter_reveal'
-                    ? 'rotate-x-180 -translate-y-full opacity-60'
-                    : 'rotate-x-0'
-                }`}
+                className="relative w-[310px] xs:w-[350px] sm:w-[500px] md:w-[540px] h-[215px] xs:h-[235px] sm:h-[320px] rounded-2xl shadow-[0_30px_70px_rgba(0,0,0,0.85)] border-2 border-[#8C6B46]/60 overflow-visible"
                 style={{
-                  transformStyle: 'preserve-3d',
-                  transitionDuration: '1.4s'
+                  background: 'linear-gradient(145deg, #C29B68 0%, #A97E4A 50%, #8C6230 100%)',
+                  boxShadow: '0 25px 60px rgba(0,0,0,0.7), inset 0 2px 6px rgba(255,255,255,0.3)'
                 }}
               >
-                <svg className="w-full h-full drop-shadow-xl" viewBox="0 0 480 155">
-                  <polygon points="0,0 480,0 240,155" fill="#B3864E" stroke="#8C6230" strokeWidth="1.5" />
-                </svg>
-              </div>
+                {/* Back Envelope Lining (Fully Opaque Interior Pocket) */}
+                <div className="absolute inset-0 bg-gradient-to-b from-[#663F17] via-[#855B27] to-[#4D2E0F] rounded-2xl overflow-hidden shadow-inner" />
 
-              {/* Royal Golden Wax Seal with TheZar Medallion */}
-              <div
-                className={`absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 z-30 ${
-                  stage === 'envelope_opening' || stage === 'letter_reveal'
-                    ? 'scale-150 opacity-0 -translate-y-24 rotate-45 pointer-events-none'
-                    : 'scale-100 opacity-100'
-                }`}
-              >
-                <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-[#996515] via-[#FFD700] to-[#FFF3B0] p-1 shadow-[0_10px_30px_rgba(212,175,55,0.75)] flex items-center justify-center">
-                  <div className="w-full h-full rounded-full bg-gradient-to-b from-[#B8860B] to-[#785404] border border-[#FFE082] flex items-center justify-center shadow-inner overflow-hidden p-1.5 sm:p-2.5">
-                    <img
-                      src={thezarLogo}
-                      alt="TheZar Medallion Seal"
-                      className="w-full h-full object-contain rounded-full drop-shadow-md filter brightness-110"
-                    />
+                {/* Letter Paper (Strictly bottom-aligned so it never protrudes at bottom; slides UP above top edge when opened) */}
+                <div
+                  className={`absolute left-3 sm:left-6 right-3 sm:right-6 bottom-3 sm:bottom-4 h-[185px] xs:h-[200px] sm:h-[265px] rounded-xl bg-[#FAF6EE] shadow-2xl transition-all duration-[1800ms] ease-out border-2 border-[#D4AF37] flex flex-col items-center justify-start pt-2.5 sm:pt-4 px-3 sm:px-6 overflow-hidden z-10 ${
+                    stage === 'envelope_opening'
+                      ? '-translate-y-28 sm:-translate-y-40 scale-100 shadow-[0_25px_60px_rgba(0,0,0,0.65)]'
+                      : 'translate-y-0 scale-95 shadow-none'
+                  }`}
+                  style={{
+                    background: 'linear-gradient(180deg, #FFFFFF 0%, #FAF6EE 55%, #F4E8D6 100%)'
+                  }}
+                >
+                  {/* Gold Top Trim */}
+                  <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mb-1 sm:mb-2 shrink-0" />
+
+                  {/* Big Medallion Logo */}
+                  <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded-full p-1 sm:p-1.5 bg-gradient-to-tr from-[#996515] via-[#FFD700] to-[#FFE082] mb-1 sm:mb-1.5 shadow-lg shrink-0">
+                    <img src={thezarLogo} alt="TheZar Logo" className="w-full h-full object-contain rounded-full bg-[#4A0A0A] p-1" />
+                  </div>
+
+                  {/* Title & Badge */}
+                  <span className="font-serif font-black text-[#5C101B] text-[11px] xs:text-xs sm:text-base tracking-widest uppercase text-center shrink-0">
+                    THEZAR 2026
+                  </span>
+                  <span className="text-[7.5px] xs:text-[8.5px] sm:text-[11px] font-serif font-bold text-[#8C202E] tracking-wider uppercase text-center mt-0.5 shrink-0">
+                    Official Inauguration & Youth Championship
+                  </span>
+                  <div className="mt-1 flex items-center gap-1 text-[7px] sm:text-[9.5px] text-amber-900 font-bold uppercase tracking-widest bg-amber-100/90 px-2 sm:px-2.5 py-0.5 rounded-full border border-amber-300 shrink-0">
+                    ✨ Statewide Cultural Festival ✨
+                  </div>
+                </div>
+
+                {/* Front Folded Triangular Pocket Flaps (Z-Index 20: Keeps lower half of paper covered inside) */}
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none z-20 rounded-2xl overflow-hidden"
+                  viewBox="0 0 500 320"
+                  preserveAspectRatio="none"
+                >
+                  {/* Left Triangle Flap */}
+                  <polygon points="0,0 250,160 0,320" fill="#996E3B" opacity="0.99" />
+                  {/* Right Triangle Flap */}
+                  <polygon points="500,0 250,160 500,320" fill="#8E6332" opacity="0.99" />
+                  {/* Bottom Triangle Flap */}
+                  <polygon points="0,320 250,160 500,320" fill="#A87A44" filter="drop-shadow(0 -4px 6px rgba(0,0,0,0.25))" />
+                </svg>
+
+                {/* Top Envelope Flap (3D Flip Open at Slow Speed) */}
+                <div
+                  className={`absolute top-0 left-0 right-0 h-1/2 origin-top transition-transform duration-[1800ms] ease-[cubic-bezier(0.25,1,0.5,1)] z-30 ${
+                    stage === 'envelope_opening'
+                      ? 'rotate-x-180 -translate-y-full opacity-30'
+                      : 'rotate-x-0'
+                  }`}
+                  style={{
+                    transformStyle: 'preserve-3d'
+                  }}
+                >
+                  <svg
+                    className="w-full h-full drop-shadow-xl overflow-visible"
+                    viewBox="0 0 500 160"
+                    preserveAspectRatio="none"
+                  >
+                    <polygon points="0,0 500,0 250,160" fill="#B3864E" stroke="#8C6230" strokeWidth="1.5" />
+                  </svg>
+                </div>
+
+                {/* Royal Golden Wax Seal with TheZar Medallion */}
+                <div
+                  className={`absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-1000 z-40 ${
+                    stage === 'envelope_opening'
+                      ? 'scale-150 opacity-0 -translate-y-36 rotate-45 pointer-events-none'
+                      : 'scale-100 opacity-100'
+                  }`}
+                >
+                  <div className="w-24 h-24 xs:w-28 xs:h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full bg-gradient-to-tr from-[#8A550F] via-[#FFD700] to-[#FFF3B0] p-1.5 sm:p-2.5 shadow-[0_15px_40px_rgba(0,0,0,0.85),0_0_35px_rgba(212,175,55,0.8)] flex items-center justify-center">
+                    <div className="w-full h-full rounded-full bg-gradient-to-b from-[#B8860B] via-[#785404] to-[#422C02] border-2 border-[#FFE082] flex items-center justify-center shadow-inner overflow-hidden p-1.5 sm:p-3">
+                      <img
+                        src={thezarLogo}
+                        alt="TheZar Medallion Seal"
+                        className="w-full h-full object-contain rounded-full drop-shadow-lg filter brightness-110"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* 
             ====================================================================
@@ -645,7 +536,7 @@ export default function RibbonCuttingSplash({ onComplete }) {
           */}
           {stage === 'letter_reveal' && (
             <div
-              className="relative w-full max-w-4xl max-h-[88vh] bg-[#FAF8F5] rounded-2xl sm:rounded-3xl shadow-[0_30px_90px_rgba(0,0,0,0.9)] border-2 sm:border-4 border-[#D4AF37] overflow-y-auto z-40 p-4 sm:p-8 md:p-10 text-[#2A040A] animate-letter-unfold"
+              className="relative w-full max-w-4xl max-h-[90vh] bg-[#FAF8F5] rounded-2xl sm:rounded-3xl shadow-[0_30px_90px_rgba(0,0,0,0.9)] border-2 sm:border-4 border-[#D4AF37] overflow-y-auto z-40 p-3.5 sm:p-8 md:p-10 text-[#2A040A] animate-letter-unfold mx-auto my-auto"
               ref={letterScrollRef}
               style={{
                 background: 'linear-gradient(135deg, #FAF8F5 0%, #F6EFE6 50%, #EFE4D4 100%)',
@@ -661,14 +552,14 @@ export default function RibbonCuttingSplash({ onComplete }) {
                   className="w-full h-32 sm:h-44 md:h-52 object-cover object-center filter contrast-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-transparent" />
-                
-                {/* Medallion Logo Overlay at Bottom of Banner */}
+
+                {/* Medallion Logo Overlay at Bottom of Banner (Enlarged) */}
                 <div className="absolute bottom-1 sm:bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full p-1 bg-gradient-to-tr from-[#996515] via-[#FFD700] to-[#FFF3B0] shadow-2xl">
+                  <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full p-1.5 bg-gradient-to-tr from-[#996515] via-[#FFD700] to-[#FFF3B0] shadow-2xl">
                     <img
                       src={thezarLogo}
                       alt="TheZar Official Medallion"
-                      className="w-full h-full object-contain rounded-full bg-[#4A0A0A]"
+                      className="w-full h-full object-contain rounded-full bg-[#4A0A0A] p-1"
                     />
                   </div>
                 </div>
@@ -725,7 +616,7 @@ export default function RibbonCuttingSplash({ onComplete }) {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                          
+
                           <div className="absolute top-2.5 left-2.5 px-2 py-0.5 sm:py-1 rounded-full bg-[#6B1414]/90 backdrop-blur-md text-[#FFE082] text-[9px] sm:text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 border border-[#D4AF37]/40">
                             <IconComponent className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#FFE082]" />
                             <span>{item.tag}</span>
@@ -787,31 +678,23 @@ export default function RibbonCuttingSplash({ onComplete }) {
         </div>
       )}
 
-      {/* Golden Scissors Cursor before cut */}
-      {stage === 'initial' && (
-        <div
-          className="fixed pointer-events-none z-50 transition-transform duration-75 -translate-x-1/2 -translate-y-1/2 hidden md:block"
-          style={{
-            left: `${mousePos.x}px`,
-            top: `${mousePos.y}px`,
-            filter: 'drop-shadow(0 6px 18px rgba(0,0,0,0.6))'
-          }}
-        >
-          <div className="relative">
-            <Scissors
-              className={`w-12 h-12 text-[#FFD700] transition-transform duration-150 ${
-                isHoveringRibbon ? 'scale-125 rotate-[-25deg]' : 'rotate-[-45deg]'
-              }`}
-            />
-            <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black/80 backdrop-blur-md px-3 py-0.5 rounded-full text-[10px] text-white font-bold border border-white/30 font-mono">
-              Cut Ribbon ✂️
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Custom Keyframe Animations */}
       <style>{`
+        @keyframes confettiRain {
+          0% {
+            transform: translateY(-40px) rotate(0deg) translateX(0);
+          }
+          50% {
+            transform: translateY(55vh) rotate(180deg) translateX(20px);
+          }
+          100% {
+            transform: translateY(115vh) rotate(360deg) translateX(-15px);
+          }
+        }
+        .animate-confetti-rain {
+          animation-name: confettiRain;
+        }
+
         @keyframes snowfall {
           0% {
             transform: translateY(0) translateX(0);

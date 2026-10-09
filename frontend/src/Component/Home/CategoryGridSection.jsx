@@ -28,7 +28,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
           color: 'bg-amber-500/15 text-amber-900 border-amber-200',
           badgeBg: 'bg-amber-100 text-amber-800',
           description: 'Acoustic festive singing with live jury evaluation. Kids (under 15) and adult open tracks available.',
-          prizes: '1st ₹15,000 / 2nd ₹10,000',
+          prizes: '1st Prize ₹15,000 / 2nd Prize ₹10,000',
           venue: 'Tirunelveli District Arena'
         },
         {
@@ -41,7 +41,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
           color: 'bg-[#9e0804]/15 text-[#9e0804] border-[#9e0804]/30',
           badgeBg: 'bg-[#9e0804]/15 text-[#9e0804]',
           description: 'Grand choir and band competition for church, school, college, and independent ensembles.',
-          prizes: '1st ₹50,000 / 2nd ₹25,000',
+          prizes: '1st Prize ₹50,000 / 2nd Prize ₹25,000',
           venue: 'Main Auditorium Stage'
         },
         {
@@ -54,7 +54,7 @@ export default function CategoryGridSection({ onOpenRegister }) {
           color: 'bg-purple-500/15 text-purple-900 border-purple-200',
           badgeBg: 'bg-purple-100 text-purple-800',
           description: 'Dynamic festive dance battles featuring creative choreography, rhythm, costumes, and stage synchrony.',
-          prizes: '1st ₹25,000 / 2nd ₹15,000',
+          prizes: '1st Prize ₹25,000 / 2nd Prize ₹15,000',
           venue: 'Grand Stage Arena'
         },
         {

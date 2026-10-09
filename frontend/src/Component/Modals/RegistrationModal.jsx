@@ -74,7 +74,7 @@ const CATEGORIES_DATA = [
     eventId: 'evt-carol-kids-solo',
     feePerUnit: 699,
     feeLabel: '₹699 per entry',
-    prizes: '1st ₹5,000 / 2nd ₹3,000',
+    prizes: '1st Prize ₹5,000 / 2nd Prize ₹3,000',
     badge: 'Kids Under 15',
     description: 'Solo vocal contest for young kids with acoustic accompaniment.'
   },
@@ -86,7 +86,7 @@ const CATEGORIES_DATA = [
     eventId: 'evt-carol-adult-solo',
     feePerUnit: 699,
     feeLabel: '₹699 per entry',
-    prizes: '1st ₹10,000 / 2nd ₹5,000',
+    prizes: '1st Prize ₹10,000 / 2nd Prize ₹5,000',
     badge: 'Popular',
     description: 'Open solo vocal contest for adults across Tamil Nadu.'
   },
@@ -98,7 +98,7 @@ const CATEGORIES_DATA = [
     eventId: 'evt-carol-choirs-bands',
     feePerUnit: 199,
     feeLabel: '₹199 per person',
-    prizes: '1st ₹25,000 / 2nd ₹15,000',
+    prizes: '1st Prize ₹25,000 / 2nd Prize ₹15,000',
     badge: 'Team Event',
     description: 'Family, Church, School Choirs & Live Festive Music Bands.'
   },
@@ -110,7 +110,7 @@ const CATEGORIES_DATA = [
     eventId: 'evt-carol-solo-dance',
     feePerUnit: 699,
     feeLabel: '₹699 per entry',
-    prizes: '1st ₹10,000 / 2nd ₹5,000',
+    prizes: '1st Prize ₹10,000 / 2nd Prize ₹5,000',
     badge: 'Freestyle',
     description: 'Solo Christmas rhythm, classical fusion & festive dance act.'
   },
@@ -122,7 +122,7 @@ const CATEGORIES_DATA = [
     eventId: 'evt-carol-group-dance',
     feePerUnit: 199,
     feeLabel: '₹199 per person',
-    prizes: '1st ₹25,000 / 2nd ₹15,000',
+    prizes: '1st Prize ₹25,000 / 2nd Prize ₹15,000',
     badge: 'Choreography',
     description: 'Group dance troupe performance with creative theme & costumes.'
   },
@@ -687,11 +687,11 @@ export default function RegistrationModal({ onClose }) {
                         {cat.description}
                       </p>
 
-                      <div className="pt-2 border-t border-slate-200/70 flex items-center justify-between text-xs">
-                        <span className="font-mono font-extrabold text-[#9e0804] bg-white px-2.5 py-0.5 rounded-lg border border-red-100 shadow-2xs">
+                      <div className="pt-2 border-t border-slate-200/70 flex flex-wrap items-center justify-between gap-1.5 text-xs">
+                        <span className="font-mono font-extrabold text-[#9e0804] bg-white px-2.5 py-0.5 rounded-lg border border-red-100 shadow-2xs text-[11px] sm:text-xs">
                           {cat.feeLabel}
                         </span>
-                        <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md">
+                        <span className="text-[10px] sm:text-[11px] text-emerald-800 font-extrabold bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-md">
                           {cat.prizes}
                         </span>
                       </div>
@@ -804,7 +804,7 @@ export default function RegistrationModal({ onClose }) {
                       <input
                         type="email"
                         required
-                        placeholder="******@gmail.com"
+                        placeholder="e.g. participant@gmail.com"
                         value={individualData.email}
                         onChange={(e) => setIndividualData({ ...individualData, email: e.target.value })}
                         className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#9e0804]/20 focus:border-[#9e0804] transition-all"
@@ -827,16 +827,16 @@ export default function RegistrationModal({ onClose }) {
                       style={{ borderRadius: '12px' }}
                     >
                       {/* Country Code Selector */}
-                      <div className="relative bg-slate-50 border-r border-slate-200 shrink-0">
+                      <div className="relative bg-slate-50 border-r border-slate-200 shrink-0 w-20 sm:w-24">
                         <select
                           value={individualData.countryCode || '+91'}
                           onChange={(e) => setIndividualData({ ...individualData, countryCode: e.target.value })}
-                          className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs sm:text-sm font-bold text-slate-800 cursor-pointer focus:outline-none"
+                          className="w-full appearance-none bg-transparent py-2.5 pl-2 sm:pl-2.5 pr-5 text-xs sm:text-sm font-bold text-slate-800 cursor-pointer focus:outline-none"
                           title="Select Country Code"
                         >
                           {COUNTRY_CODES.map((c) => (
                             <option key={`ind-phone-${c.country}-${c.code}`} value={c.code}>
-                              {c.flag} {c.code} ({c.name})
+                              {c.flag} {c.code}
                             </option>
                           ))}
                         </select>
@@ -849,13 +849,13 @@ export default function RegistrationModal({ onClose }) {
                         required
                         inputMode="numeric"
                         maxLength={10}
-                        placeholder="******1878"
+                        placeholder="9876543210"
                         value={individualData.phone}
                         onChange={(e) => {
                           const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
                           setIndividualData({ ...individualData, phone: digits });
                         }}
-                        className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs sm:text-sm focus:outline-none font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal placeholder:text-slate-400"
+                        className="flex-1 min-w-0 w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs sm:text-sm focus:outline-none font-medium placeholder:text-slate-400"
                       />
                     </div>
                   </div>
@@ -875,16 +875,16 @@ export default function RegistrationModal({ onClose }) {
                       className="flex items-center rounded-xl bg-white border border-slate-300 focus-within:ring-2 focus-within:ring-[#9e0804]/20 focus-within:border-[#9e0804] transition-all overflow-hidden"
                       style={{ borderRadius: '12px' }}
                     >
-                      <div className="relative bg-slate-50 border-r border-slate-200 shrink-0">
+                      <div className="relative bg-slate-50 border-r border-slate-200 shrink-0 w-20 sm:w-24">
                         <select
                           value={individualData.altCountryCode || '+91'}
                           onChange={(e) => setIndividualData({ ...individualData, altCountryCode: e.target.value })}
-                          className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs sm:text-sm font-bold text-slate-800 cursor-pointer focus:outline-none"
+                          className="w-full appearance-none bg-transparent py-2.5 pl-2 sm:pl-2.5 pr-5 text-xs sm:text-sm font-bold text-slate-800 cursor-pointer focus:outline-none"
                           title="Select Country Code"
                         >
                           {COUNTRY_CODES.map((c) => (
                             <option key={`ind-alt-${c.country}-${c.code}`} value={c.code}>
-                              {c.flag} {c.code} ({c.name})
+                              {c.flag} {c.code}
                             </option>
                           ))}
                         </select>
@@ -895,13 +895,13 @@ export default function RegistrationModal({ onClose }) {
                         type="tel"
                         inputMode="numeric"
                         maxLength={10}
-                        placeholder="******3210"
+                        placeholder="9876543210"
                         value={individualData.altPhone}
                         onChange={(e) => {
                           const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
                           setIndividualData({ ...individualData, altPhone: digits });
                         }}
-                        className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs sm:text-sm focus:outline-none font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal placeholder:text-slate-400"
+                        className="flex-1 min-w-0 w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs sm:text-sm focus:outline-none font-medium placeholder:text-slate-400"
                       />
                     </div>
                   </div>
@@ -971,16 +971,16 @@ export default function RegistrationModal({ onClose }) {
                       className="flex items-center rounded-xl bg-white border border-slate-300 focus-within:ring-2 focus-within:ring-[#9e0804]/20 focus-within:border-[#9e0804] transition-all overflow-hidden"
                       style={{ borderRadius: '12px' }}
                     >
-                      <div className="relative bg-slate-50 border-r border-slate-200 shrink-0">
+                      <div className="relative bg-slate-50 border-r border-slate-200 shrink-0 w-20 sm:w-24">
                         <select
                           value={groupData.countryCode || '+91'}
                           onChange={(e) => setGroupData({ ...groupData, countryCode: e.target.value })}
-                          className="appearance-none bg-transparent py-2.5 pl-2.5 pr-6 text-xs sm:text-sm font-bold text-slate-800 cursor-pointer focus:outline-none"
+                          className="w-full appearance-none bg-transparent py-2.5 pl-2 sm:pl-2.5 pr-5 text-xs sm:text-sm font-bold text-slate-800 cursor-pointer focus:outline-none"
                           title="Select Country Code"
                         >
                           {COUNTRY_CODES.map((c) => (
                             <option key={`grp-phone-${c.country}-${c.code}`} value={c.code}>
-                              {c.flag} {c.code} ({c.name})
+                              {c.flag} {c.code}
                             </option>
                           ))}
                         </select>
@@ -992,13 +992,13 @@ export default function RegistrationModal({ onClose }) {
                         required
                         inputMode="numeric"
                         maxLength={10}
-                        placeholder="******1878"
+                        placeholder="9876543210"
                         value={groupData.groupLeaderPhone}
                         onChange={(e) => {
                           const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
                           setGroupData({ ...groupData, groupLeaderPhone: digits });
                         }}
-                        className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs sm:text-sm focus:outline-none font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal placeholder:text-slate-400"
+                        className="flex-1 min-w-0 w-full px-3 py-2.5 bg-transparent text-slate-900 text-xs sm:text-sm focus:outline-none font-medium placeholder:text-slate-400"
                       />
                     </div>
                   </div>
@@ -1012,7 +1012,7 @@ export default function RegistrationModal({ onClose }) {
                       <input
                         type="email"
                         required
-                        placeholder="******@choir.org"
+                        placeholder="e.g. leader@choir.org"
                         value={groupData.email}
                         onChange={(e) => setGroupData({ ...groupData, email: e.target.value })}
                         className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#9e0804]/20 focus:border-[#9e0804] transition-all"
