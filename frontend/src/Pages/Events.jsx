@@ -12,6 +12,7 @@ import { CheckCircle2 } from 'lucide-react';
 export default function Events() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
+  const [selectedEventData, setSelectedEventData] = useState(null);
 
   const rules = [
     'Participants must produce a valid College ID Card along with THEZAR digital QR pass.',
@@ -49,7 +50,10 @@ export default function Events() {
         {/* 04 Upcoming Events Grid (Next) */}
         <EventsGrid
           onOpenRegister={() => setIsRegisterOpen(true)}
-          onSelectEvent={(evtId) => setSelectedEventId(evtId)}
+          onSelectEvent={(evtId, evtData) => {
+            setSelectedEventId(evtId);
+            setSelectedEventData(evtData);
+          }}
         />
 
         {/* 05 Competitions Categories */}
@@ -111,7 +115,11 @@ export default function Events() {
       {selectedEventId && (
         <EventDetailsModal
           eventId={selectedEventId}
-          onClose={() => setSelectedEventId(null)}
+          eventData={selectedEventData}
+          onClose={() => {
+            setSelectedEventId(null);
+            setSelectedEventData(null);
+          }}
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
       )}

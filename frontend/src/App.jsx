@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { SiteContentProvider } from './context/SiteContentContext';
 import Home from './Pages/Home';
+import Events from './Pages/Events';
 import Admin from './Pages/Admin';
 
 // Protected Route Guard for Admin Dashboard (/admin/portal/dashboard)
@@ -27,6 +28,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/events" element={<Events />} />
         
           {/* Public Admin Login / Setup Route */}
           <Route

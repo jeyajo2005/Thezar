@@ -2,10 +2,23 @@ import { useState } from 'react';
 import { EVENTS_LIST } from '../../data/mockData';
 import { X, Calendar, Clock, MapPin, Code, Music, HelpCircle, Zap, Shield, Trophy, Sparkles, UserCheck, ArrowRight } from 'lucide-react';
 
-export default function EventDetailsModal({ eventId, onClose, onOpenRegister }) {
+export default function EventDetailsModal({ eventId, eventData, onClose, onOpenRegister }) {
   const [activeTab, setActiveTab] = useState('Overview');
 
-  const event = EVENTS_LIST.find(e => e.id === eventId) || EVENTS_LIST[0];
+  const rawEvent = eventData || EVENTS_LIST.find(e => e.id === eventId) || EVENTS_LIST[0];
+  const event = {
+    ...rawEvent,
+    competitions: rawEvent?.competitions && rawEvent.competitions.length > 0 ? rawEvent.competitions : [
+      { name: rawEvent?.title || 'Championship Stage', type: rawEvent?.category || 'General', duration: 'Full Day', prizes: `₹${rawEvent?.price > 0 ? rawEvent.price : 'Free'} Entry` }
+    ],
+    schedule: rawEvent?.schedule && rawEvent.schedule.length > 0 ? rawEvent.schedule : [
+      { time: '09:00 AM', task: 'Participant Reporting & Check-in Desk', room: rawEvent?.venue || 'Main Gate' },
+      { time: '10:30 AM', task: `${rawEvent?.title || 'District Round'} Preliminary Session`, room: 'Acoustic Stage' },
+      { time: '01:00 PM', task: 'Lunch Break & Live Talent Showcase', room: 'Auditorium Hall' },
+      { time: '02:30 PM', task: 'Grand Jury Round & Stage Finals', room: 'Main Arena' },
+      { time: '05:00 PM', task: 'Valedictory & Winner Digital Pass Certification', room: 'Main Stage' }
+    ]
+  };
 
   const getCompetitionIcon = (type) => {
     switch (type) {

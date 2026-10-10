@@ -24,6 +24,7 @@ import RibbonCuttingSplash from '../Component/SplashScreen/RibbonCuttingSplash';
 export default function Home() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
+  const [selectedEventData, setSelectedEventData] = useState(null);
   const [showRibbonSplash, setShowRibbonSplash] = useState(true);
 
   return (
@@ -65,7 +66,10 @@ export default function Home() {
         {/* 06. Upcoming Events */}
         <EventsGrid
           onOpenRegister={() => setIsRegisterOpen(true)}
-          onSelectEvent={(evtId) => setSelectedEventId(evtId)}
+          onSelectEvent={(evtId, evtData) => {
+            setSelectedEventId(evtId);
+            setSelectedEventData(evtData);
+          }}
         />
 
         {/* 07. 38 District Journey */}
@@ -130,7 +134,11 @@ export default function Home() {
       {selectedEventId && (
         <EventDetailsModal
           eventId={selectedEventId}
-          onClose={() => setSelectedEventId(null)}
+          eventData={selectedEventData}
+          onClose={() => {
+            setSelectedEventId(null);
+            setSelectedEventData(null);
+          }}
           onOpenRegister={() => setIsRegisterOpen(true)}
         />
       )}

@@ -1,44 +1,101 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { EVENTS_LIST } from '../../data/mockData';
-import { Calendar, MapPin, ArrowRight, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, Eye, ChevronLeft, ChevronRight, Loader2, Sparkles } from 'lucide-react';
+import { useSiteContent } from '../../context/SiteContentContext';
+
+const getEventImage = (category, title) => {
+  const text = `${category || ''} ${title || ''}`.toLowerCase();
+  if (text.includes('sing') || text.includes('vocal') || text.includes('carol')) {
+    return 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700&auto=format&fit=crop&q=80';
+  }
+  if (text.includes('choir') || text.includes('band')) {
+    return 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=700&auto=format&fit=crop&q=80';
+  }
+  if (text.includes('dance')) {
+    return 'https://images.unsplash.com/photo-1547153760-18fc86324498?w=700&auto=format&fit=crop&q=80';
+  }
+  if (text.includes('santa') || text.includes('special')) {
+    return 'https://images.unsplash.com/photo-1543258103-a62bdc069871?w=700&auto=format&fit=crop&q=80';
+  }
+  if (text.includes('quiz') || text.includes('hack') || text.includes('tech')) {
+    return 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=700&auto=format&fit=crop&q=80';
+  }
+  return 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=700&auto=format&fit=crop&q=80';
+};
 
 export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
+  const { siteContent } = useSiteContent();
   const [filterCategory, setFilterCategory] = useState('All');
   const [eventsList, setEventsList] = useState(EVENTS_LIST);
+  const [loading, setLoading] = useState(true);
   const [activeDot, setActiveDot] = useState(0);
   const sliderRef = useRef(null);
 
   useEffect(() => {
+    let isMounted = true;
     fetch('http://localhost:5000/api/events')
       .then((res) => res.json())
       .then((data) => {
+        if (!isMounted) return;
         if (data.success && Array.isArray(data.events) && data.events.length > 0) {
           // Format DB events for EventsGrid display
-          const formatted = data.events.map((ev) => ({
-            id: ev.eventId || ev.id,
+          const formatted = data.events.map((ev, idx) => ({
+            id: ev.eventId || ev._id || `evt-${idx}`,
             title: ev.title,
             district: ev.district || 'Tirunelveli',
             date: ev.date || '12.12.2026',
+            time: ev.time || '10:00 AM - 05:00 PM',
             venue: ev.venue || 'Tirunelveli District Arena',
-            status: 'Upcoming',
-            price: ev.price,
+            status: ev.status || (idx === 0 ? 'Live' : 'Upcoming'),
+            price: ev.price ?? 699,
+            category: ev.category || 'Competitions',
             badge: ev.category || 'Competitions',
-            image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80',
-            competitions: [{ name: ev.title, prize: `₹${ev.price > 0 ? ev.price : 'Free'} Entry` }]
+            image: ev.image || getEventImage(ev.category, ev.title),
+            description: ev.description || `${ev.title} hosted in ${ev.district || 'Tirunelveli'} with live audience and master jury evaluation.`,
+            competitions: ev.competitions || [
+              { name: ev.title, duration: '15 Mins', prizes: `₹${ev.price > 0 ? ev.price : 'Free'} Entry`, type: ev.category || 'Cultural' }
+            ],
+            schedule: ev.schedule || [
+              { time: '09:30 AM', task: 'Check-in & Registration Desk', room: 'Main Entrance' },
+              { time: '10:30 AM', task: `${ev.title} Preliminary Round`, room: 'Acoustic Stage' },
+              { time: '02:00 PM', task: 'Finalist Stage Performance', room: 'Grand Arena' },
+              { time: '04:30 PM', task: 'Award Ceremony & Winner Certification', room: 'Main Stage' }
+            ]
           }));
+
+          // Merge with mock events or replace
           setEventsList(formatted);
         }
       })
-      .catch(() => {});
+      .catch((err) => {
+        console.warn('[EventsGrid] Offline or API error, keeping default events:', err.message);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const categories = ['All', 'Live Now', 'Singing Solo', 'Choir & Bands', 'Dance Showcase', 'Special Contest'];
+  // Compute dynamic categories based on events list
+  const categories = useMemo(() => {
+    const rawCategories = eventsList.map((e) => e.badge || e.category).filter(Boolean);
+    const unique = Array.from(new Set(rawCategories));
+    return ['All', 'Live Now', ...unique.slice(0, 5)];
+  }, [eventsList]);
 
-  const filteredEvents = eventsList.filter((evt) => {
-    if (filterCategory === 'All') return true;
-    if (filterCategory === 'Live Now') return evt.status === 'Live';
-    return evt.badge?.toLowerCase().includes(filterCategory.toLowerCase()) || evt.title?.toLowerCase().includes(filterCategory.toLowerCase());
-  });
+  const filteredEvents = useMemo(() => {
+    return eventsList.filter((evt) => {
+      if (filterCategory === 'All') return true;
+      if (filterCategory === 'Live Now') return evt.status === 'Live';
+      const cat = (evt.badge || evt.category || '').toLowerCase();
+      const title = (evt.title || '').toLowerCase();
+      const target = filterCategory.toLowerCase();
+      return cat.includes(target) || title.includes(target);
+    });
+  }, [eventsList, filterCategory]);
 
   const handleScroll = () => {
     if (sliderRef.current) {
@@ -132,18 +189,6 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
                       color: isSelected ? '#FFFFFF' : '#475569',
                       boxShadow: isSelected ? '0 4px 12px rgba(158, 8, 4, 0.25)' : 'none',
                     }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = '#9e0804';
-                        e.currentTarget.style.backgroundColor = 'rgba(158, 8, 4, 0.08)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = '#475569';
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                      }
-                    }}
                   >
                     {cat}
                   </button>
@@ -173,102 +218,123 @@ export default function EventsGrid({ onOpenRegister, onSelectEvent }) {
           </div>
         </div>
 
-        {/* Event Cards Interactive Horizontal Slider Container (Hidden Scrollbar) */}
-        <div
-          ref={sliderRef}
-          onScroll={handleScroll}
-          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {filteredEvents.map((evt) => (
-            <div
-              key={evt.id}
-              className="snap-start shrink-0 w-[300px] sm:w-[350px] md:w-[380px] bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
-            >
-              {/* Event Image with Badge */}
-              <div className="relative h-52 sm:h-56 overflow-hidden">
-                <img
-                  src={evt.image}
-                  alt={evt.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#3f0701]/75 via-transparent to-transparent" />
-                
-                {/* Status Badge */}
-                <div className="absolute top-4 left-4">
-                  {evt.status === 'Live' ? (
-                    <span className="inline-flex items-center gap-1.5 bg-[#9e0804] text-white text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md" style={{ borderRadius: '9999px' }}>
-                      <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                      LIVE NOW
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-md text-[#3f0701] text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm" style={{ borderRadius: '9999px' }}>
-                      <span className="w-2 h-2 rounded-full bg-slate-400"></span>
-                      UPCOMING
-                    </span>
-                  )}
-                </div>
-
-                {/* District Pill */}
-                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white text-xs">
-                  <span className="text-red-300 font-bold uppercase tracking-[0.12em] text-[11px] sm:text-[12px]">
-                    {evt.district} DISTRICT
-                  </span>
-                  <span className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-semibold" style={{ borderRadius: '9999px' }}>
-                    Round 2
-                  </span>
-                </div>
+        {/* Event Cards Interactive Horizontal Slider */}
+        {loading ? (
+          <div className="flex gap-6 overflow-hidden pb-4">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="shrink-0 w-[300px] sm:w-[350px] md:w-[380px] bg-white rounded-2xl h-96 border border-slate-200 animate-pulse p-4 space-y-4">
+                <div className="h-52 bg-slate-200 rounded-xl" />
+                <div className="h-4 bg-slate-200 rounded w-1/3" />
+                <div className="h-6 bg-slate-200 rounded w-3/4" />
+                <div className="h-10 bg-slate-200 rounded-full mt-6" />
               </div>
+            ))}
+          </div>
+        ) : filteredEvents.length === 0 ? (
+          <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 my-6">
+            <p className="text-slate-500 text-sm">No events found for "{filterCategory}".</p>
+          </div>
+        ) : (
+          <div
+            ref={sliderRef}
+            onScroll={handleScroll}
+            className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            {filteredEvents.map((evt) => (
+              <div
+                key={evt.id}
+                className="snap-start shrink-0 w-[300px] sm:w-[350px] md:w-[380px] bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
+              >
+                {/* Event Image with Badge */}
+                <div className="relative h-52 sm:h-56 overflow-hidden bg-slate-900">
+                  <img
+                    src={evt.image}
+                    alt={evt.title}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = getEventImage(evt.category, evt.title);
+                    }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#3f0701]/75 via-transparent to-transparent" />
+                  
+                  {/* Status Badge */}
+                  <div className="absolute top-4 left-4">
+                    {evt.status === 'Live' ? (
+                      <span className="inline-flex items-center gap-1.5 bg-[#9e0804] text-white text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md" style={{ borderRadius: '9999px' }}>
+                        <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                        LIVE NOW
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-md text-[#3f0701] text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm" style={{ borderRadius: '9999px' }}>
+                        <span className="w-2 h-2 rounded-full bg-slate-400"></span>
+                        UPCOMING
+                      </span>
+                    )}
+                  </div>
 
-              {/* Card Body */}
-              <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <h3 className="text-[19px] sm:text-[21px] font-bold text-[#071426] tracking-tight group-hover:text-[#9e0804] transition-colors line-clamp-1">
-                    {evt.title}
-                  </h3>
-                  <div className="space-y-1.5 text-[13px] sm:text-[14px] text-[#64748B] font-medium">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-3.5 h-3.5 text-[#9e0804] shrink-0" />
-                      <span>{evt.date} • {evt.time}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                      <span className="truncate">{evt.venue}</span>
-                    </div>
+                  {/* District Pill */}
+                  <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white text-xs">
+                    <span className="text-red-300 font-bold uppercase tracking-[0.12em] text-[11px] sm:text-[12px]">
+                      {evt.district} DISTRICT
+                    </span>
+                    <span className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-semibold" style={{ borderRadius: '9999px' }}>
+                      {evt.badge || 'District Round'}
+                    </span>
                   </div>
                 </div>
 
-                {/* Card Actions */}
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
-                  <button
-                    onClick={() => onSelectEvent && onSelectEvent(evt.id)}
-                    className="inline-flex items-center gap-1.5 text-[13px] sm:text-[14px] font-bold text-slate-700 hover:text-[#9e0804] transition-colors cursor-pointer"
-                  >
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>View Details</span>
-                  </button>
+                {/* Card Body */}
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <h3 className="text-[19px] sm:text-[21px] font-bold text-[#071426] tracking-tight group-hover:text-[#9e0804] transition-colors line-clamp-1">
+                      {evt.title}
+                    </h3>
+                    <div className="space-y-1.5 text-[13px] sm:text-[14px] text-[#64748B] font-medium">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-3.5 h-3.5 text-[#9e0804] shrink-0" />
+                        <span>{evt.date} • {evt.time}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span className="truncate">{evt.venue}</span>
+                      </div>
+                    </div>
+                  </div>
 
-                  <button
-                    onClick={onOpenRegister}
-                    className="px-5 py-2.5 rounded-full text-[13px] sm:text-[14px] font-bold text-white transition-all cursor-pointer shadow-sm shadow-red-900/20 inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
-                    style={{
-                      borderRadius: '9999px',
-                      background: 'linear-gradient(135deg, #9e0804 0%, #c4120c 100%)',
-                      color: '#FFFFFF',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    <span style={{ whiteSpace: 'nowrap' }}>Register</span>
-                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
-                  </button>
+                  {/* Card Actions */}
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
+                    <button
+                      onClick={() => onSelectEvent && onSelectEvent(evt.id, evt)}
+                      className="inline-flex items-center gap-1.5 text-[13px] sm:text-[14px] font-bold text-slate-700 hover:text-[#9e0804] transition-colors cursor-pointer"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>View Details</span>
+                    </button>
+
+                    <button
+                      onClick={() => onOpenRegister && onOpenRegister(evt)}
+                      className="px-5 py-2.5 rounded-full text-[13px] sm:text-[14px] font-bold text-white transition-all cursor-pointer shadow-sm shadow-red-900/20 inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 hover:scale-105 active:scale-95"
+                      style={{
+                        borderRadius: '9999px',
+                        background: 'linear-gradient(135deg, #9e0804 0%, #c4120c 100%)',
+                        color: '#FFFFFF',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      <span style={{ whiteSpace: 'nowrap' }}>Register</span>
+                      <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Three Dot Pagination Indicators */}
         <div className="flex items-center justify-center gap-2 pt-6">
